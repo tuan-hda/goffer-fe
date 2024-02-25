@@ -1,11 +1,10 @@
-import { createBrowserRouter } from 'react-router-dom'
-import { LandingPage } from '../pages'
+import { RouteObject } from 'react-router-dom'
+import { LandingPage, NotFound } from '../pages'
+import LandingLayout from '../layouts/LandingLayout'
 
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <LandingPage />,
-    },
-])
+const routesConfig: RouteObject[] = [
+    { path: '/', element: <LandingLayout />, children: [{ path: '/', element: <LandingPage /> }] },
+    { path: '*', element: <NotFound /> },
+]
 
-export default router
+export default routesConfig

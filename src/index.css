@@ -8,6 +8,18 @@
     background-image: url('/background.png');
     background-repeat: repeat;
     background-size: 280px;
+    --main-background: #efded6;
+}
+
+::-moz-selection {
+    /* Code for Firefox */
+    color: #333;
+    background: var(--main-background);
+}
+
+::selection {
+    color: #333;
+    background: var(--main-background);
 }
 
 * {
