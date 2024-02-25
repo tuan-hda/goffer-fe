@@ -14,16 +14,10 @@ const LandingLayout = () => {
                     <Tab key='pricing' title='Pricing' href='/pricing' />
                 </Tabs>
                 <div className='flex items-center justify-center gap-4 mt-3'>
-                    <Link
-                        to='/about-us'
-                        className='hover:underline hover:text-text transition text-[13px] text-black/40'
-                    >
+                    <Link to='/about-us' className='hover:underline hover:text-text transition text-sm text-black/40'>
                         About us
                     </Link>
-                    <Link
-                        to='/about-us'
-                        className='hover:underline hover:text-text transition text-[13px] text-black/40'
-                    >
+                    <Link to='/about-us' className='hover:underline hover:text-text transition text-sm text-black/40'>
                         Support
                     </Link>
                 </div>
