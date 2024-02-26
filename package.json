@@ -17,6 +17,7 @@
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.22.1",
     "swr": "^2.2.5",
+    "use-spring": "^0.2.4",
     "zustand": "^4.5.1"
   },
   "devDependencies": {
