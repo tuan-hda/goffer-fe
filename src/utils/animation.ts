@@ -40,8 +40,10 @@ export const fadeInPropsFn =
         variants: fadeInAnimationFn(index),
     });
 
-export const zoomInPropsFn = (ctrls: AnimationControls) => (index: number) => ({
-    initial: 'hidden',
-    animate: ctrls,
-    variants: zoomInAnimationFn(index),
-});
+export const zoomInPropsFn =
+    (ctrls: AnimationControls) =>
+    (index = 0) => ({
+        initial: 'hidden',
+        animate: ctrls,
+        variants: zoomInAnimationFn(index),
+    });

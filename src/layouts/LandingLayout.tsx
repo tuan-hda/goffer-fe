@@ -74,7 +74,7 @@ const LandingLayout = () => {
             <CursorTrailEffect />
             <div
                 style={{
-                    position: 'absolute',
+                    position: 'fixed',
                     borderRadius: '13px',
                     zIndex: 2,
                     top: barInfo.top,
@@ -84,7 +84,7 @@ const LandingLayout = () => {
                     backgroundColor: 'white',
                 }}
             />
-            <div className="absolute bottom-12 z-[4] mix-blend-difference flex flex-col items-center justify-center w-full">
+            <div className="fixed top-[84vh] z-[4] mix-blend-difference flex flex-col items-center justify-center w-full">
                 <div ref={barRef} className="flex items-center">
                     <Tabs
                         onSelectionChange={handleSelectionChange}
@@ -95,7 +95,7 @@ const LandingLayout = () => {
                     >
                         <Tab key="/" title="Home" />
                         <Tab key="/who-are-we" title="Who are we" />
-                        <Tab key="/features" title="Features" />
+                        <Tab key="/feature" title="Features" />
                         <Tab key="/trusted-by" title="Trusted by" />
                         <Tab key="/pricing" title="Pricing" />
                     </Tabs>
