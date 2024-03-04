@@ -1,12 +1,10 @@
 import { RouteObject } from 'react-router-dom';
 import { LandingPage, NotFound } from '../pages';
-import LandingLayout from '../layouts/LandingLayout';
-import WhoAreWe from '../pages/WhoAreWe';
-import { HomePage } from '../pages/applicant';
 import Feature from '../pages/Feature';
+import WhoAreWe from '../pages/WhoAreWe';
+import { ApplicantLayout, LandingLayout } from '../layouts';
 
 const routesConfig: RouteObject[] = [
-    { path: '/applicant/find-work', element: <HomePage /> },
     {
         path: '/',
         element: <LandingLayout />,
@@ -17,6 +15,10 @@ const routesConfig: RouteObject[] = [
         ],
     },
     { path: '*', element: <NotFound /> },
+    {
+        path: '/applicant',
+        element: <ApplicantLayout />,
+    },
 ];
 
 export default routesConfig;
