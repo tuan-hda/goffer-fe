@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import { IconType } from 'react-icons';
 import {
     RiFacebookCircleLine,
@@ -132,7 +132,7 @@ const list = chunkArray({ array, columns });
 
 const Footer = () => {
     return (
-        <div className="max-w-screen-2xl bg-beige py-16 justify-between rounded-2xl mb-6 md:mx-6 2xl:mx-auto">
+        <div className="hidden sm:block max-w-screen-2xl bg-beige py-16 justify-between rounded-2xl mb-6 md:mx-6 2xl:mx-auto">
             <div className="px-4 xl:mx-14 md:px-8 xl:px-20">
                 <div>
                     <div className="grid grid-rows-4 md:grid-rows-1 md:grid-cols-4 gap-8">
@@ -152,7 +152,7 @@ const Footer = () => {
                         <div className="md:flex flex-row gap-4 flex-1 items-center">
                             <p className="py-3 md:py-0 text-sm uppercase md:capitalize">{'Follow Us'}</p>
                             <ul className="flex flex-row gap-2">
-                                {follows.map(({ Icon, href }, index) => (
+                                {follows.map(({ Icon }, index) => (
                                     <Button
                                         key={index}
                                         isIconOnly
@@ -169,7 +169,7 @@ const Footer = () => {
                         <div className="md:flex flex-row gap-4 flex-1 items-center md:justify-end">
                             <p className="py-3 md:py-0 text-sm uppercase md:capitalize">{'Mobiles app'}</p>
                             <ul className="flex flex-row gap-2">
-                                {mobiles.map(({ Icon, href }, index) => (
+                                {mobiles.map(({ Icon }, index) => (
                                     <Button
                                         key={index}
                                         isIconOnly
