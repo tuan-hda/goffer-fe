@@ -1,7 +1,8 @@
 import { TbHeartHandshake, TbPlayerRecord, TbSparkles, TbWaveSine } from 'react-icons/tb';
-import { useMotionValue, useTransform, motion, useAnimation, Variants } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useMotionValue, useTransform, motion, useAnimation } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSpring } from 'use-spring';
+import { fadeInPropsFn, zoomInPropsFn } from '../utils/animation';
 
 const LandingPage = () => {
     const [floatY, setFloatY] = useState(0);
@@ -79,81 +80,45 @@ const LandingPage = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const fadeInAnimationFn: (_: number) => Variants = (index) => ({
-        hidden: {
-            opacity: 0,
-            y: '28px',
-        },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                delay: index * 0.25,
-                duration: 1,
-                ease: [0.2, 0.65, 0.3, 0.9],
-            },
-        },
-    });
+    const getFadeInProps = useMemo(() => {
+        return fadeInPropsFn(ctrls);
+    }, [ctrls]);
 
-    const zoomInAnimationFn: (_: number) => Variants = (index) => ({
-        hidden: {
-            opacity: 0,
-            scale: 0.8,
-        },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            transition: {
-                delay: index * 0.25,
-                duration: 1,
-                ease: [0.2, 0.65, 0.3, 0.9],
-            },
-        },
-    });
-
-    const fadeInPropsFn = (index = 0) => ({
-        initial: 'hidden',
-        animate: ctrls,
-        variants: fadeInAnimationFn(index),
-    });
-
-    const zoomInPropsFn = (index: number) => ({
-        initial: 'hidden',
-        animate: ctrls,
-        variants: zoomInAnimationFn(index),
-    });
+    const getZoomInProps = useMemo(() => {
+        return zoomInPropsFn(ctrls);
+    }, [ctrls]);
 
     return (
         <div className="flex w-full h-full">
-            <div className="m-auto flex flex-col z-[2] items-center relative text-white mix-blend-difference">
-                <motion.div {...fadeInPropsFn()} className="mix-blend-difference">
+            <div className="m-auto flex flex-col z-[4] items-center relative text-white mix-blend-difference">
+                <motion.div {...getFadeInProps()} className="mix-blend-difference">
                     <img src="/logo.svg" alt="logo" className="w-10 invert h-10" />
                 </motion.div>
-                <motion.p {...fadeInPropsFn(0.3)} className="mt-5 text-white">
+                <motion.p {...getFadeInProps(0.3)} className="mt-5 text-white">
                     Hi there. We&#39;re Goffer.
                 </motion.p>
-                <motion.p {...fadeInPropsFn(0.6)} className="font-serif font-semibold text-5xl mt-2 text-white">
+                <motion.p {...getFadeInProps(0.6)} className="font-serif font-semibold text-5xl mt-2 text-white">
                     Offer to your quality candidates.
                 </motion.p>
-                <motion.p {...fadeInPropsFn(0.9)} className="font-serif font-semibold text-5xl mt-2 text-white">
+                <motion.p {...getFadeInProps(0.9)} className="font-serif font-semibold text-5xl mt-2 text-white">
                     Got offer from your recruiter.
                 </motion.p>
                 <div className="flex items-center gap-5 mt-6">
-                    <motion.div {...zoomInPropsFn(0)} className="flex items-center gap-1 text-white">
+                    <motion.div {...getZoomInProps(0)} className="flex items-center gap-1 text-white">
                         <TbWaveSine className="text-2xl p-1 bg-white rounded-full" /> Audio Responses
                     </motion.div>
-                    <motion.div {...zoomInPropsFn(1)} className="flex items-center gap-1 text-white">
+                    <motion.div {...getZoomInProps(1)} className="flex items-center gap-1 text-white">
                         <TbPlayerRecord className="text-2xl p-1 bg-white rounded-full" /> Video Responses
                     </motion.div>
-                    <motion.div {...zoomInPropsFn(2)} className="flex items-center gap-1 text-white">
+                    <motion.div {...getZoomInProps(2)} className="flex items-center gap-1 text-white">
                         <TbSparkles className="text-2xl p-1 bg-white rounded-full" /> Artificial Intelligence
                     </motion.div>
-                    <motion.div {...zoomInPropsFn(3)} className="flex items-center gap-1 text-white">
+                    <motion.div {...getZoomInProps(3)} className="flex items-center gap-1 text-white">
                         <TbHeartHandshake className="text-2xl p-1 bg-white rounded-full" /> Network
                     </motion.div>
                 </div>
                 <motion.div
-                    {...fadeInPropsFn(4)}
+                    {...getFadeInProps(4)}
                     className="flex items-center justify-center gap-2 font-light text-sm text-white/40 mt-2"
                 >
                     Press <img src="/space-button.svg" alt="space-bar" className="w-16 h-16 opacity-50 invert" /> or use

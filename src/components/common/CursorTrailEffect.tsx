@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 const LENGTH = 20;
 const RADIUS = 20;
+const SPEED_FACTOR = 0.2;
 
 interface CustomDiv extends HTMLDivElement {
     x?: number;
@@ -22,8 +23,8 @@ const CursorTrailEffect = () => {
             for (let i = 0; i < LENGTH; i++) {
                 newPosCircles.push({ x, y });
                 const nextCircle = circleRefs.current[(i + 1) % LENGTH];
-                x += ((nextCircle.x || 0) - x) * 0.4;
-                y += ((nextCircle.y || 0) - y) * 0.4;
+                x += ((nextCircle.x || 0) - x) * SPEED_FACTOR;
+                y += ((nextCircle.y || 0) - y) * SPEED_FACTOR;
             }
 
             newPosCircles.forEach((pos, i) => {
@@ -58,7 +59,7 @@ const CursorTrailEffect = () => {
                 <div
                     ref={(el) => (circleRefs.current[i] = el as HTMLDivElement)}
                     key={i}
-                    className="rounded-full z-[1] pointer-events-none  bg-black fixed w-10 h-10"
+                    className="rounded-full z-[3] pointer-events-none  bg-black fixed w-10 h-10"
                     style={{
                         transform: `scale(${(LENGTH - i) / LENGTH})`,
                     }}
