@@ -33,11 +33,12 @@ const LandingLayout = () => {
         (e: KeyboardEvent) => {
             if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'ArrowRight') {
                 moveLocation(1);
+                e.preventDefault();
             }
             if (e.key === 'ArrowLeft') {
                 moveLocation(-1);
+                e.preventDefault();
             }
-            e.preventDefault();
         },
         [moveLocation],
     );
@@ -73,9 +74,9 @@ const LandingLayout = () => {
             <CursorTrailEffect />
             <div
                 style={{
-                    position: 'fixed',
+                    position: 'absolute',
                     borderRadius: '13px',
-                    zIndex: 0,
+                    zIndex: 2,
                     top: barInfo.top,
                     left: barInfo.left,
                     width: barInfo.width,
@@ -83,7 +84,7 @@ const LandingLayout = () => {
                     backgroundColor: 'white',
                 }}
             />
-            <div className="absolute bottom-12 z-[2] mix-blend-difference flex flex-col items-center justify-center w-full">
+            <div className="absolute bottom-12 z-[4] mix-blend-difference flex flex-col items-center justify-center w-full">
                 <div ref={barRef} className="flex items-center">
                     <Tabs
                         onSelectionChange={handleSelectionChange}
