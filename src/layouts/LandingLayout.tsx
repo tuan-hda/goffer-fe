@@ -3,7 +3,16 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import CursorTrailEffect from '../components/common/CursorTrailEffect';
 
-const paths = ['/', '/who-are-we', '/features', '/trusted-by', '/pricing'];
+const paths = [
+    '/',
+    '/who-are-we',
+    '/features',
+    '/features?step=2',
+    '/features?step=3',
+    '/features?step=4',
+    '/trusted-by',
+    '/pricing',
+];
 
 const LandingLayout = () => {
     const location = useLocation();
@@ -22,7 +31,7 @@ const LandingLayout = () => {
 
     const moveLocation = useCallback(
         (value: number) => {
-            const index = paths.indexOf(window.location.pathname);
+            const index = paths.indexOf(window.location.pathname + (window.location.search || ''));
             if (index + value < 0 || index + value >= paths.length) return;
             navigate(paths[index + value]);
         },
@@ -95,7 +104,7 @@ const LandingLayout = () => {
                     >
                         <Tab key="/" title="Home" />
                         <Tab key="/who-are-we" title="Who are we" />
-                        <Tab key="/feature" title="Features" />
+                        <Tab key="/features" title="Features" />
                         <Tab key="/trusted-by" title="Trusted by" />
                         <Tab key="/pricing" title="Pricing" />
                     </Tabs>

@@ -1,10 +1,11 @@
-import { useAnimation, motion } from 'framer-motion';
+import { useAnimation, motion, AnimationControls } from 'framer-motion';
 import { ReactElement, useEffect, useMemo } from 'react';
 import { fadeInPropsFn, zoomInPropsFn } from '../utils/animation';
+import classNames from 'classnames';
 
 const SPEED_FACTOR = 1;
 
-type WhoAreWeProps = {
+export type LandingTwoColumnProps = {
     title: string;
     left: {
         animType: 'fadeIn' | 'zoomIn';
@@ -12,14 +13,17 @@ type WhoAreWeProps = {
     }[];
     right: string;
     rightAlt: string;
+    outerCtrls?: AnimationControls;
+    className?: string;
 };
 
-const LandingTwoColumn = ({ left, right, title, rightAlt }: WhoAreWeProps) => {
-    const ctrls = useAnimation();
+const LandingTwoColumn = ({ left, right, title, rightAlt, outerCtrls, className }: LandingTwoColumnProps) => {
+    const innerCtrls = useAnimation();
+    const ctrls = outerCtrls || innerCtrls;
 
     useEffect(() => {
-        ctrls.start('visible');
-    }, [ctrls]);
+        if (!outerCtrls) ctrls.start('visible');
+    }, [ctrls, outerCtrls]);
 
     const getFadeInProps = useMemo(() => {
         return fadeInPropsFn(ctrls);
@@ -35,9 +39,9 @@ const LandingTwoColumn = ({ left, right, title, rightAlt }: WhoAreWeProps) => {
     };
 
     return (
-        <div className="h-[86vh] flex relative z-[4] mix-blend-difference text-white text-xl">
-            <div className="mx-auto p-8 max-w-6xl flex gap-8 xl:gap-16">
-                <div className="flex flex-col max-w-[400px] m-auto flex-1 h-full max-h-[610px] overflow-y-auto scroll-hidden xl:max-w-lg flex-shrink-0">
+        <div className={classNames('h-[86vh] flex relative z-[4] mix-blend-difference text-white text-xl', className)}>
+            <div className="mx-auto p-8 w-full max-w-6xl flex gap-8 xl:gap-16">
+                <div className="flex flex-col max-w-1/2 m-auto flex-1 h-full max-h-[610px] overflow-y-auto scroll-hidden xl:max-w-lg flex-shrink-0">
                     <motion.h1 {...getFadeInProps()} className="text-2xl font-bold mb-6 font-serif">
                         {title}
                     </motion.h1>
