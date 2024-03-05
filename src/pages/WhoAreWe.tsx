@@ -49,7 +49,7 @@ const WhoAreWe = () => {
                 },
             ]}
             title="Who Are We"
-            right="/trivia1.jpeg"
+            right="/trivia1.png"
             rightAlt="Trivia-1"
         />
     );
