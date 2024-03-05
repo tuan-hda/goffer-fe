@@ -1,5 +1,10 @@
 import { AnimationControls, Variants } from 'framer-motion';
 
+export const transitionPreset = {
+    duration: 1,
+    ease: [0.2, 0.65, 0.3, 0.9],
+};
+
 export const fadeInAnimationFn: (_: number) => Variants = (index) => ({
     hidden: {
         opacity: 0,
