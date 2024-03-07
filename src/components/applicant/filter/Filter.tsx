@@ -12,8 +12,9 @@ import {
     ModalHeader,
 } from '@nextui-org/react';
 import classNames from 'classnames';
-import { RiSearchLine, RiHeartsLine } from 'react-icons/ri';
+import { RiSearchLine } from 'react-icons/ri';
 import { HiOutlineAdjustments } from 'react-icons/hi';
+import { TbHearts } from 'react-icons/tb';
 
 const Filter = () => {
     const [scrollDirection, setScrollDirection] = useState('up');
@@ -108,7 +109,7 @@ const Filter = () => {
                     <Button
                         radius="full"
                         variant="ghost"
-                        startContent={<RiHeartsLine size={20} className="text-default-700" />}
+                        startContent={<TbHearts size={20} className="text-default-700" />}
                     >
                         Saved
                     </Button>
