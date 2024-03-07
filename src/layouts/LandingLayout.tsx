@@ -11,6 +11,7 @@ const paths = [
     '/features?step=3',
     '/features?step=4',
     '/trusted-by',
+    '/trusted-by?type=individual',
     '/pricing',
 ];
 

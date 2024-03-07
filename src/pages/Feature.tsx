@@ -49,7 +49,7 @@ const FeatureFirst = () => {
                 {
                     animType: 'fadeIn',
                     el: (
-                        <p className="font-serif">
+                        <p className="text-base">
                             Simplifies job applications by replacing text answers with audio or video recordings,
                             offering a more personal and concise way for candidates to express themselves.
                         </p>
@@ -65,7 +65,7 @@ const FeatureFirst = () => {
                 {
                     animType: 'fadeIn',
                     el: (
-                        <p className="font-serif">
+                        <p className="text-base">
                             Utilizes AI to analyze and assess candidates&apos; profiles, CVs, and responses, providing a
                             succinct and insightful evaluation of their suitability for a role.
                         </p>
@@ -81,7 +81,7 @@ const FeatureFirst = () => {
                 {
                     animType: 'fadeIn',
                     el: (
-                        <p className="font-serif">
+                        <p className="text-base">
                             Enables users to discover and connect with peers and professionals of interest, facilitating
                             the growth and improvement of their networking circles. This tool uses smart algorithms to
                             suggest relevant connections, making it easier to build a supportive and beneficial
@@ -99,7 +99,7 @@ const FeatureFirst = () => {
                 {
                     animType: 'fadeIn',
                     el: (
-                        <p className="font-serif">
+                        <p className="text-base">
                             With AI technology, we transform and enhance your professional profile, ensuring it stands
                             out in a competitive landscape. This tool provides personalized suggestions for
                             improvements, tailoring your profile to showcase your strengths and achievements more
