@@ -12,6 +12,9 @@
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
     "classnames": "^2.5.1",
+    "embla-carousel": "^8.0.0",
+    "embla-carousel-autoplay": "^8.0.0",
+    "embla-carousel-react": "^8.0.0",
     "framer-motion": "^11.0.6",
     "lodash": "^4.17.21",
     "react": "^18.2.0",

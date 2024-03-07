@@ -5,17 +5,12 @@ const ApplicantLayout = () => {
     return (
         <div className="flex flex-col flex-1">
             <Header />
-            <div className="flex flex-row justify-between">
+            <Filter />
+            <div className="flex flex-row justify-around pb-32">
                 <PersonCard />
                 <PersonCard />
                 <PersonCard />
             </div>
-            <Filter />
-            <Footer />
-            <Footer />
-            <Footer />
-            <Footer />
-            <Footer />
             <Footer />
         </div>
     );
