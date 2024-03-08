@@ -66,7 +66,7 @@ const LandingTwoColumn = ({ left, right, title, rightAlt, outerCtrls, className 
                 <motion.img
                     src={right}
                     alt={rightAlt}
-                    className="flex-1 m-auto h-full min-w-0 object-cover rounded-lg max-h-[610px] invert"
+                    className="flex-1 m-auto h-full min-w-0 object-cover rounded-2xl max-h-[610px] invert"
                     {...getZoomInProps()}
                 />
             </div>
