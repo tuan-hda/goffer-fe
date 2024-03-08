@@ -50,7 +50,7 @@ const Individual = () => {
                             key={index}
                             whileHover={{
                                 scale: 1.2,
-                                backgroundColor: '#fff7ed',
+                                backgroundColor: '#fff0dd',
                                 rotate: 0,
                                 zIndex: 4,
                                 transition: { duration: 0.3 },
@@ -79,7 +79,7 @@ const Individual = () => {
                                     delay: index * 0.1,
                                 },
                             }}
-                            className="absolute p-6 flex flex-col invert group rounded-3xl h-[360px] w-64 shadow-2xl"
+                            className="absolute p-6 flex flex-col invert group rounded-2xl h-[360px] w-64 shadow-2xl"
                         >
                             <img src={item.img} alt="author" className="object-cover rounded-full h-16 w-16" />
                             <p className="mt-4 text-text">&quot;{item.content}&quot;</p>
