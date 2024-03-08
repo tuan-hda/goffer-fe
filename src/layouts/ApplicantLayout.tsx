@@ -1,4 +1,3 @@
-import React from 'react';
 import { Filter, Footer, Header, PersonCard } from '../components/applicant';
 
 const ApplicantLayout = () => {
