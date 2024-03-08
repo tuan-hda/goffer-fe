@@ -1,5 +1,6 @@
+/* eslint-disable import/named */
 import { Card, CardHeader, Avatar, Button, CardBody, CardFooter } from '@nextui-org/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TbHearts, TbSend } from 'react-icons/tb';
 import EmblaCarousel from './slide/EmblaCarousel';
 import { EmblaOptionsType } from 'embla-carousel';
