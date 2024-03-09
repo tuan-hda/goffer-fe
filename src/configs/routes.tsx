@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom';
-import { LandingPage, NotFound, TrustedBy } from '../pages';
+import { LandingPage, NotFound, Pricing, TrustedBy } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
 import { ApplicantLayout, LandingLayout } from '../layouts';
@@ -13,6 +13,7 @@ const routesConfig: RouteObject[] = [
             { path: 'who-are-we', element: <WhoAreWe /> },
             { path: 'features', element: <Feature /> },
             { path: 'trusted-by', element: <TrustedBy /> },
+            { path: 'pricing', element: <Pricing /> },
         ],
     },
     {
