@@ -6,13 +6,18 @@ import EmblaCarousel from './slide/EmblaCarousel';
 import { EmblaOptionsType } from 'embla-carousel';
 
 const OPTIONS: EmblaOptionsType = { loop: true };
-const SLIDE_COUNT = 5;
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
+const SLIDES = [
+    'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/1213447/pexels-photo-1213447.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+];
 
 const PersonCard = () => {
     const [isFollowed, setIsFollowed] = useState(false);
     return (
-        <Card isPressable isBlurred className="bg-background/60 dark:bg-default-100/50 max-w-sm">
+        <Card isBlurred className="bg-background/60 dark:bg-default-100/50 max-w-sm">
             <CardHeader className="justify-between">
                 <div className="flex gap-5">
                     <Avatar isBordered radius="full" size="md" src="/avatars/avatar-1.png" />
@@ -22,11 +27,11 @@ const PersonCard = () => {
                     </div>
                 </div>
             </CardHeader>
-            <CardBody className="px-3 py-0 text-small text-default-400">
+            <CardBody className="px-3 py-0 text-small text-default-400 gap-y-4">
                 <p>Frontend developer and UI/UX enthusiast. Join me on this coding adventure!</p>
                 <EmblaCarousel slides={SLIDES} options={OPTIONS} />
             </CardBody>
-            <CardFooter className="justify-between border-t-1 py-4 w-[calc(100%_-_8px)]">
+            <CardFooter className="justify-between border-t-1 py-4 mt-4 w-full]">
                 <Button size="md" radius="full" className="w-4/5" startContent={<TbSend size={20} />}>
                     Get in touch
                 </Button>

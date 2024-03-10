@@ -39,7 +39,7 @@ const Filter = () => {
     return (
         <div
             className={classNames(
-                'w-full max-w-screen-2xl self-center rounded-b-xl sticky top-16 z-30 transition bg-white hidden md:flex py-6',
+                'w-full max-w-screen-2xl self-center rounded-b-2xl sticky top-16 z-30 transition bg-image shadow-md hidden md:flex py-6',
                 scrollDirection === 'down' ? '-translate-y-[160px]' : 'translate-y-0',
             )}
         >
