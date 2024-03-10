@@ -132,7 +132,7 @@ const list = chunkArray({ array, columns });
 
 const Footer = () => {
     return (
-        <div className="hidden sm:block max-w-screen-2xl bg-beige py-16 justify-between rounded-2xl mb-6 md:mx-6 2xl:mx-auto">
+        <div className="hidden sm:block max-w-screen-2xl bg-beige py-16 justify-between rounded-2xl mb-6 mx-4 md:mx-6 2xl:mx-auto">
             <div className="px-4 xl:mx-14 md:px-8 xl:px-20">
                 <div>
                     <div className="grid grid-rows-4 md:grid-rows-1 md:grid-cols-4 gap-8">

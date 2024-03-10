@@ -1,12 +1,11 @@
-import { Filter, Footer, Header } from '../components/applicant';
-import PeopleDiscover from '../components/applicant/discover/PeopleDiscover';
+import Discover from 'src/components/applicant/discover/Discover';
+import { Footer, Header } from '../components/applicant';
 
 const ApplicantLayout = () => {
     return (
         <div className="flex flex-col flex-1">
             <Header />
-            <Filter />
-            <PeopleDiscover />
+            <Discover/>
             <Footer />
         </div>
     );
