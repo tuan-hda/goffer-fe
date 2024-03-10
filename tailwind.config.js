@@ -14,7 +14,7 @@ export default {
             },
             colors: {
                 beige: {
-                    DEFAULT: '#EFDED6',
+                    DEFAULT: '#fff0dd',
                 },
                 text: {
                     DEFAULT: '#333',
