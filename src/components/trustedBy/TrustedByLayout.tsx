@@ -1,4 +1,7 @@
 import classNames from 'classnames';
+import { motion, useAnimation } from 'framer-motion';
+import { useEffect } from 'react';
+import { fadeInPropsFn } from 'src/utils/animation';
 
 type TrustedByLayoutProps = {
     title: string;
@@ -7,6 +10,12 @@ type TrustedByLayoutProps = {
     className?: string;
 };
 const TrustedByLayout = ({ title, children, blendTitleOnly, className }: TrustedByLayoutProps) => {
+    const ctrls = useAnimation();
+
+    useEffect(() => {
+        ctrls.start('visible');
+    }, [ctrls]);
+
     return (
         <div className="h-[84vh] w-full flex">
             <div
@@ -25,6 +34,12 @@ const TrustedByLayout = ({ title, children, blendTitleOnly, className }: Trusted
                     {title}
                 </p>
                 {children}
+                <motion.div
+                    {...fadeInPropsFn(ctrls)(2)}
+                    className="flex items-center mx-auto gap-2 font-light text-sm text-black/40 mt-6 invert"
+                >
+                    Press <img src="/space-button.svg" alt="space-bar" className="w-16 opacity-50" /> or use arrow keys
+                </motion.div>
             </div>
         </div>
     );
