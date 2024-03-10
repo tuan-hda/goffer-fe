@@ -15,12 +15,14 @@ import classNames from 'classnames';
 import { RiSearchLine } from 'react-icons/ri';
 import { HiOutlineAdjustments } from 'react-icons/hi';
 import { TbHearts } from 'react-icons/tb';
+import useDiscoverStore from 'src/stores/discoverStore';
 
 const Filter = () => {
     const [scrollDirection, setScrollDirection] = useState('up');
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [searchValue, setSearchValue] = useState('');
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const {tabKey, updateTabKey} = useDiscoverStore()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -70,6 +72,8 @@ const Filter = () => {
                             tabList: 'bg-transparent h-full',
                             tab: 'h-10 min-w-16 w-fit',
                         }}
+                        selectedKey={tabKey}
+                        onSelectionChange={(e)=>updateTabKey(e.toString())}
                     >
                         <Tab key="jobs" title="Jobs" />
                         <Tab key="people" title="People" />
