@@ -1,4 +1,4 @@
-import { nextui } from '@nextui-org/react'
+import { nextui } from '@nextui-org/react';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -14,7 +14,7 @@ export default {
             },
             colors: {
                 beige: {
-                    DEFAULT: '#EFDED6',
+                    DEFAULT: '#fff0dd',
                 },
                 text: {
                     DEFAULT: '#333',
@@ -32,10 +32,14 @@ export default {
                             DEFAULT: '#FA8050',
                             foreground: '#fff',
                         },
+                        secondary: {
+                            DEFAULT: '#222834',
+                            foreground: '#fff',
+                        },
                         focus: '#FA8050',
                     },
                 },
             },
         }),
     ],
-}
+};

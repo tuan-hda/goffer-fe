@@ -119,7 +119,7 @@ const LandingPage = () => {
                 </div>
                 <motion.div
                     {...getFadeInProps(4)}
-                    className="flex items-center justify-center gap-2 py-4 font-light text-sm text-white/40 mt-2"
+                    className="flex items-center justify-center gap-2 py-4 font-light text-sm text-white/40 mt-6"
                 >
                     Press <img src="/space-button.svg" alt="space-bar" className="w-16 opacity-50 invert" /> or use
                     arrow keys
