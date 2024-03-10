@@ -63,19 +63,37 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+.bg-image {
+    background-image: url('/background.png');
+    background-repeat: repeat;
+    background-size: 280px;
+}
+
 .scroll-hidden::-webkit-scrollbar {
     display: none;
 }
 
 .embla {
+    max-width: 48rem;
+    margin: auto;
+    --slide-height: 10rem;
+    --slide-spacing: 1rem;
+    --slide-size: 100%;
+}
+
+.embla__viewport {
     overflow: hidden;
 }
 
 .embla__container {
+    backface-visibility: hidden;
     display: flex;
+    touch-action: pan-y;
+    margin-left: calc(var(--slide-spacing) * -1);
 }
 
 .embla__slide {
-    flex: 0 0 100%;
+    flex: 0 0 var(--slide-size);
     min-width: 0;
+    padding-left: var(--slide-spacing);
 }
