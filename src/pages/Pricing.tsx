@@ -25,11 +25,11 @@ const Pricing = () => {
     }, [isIndividual, organizationCtrls, individualCtrls]);
 
     return (
-        <div className="h-[84vh] overflow-y-auto scroll-hidden invert flex relative z-[4] mix-blend-difference px-6 pt-6 text-text gap-10">
+        <div className="scroll-hidden relative z-[4] flex h-[84vh] gap-10 overflow-y-auto px-6 pt-6 text-text mix-blend-difference invert">
             <div className="m-auto flex flex-col gap-10">
                 <motion.div
                     {...fadeInPropsFn(ctrls)()}
-                    className="flex h-fit items-center mx-auto font-bold gap-4 border-1 w-fit border-primary/30 rounded-lg p-4"
+                    className="mx-auto flex h-fit w-fit items-center gap-4 rounded-lg border-1 border-black/10 p-4 font-bold"
                 >
                     <motion.p
                         initial="neutral"
@@ -40,7 +40,7 @@ const Pricing = () => {
                     >
                         FOR ORGANIZATION
                     </motion.p>
-                    <button onClick={toggle} className="w-20 text-black h-4 bg-gray-200 rounded relative outline-0">
+                    <button onClick={toggle} className="relative h-4 w-20 rounded bg-gray-200 text-black outline-0">
                         <motion.div
                             initial="neutral"
                             variants={{
@@ -48,7 +48,7 @@ const Pricing = () => {
                                 neutral: { x: 0 },
                             }}
                             animate={ctrls}
-                            className="bg-gray-900 h-full rounded w-10 absolute shadow-[0_0_10px_0px_rgba(0,0,0,0.3)] top-0"
+                            className="absolute top-0 h-full w-10 rounded bg-gray-900 shadow-[0_0_10px_0px_rgba(0,0,0,0.3)]"
                         />
                     </button>
                     <motion.p
@@ -63,7 +63,7 @@ const Pricing = () => {
                     </motion.p>
                 </motion.div>
 
-                <div className="flex-1 flex flex-col -mx-4 px-4">
+                <div className="-mx-4 flex flex-1 flex-col px-4">
                     {!isIndividual ? (
                         <PricingCard
                             ctrls={organizationCtrls}
@@ -79,7 +79,7 @@ const Pricing = () => {
                             pricing={20}
                         />
                     ) : (
-                        <div className="flex m-auto flex-col lg:flex-row h-fit items-start gap-6">
+                        <div className="m-auto flex h-fit flex-col items-start gap-6 lg:flex-row">
                             <PricingCard
                                 ctrls={individualCtrls}
                                 description="Quickly start"
@@ -108,7 +108,7 @@ const Pricing = () => {
                     )}
                     <motion.div
                         {...fadeInPropsFn(ctrls)(2)}
-                        className="flex items-center mx-auto gap-2 font-light text-sm text-black/40 mt-8"
+                        className="mx-auto mt-8 flex items-center gap-2 text-sm font-light text-black/40"
                     >
                         Press <img src="/space-button.svg" alt="space-bar" className="w-16 opacity-50" /> or use arrow
                         keys
