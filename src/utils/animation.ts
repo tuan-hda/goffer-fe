@@ -1,9 +1,15 @@
 import { AnimationControls, Variants } from 'framer-motion';
 
+export const transitionPreset = {
+    duration: 1,
+    ease: [0.2, 0.65, 0.3, 0.9],
+};
+
 export const fadeInAnimationFn: (_: number) => Variants = (index) => ({
     hidden: {
         opacity: 0,
-        y: '28px',
+        y: '80px',
+        rotate: 3,
     },
     visible: {
         opacity: 1,
@@ -13,17 +19,16 @@ export const fadeInAnimationFn: (_: number) => Variants = (index) => ({
             duration: 1,
             ease: [0.2, 0.65, 0.3, 0.9],
         },
+        rotate: 0,
     },
 });
 
 export const zoomInAnimationFn: (_: number) => Variants = (index) => ({
     hidden: {
         opacity: 0,
-        scale: 0.8,
     },
     visible: {
         opacity: 1,
-        scale: 1,
         transition: {
             delay: index * 0.25,
             duration: 1,
