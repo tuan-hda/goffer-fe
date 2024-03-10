@@ -25,11 +25,11 @@ const Pricing = () => {
     }, [isIndividual, organizationCtrls, individualCtrls]);
 
     return (
-        <div className="h-[84vh] invert flex relative z-[4] mix-blend-difference p-6 text-text gap-10">
-            <div className="mx-auto mt-[6vh] h-full max-h-[72vh] flex flex-col gap-10">
+        <div className="h-[84vh] overflow-y-auto scroll-hidden invert flex relative z-[4] mix-blend-difference px-6 pt-6 text-text gap-10">
+            <div className="m-auto flex flex-col gap-10">
                 <motion.div
                     {...fadeInPropsFn(ctrls)()}
-                    className="flex h-fit items-center font-bold gap-4 border-1 border-beige/70 rounded-lg p-4"
+                    className="flex h-fit items-center mx-auto font-bold gap-4 border-1 w-fit border-primary/30 rounded-lg p-4"
                 >
                     <motion.p
                         initial="neutral"
@@ -63,7 +63,7 @@ const Pricing = () => {
                     </motion.p>
                 </motion.div>
 
-                <div className="flex-1 h-[calc(100%-98px)] scroll-hidden -mx-4 px-4 overflow-y-auto">
+                <div className="flex-1 flex flex-col -mx-4 px-4">
                     {!isIndividual ? (
                         <PricingCard
                             ctrls={organizationCtrls}
@@ -79,35 +79,40 @@ const Pricing = () => {
                             pricing={20}
                         />
                     ) : (
-                        <div className="flex flex-col items-start gap-6">
+                        <div className="flex m-auto flex-col lg:flex-row h-fit items-start gap-6">
                             <PricingCard
                                 ctrls={individualCtrls}
-                                description="Best for speed up and scale your hiring process"
-                                title="Lord"
+                                description="Quickly start"
+                                title="Fragment"
                                 features={[
-                                    'Post jobs, browse candidates, & hire experts',
-                                    'Audio and video response, with analytics',
-                                    'Shared company workspace & payment methods',
-                                    'Evaluate your candidate with ease',
+                                    'Create your profile',
+                                    'Find jobs matching your skills',
+                                    'Expand your network',
                                 ]}
-                                isPrimary
-                                pricing={20}
+                                pricing={'Free'}
                             />
                             <PricingCard
                                 ctrls={individualCtrls}
-                                description="Best for speed up and scale your hiring process"
-                                title="Lord"
+                                description="Best for boosting your career"
+                                title="Star"
                                 features={[
-                                    'Post jobs, browse candidates, & hire experts',
-                                    'Audio and video response, with analytics',
-                                    'Shared company workspace & payment methods',
-                                    'Evaluate your candidate with ease',
+                                    'All Fragment features',
+                                    'Get priority support',
+                                    'Create your portfolio from our templates',
+                                    'Improve your profile with AI',
                                 ]}
                                 isPrimary
-                                pricing={20}
+                                pricing={10}
                             />
                         </div>
                     )}
+                    <motion.div
+                        {...fadeInPropsFn(ctrls)(2)}
+                        className="flex items-center mx-auto gap-2 font-light text-sm text-black/40 mt-8"
+                    >
+                        Press <img src="/space-button.svg" alt="space-bar" className="w-16 opacity-50" /> or use arrow
+                        keys
+                    </motion.div>
                 </div>
             </div>
         </div>

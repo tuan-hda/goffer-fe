@@ -3,13 +3,14 @@ import { TbCheck } from 'react-icons/tb';
 import { AnimationControls, motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { fadeInPropsFn } from 'src/utils/animation';
+import classNames from 'classnames';
 
 type FadeInProps = {
     ctrls: AnimationControls;
     title: string;
     description: string;
-    pricing: number;
-    isPrimary: boolean;
+    pricing: string | number;
+    isPrimary?: boolean;
     features: string[];
 };
 
@@ -19,17 +20,26 @@ const PricingCard = ({ ctrls, title, description, pricing, isPrimary, features }
     }, [ctrls]);
 
     return (
-        <div className="max-w-[430px] h-[410px] w-full">
+        <motion.div
+            {...getFadeInProps(0.3)}
+            className="max-w-[430px] h-[452px] bg-[#fff0dd]/70 p-6 lg:p-8 rounded-2xl w-full"
+        >
             <motion.div {...getFadeInProps(0.3)}>
                 <p className="font-bold text-black text-lg">{title}</p>
                 <p className="text-text">{description}</p>
             </motion.div>
             <motion.p {...getFadeInProps(0.6)} className="text-5xl font-bold text-black font-serif mt-4">
-                ${pricing}
-                <span className="font-serif text-xl font-normal ml-1 text-text">/mo</span>
+                {pricing !== 'Free' && '$'}
+                {pricing}
+                {pricing !== 'Free' && <span className="font-serif text-xl font-normal ml-1 text-text">/mo</span>}
             </motion.p>
             <motion.div {...getFadeInProps(0.9)}>
-                <Button className="mt-4" variant="shadow" size="lg" color={isPrimary ? 'primary' : 'default'}>
+                <Button
+                    className={classNames('mt-4', !isPrimary && 'border-1 border-gray-500')}
+                    variant={isPrimary ? 'shadow' : 'ghost'}
+                    size="lg"
+                    color={isPrimary ? 'primary' : 'default'}
+                >
                     Get Started
                 </Button>
             </motion.div>
@@ -55,7 +65,7 @@ const PricingCard = ({ ctrls, title, description, pricing, isPrimary, features }
                     {feature}
                 </motion.div>
             ))}
-        </div>
+        </motion.div>
     );
 };
 
