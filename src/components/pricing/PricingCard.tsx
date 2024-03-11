@@ -23,7 +23,7 @@ const PricingCard = ({ ctrls, title, description, pricing, isPrimary, features }
     return (
         <motion.div
             {...getFadeInProps(0.3)}
-            className="h-[452px] w-full max-w-[430px] rounded-2xl bg-white p-6 shadow-medium lg:p-8"
+            className="h-[432px] w-full max-w-[450px] rounded-2xl bg-white p-6 shadow-medium lg:p-8"
         >
             <motion.div {...getFadeInProps(0.3)}>
                 <p className="text-lg font-bold text-black">{title}</p>
@@ -63,7 +63,7 @@ const PricingCard = ({ ctrls, title, description, pricing, isPrimary, features }
                 <img src="/dash-line.svg" className="-ml-1 mt-8 h-4 w-fit self-start" alt="dash-line" />
             </motion.div>
             {features.map((feature, i) => (
-                <motion.div key={i} {...getFadeInProps(1.5)} className="mt-2 flex items-center gap-2 text-text">
+                <motion.div key={i} {...getFadeInProps(1.5)} className="mt-2 flex w-full items-center gap-2 text-text">
                     <TbCheck className="text-xl" />
                     {feature}
                 </motion.div>
