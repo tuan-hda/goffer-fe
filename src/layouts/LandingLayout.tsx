@@ -94,7 +94,7 @@ const LandingLayout = () => {
                     backgroundColor: 'white',
                 }}
             />
-            <div className="fixed top-[84vh] z-[4] mix-blend-difference flex flex-col items-center justify-center w-full">
+            <div className="fixed top-[84vh] z-[4] flex w-full flex-col items-center justify-center mix-blend-difference">
                 <div ref={barRef} className="flex items-center">
                     <Tabs
                         onSelectionChange={handleSelectionChange}
@@ -109,16 +109,19 @@ const LandingLayout = () => {
                         <Tab key="/trusted-by" title="Trusted by" />
                         <Tab key="/pricing" title="Pricing" />
                     </Tabs>
-                    <div className="invert rounded-r-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition h-11 flex items-center -ml-5 relative w-[120px] text-gray-600 pl-10 shadow-xl font-semibold">
+                    <Link
+                        to={'/auth/sign-up'}
+                        className="relative -ml-5 flex h-11 w-[120px] cursor-pointer items-center rounded-r-xl bg-gray-50 pl-10 font-semibold text-gray-600 shadow-xl invert transition hover:bg-gray-100"
+                    >
                         Sign Up
-                    </div>
+                    </Link>
                 </div>
-                <div className="flex items-center justify-center gap-4 mt-3">
-                    <Link to="/about-us" className="hover:underline hover:text-white transition text-sm text-white/30">
+                <div className="mt-3 flex items-center justify-center gap-4">
+                    <Link to="/about-us" className="text-sm text-white/30 transition hover:text-white hover:underline">
                         About us
                     </Link>
-                    <Link to="/about-us" className="hover:underline hover:text-white transition text-sm text-white/30">
-                        Support
+                    <Link to="/contact" className="text-sm text-white/30 transition hover:text-white hover:underline">
+                        Contact
                     </Link>
                 </div>
             </div>

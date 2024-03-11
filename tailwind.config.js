@@ -14,7 +14,7 @@ export default {
             },
             colors: {
                 beige: {
-                    DEFAULT: '#fff0dd',
+                    DEFAULT: '#F0DCC8',
                 },
                 text: {
                     DEFAULT: '#333',
@@ -33,8 +33,8 @@ export default {
                             foreground: '#fff',
                         },
                         secondary: {
-                            DEFAULT: '#222834',
-                            foreground: '#fff',
+                            DEFAULT: '#F0DCC8',
+                            foreground: '#333',
                         },
                         focus: '#FA8050',
                     },
