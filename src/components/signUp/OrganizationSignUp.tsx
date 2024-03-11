@@ -28,10 +28,10 @@ const OrganizationSignUp = () => {
                         <TbCheck className="text-2xl text-green-500" />{' '}
                         <p className="text-white">One platform to maintain all your candidates</p>
                     </div>
-                    <div className="absolute bottom-0 left-0 right-0 top-0">
+                    <div className="absolute bottom-0 left-0 right-0 top-0 overflow-hidden">
                         <img
-                            src="/assets/tunnel.png"
-                            className="h-full w-full object-contain mix-blend-difference"
+                            src="/assets/cone.png"
+                            className="h-full w-full scale-110 object-contain pl-10 pt-20 opacity-80 mix-blend-difference"
                             alt="Cone"
                         />
                     </div>
