@@ -22,7 +22,7 @@ const Login = () => {
                     Welcome back to Goffer <span className="ml-1">👋</span>
                 </h1>
                 <Button fullWidth startContent={<FcGoogle className="text-lg" />} className="mt-4" color="secondary">
-                    Continue with Google
+                    Login with Google
                 </Button>
                 <div className="mt-6 border-t" />
                 <form className="mt-4">
