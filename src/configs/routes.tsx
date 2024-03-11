@@ -3,6 +3,7 @@ import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy }
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
 import { ApplicantLayout, AuthLayout, LandingLayout } from '../layouts';
+import { Login } from 'src/components/auth';
 
 const routesConfig: RouteObject[] = [
     {
@@ -31,8 +32,12 @@ const routesConfig: RouteObject[] = [
     {
         path: '/auth',
         element: <AuthLayout />,
-        children: [{ path: 'sign-up', element: <SignUp /> }],
+        children: [
+            { path: 'sign-up', element: <SignUp /> },
+            { path: 'login', element: <Login /> },
+        ],
     },
+
     { path: '*', element: <NotFound /> },
 ];
 
