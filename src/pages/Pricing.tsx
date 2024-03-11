@@ -29,10 +29,11 @@ const Pricing = () => {
             <div className="m-auto flex flex-col gap-10">
                 <motion.div
                     {...fadeInPropsFn(ctrls)()}
-                    className="mx-auto flex h-fit w-fit items-center gap-4 rounded-lg border-1 border-black/10 p-4 font-bold"
+                    className="mx-auto flex h-fit w-fit min-w-[450px] items-center gap-4 rounded-lg border-1 border-black/10 p-4 font-bold"
                 >
                     <motion.p
                         initial="neutral"
+                        className="ml-auto"
                         variants={{
                             neutral: { color: 'rgb(0,0,0)' },
                             toggled: { color: 'rgb(150, 150, 150)' },
@@ -52,6 +53,7 @@ const Pricing = () => {
                         />
                     </button>
                     <motion.p
+                        className="mr-auto"
                         initial="neutral"
                         variants={{
                             toggled: { color: 'rgb(0,0,0)' },

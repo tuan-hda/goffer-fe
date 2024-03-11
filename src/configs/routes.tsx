@@ -1,8 +1,8 @@
 import { RouteObject } from 'react-router-dom';
-import { AboutUs, LandingPage, NotFound, Pricing, TrustedBy } from '../pages';
+import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
-import { ApplicantLayout, LandingLayout } from '../layouts';
+import { ApplicantLayout, AuthLayout, LandingLayout } from '../layouts';
 
 const routesConfig: RouteObject[] = [
     {
@@ -21,8 +21,17 @@ const routesConfig: RouteObject[] = [
         element: <ApplicantLayout />,
     },
     {
-        path: 'about-us',
+        path: '/about-us',
         element: <AboutUs />,
+    },
+    {
+        path: '/contact',
+        element: <ContactUs />,
+    },
+    {
+        path: '/auth',
+        element: <AuthLayout />,
+        children: [{ path: 'sign-up', element: <SignUp /> }],
     },
     { path: '*', element: <NotFound /> },
 ];
