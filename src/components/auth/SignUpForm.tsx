@@ -12,7 +12,7 @@ type SignUpFormProps = {
 };
 
 const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(0);
     const [loading, setLoading] = useState(false);
 
     const [email, setEmail] = useState('');
@@ -64,34 +64,32 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
         setPassword(e.target.value);
     };
 
-    if (step === 0)
-        return (
-            <SignUpFirstStep
-                email={email}
-                emailExists={emailExists}
-                handleChange={handleEmailChange}
-                handleContinue={handleContinue}
-                isValidEmail={isValidEmail}
-                loading={loading}
-                type={type}
-            />
-        );
-
-    if (step === 1)
-        return (
-            <SignUpSecondStep
-                handleChange={handlePasswordChange}
-                password={password}
-                email={email}
-                handleContinue={handleContinue}
-                isValidPassword={isValidPassword}
-                loading={loading}
-                setStep={setStep}
-                type={type}
-            />
-        );
-
-    if (step === 2) return <ConfirmEmail setStep={setStep} email={'hdatdragon2@gmail.com'} />;
+    return (
+        <>
+            {step === 0 && (
+                <SignUpFirstStep
+                    email={email}
+                    emailExists={emailExists}
+                    handleChange={handleEmailChange}
+                    handleContinue={handleContinue}
+                    isValidEmail={isValidEmail}
+                    loading={loading}
+                    type={type}
+                />
+            )}
+            {step === 1 && (
+                <SignUpSecondStep
+                    handleChange={handlePasswordChange}
+                    password={password}
+                    handleContinue={handleContinue}
+                    isValidPassword={isValidPassword}
+                    loading={loading}
+                    setStep={setStep}
+                />
+            )}
+            {step === 2 && <ConfirmEmail setStep={setStep} email={'hdatdragon2@gmail.com'} />}
+        </>
+    );
 };
 
 export default SignUpForm;
