@@ -4,10 +4,8 @@ import { TbCheck, TbChevronLeft } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
 type SignUpSecondStepProps = {
-    type: 'individual' | 'organization';
     handleChange: (_: React.ChangeEvent<HTMLInputElement>) => void;
     password: string;
-    email: string;
     isValidPassword: boolean;
     loading: boolean;
     handleContinue: () => void;
@@ -15,9 +13,7 @@ type SignUpSecondStepProps = {
 };
 
 const SignUpSecondStep = ({
-    type,
     handleChange,
-    email,
     password,
     isValidPassword,
     loading,
@@ -26,6 +22,7 @@ const SignUpSecondStep = ({
 }: SignUpSecondStepProps) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log('trigger');
         if (isValidPassword) handleContinue();
     };
 
@@ -43,31 +40,6 @@ const SignUpSecondStep = ({
             <h1 className="mt-3 font-serif text-xl font-bold">Enter your password</h1>
 
             <form className="mt-3" onSubmit={handleSubmit}>
-                <label htmlFor="email">{type === 'individual' ? 'Email' : 'Work email'} address</label>
-                <div className="group relative">
-                    <Input
-                        disabled
-                        value={email}
-                        variant="faded"
-                        className="relative z-[1] mt-1"
-                        classNames={{
-                            inputWrapper: 'h-10 border-1 bg-white',
-                        }}
-                        id="email"
-                        type="email"
-                        placeholder={type === 'individual' ? 'name@email.com' : 'name@work-email.com'}
-                    />
-                    <div className="absolute -top-6 right-0 z-0 hidden w-full text-primary after:absolute after:right-0 after:top-2 after:h-10 after:w-full after:-rotate-[6deg] after:content-[''] group-hover:flex">
-                        <button
-                            onClick={() => setStep((prev) => prev - 1)}
-                            type="button"
-                            className="relative z-[1] ml-auto"
-                        >
-                            Edit
-                        </button>
-                    </div>
-                </div>
-
                 <label htmlFor="password" className="mt-3 block">
                     Password
                 </label>
@@ -114,6 +86,23 @@ const SignUpSecondStep = ({
                         Password must have at least 1 alphabet
                     </div>
                 </div>
+
+                <label htmlFor="password" className="mt-4 block">
+                    Confirm password
+                </label>
+                <Input
+                    onChange={handleChange}
+                    value={password}
+                    variant="faded"
+                    className="mt-1"
+                    classNames={{
+                        inputWrapper: 'h-10 border-1 bg-white !ring-0',
+                    }}
+                    autoFocus
+                    id="password"
+                    type="password"
+                    placeholder="Confirm your password"
+                />
 
                 <Button
                     disabled={!isValidPassword}
