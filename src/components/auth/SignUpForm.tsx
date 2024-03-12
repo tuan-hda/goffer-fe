@@ -1,20 +1,26 @@
-import { Button, Input } from '@nextui-org/react';
-import classNames from 'classnames';
 import { useState } from 'react';
-import { checkExistEmailService } from 'src/services/auth.serivce';
+import { checkExistEmailService } from 'src/services/users.service';
 import { validateEmail } from 'src/utils/regex';
+import toast from 'react-hot-toast';
+import SignUpFirstStep from './SignUpFirstStep';
+import SignUpSecondStep from './SignUpSecondStep';
+import { signUpService } from 'src/services/auth.service';
+import ConfirmEmail from './ConfirmEmail';
 
 type SignUpFormProps = {
     type?: 'individual' | 'organization';
 };
 
 const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(2);
+    const [loading, setLoading] = useState(false);
 
     const [email, setEmail] = useState('');
     const [emailExists, setEmailExists] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [isValidEmail, setValidEmail] = useState(false);
+
+    const [password, setPassword] = useState('');
+    const isValidPassword = password.length >= 8 && /\d/.test(password) && /[a-zA-Z]/.test(password);
 
     const handleContinue = async () => {
         switch (step) {
@@ -23,11 +29,24 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
                     setLoading(true);
                     const response = await checkExistEmailService(email);
                     setEmailExists(response.data.exists);
+                    if (response.data.exists) return;
                     setStep((prev) => prev + 1);
                 } catch (error) {
+                    toast.error('An error occurred. Please try again later.');
                     console.log('Check email error:', error);
                 } finally {
                     setLoading(false);
+                }
+                return;
+
+            case 1:
+                try {
+                    setLoading(true);
+                    await signUpService({ email, password });
+                    setStep((prev) => prev + 1);
+                } catch (error) {
+                    toast.error('An error occurred. Please try again later.');
+                    console.log('Sign up error:', error);
                 }
                 return;
             default:
@@ -35,43 +54,44 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
         setEmailExists(false);
         setValidEmail(validateEmail(e.target.value) !== null);
     };
 
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    };
+
     if (step === 0)
         return (
-            <form className="mt-4">
-                <label htmlFor="email">{type === 'individual' ? 'Email' : 'Work email'} address</label>
-                <Input
-                    errorMessage={emailExists}
-                    isInvalid={emailExists}
-                    onChange={handleChange}
-                    value={email}
-                    variant="faded"
-                    className="mt-1"
-                    classNames={{
-                        inputWrapper: 'h-10 border-1 bg-white',
-                    }}
-                    id="email"
-                    type="email"
-                    placeholder={type === 'individual' ? 'name@email.com' : 'name@work-email.com'}
-                />
-                <Button
-                    disabled={!isValidEmail}
-                    isLoading={loading}
-                    onClick={handleContinue}
-                    className={classNames('mt-4', !isValidEmail && 'pointer-events-none text-white')}
-                    variant={isValidEmail ? 'shadow' : 'solid'}
-                    color={isValidEmail ? 'primary' : 'default'}
-                    fullWidth
-                >
-                    Continue
-                </Button>
-            </form>
+            <SignUpFirstStep
+                email={email}
+                emailExists={emailExists}
+                handleChange={handleEmailChange}
+                handleContinue={handleContinue}
+                isValidEmail={isValidEmail}
+                loading={loading}
+                type={type}
+            />
         );
+
+    if (step === 1)
+        return (
+            <SignUpSecondStep
+                handleChange={handlePasswordChange}
+                password={password}
+                email={email}
+                handleContinue={handleContinue}
+                isValidPassword={isValidPassword}
+                loading={loading}
+                setStep={setStep}
+                type={type}
+            />
+        );
+
+    if (step === 2) return <ConfirmEmail setStep={setStep} email={'hdatdragon2@gmail.com'} />;
 };
 
 export default SignUpForm;
