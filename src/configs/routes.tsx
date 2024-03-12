@@ -1,9 +1,8 @@
 import { RouteObject } from 'react-router-dom';
-import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy } from '../pages';
+import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy, Login } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
 import { ApplicantLayout, AuthLayout, LandingLayout } from '../layouts';
-import { Login } from 'src/components/auth';
 
 const routesConfig: RouteObject[] = [
     {

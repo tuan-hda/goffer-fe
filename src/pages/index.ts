@@ -5,3 +5,4 @@ export { default as Pricing } from './Pricing';
 export { default as AboutUs } from './AboutUs';
 export { default as ContactUs } from './ContactUs';
 export { default as SignUp } from './SignUp';
+export { default as Login } from './Login';
