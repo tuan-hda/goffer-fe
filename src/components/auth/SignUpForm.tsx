@@ -27,13 +27,11 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
     const [password, setPassword] = useState('');
     const isValidPassword = password.length >= 8 && /\d/.test(password) && /[a-zA-Z]/.test(password);
 
-    const [user, setUser] = useState<User>();
     const [tokens, setTokens] = useState<AuthToken>();
 
     const handleShouldVerifyEmail = (user: User, tokens: AuthToken, currStep: number) => {
         if (!user.isEmailVerified) {
             setStep(currStep + 1);
-            setUser(user);
             setTokens(tokens);
         } else {
             navigate('/individual');
@@ -103,9 +101,7 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
                     setStep={setStep}
                 />
             )}
-            {step === 2 && user && tokens && (
-                <ConfirmEmail user={user} tokens={tokens} setStep={setStep} email={'hdatdragon2@gmail.com'} />
-            )}
+            {step === 2 && tokens && <ConfirmEmail tokens={tokens} setStep={setStep} email={'hdatdragon2@gmail.com'} />}
         </>
     );
 };

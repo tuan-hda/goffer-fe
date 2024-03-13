@@ -20,3 +20,15 @@ export const sendOtpVerificationEmail = async (accessToken: string) => {
         },
     );
 };
+
+export const verifyOtpEmail = async (accessToken: string, otp: string) => {
+    return baseAxios.post(
+        '/auth/verify-otp-email?token=' + otp,
+        {},
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        },
+    );
+};
