@@ -1,3 +1,4 @@
+import { Button } from '@nextui-org/react';
 import { TbChevronLeft } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
@@ -5,11 +6,10 @@ const AboutUs = () => {
     return (
         <div className="flex w-full p-14">
             <div className="m-auto max-w-[600px]">
-                <Link to="/" className="group relative flex w-fit items-center gap-2">
+                <Button as={Link} to="/" variant="light" className="relative flex w-fit items-center gap-2">
                     <TbChevronLeft />
                     Go Home
-                    <div className="absolute bottom-0 w-full border-b border-text opacity-0 transition group-hover:opacity-100" />
-                </Link>
+                </Button>
                 <h1 className="mt-10 text-center font-serif text-5xl font-bold">Meet the members</h1>
                 <img src="/trivia6.png" className="mt-14" alt="Trivia" />
                 <p className="mt-10">
