@@ -98,6 +98,12 @@
     padding-left: var(--slide-spacing);
 }
 
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .size_bar_header:hover {
     background-color: transparent !important;
 }
