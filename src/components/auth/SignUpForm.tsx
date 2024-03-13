@@ -47,6 +47,8 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
                 } catch (error) {
                     toast.error('An error occurred. Please try again later.');
                     console.log('Sign up error:', error);
+                } finally {
+                    setLoading(false);
                 }
                 return;
             default:
@@ -58,10 +60,6 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
         setEmail(e.target.value);
         setEmailExists(false);
         setValidEmail(validateEmail(e.target.value) !== null);
-    };
-
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
     };
 
     return (
@@ -79,7 +77,7 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
             )}
             {step === 1 && (
                 <SignUpSecondStep
-                    handleChange={handlePasswordChange}
+                    setPassword={setPassword}
                     password={password}
                     handleContinue={handleContinue}
                     isValidPassword={isValidPassword}

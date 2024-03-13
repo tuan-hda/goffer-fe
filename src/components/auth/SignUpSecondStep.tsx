@@ -1,11 +1,12 @@
 import { Button, Input } from '@nextui-org/react';
 import classNames from 'classnames';
+import { useState } from 'react';
 import { TbCheck, TbChevronLeft } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
 type SignUpSecondStepProps = {
-    handleChange: (_: React.ChangeEvent<HTMLInputElement>) => void;
     password: string;
+    setPassword: React.Dispatch<React.SetStateAction<string>>;
     isValidPassword: boolean;
     loading: boolean;
     handleContinue: () => void;
@@ -13,25 +14,58 @@ type SignUpSecondStepProps = {
 };
 
 const SignUpSecondStep = ({
-    handleChange,
     password,
+    setPassword,
     isValidPassword,
     loading,
     handleContinue,
     setStep,
 }: SignUpSecondStepProps) => {
+    const [confirmPassword, setConfirmPassword] = useState<string>('');
+    const [error, setError] = useState<string>('');
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('trigger');
-        if (isValidPassword) handleContinue();
     };
+
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+        setError('');
+    };
+
+    const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setConfirmPassword(e.target.value);
+        setError('');
+    };
+
+    const checkPasswords =
+        (isPassword = false) =>
+        () => {
+            if (isPassword) {
+                if (confirmPassword && password !== confirmPassword) {
+                    setError('Passwords do not match');
+                }
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                setError('Passwords do not match');
+            } else {
+                setError('');
+            }
+        };
+
+    const handleBack = () => {
+        setPassword('');
+        setConfirmPassword('');
+        setStep((prev) => prev - 1);
+    };
+
+    const isInvalid = !isValidPassword || password !== confirmPassword;
 
     return (
         <>
-            <button
-                onClick={() => setStep((prev) => prev - 1)}
-                className="group relative flex w-fit items-center gap-2"
-            >
+            <button onClick={handleBack} className="group relative flex w-fit items-center gap-2">
                 <TbChevronLeft />
                 Go back
                 <div className="absolute bottom-0 left-0 hidden w-full border-b-1 border-text group-hover:block" />
@@ -44,7 +78,7 @@ const SignUpSecondStep = ({
                     Password
                 </label>
                 <Input
-                    onChange={handleChange}
+                    onChange={handlePasswordChange}
                     value={password}
                     variant="faded"
                     className="mt-1"
@@ -55,6 +89,7 @@ const SignUpSecondStep = ({
                     id="password"
                     type="password"
                     placeholder="Your password"
+                    onBlur={checkPasswords(true)}
                 />
 
                 <div className="mt-3 space-y-1 rounded-xl bg-white p-3 shadow-small">
@@ -87,31 +122,37 @@ const SignUpSecondStep = ({
                     </div>
                 </div>
 
-                <label htmlFor="password" className="mt-4 block">
+                <label htmlFor="confirmPassword" className="mt-4 block">
                     Confirm password
                 </label>
                 <Input
-                    onChange={handleChange}
-                    value={password}
+                    isInvalid={!!error}
+                    errorMessage={error}
+                    onChange={handleConfirmPasswordChange}
+                    value={confirmPassword}
                     variant="faded"
                     className="mt-1"
                     classNames={{
-                        inputWrapper: 'h-10 border-1 bg-white !ring-0',
+                        inputWrapper: classNames(
+                            'h-10 border-1 bg-white !ring-0',
+                            !!error && 'border-red-300 group-hover:border-red-600',
+                        ),
                     }}
-                    autoFocus
-                    id="password"
+                    id="confirmPassword"
                     type="password"
+                    onBlur={checkPasswords()}
                     placeholder="Confirm your password"
                 />
 
                 <Button
-                    disabled={!isValidPassword}
+                    disabled={isInvalid}
                     isLoading={loading}
                     onClick={handleContinue}
-                    className={classNames('mt-4', !isValidPassword && 'pointer-events-none text-white')}
-                    variant={isValidPassword ? 'shadow' : 'solid'}
-                    color={isValidPassword ? 'primary' : 'default'}
+                    className={classNames('mt-4', isInvalid && 'pointer-events-none text-white')}
+                    variant={!isInvalid ? 'shadow' : 'solid'}
+                    color={!isInvalid ? 'primary' : 'default'}
                     fullWidth
+                    type="submit"
                 >
                     Sign up
                 </Button>
