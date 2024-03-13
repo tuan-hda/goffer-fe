@@ -1,5 +1,5 @@
 /* eslint-disable import/named */
-import { Card, CardHeader, Avatar, Button, CardBody, CardFooter } from '@nextui-org/react';
+import { Card, CardHeader, Avatar, Button, CardBody, CardFooter, Skeleton } from '@nextui-org/react';
 import { useState } from 'react';
 import { TbHearts, TbSend } from 'react-icons/tb';
 import EmblaCarousel from './slide/EmblaCarousel';
@@ -16,27 +16,39 @@ const SLIDES = [
 
 const PersonCard = () => {
     const [isFollowed, setIsFollowed] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(true);
+
+    const toggleLoad = () => setIsLoaded(!isLoaded);
+
     return (
-        <Card isBlurred className="bg-background/60 dark:bg-default-100/50 max-w-sm">
+        <Card isBlurred className="max-w-sm bg-background/60 dark:bg-default-100/50">
             <CardHeader className="justify-between">
                 <div className="flex gap-5">
                     <Avatar isBordered radius="full" size="md" src="/avatars/avatar-1.png" />
-                    <div className="flex flex-col gap-1 items-start justify-center">
+                    <div className="flex flex-col items-start justify-center gap-1">
                         <h4 className="text-small font-semibold leading-none text-default-600">Zoey Lang</h4>
                         <h5 className="text-small tracking-tight text-default-400">@zoeylang</h5>
                     </div>
                 </div>
             </CardHeader>
-            <CardBody className="px-3 py-0 text-small text-default-400 gap-y-4">
+            <CardBody className="gap-y-4 px-3 py-0 text-small text-default-400">
                 <p>Frontend developer and UI/UX enthusiast. Join me on this coding adventure!</p>
-                <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+                <Skeleton className="rounded-xl" isLoaded={isLoaded}>
+                    <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+                </Skeleton>
             </CardBody>
-            <CardFooter className="justify-between border-t-1 py-4 mt-4 w-full]">
-                <Button size="md" radius="full" className="w-4/5" startContent={<TbSend size={20} />}>
+            <CardFooter className="w-full] mt-4 justify-between border-t-1 py-4">
+                <Button
+                    size="md"
+                    radius="full"
+                    className="w-4/5"
+                    startContent={<TbSend size={20} />}
+                    onPress={toggleLoad}
+                >
                     Get in touch
                 </Button>
                 <Button
-                    className={isFollowed ? 'bg-transparent text-default-500 border-default-200' : ''}
+                    className={isFollowed ? 'border-default-200 bg-transparent text-default-500' : ''}
                     color="primary"
                     radius="full"
                     size="md"
