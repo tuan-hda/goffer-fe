@@ -1,17 +1,21 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 type State = {
-  tabKey: string
-}
+    tabKey: string;
+    sideBarPinned: boolean;
+};
 
 type Action = {
-  updateTabKey: (_tabKey: State['tabKey']) => void
-}
+    updateTabKey: (_tabKey: State['tabKey']) => void;
+    updateSideBarPinned: (_pinned: State['sideBarPinned']) => void;
+};
 
 // Create your store, which includes both state and (optionally) actions
 const useDiscoverStore = create<State & Action>((set) => ({
-  tabKey: 'jobs',
-  updateTabKey: (tabKey) => set(() => ({ tabKey: tabKey })),
-}))
+    tabKey: 'jobs',
+    sideBarPinned: false,
+    updateTabKey: (tabKey) => set(() => ({ tabKey: tabKey })),
+    updateSideBarPinned: (pinned) => set(() => ({ sideBarPinned: pinned })),
+}));
 
-export default useDiscoverStore
+export default useDiscoverStore;
