@@ -20,9 +20,6 @@ export default {
                     DEFAULT: '#333',
                 },
             },
-            backgroundImage: {
-                default: "url('/background.png')",
-            },
         },
     },
     darkMode: 'class',
