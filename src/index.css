@@ -97,3 +97,7 @@
     min-width: 0;
     padding-left: var(--slide-spacing);
 }
+
+.size_bar_header:hover {
+    background-color: transparent !important;
+}

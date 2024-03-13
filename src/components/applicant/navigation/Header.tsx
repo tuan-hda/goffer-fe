@@ -4,16 +4,16 @@ import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 
 export default function Header() {
     return (
-        <Navbar isBordered isBlurred={false} maxWidth="2xl" className="t-0 bg-image">
+        <Navbar isBordered isBlurred={false} maxWidth="2xl" className="bg-image top-0">
             <NavbarContent justify="start">
                 <NavbarItem className="hidden lg:flex">
-                    <p className="text-default-700 font-bold text-3xl">Discover</p>
+                    <p className="text-3xl font-bold text-default-700">Discover</p>
                 </NavbarItem>
             </NavbarContent>
-            <NavbarBrand className="lg:hidden gap-4 justify-center">
+            <NavbarBrand className="justify-center gap-4 lg:hidden">
                 <Link color="foreground" href="/applicant">
-                    <img src="/logo.svg" alt="logo" className="w-10 h-10 mr-2" />
-                    <p className="font-bold text-inherit text-4xl">GOFFER</p>
+                    <img src="/logo.svg" alt="logo" className="mr-2 h-10 w-10" />
+                    <p className="text-4xl font-bold text-inherit">GOFFER</p>
                 </Link>
             </NavbarBrand>
             <NavbarContent justify="end">
