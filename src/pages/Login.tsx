@@ -1,9 +1,14 @@
 import { Button, Input } from '@nextui-org/react';
+import { useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import AuthTwoSection from 'src/layouts/AuthTwoSection';
 
 const Login = () => {
+    useEffect(() => {
+        document.title = 'Login | Goffer';
+    }, []);
+
     return (
         <AuthTwoSection
             right={
