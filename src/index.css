@@ -103,3 +103,7 @@ input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+.size_bar_header:hover {
+    background-color: transparent !important;
+}
