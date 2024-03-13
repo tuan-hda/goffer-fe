@@ -1,7 +1,7 @@
 import { Button, Input } from '@nextui-org/react';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { TbCheck, TbChevronLeft } from 'react-icons/tb';
+import { TbCheck, TbChevronLeft, TbEye, TbEyeClosed } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
 type SignUpSecondStepProps = {
@@ -21,6 +21,8 @@ const SignUpSecondStep = ({
     handleContinue,
     setStep,
 }: SignUpSecondStepProps) => {
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showConfirm, setShowConfirm] = useState<boolean>(false);
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
 
@@ -78,6 +80,11 @@ const SignUpSecondStep = ({
                     Password
                 </label>
                 <Input
+                    endContent={
+                        <button tabIndex={-1} type="button" onClick={() => setShowPassword((prev) => !prev)}>
+                            {!showPassword ? <TbEyeClosed className="text-lg" /> : <TbEye className="text-lg" />}
+                        </button>
+                    }
                     onChange={handlePasswordChange}
                     value={password}
                     variant="faded"
@@ -87,7 +94,7 @@ const SignUpSecondStep = ({
                     }}
                     autoFocus
                     id="password"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Your password"
                     onBlur={checkPasswords(true)}
                 />
@@ -126,6 +133,11 @@ const SignUpSecondStep = ({
                     Confirm password
                 </label>
                 <Input
+                    endContent={
+                        <button tabIndex={-1} type="button" onClick={() => setShowConfirm((prev) => !prev)}>
+                            {!showConfirm ? <TbEyeClosed className="text-lg" /> : <TbEye className="text-lg" />}
+                        </button>
+                    }
                     isInvalid={!!error}
                     errorMessage={error}
                     onChange={handleConfirmPasswordChange}
@@ -139,7 +151,7 @@ const SignUpSecondStep = ({
                         ),
                     }}
                     id="confirmPassword"
-                    type="password"
+                    type={showConfirm ? 'text' : 'password'}
                     onBlur={checkPasswords()}
                     placeholder="Confirm your password"
                 />
