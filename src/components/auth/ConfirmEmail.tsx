@@ -1,21 +1,23 @@
 import { Spinner } from '@nextui-org/react';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { TbPencil } from 'react-icons/tb';
-import { sendOtpVerificationEmail } from 'src/services/auth.service';
+import { sendOtpVerificationEmail, verifyOtpEmail } from 'src/services/auth.service';
 import { AuthToken } from 'src/types/token.type';
-import { User } from 'src/types/user.type';
 import toast from 'react-hot-toast';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
+import { isAxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 type ConfirmEmailProps = {
     email: string;
     setStep: React.Dispatch<React.SetStateAction<number>>;
-    user: User;
     tokens: AuthToken;
 };
 
-const ConfirmEmail = ({ email, setStep, user, tokens }: ConfirmEmailProps) => {
+const ConfirmEmail = ({ email, setStep, tokens }: ConfirmEmailProps) => {
+    const navigate = useNavigate();
+
     const [otp, setOtp] = useState<string>('      ');
     const [curr, setCurr] = useState<number>(0);
     const [remainingTime, setRemainingTime] = useState<number>(60);
@@ -87,12 +89,25 @@ const ConfirmEmail = ({ email, setStep, user, tokens }: ConfirmEmailProps) => {
         };
     }, [checkStillRemaining, sendVerificationEmail, tokens]);
 
-    const checkOtp = async () => {
+    const checkOtp = async (token: string) => {
         try {
             setLoading(true);
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            await verifyOtpEmail(tokens.access.token, token);
+            toast.success('Verified successfully');
+            setTimeout(() => {
+                navigate('/individual');
+            }, 1500);
         } catch (error) {
             console.log('Check otp error:', error);
+            if (isAxiosError(error)) {
+                if (error.response?.status === 400) {
+                    toast.error(error.response.data.message);
+                } else {
+                    toast.error('An error occurred. Please try again later.');
+                }
+            } else {
+                toast.error('An error occurred. Please try again later.');
+            }
         } finally {
             setLoading(false);
         }
@@ -105,10 +120,10 @@ const ConfirmEmail = ({ email, setStep, user, tokens }: ConfirmEmailProps) => {
         newOtp[index] = value;
         const newOtpStr = newOtp.join('');
         setOtp(newOtpStr);
-        if (newOtpStr.replace(/\s/g, '').length === 6) {
-            await checkOtp();
-        }
         setCurr(Math.min(index + 1, 5));
+        if (newOtpStr.replace(/\s/g, '').length === 6) {
+            await checkOtp(newOtpStr);
+        }
     };
 
     const handleOnKeyDown = (index: number) => async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -116,6 +131,15 @@ const ConfirmEmail = ({ email, setStep, user, tokens }: ConfirmEmailProps) => {
             e.preventDefault();
             setCurr(Math.max(index - 1, 0));
             setOtp((prev) => prev.slice(0, index) + ' ' + prev.slice(index + 1));
+            return;
+        }
+
+        if (e.key === String(otp[index])) {
+            e.preventDefault();
+            setCurr(Math.min(index + 1, 5));
+            if (index === 5) {
+                await checkOtp(otp);
+            }
             return;
         }
 
@@ -153,6 +177,7 @@ const ConfirmEmail = ({ email, setStep, user, tokens }: ConfirmEmailProps) => {
                 {otp.split('').map((_, index) => (
                     <Fragment key={index}>
                         <input
+                            disabled={loading}
                             onClick={() => setCurr(index)}
                             ref={(el) => (inputRef.current[index] = el as HTMLInputElement)}
                             value={otp[index]}
@@ -171,6 +196,7 @@ const ConfirmEmail = ({ email, setStep, user, tokens }: ConfirmEmailProps) => {
                     disabled={remainingTime > 0 || loading}
                     onClick={() => {
                         tokens.access.token && sendVerificationEmail(tokens.access.token);
+                        setOtp('      ');
                     }}
                     className={classNames(
                         'text-primary transition',
