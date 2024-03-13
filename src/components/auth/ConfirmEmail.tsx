@@ -1,15 +1,27 @@
 import { Spinner } from '@nextui-org/react';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { TbPencil } from 'react-icons/tb';
+import { sendOtpVerificationEmail } from 'src/services/auth.service';
+import { AuthToken } from 'src/types/token.type';
+import { User } from 'src/types/user.type';
+import toast from 'react-hot-toast';
+import dayjs from 'dayjs';
+import classNames from 'classnames';
 
 type ConfirmEmailProps = {
     email: string;
     setStep: React.Dispatch<React.SetStateAction<number>>;
+    user: User;
+    tokens: AuthToken;
 };
 
-const ConfirmEmail = ({ email, setStep }: ConfirmEmailProps) => {
+const ConfirmEmail = ({ email, setStep, user, tokens }: ConfirmEmailProps) => {
     const [otp, setOtp] = useState<string>('      ');
     const [curr, setCurr] = useState<number>(0);
+    const [remainingTime, setRemainingTime] = useState<number>(60);
+    const sent = useRef<boolean>(false);
+
+    const [initialLoading, setInitialLoading] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
 
     const inputRef = useRef<HTMLInputElement[]>(new Array(6).fill(null));
@@ -21,6 +33,59 @@ const ConfirmEmail = ({ email, setStep }: ConfirmEmailProps) => {
     useEffect(() => {
         inputRef.current[curr]?.select();
     }, [curr]);
+
+    const checkStillRemaining = useCallback(() => {
+        const lastSentEmailStr = localStorage.getItem('lastSentEmail');
+        if (lastSentEmailStr) {
+            const lastSentEmail = dayjs(lastSentEmailStr);
+            const diff = dayjs().diff(lastSentEmail, 'second');
+            if (diff < 60) {
+                setRemainingTime(60 - diff);
+                return true;
+            } else {
+                setRemainingTime(0);
+                return false;
+            }
+        } else {
+            setRemainingTime(0);
+            return false;
+        }
+    }, []);
+
+    const sendVerificationEmail = useCallback(async (accessToken: string) => {
+        try {
+            setLoading(true);
+            localStorage.setItem('lastSentEmail', dayjs().toISOString());
+            await sendOtpVerificationEmail(accessToken);
+            setRemainingTime(60);
+        } catch (error) {
+            console.log('Send verification email error:', error);
+            toast.error('An error occurred. Please try again later.');
+        } finally {
+            setLoading(false);
+            setInitialLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        let interval: number | null = null;
+        if (checkStillRemaining()) {
+            interval = setInterval(() => {
+                setRemainingTime((prev) => {
+                    if (prev === 0 && interval) {
+                        clearInterval(interval);
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+        } else if (!sent.current) {
+            sent.current = true;
+            sendVerificationEmail(tokens.access.token);
+        }
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [checkStillRemaining, sendVerificationEmail, tokens]);
 
     const checkOtp = async () => {
         try {
@@ -66,6 +131,13 @@ const ConfirmEmail = ({ email, setStep }: ConfirmEmailProps) => {
         }
     };
 
+    if (initialLoading)
+        return (
+            <div className="flex flex-col items-center">
+                <Spinner />
+            </div>
+        );
+
     return (
         <div className="flex flex-col items-center">
             <h1 className="mt-6 font-serif text-xl font-bold">We&apos;ve emailed you a code</h1>
@@ -94,7 +166,19 @@ const ConfirmEmail = ({ email, setStep }: ConfirmEmailProps) => {
                 ))}
             </div>
             <div className="mt-4">
-                Not get any code? <button className="text-primary hover:underline">Send new code</button>
+                Not get any code?{' '}
+                <button
+                    disabled={remainingTime > 0 || loading}
+                    onClick={() => {
+                        tokens.access.token && sendVerificationEmail(tokens.access.token);
+                    }}
+                    className={classNames(
+                        'text-primary transition',
+                        remainingTime > 0 || loading ? 'opacity-50' : 'opacity-100 hover:underline',
+                    )}
+                >
+                    Send new code {remainingTime > 0 && <>({remainingTime})</>}
+                </button>
             </div>
 
             <div className="mt-8 h-10">{loading && <Spinner />}</div>

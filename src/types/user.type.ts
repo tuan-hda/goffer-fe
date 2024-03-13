@@ -6,6 +6,8 @@ export type User = {
     createdAt: string;
     updatedAt: string;
     role: string;
+    isEmailVerified: false;
+    isBanned: false;
 };
 
 export type SignUpRequest = {
