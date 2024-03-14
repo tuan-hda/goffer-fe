@@ -13,13 +13,7 @@ import useDiscoverStore from 'src/stores/discoverStore';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-const sidebarClasses = {
-    root: 'ps-sidebar-root',
-    container: 'ps-sidebar-container',
-    content: 'my-custom-sidebar-content',
-};
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
-const bgColor = 'hsl(var(--nextui-default-foreground)/0.8)';
 
 const SideBar = () => {
     const [collapsed, setCollapsed] = useState(true);
@@ -34,22 +28,24 @@ const SideBar = () => {
 
     return (
         <div className="fixed z-50" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-            <Sidebar
-                rootStyles={{
-                    [`.${sidebarClasses.container}`]: {
-                        backgroundColor: bgColor,
-                        top: 0,
-                        left: 0,
-                        height: '100vh',
-                        color: textColor,
-                        paddingTop: 20,
-                        paddingBottom: 20,
-                    },
-                }}
-                width={'256px'}
-                collapsed={collapsed}
-            >
-                <Menu>
+            <Sidebar width={'256px'} collapsed={collapsed}>
+                <Menu
+                    className="h-full"
+                    menuItemStyles={{
+                        button: ({ active }) => {
+                            return {
+                                color: active ? textColor : '#A0A2AA',
+                                backgroundColor: active ? '#27272A' : undefined,
+                                borderRadius: '14px !important',
+                                '&:hover': {
+                                    backgroundColor: 'hsl(var(--nextui-default)/0.4)',
+                                    color: textColor + ' !important',
+                                    fontWeight: 'bold !important',
+                                },
+                            };
+                        },
+                    }}
+                >
                     <MenuItem
                         icon={<img src="/logo-inverted.svg" alt="logo" className="h-[35px] w-[35px]" />}
                         component={<Link to="/" />}
@@ -62,13 +58,7 @@ const SideBar = () => {
                                 )}
                             </Button>
                         }
-                        style={{
-                            backgroundColor: 'transparent',
-                            transition: 'background-color 0.2s ease-in-out',
-                            '&:hover': {
-                                backgroundColor: 'transparent',
-                            },
-                        }}
+                        className="sidebar_header"
                     >
                         <p className="pr-8 text-left text-3xl font-semibold text-primary-foreground">Goffer</p>
                     </MenuItem>
@@ -76,19 +66,19 @@ const SideBar = () => {
                     <Card
                         isPressable
                         shadow="none"
-                        radius="sm"
+                        radius="lg"
                         fullWidth={collapsed}
                         className={classNames(
-                            'hover my-12 bg-transparent',
-                            !collapsed && 'mx-5 my-12 w-[216px] border border-primary-foreground bg-transparent',
+                            'hover my-12 border border-transparent bg-transparent',
+                            !collapsed && 'mx-5 w-[216px] border-primary-foreground bg-transparent',
                         )}
                     >
                         <CardHeader className={classNames(collapsed ? 'justify-center' : 'justify-between')}>
-                            <div className=" flex items-center justify-center gap-5">
+                            <div className=" flex items-center justify-center gap-3">
                                 <Avatar isBordered radius="full" size="md" src="/avatars/avatar-1.png" />
                                 {!collapsed && (
                                     <div className="flex flex-col items-start justify-center gap-1">
-                                        <h4 className="text-small font-semibold leading-none text-primary-foreground">
+                                        <h4 className="max-w-28 overflow-hidden text-ellipsis text-nowrap text-small font-semibold leading-none text-primary-foreground">
                                             Zoey Lang
                                         </h4>
                                         <h5 className="text-small tracking-tight text-default-400">@zoeylang</h5>
@@ -103,11 +93,13 @@ const SideBar = () => {
                         </CardHeader>
                     </Card>
 
-                    <MenuItem icon={<TbHomeEco size={28} color="white" />}>Home</MenuItem>
-                    <MenuItem icon={<PiCompass size={28} color="white" />}>Discover</MenuItem>
-                    <MenuItem icon={<PiUserCircle size={28} color="white" />}>Profile</MenuItem>
-                    <div className="flex flex-1 flex-row" />
-                    <MenuItem icon={<TbLogout size={28} color="white" />}>Log out</MenuItem>
+                    <MenuItem active icon={<TbHomeEco size={28} />}>
+                        Home
+                    </MenuItem>
+                    <MenuItem icon={<PiCompass size={28} />}>Discover</MenuItem>
+                    <MenuItem icon={<PiUserCircle size={28} />}>Profile</MenuItem>
+                    <MenuItem disabled className=" flex flex-1 flex-row" />
+                    <MenuItem icon={<TbLogout size={28} />}>Log out</MenuItem>
                 </Menu>
             </Sidebar>
         </div>
