@@ -49,7 +49,25 @@ const SideBar = () => {
                 width={'256px'}
                 collapsed={collapsed}
             >
-                <Menu>
+                <Menu
+                    className="h-full"
+                    menuItemStyles={{
+                        button: ({ level, active, disabled }) => {
+                            // only apply styles on first level elements of the tree
+                            if (level === 0)
+                                return {
+                                    color: disabled ? '#f5d9ff' : '#d359ff',
+                                    backgroundColor: active ? '#eecef9' : undefined,
+                                    '&:hover': {
+                                        backgroundColor: '#335B8C',
+                                        color: 'white !important',
+                                        borderRadius: '8px !important',
+                                        fontWeight: 'bold !important',
+                                    },
+                                };
+                        },
+                    }}
+                >
                     <MenuItem
                         icon={<img src="/logo-inverted.svg" alt="logo" className="h-[35px] w-[35px]" />}
                         component={<Link to="/" />}
@@ -66,7 +84,7 @@ const SideBar = () => {
                             backgroundColor: 'transparent',
                             transition: 'background-color 0.2s ease-in-out',
                             '&:hover': {
-                                backgroundColor: 'transparent',
+                                backgroundColor: 'transparent !important',
                             },
                         }}
                     >
@@ -76,7 +94,7 @@ const SideBar = () => {
                     <Card
                         isPressable
                         shadow="none"
-                        radius="sm"
+                        radius="md"
                         fullWidth={collapsed}
                         className={classNames(
                             'hover my-12 bg-transparent',
@@ -103,10 +121,12 @@ const SideBar = () => {
                         </CardHeader>
                     </Card>
 
-                    <MenuItem icon={<TbHomeEco size={28} color="white" />}>Home</MenuItem>
+                    <MenuItem active icon={<TbHomeEco size={28} color="white" />}>
+                        Home
+                    </MenuItem>
                     <MenuItem icon={<PiCompass size={28} color="white" />}>Discover</MenuItem>
                     <MenuItem icon={<PiUserCircle size={28} color="white" />}>Profile</MenuItem>
-                    <div className="flex flex-1 flex-row" />
+                    <MenuItem disabled className=" flex flex-1 flex-row" />
                     <MenuItem icon={<TbLogout size={28} color="white" />}>Log out</MenuItem>
                 </Menu>
             </Sidebar>

@@ -104,6 +104,18 @@ input[type='number']::-webkit-outer-spin-button {
     margin: 0;
 }
 
-.size_bar_header:hover {
-    background-color: transparent !important;
+/* .ps-sidebar-container {
+    background-color: hsl(var(--nextui-default-foreground) / 0.8);
+    top: 0;
+    left: 0;
+    height: 100vh;
+    color: hsl(var(--nextui-primary-foreground) / 1);
+    padding-top: 20px;
+    padding-bottom: 20px;
+} */
+
+.css-ewdv3l {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
