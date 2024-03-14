@@ -5,5 +5,4 @@ export type Token = {
 
 export type AuthToken = {
     access: Token;
-    refresh: Token;
 };
