@@ -32,3 +32,13 @@ export const verifyOtpEmail = async (accessToken: string, otp: string) => {
         },
     );
 };
+
+export const loginService = async (email: string, password: string) => {
+    return noAuthAxios.post<{
+        user: User;
+        tokens: AuthToken;
+    }>('/auth/login', {
+        email,
+        password,
+    });
+};
