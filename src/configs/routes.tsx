@@ -17,21 +17,21 @@ const routesConfig: RouteObject[] = [
         ],
     },
     {
-        path: '/applicant',
+        path: '/individual',
         element: <ApplicantLayout />,
         children: [
             {
-                path: '/applicant/discover',
+                path: '/individual/discover',
                 element: <></>,
                 children: [
-                    { path: '/applicant/discover/jobs', element: <></> },
-                    { path: '/applicant/discover/people', element: <></> },
-                    { path: '/applicant/discover/companies', element: <></> },
+                    { path: '/individual/discover/jobs', element: <></> },
+                    { path: '/individual/discover/people', element: <></> },
+                    { path: '/individual/discover/companies', element: <></> },
                 ],
             },
-            { path: '/applicant/tab2', element: <></> },
-            { path: '/applicant/tab3', element: <></> },
-            { path: '/applicant/tab4', element: <></> },
+            { path: '/individual/tab2', element: <></> },
+            { path: '/individual/tab3', element: <></> },
+            { path: '/individual/tab4', element: <></> },
         ],
     },
     {
