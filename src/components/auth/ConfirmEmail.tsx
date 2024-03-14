@@ -108,6 +108,7 @@ const ConfirmEmail = ({ email, setStep, tokens }: ConfirmEmailProps) => {
             } else {
                 toast.error('An error occurred. Please try again later.');
             }
+            setOtp('      ');
         } finally {
             setLoading(false);
         }
@@ -137,7 +138,7 @@ const ConfirmEmail = ({ email, setStep, tokens }: ConfirmEmailProps) => {
         if (e.key === String(otp[index])) {
             e.preventDefault();
             setCurr(Math.min(index + 1, 5));
-            if (index === 5) {
+            if (otp.replace(/\s/g, '').length === 6) {
                 await checkOtp(otp);
             }
             return;
@@ -151,6 +152,9 @@ const ConfirmEmail = ({ email, setStep, tokens }: ConfirmEmailProps) => {
             setCurr(Math.min(5, clipboard.length));
             if (clipboard.length < 6) clipboard = clipboard.padEnd(6, ' ');
             setOtp(clipboard);
+            if (clipboard.length === 6) {
+                await checkOtp(clipboard);
+            }
             return;
         }
     };
