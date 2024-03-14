@@ -104,6 +104,31 @@ input[type='number']::-webkit-outer-spin-button {
     margin: 0;
 }
 
-.size_bar_header:hover {
-    background-color: transparent !important;
+.ps-sidebar-container {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    top: 0;
+    left: 0;
+    height: 100vh !important;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.ps-menuitem-root {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.ps-menu-button {
+    padding-left: 6px !important;
+    padding-right: 0px !important;
+    align-self: center;
+    margin-top: 1px !important;
+    margin-bottom: 1px !important;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.css-ewdv3l {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }

@@ -11,7 +11,7 @@ export default function Header() {
                 </NavbarItem>
             </NavbarContent>
             <NavbarBrand className="justify-center gap-4 lg:hidden">
-                <Link color="foreground" href="/applicant">
+                <Link color="foreground" href="/individual">
                     <img src="/logo.svg" alt="logo" className="mr-2 h-10 w-10" />
                     <p className="text-4xl font-bold text-inherit">GOFFER</p>
                 </Link>
