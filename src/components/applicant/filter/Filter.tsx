@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Key } from 'react';
 import {
     Input,
     Tabs,
@@ -16,13 +16,15 @@ import { RiSearchLine } from 'react-icons/ri';
 import { HiOutlineAdjustments } from 'react-icons/hi';
 import { TbHearts } from 'react-icons/tb';
 import useDiscoverStore from 'src/stores/discoverStore';
+import { useNavigate } from 'react-router-dom';
 
 const Filter = () => {
+    const navigate = useNavigate();
     const [scrollDirection, setScrollDirection] = useState('up');
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [searchValue, setSearchValue] = useState('');
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const {tabKey, updateTabKey} = useDiscoverStore()
+    const { tabKey, updateTabKey } = useDiscoverStore();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -38,15 +40,20 @@ const Filter = () => {
         };
     }, [prevScrollPos, scrollDirection]);
 
+    const handleTabChange = (key: Key) => {
+        updateTabKey(key.toString());
+        navigate(`/individual/discover/${key}`);
+    };
+
     return (
         <div
             className={classNames(
-                'w-full max-w-screen-2xl self-center rounded-b-2xl sticky top-16 z-30 transition bg-image shadow-md hidden md:flex py-6',
+                'bg-image sticky top-16 z-30 hidden w-full max-w-screen-2xl self-center rounded-b-2xl py-6 shadow-md transition md:flex',
                 scrollDirection === 'down' ? '-translate-y-[160px]' : 'translate-y-0',
             )}
         >
-            <div className="flex flex-col w-full gap-y-6">
-                <div className="rounded-full h-12 mx-auto flex w-fit gap-x-2 bg-beige/40 focus-within:bg-beige/60">
+            <div className="flex w-full flex-col gap-y-6">
+                <div className="mx-auto flex h-12 w-fit gap-x-2 rounded-full bg-beige/40 focus-within:bg-beige/60">
                     <Input
                         classNames={{
                             base: 'w-full min-w-96 md:max-w-xl hidden sm:flex h-full bg-beige/60 focus-within:bg-beige p-0.5 rounded-full',
@@ -73,7 +80,7 @@ const Filter = () => {
                             tab: 'h-10 min-w-16 w-fit',
                         }}
                         selectedKey={tabKey}
-                        onSelectionChange={(e)=>updateTabKey(e.toString())}
+                        onSelectionChange={(key) => handleTabChange(key)}
                     >
                         <Tab key="jobs" title="Jobs" />
                         <Tab key="people" title="People" />

@@ -3,6 +3,7 @@ import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy, 
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
 import { ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
+import { Discover, JobDiscover, PeopleDiscover } from 'src/components/applicant/discover';
 
 const routesConfig: RouteObject[] = [
     {
@@ -24,18 +25,17 @@ const routesConfig: RouteObject[] = [
                 path: '/individual',
                 element: <ApplicantLayout />,
                 children: [
+                    { path: 'home', element: <>Home</> },
                     {
-                        path: '/individual/discover',
-                        element: <></>,
+                        path: 'discover',
+                        element: <Discover />,
                         children: [
-                            { path: '/individual/discover/jobs', element: <></> },
-                            { path: '/individual/discover/people', element: <></> },
-                            { path: '/individual/discover/companies', element: <></> },
+                            { path: 'jobs', element: <JobDiscover /> },
+                            { path: 'people', element: <PeopleDiscover /> },
+                            { path: 'companies', element: <>Companies</> },
                         ],
                     },
-                    { path: '/individual/tab2', element: <></> },
-                    { path: '/individual/tab3', element: <></> },
-                    { path: '/individual/tab4', element: <></> },
+                    { path: ':user_id', element: <>User Profile</> },
                 ],
             },
             {

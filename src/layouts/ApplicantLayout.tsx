@@ -1,8 +1,8 @@
-import Discover from 'src/components/applicant/discover/Discover';
-import { Footer, Header } from '../components/applicant';
+import { Header } from '../components/applicant';
 import SideBar from 'src/components/applicant/navigation/SideBar';
 import useDiscoverStore from 'src/stores/discoverStore';
 import classNames from 'classnames';
+import { Outlet } from 'react-router-dom';
 
 const ApplicantLayout = () => {
     const sideBarPinned = useDiscoverStore((state) => state.sideBarPinned);
@@ -11,8 +11,7 @@ const ApplicantLayout = () => {
             <SideBar />
             <div className={classNames('transition-all duration-500 ease-in-out', sideBarPinned ? 'pl-64' : 'pl-20')}>
                 <Header />
-                <Discover />
-                <Footer />
+                <Outlet />
             </div>
         </div>
     );
