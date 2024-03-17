@@ -1,4 +1,4 @@
-import { RouteObject } from 'react-router-dom';
+import { Navigate, RouteObject } from 'react-router-dom';
 import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy, Login } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -25,6 +25,7 @@ const routesConfig: RouteObject[] = [
                 path: '/individual',
                 element: <ApplicantLayout />,
                 children: [
+                    { index: true, element: <Navigate to="home" /> },
                     { path: 'home', element: <>Home</> },
                     {
                         path: 'discover',
