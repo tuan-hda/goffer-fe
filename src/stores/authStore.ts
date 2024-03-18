@@ -22,9 +22,9 @@ const useAuthStore = create<AuthState & Actions>()(
         logOut: () =>
             set((state) => {
                 if (state.access) {
-                    state.access = null;
                     window.location.pathname = '/';
                 }
+                state.access = null;
             }),
     })),
 );
