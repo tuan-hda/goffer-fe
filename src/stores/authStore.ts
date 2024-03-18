@@ -2,6 +2,7 @@ import { Token } from 'src/types/token.type';
 import { create } from 'zustand';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { immer } from 'zustand/middleware/immer';
+import { logoutService } from 'src/services/auth.service';
 
 type AuthState = {
     access?: Token | null;
@@ -20,8 +21,9 @@ const useAuthStore = create<AuthState & Actions>()(
                 state.access = access;
             }),
         logOut: () =>
-            set((state) => {
+            set(async (state) => {
                 if (state.access) {
+                    await logoutService();
                     window.location.pathname = '/';
                 }
                 state.access = null;

@@ -1889,6 +1889,11 @@
     "@react-types/shared" "^3.22.1"
     "@swc/helpers" "^0.5.0"
 
+"@react-oauth/google@^0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@react-oauth/google/-/google-0.12.1.tgz#b76432c3a525e9afe076f787d2ded003fcc1bee9"
+  integrity sha512-qagsy22t+7UdkYAiT5ZhfM4StXi9PPNvw0zuwNmabrWyMKddczMtBIOARflbaIj+wHiQjnMAsZmzsUYuXeyoSg==
+
 "@react-stately/checkbox@^3.5.1", "@react-stately/checkbox@^3.6.3":
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/@react-stately/checkbox/-/checkbox-3.6.3.tgz#1315f13348851c51af182a3591bac14495eae2bf"
