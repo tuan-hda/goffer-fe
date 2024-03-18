@@ -6,6 +6,7 @@ export type User = {
     role: string;
     isEmailVerified: boolean;
     isBanned: boolean;
+    initialType: 'individual' | 'organization';
 };
 
 export type SignUpRequest = {

@@ -46,3 +46,5 @@ export const loginService = async (email: string, password: string) => {
         password,
     });
 };
+
+export const logoutService = async () => baseAxios.post('/auth/logout');
