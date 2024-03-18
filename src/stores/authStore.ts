@@ -21,7 +21,10 @@ const useAuthStore = create<AuthState & Actions>()(
             }),
         logOut: () =>
             set((state) => {
-                state.access = null;
+                if (state.access) {
+                    state.access = null;
+                    window.location.pathname = '/';
+                }
             }),
     })),
 );
