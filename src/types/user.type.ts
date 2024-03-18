@@ -3,11 +3,9 @@ export type User = {
     email: string;
     name?: string;
     avatar?: string;
-    createdAt: string;
-    updatedAt: string;
     role: string;
-    isEmailVerified: false;
-    isBanned: false;
+    isEmailVerified: boolean;
+    isBanned: boolean;
 };
 
 export type SignUpRequest = {

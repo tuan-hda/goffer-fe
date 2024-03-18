@@ -2,7 +2,7 @@ import { RouteObject } from 'react-router-dom';
 import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy, Login } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
-import { ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
+import { AppLayout, ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
 
 const routesConfig: RouteObject[] = [
     {
@@ -21,24 +21,6 @@ const routesConfig: RouteObject[] = [
                 ],
             },
             {
-                path: '/individual',
-                element: <ApplicantLayout />,
-                children: [
-                    {
-                        path: '/individual/discover',
-                        element: <></>,
-                        children: [
-                            { path: '/individual/discover/jobs', element: <></> },
-                            { path: '/individual/discover/people', element: <></> },
-                            { path: '/individual/discover/companies', element: <></> },
-                        ],
-                    },
-                    { path: '/individual/tab2', element: <></> },
-                    { path: '/individual/tab3', element: <></> },
-                    { path: '/individual/tab4', element: <></> },
-                ],
-            },
-            {
                 path: '/about-us',
                 element: <AboutUs />,
             },
@@ -54,7 +36,30 @@ const routesConfig: RouteObject[] = [
                     { path: 'login', element: <Login /> },
                 ],
             },
-
+            {
+                path: '/app',
+                element: <AppLayout />,
+                children: [
+                    {
+                        path: '/app/individual',
+                        element: <ApplicantLayout />,
+                        children: [
+                            {
+                                path: '/app/individual/discover',
+                                element: <></>,
+                                children: [
+                                    { path: '/app/individual/discover/jobs', element: <></> },
+                                    { path: '/app/individual/discover/people', element: <></> },
+                                    { path: '/app/individual/discover/companies', element: <></> },
+                                ],
+                            },
+                            { path: '/app/individual/tab2', element: <></> },
+                            { path: '/app/individual/tab3', element: <></> },
+                            { path: '/app/individual/tab4', element: <></> },
+                        ],
+                    },
+                ],
+            },
             { path: '*', element: <NotFound /> },
         ],
     },

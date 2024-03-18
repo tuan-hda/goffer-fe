@@ -1,7 +1,9 @@
-import { Tab, Tabs } from '@nextui-org/react';
+import { Avatar, Tab, Tabs } from '@nextui-org/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import CursorTrailEffect from '../components/common/CursorTrailEffect';
+import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import { TbArrowRight } from 'react-icons/tb';
 
 const paths = [
     '/',
@@ -17,6 +19,7 @@ const paths = [
 
 const LandingLayout = () => {
     const location = useLocation();
+    const { data: user } = useSelfProfileQuery();
     const navigate = useNavigate();
 
     // This one prevent focus on the tab, so we can use space-bar normally to navigate
@@ -109,12 +112,27 @@ const LandingLayout = () => {
                         <Tab key="/trusted-by" title="Trusted by" />
                         <Tab key="/pricing" title="Pricing" />
                     </Tabs>
-                    <Link
-                        to={'/auth/sign-up'}
-                        className="relative -ml-5 flex h-11 w-[120px] cursor-pointer items-center rounded-r-xl bg-gray-50 pl-10 font-semibold text-gray-600 shadow-xl invert transition hover:bg-gray-100"
-                    >
-                        Sign Up
-                    </Link>
+                    {user ? (
+                        <Link
+                            to="/individual"
+                            className="-ml-5 flex h-11 w-[120px] cursor-pointer items-center gap-2 rounded-r-xl bg-gray-50 pl-10 text-gray-600 opacity-90 shadow-xl invert transition hover:bg-gray-100 hover:opacity-100"
+                        >
+                            <Avatar
+                                className="h-7 w-7 invert"
+                                size="sm"
+                                src={user.avatar}
+                                alt={user.name || user.email}
+                            />
+                            <TbArrowRight className="text-xl text-black" />
+                        </Link>
+                    ) : (
+                        <Link
+                            to={'/auth/sign-up'}
+                            className="relative -ml-5 flex h-11 w-[120px] cursor-pointer items-center rounded-r-xl bg-gray-50 pl-10 font-semibold text-gray-600 shadow-xl invert transition hover:bg-gray-100"
+                        >
+                            Sign Up
+                        </Link>
+                    )}
                 </div>
                 <div className="mt-3 flex items-center justify-center gap-4">
                     <Link to="/about-us" className="text-sm text-white/30 transition hover:text-white hover:underline">

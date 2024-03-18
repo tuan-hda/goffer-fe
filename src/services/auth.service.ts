@@ -2,11 +2,15 @@ import { SignUpRequest, User } from 'src/types/user.type';
 import { baseAxios, noAuthAxios } from './base';
 import { AuthToken } from 'src/types/token.type';
 
-export const signUpService = async (user: SignUpRequest) => {
+export const signUpService = async (user: SignUpRequest, type: string) => {
     return noAuthAxios.post<{
         user: User;
         tokens: AuthToken;
-    }>('/auth/register', user);
+    }>('/auth/register', user, {
+        params: {
+            type,
+        },
+    });
 };
 
 export const sendOtpVerificationEmail = async (accessToken: string) => {

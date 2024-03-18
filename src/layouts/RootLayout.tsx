@@ -1,10 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { getSelfService } from 'src/services/users.service';
+import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
 
 const RootLayout = () => {
-    useQuery({ queryKey: ['getSelf'], queryFn: getSelfService });
-
+    useSelfProfileQuery();
     return <Outlet />;
 };
 
