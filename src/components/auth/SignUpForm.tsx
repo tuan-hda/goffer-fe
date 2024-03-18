@@ -7,7 +7,7 @@ import SignUpSecondStep from './SignUpSecondStep';
 import { signUpService } from 'src/services/auth.service';
 import ConfirmEmail from './ConfirmEmail';
 import { User } from 'src/types/user.type';
-import { AuthToken } from 'src/types/token.type';
+import { AuthToken, Token } from 'src/types/token.type';
 import { useNavigate } from 'react-router-dom';
 
 type SignUpFormProps = {
@@ -27,14 +27,14 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
     const [password, setPassword] = useState('');
     const isValidPassword = password.length >= 8 && /\d/.test(password) && /[a-zA-Z]/.test(password);
 
-    const [tokens, setTokens] = useState<AuthToken>();
+    const [accessToken, setAccessToken] = useState<Token>();
 
     const handleShouldVerifyEmail = (user: User, tokens: AuthToken, currStep: number) => {
         if (!user.isEmailVerified) {
             setStep(currStep + 1);
-            setTokens(tokens);
+            setAccessToken(tokens.access);
         } else {
-            navigate('/individual');
+            navigate('/app/individual');
         }
     };
 
@@ -58,7 +58,8 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
             case 1:
                 try {
                     setLoading(true);
-                    const response = await signUpService({ email, password });
+                    const type = new URLSearchParams(window.location.search).get('type') || 'individual';
+                    const response = await signUpService({ email, password }, type);
                     handleShouldVerifyEmail(response.data.user, response.data.tokens, step);
                 } catch (error) {
                     toast.error('An error occurred. Please try again later.');
@@ -101,7 +102,7 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
                     setStep={setStep}
                 />
             )}
-            {step === 2 && tokens && <ConfirmEmail tokens={tokens} setStep={setStep} email={'hdatdragon2@gmail.com'} />}
+            {step === 2 && accessToken && <ConfirmEmail accessToken={accessToken} email={email} />}
         </>
     );
 };
