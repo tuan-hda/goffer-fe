@@ -2,7 +2,6 @@ import { QueryClient, QueryClientProvider, QueryCache } from '@tanstack/react-qu
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { isAxiosError } from 'axios';
 import { useCallback, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { baseAxios } from 'src/services/base';
 import useAuthStore from 'src/stores/authStore';
 import { AuthToken } from 'src/types/token.type';
@@ -13,7 +12,6 @@ type QueryProviderProps = {
 };
 
 const QueryProvider = ({ children }: QueryProviderProps) => {
-    const navigate = useNavigate();
     const refreshingToken = useRef(false);
 
     const [queryClient] = useState(
@@ -59,12 +57,11 @@ const QueryProvider = ({ children }: QueryProviderProps) => {
             setAccess(response.data.access);
         } catch (error) {
             logOut();
-            navigate('/');
             throw error;
         } finally {
             refreshingToken.current = false;
         }
-    }, [logOut, navigate, setAccess]);
+    }, [logOut, setAccess]);
 
     return (
         <QueryClientProvider client={queryClient}>
