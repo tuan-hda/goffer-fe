@@ -1,3 +1,4 @@
+import { User } from 'src/types/user.type';
 import { baseAxios, noAuthAxios } from './base';
 
 export const checkExistEmailService = async (email: string) => {
@@ -5,5 +6,5 @@ export const checkExistEmailService = async (email: string) => {
 };
 
 export const getSelfService = async () => {
-    return baseAxios.get('/users/self');
+    return (await baseAxios.get<User>('/users/self')).data;
 };
