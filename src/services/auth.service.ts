@@ -48,3 +48,6 @@ export const loginService = async (email: string, password: string) => {
 };
 
 export const logoutService = async () => baseAxios.post('/auth/logout');
+
+export const googleAuthService = async (authType: 'register' | 'login') =>
+    noAuthAxios.post('/auth/google', {}, { params: { authType } });
