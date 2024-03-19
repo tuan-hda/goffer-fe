@@ -7,17 +7,20 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
 
 type ConfirmEmailProps = {
+    initialType: 'individual' | 'organization';
     email: string;
     accessToken: Token;
-    onSuccess: (() => void) | undefined;
+    onSuccess?: () => void;
 };
 
 const COOLDOWN_RESEND_OTP = 60;
 
-const ConfirmEmail = ({ email, accessToken, onSuccess }: ConfirmEmailProps) => {
+const ConfirmEmail = ({ email, accessToken, onSuccess, initialType }: ConfirmEmailProps) => {
     const navigate = useNavigate();
+    const { refetch } = useSelfProfileQuery();
 
     const [otp, setOtp] = useState<string>('      ');
     const [curr, setCurr] = useState<number>(0);
@@ -102,11 +105,12 @@ const ConfirmEmail = ({ email, accessToken, onSuccess }: ConfirmEmailProps) => {
             setLoading(true);
             await verifyOtpEmail(accessToken.token, token);
             toast.success('Verified successfully');
+            refetch();
             setTimeout(() => {
                 if (onSuccess) {
                     onSuccess();
                 } else {
-                    navigate('/app/individual');
+                    navigate(`/app/${initialType}`);
                 }
                 localStorage.removeItem('lastSentEmail');
             }, 1500);

@@ -1,6 +1,7 @@
-import { SignUpRequest, User } from 'src/types/user.type';
+import { SignUpGoogle, SignUpRequest, User } from 'src/types/user.type';
 import { baseAxios, noAuthAxios } from './base';
 import { AuthToken } from 'src/types/token.type';
+import config from 'src/configs/config';
 
 export const signUpService = async (user: SignUpRequest, type: string) => {
     return noAuthAxios.post<{
@@ -12,6 +13,13 @@ export const signUpService = async (user: SignUpRequest, type: string) => {
         },
     });
 };
+
+export const signUpGoogleService = async (user: SignUpGoogle, type: string) =>
+    noAuthAxios.post<{ user: User; tokens: AuthToken }>('/auth/register/google', user, {
+        params: {
+            type,
+        },
+    });
 
 export const sendOtpVerificationEmail = async (accessToken: string) => {
     return baseAxios.post(
@@ -45,4 +53,21 @@ export const loginService = async (email: string, password: string) => {
         email,
         password,
     });
+};
+
+export const loginGoogleService = async (accessToken: string) => {
+    return (
+        await noAuthAxios.post<{
+            user: User;
+            tokens: AuthToken;
+        }>('/auth/login/google', {
+            accessToken,
+        })
+    ).data;
+};
+
+export const logoutService = async () => baseAxios.post('/auth/logout');
+
+export const getGoogleAuthUrl = (authType: 'login' | 'register') => {
+    return `https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.GOOGLE_CLIENT_ID}&redirect_uri=${config.BACKEND_BASE_URL}/${config.BACKEND_VERSION}/auth/${authType}/google/callback&response_type=code&scope=email%20profile`;
 };

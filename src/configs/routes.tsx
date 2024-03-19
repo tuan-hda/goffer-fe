@@ -3,6 +3,7 @@ import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy, 
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
 import { AppLayout, ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
+import Test from 'src/pages/Test';
 
 const routesConfig: RouteObject[] = [
     {
@@ -64,5 +65,12 @@ const routesConfig: RouteObject[] = [
         ],
     },
 ];
+
+if (process.env.NODE_ENV === 'development') {
+    routesConfig[0].children?.push({
+        path: 'test',
+        element: <Test />,
+    });
+}
 
 export default routesConfig;
