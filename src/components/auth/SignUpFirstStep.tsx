@@ -1,11 +1,8 @@
 import { Button, Input } from '@nextui-org/react';
-import { isAxiosError } from 'axios';
 import classNames from 'classnames';
-import { FcGoogle } from 'react-icons/fc';
 import { TbChevronLeft } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
-import { googleAuthService } from 'src/services/auth.service';
-import toast from 'react-hot-toast';
+import GoogleAuth from './GoogleSignUp';
 
 type SignUpFirstStepProps = {
     type: 'individual' | 'organization';
@@ -31,19 +28,6 @@ const SignUpFirstStep = ({
         if (isValidEmail) handleContinue();
     };
 
-    const handleContinueWithGoogle = async () => {
-        try {
-            await googleAuthService('register');
-        } catch (error) {
-            console.log('Google auth error:', error);
-            if (isAxiosError(error)) {
-                toast.error(error.response?.data.message || 'An error occurred. Please try again later.');
-            } else {
-                toast.error('An error occurred. Please try again later.');
-            }
-        }
-    };
-
     return (
         <>
             <Link
@@ -57,15 +41,7 @@ const SignUpFirstStep = ({
             <img alt="Logo" src="/logo.svg" className="mt-4 h-8 w-8 " />
             <h1 className="mt-3 font-serif text-xl font-bold">Goffer for {type}</h1>
 
-            <Button
-                onClick={handleContinueWithGoogle}
-                fullWidth
-                startContent={<FcGoogle className="text-lg" />}
-                className="mt-4"
-                color="secondary"
-            >
-                Continue with Google
-            </Button>
+            <GoogleAuth authType="register" type={type} />
             <div className="mt-6 border-t" />
             <form className="mt-4" onSubmit={handleSubmit}>
                 <label htmlFor="email">{type === 'individual' ? 'Email' : 'Work email'} address</label>

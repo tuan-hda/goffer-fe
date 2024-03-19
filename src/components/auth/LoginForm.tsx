@@ -1,9 +1,9 @@
 import { Button, Input } from '@nextui-org/react';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
 import { TbEye, TbEyeClosed } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
+import GoogleAuth from './GoogleSignUp';
 
 type LoginFormProps = {
     handleSubmit: (_: React.FormEvent<HTMLFormElement>) => void;
@@ -39,9 +39,7 @@ const LoginForm = ({
             <h1 className="mt-3 flex items-center gap-2 font-serif text-xl font-bold">
                 Welcome back to Goffer <span className="ml-1">👋</span>
             </h1>
-            <Button fullWidth startContent={<FcGoogle className="text-lg" />} className="mt-4" color="secondary">
-                Login with Google
-            </Button>
+            <GoogleAuth authType="login" />
             <div className="mt-6 border-t" />
 
             <form className="mt-4" onSubmit={handleSubmit}>

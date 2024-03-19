@@ -9,7 +9,13 @@ function App() {
     return (
         <NextUIProvider>
             {routes}
-            <Toaster />
+            <Toaster
+                toastOptions={{
+                    style: {
+                        maxWidth: 500,
+                    },
+                }}
+            />
         </NextUIProvider>
     );
 }
