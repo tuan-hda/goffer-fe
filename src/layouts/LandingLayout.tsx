@@ -4,6 +4,8 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import CursorTrailEffect from '../components/common/CursorTrailEffect';
 import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
 import { TbArrowRight } from 'react-icons/tb';
+import useAuthStore from 'src/stores/authStore';
+import { shallow } from 'zustand/shallow';
 
 const paths = [
     '/',
@@ -18,6 +20,9 @@ const paths = [
 ];
 
 const LandingLayout = () => {
+    // TODO: Remove logout from this file
+    const [logout, access] = useAuthStore((state) => [state.logOut, state.access], shallow);
+
     const location = useLocation();
     const { data: user } = useSelfProfileQuery();
     const navigate = useNavigate();
@@ -114,15 +119,10 @@ const LandingLayout = () => {
                     </Tabs>
                     {user ? (
                         <Link
-                            to="/individual"
+                            to="/app/individual"
                             className="-ml-5 flex h-11 w-[120px] cursor-pointer items-center gap-2 rounded-r-xl bg-gray-50 pl-10 text-gray-600 opacity-90 shadow-xl invert transition hover:bg-gray-100 hover:opacity-100"
                         >
-                            <Avatar
-                                className="h-7 w-7 invert"
-                                size="sm"
-                                src={user.avatar}
-                                alt={user.name || user.email}
-                            />
+                            <Avatar className="h-7 w-7" size="sm" src={user.avatar} alt={user.name || user.email} />
                             <TbArrowRight className="text-xl text-black" />
                         </Link>
                     ) : (
@@ -143,6 +143,7 @@ const LandingLayout = () => {
                     </Link>
                 </div>
             </div>
+            {access && <button onClick={logout}>Logout</button>}
         </div>
     );
 };
