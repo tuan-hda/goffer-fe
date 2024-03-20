@@ -1,5 +1,16 @@
 import { RouteObject } from 'react-router-dom';
-import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy, Login } from '../pages';
+import {
+    AboutUs,
+    ContactUs,
+    LandingPage,
+    NotFound,
+    Pricing,
+    SignUp,
+    TrustedBy,
+    Login,
+    ForgotPassword,
+    ResetPassword,
+} from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
 import { AppLayout, ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
@@ -35,6 +46,8 @@ const routesConfig: RouteObject[] = [
                 children: [
                     { path: 'sign-up', element: <SignUp /> },
                     { path: 'login', element: <Login /> },
+                    { path: 'forgot-password', element: <ForgotPassword /> },
+                    { path: 'reset-password', element: <ResetPassword /> },
                 ],
             },
             {
