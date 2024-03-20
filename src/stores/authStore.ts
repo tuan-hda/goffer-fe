@@ -22,15 +22,14 @@ const useAuthStore = create<AuthState & Actions>()(
                 state.access = access;
             }),
         logOut: () =>
-            set(async (state) => {
+            set((state) => {
                 if (state.access) {
-                    await logoutService();
-                    window.location.pathname = '/';
+                    logoutService().then(() => {
+                        window.location.pathname = '/';
+                    });
                 }
                 googleLogout();
-                return {
-                    access: null,
-                };
+                state.access = null;
             }),
     })),
 );
