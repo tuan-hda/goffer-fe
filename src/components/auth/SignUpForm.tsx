@@ -6,19 +6,19 @@ import SignUpFirstStep from './SignUpFirstStep';
 import SignUpSecondStep from './SignUpSecondStep';
 import { signUpService } from 'src/services/auth.service';
 import ConfirmEmail from './ConfirmEmail';
+import { AuthToken, Token } from 'src/types/token.type';
+import useAuthStore from 'src/stores/authStore';
 import { User } from 'src/types/user.type';
-import { AuthToken } from 'src/types/token.type';
-import { useNavigate } from 'react-router-dom';
 
 type SignUpFormProps = {
     type?: 'individual' | 'organization';
 };
 
 const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
-    const navigate = useNavigate();
-
     const [step, setStep] = useState(0);
     const [loading, setLoading] = useState(false);
+
+    const setAccess = useAuthStore((state) => state.setAccess);
 
     const [email, setEmail] = useState('');
     const [emailExists, setEmailExists] = useState(false);
@@ -27,15 +27,13 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
     const [password, setPassword] = useState('');
     const isValidPassword = password.length >= 8 && /\d/.test(password) && /[a-zA-Z]/.test(password);
 
-    const [tokens, setTokens] = useState<AuthToken>();
+    const [user, setUser] = useState<User>();
+    const [accessToken, setAccessToken] = useState<Token>();
 
-    const handleShouldVerifyEmail = (user: User, tokens: AuthToken, currStep: number) => {
-        if (!user.isEmailVerified) {
-            setStep(currStep + 1);
-            setTokens(tokens);
-        } else {
-            navigate('/individual');
-        }
+    const handleShouldVerifyEmail = (tokens: AuthToken, currStep: number) => {
+        setAccess(tokens.access);
+        setStep(currStep + 1);
+        setAccessToken(tokens.access);
     };
 
     const handleContinue = async () => {
@@ -58,8 +56,10 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
             case 1:
                 try {
                     setLoading(true);
-                    const response = await signUpService({ email, password });
-                    handleShouldVerifyEmail(response.data.user, response.data.tokens, step);
+                    const type = new URLSearchParams(window.location.search).get('type') || 'individual';
+                    const response = await signUpService({ email, password }, type);
+                    setUser(response.data.user);
+                    handleShouldVerifyEmail(response.data.tokens, step);
                 } catch (error) {
                     toast.error('An error occurred. Please try again later.');
                     console.log('Sign up error:', error);
@@ -101,7 +101,9 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
                     setStep={setStep}
                 />
             )}
-            {step === 2 && tokens && <ConfirmEmail tokens={tokens} setStep={setStep} email={'hdatdragon2@gmail.com'} />}
+            {step === 2 && accessToken && user && (
+                <ConfirmEmail initialType={user.initialType} accessToken={accessToken} email={email} />
+            )}
         </>
     );
 };

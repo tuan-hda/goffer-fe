@@ -1,8 +1,9 @@
 import { Button, Input } from '@nextui-org/react';
 import classNames from 'classnames';
-import { FcGoogle } from 'react-icons/fc';
 import { TbChevronLeft } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
+import GoogleAuth from './GoogleSignUp';
+
 type SignUpFirstStepProps = {
     type: 'individual' | 'organization';
     emailExists: boolean;
@@ -40,9 +41,7 @@ const SignUpFirstStep = ({
             <img alt="Logo" src="/logo.svg" className="mt-4 h-8 w-8 " />
             <h1 className="mt-3 font-serif text-xl font-bold">Goffer for {type}</h1>
 
-            <Button fullWidth startContent={<FcGoogle className="text-lg" />} className="mt-4" color="secondary">
-                Continue with Google
-            </Button>
+            <GoogleAuth authType="register" type={type} />
             <div className="mt-6 border-t" />
             <form className="mt-4" onSubmit={handleSubmit}>
                 <label htmlFor="email">{type === 'individual' ? 'Email' : 'Work email'} address</label>

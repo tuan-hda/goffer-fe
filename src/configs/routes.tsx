@@ -2,8 +2,9 @@ import { Navigate, RouteObject } from 'react-router-dom';
 import { AboutUs, ContactUs, LandingPage, NotFound, Pricing, SignUp, TrustedBy, Login } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
-import { ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
 import { Discover, JobDiscover, PeopleDiscover } from 'src/components/applicant/discover';
+import { AppLayout, ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
+import Test from 'src/pages/Test';
 
 const routesConfig: RouteObject[] = [
     {
@@ -22,24 +23,6 @@ const routesConfig: RouteObject[] = [
                 ],
             },
             {
-                path: '/individual',
-                element: <ApplicantLayout />,
-                children: [
-                    { index: true, element: <Navigate to="home" /> },
-                    { path: 'home', element: <>Home</> },
-                    {
-                        path: 'discover',
-                        element: <Discover />,
-                        children: [
-                            { path: 'jobs', element: <JobDiscover /> },
-                            { path: 'people', element: <PeopleDiscover /> },
-                            { path: 'companies', element: <>Companies</> },
-                        ],
-                    },
-                    { path: ':user_id', element: <>User Profile</> },
-                ],
-            },
-            {
                 path: '/about-us',
                 element: <AboutUs />,
             },
@@ -55,10 +38,40 @@ const routesConfig: RouteObject[] = [
                     { path: 'login', element: <Login /> },
                 ],
             },
-
+            {
+                path: '/app',
+                element: <AppLayout />,
+                children: [
+                    {
+                        path: '/app/individual',
+                        element: <ApplicantLayout />,
+                        children: [
+                            { index: true, element: <Navigate to="home" /> },
+                            { path: '/app/individual/home', element: <>Home</> },
+                            {
+                                path: '/app/individual/discover',
+                                element: <Discover />,
+                                children: [
+                                    { path: '/app/individual/discover/jobs', element: <JobDiscover /> },
+                                    { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
+                                    { path: '/app/individual/discover/companies', element: <>Companies</> },
+                                ],
+                            },
+                            { path: '/app/individual/:user_id', element: <>User Profile</> },
+                        ],
+                    },
+                ],
+            },
             { path: '*', element: <NotFound /> },
         ],
     },
 ];
+
+if (process.env.NODE_ENV === 'development') {
+    routesConfig[0].children?.push({
+        path: 'test',
+        element: <Test />,
+    });
+}
 
 export default routesConfig;
