@@ -9,10 +9,10 @@ const JobCard = () => {
     const [liked, setLiked] = useState(false);
     const toggleLike = () => setLiked(!liked);
     const tags = ['TypeScript', 'Material UI', 'Redux', 'React', 'Axios', 'RESTfull API'];
-    const updateJobDetailOpening = useDiscoverStore((state) => state.updateJobDetailOpening);
+    const { updateJobDetailOpening, jobDetailOpening } = useDiscoverStore();
 
     const openDetail = () => {
-        updateJobDetailOpening(true);
+        updateJobDetailOpening(!jobDetailOpening);
     };
 
     return (

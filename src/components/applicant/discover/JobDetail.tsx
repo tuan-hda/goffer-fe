@@ -1,10 +1,19 @@
+import classNames from 'classnames';
+import useDiscoverStore from 'src/stores/discoverStore';
+
 const JobDetail = () => {
-    const text = [1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    const text = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    const { jobDetailOpening } = useDiscoverStore();
 
     return (
-        <div className="job-detail-scrollbar fixed right-4 top-16 h-[calc(100vh-64px)] w-1/2 overflow-hidden bg-yellow-50 hover:overflow-y-scroll md:right-6 xl:left-1/2">
+        <div
+            className={classNames(
+                'fixed right-0 top-16 h-[calc(100vh-64px)] w-[calc(50vw-40px)] overflow-hidden bg-yellow-50 hover:overflow-y-scroll md:w-1/2 md:max-w-screen-sm xl:left-[calc(50vw+80px)]',
+                !jobDetailOpening && 'hidden',
+            )}
+        >
             {text.map((i, index) => (
-                <p key={index} className="mb-8 bg-gray-50">
+                <p key={index} className="mb-8">
                     {i}
                 </p>
             ))}
