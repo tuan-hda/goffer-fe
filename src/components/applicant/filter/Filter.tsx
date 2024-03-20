@@ -42,7 +42,7 @@ const Filter = () => {
 
     const handleTabChange = (key: Key) => {
         updateTabKey(key.toString());
-        navigate(`/individual/discover/${key}`);
+        navigate(`/app/individual/discover/${key}`);
     };
 
     return (

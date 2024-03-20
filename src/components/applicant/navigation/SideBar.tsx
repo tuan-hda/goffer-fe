@@ -51,7 +51,7 @@ const SideBar = () => {
                         button: ({ active }) => {
                             return {
                                 color: active ? textColor : '#A0A2AA',
-                                backgroundColor: active ? '#27272A' : undefined,
+                                backgroundColor: active ? '#3F3F46' : undefined,
                                 borderRadius: '14px !important',
                                 '&:hover': {
                                     backgroundColor: 'hsl(var(--nextui-default)/0.4)',
@@ -115,13 +115,13 @@ const SideBar = () => {
                         </CardHeader>
                     </Card>
 
-                    <CustomMenuItem to="/individual/home" icon={<TbHomeEco size={28} />}>
+                    <CustomMenuItem to="/app/individual/home" icon={<TbHomeEco size={28} />}>
                         Home
                     </CustomMenuItem>
-                    <CustomMenuItem to="/individual/discover" icon={<PiCompass size={28} />}>
+                    <CustomMenuItem to="/app/individual/discover" icon={<PiCompass size={28} />}>
                         Discover
                     </CustomMenuItem>
-                    <CustomMenuItem to={`/individual/${user}`} icon={<PiUserCircle size={28} />}>
+                    <CustomMenuItem to={`/app/individual/${user}`} icon={<PiUserCircle size={28} />}>
                         Profile
                     </CustomMenuItem>
                     <MenuItem disabled className="flex flex-1 flex-row" />
