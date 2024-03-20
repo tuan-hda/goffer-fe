@@ -59,9 +59,14 @@ const LoginForm = ({
                     onChange={handleEmailChange}
                 />
 
-                <label htmlFor="password" className="mt-3 block">
-                    Password
-                </label>
+                <div className="mt-3 flex">
+                    <label htmlFor="password" className="block">
+                        Password
+                    </label>
+                    <Link to="/auth/forgot-password" className="ml-auto text-primary hover:underline">
+                        Forgot password?
+                    </Link>
+                </div>
                 <Input
                     endContent={
                         <button tabIndex={-1} type="button" onClick={() => setShowPassword((prev) => !prev)}>
@@ -93,6 +98,7 @@ const LoginForm = ({
                     Login
                 </Button>
             </form>
+
             <Link to="/auth/sign-up" className="mt-6 block hover:underline">
                 New to Goffer? Join our platform. <span className="text-primary">Sign up</span>
             </Link>
