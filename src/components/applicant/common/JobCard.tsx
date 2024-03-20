@@ -20,7 +20,7 @@ const JobCard = () => {
             onPress={openDetail}
             isPressable
             isBlurred
-            className="max-w-full border-none bg-background/10 p-4 dark:bg-default-100/50"
+            className="w-full border-none bg-background/10 p-4 dark:bg-default-100/50"
             shadow="sm"
         >
             <CardHeader className="gap-4">
