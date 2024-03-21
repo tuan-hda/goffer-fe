@@ -49,7 +49,7 @@ const Filter = () => {
         <div
             className={classNames(
                 'bg-image sticky top-16 z-30 hidden w-full max-w-screen-2xl self-center rounded-b-2xl py-6 shadow-md transition md:flex',
-                scrollDirection === 'down' ? '-translate-y-[160px]' : 'translate-y-0',
+                scrollDirection === 'down' ? '-translate-y-[164px]' : 'translate-y-0',
             )}
         >
             <div className="flex w-full flex-col gap-y-6">
