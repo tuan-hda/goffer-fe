@@ -10,6 +10,7 @@ import {
     Login,
     ForgotPassword,
     ResetPassword,
+    GetStarted,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -71,6 +72,10 @@ const routesConfig: RouteObject[] = [
                             { path: '/app/individual/tab3', element: <></> },
                             { path: '/app/individual/tab4', element: <></> },
                         ],
+                    },
+                    {
+                        path: '/app/get-started',
+                        element: <GetStarted />,
                     },
                 ],
             },

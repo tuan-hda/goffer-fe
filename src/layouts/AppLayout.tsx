@@ -11,7 +11,7 @@ const AppLayout = () => {
     const location = useLocation();
     const match = matchRoutes([{ path: '/auth' }], location);
 
-    if (isLoading || access === undefined)
+    if (isLoading || (access === undefined && !user))
         return (
             <div className="flex h-screen w-screen">
                 <Spinner className="m-auto" />
