@@ -9,11 +9,11 @@ const JobDetail = () => {
     return (
         <Card
             className={classNames(
-                'fixed right-0 top-16 h-[calc(100vh-64px)] overflow-hidden px-6 py-4 transition hover:overflow-y-scroll md:max-w-[744px] ',
+                'fixed right-0 top-16 h-[calc(100vh-64px)] overflow-hidden px-4 py-4 transition hover:overflow-y-scroll dark:bg-default-100/50 md:max-w-[752px] ',
                 jobDetailOpening ? ' translate-x-0' : 'translate-x-[calc(50vw-40px)]',
                 sideBarPinned
-                    ? 'left-[calc(50vw+124px)] w-[calc(50vw-148px)] xl:left-[calc(50vw+120px)]'
-                    : 'left-[calc(50vw+40px)] w-[calc(50vw-64px)] xl:left-[calc(50vw+36px)]',
+                    ? 'left-[calc(50vw+124px)] w-[calc(50vw-140px)] xl:left-[calc(50vw+120px)]'
+                    : 'left-[calc(50vw+40px)] w-[calc(50vw-56px)] xl:left-[calc(50vw+36px)]',
             )}
         >
             {text.map((i, index) => (
