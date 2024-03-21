@@ -1,11 +1,13 @@
 import { Button, Input } from '@nextui-org/react';
 import { TbChevronLeft } from 'react-icons/tb';
+import SkillsAPI from 'emsi-skills-api';
 
 type SecondStepProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const SecondStep = ({ setStep }: SecondStepProps) => {
+    console.log(SkillsAPI);
     return (
         <div>
             <p className="text-sm font-light text-black/40">Step 2/5</p>
