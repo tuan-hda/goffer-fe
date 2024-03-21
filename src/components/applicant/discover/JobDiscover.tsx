@@ -8,9 +8,9 @@ const JobDiscover = () => {
     const isOpenDetail = useDiscoverStore((state) => state.jobDetailOpening);
     return (
         <div>
-            <div className="flex w-full max-w-screen-xl flex-1 flex-col gap-y-8 bg-green-50 px-6 py-8 xl:mx-auto">
+            <div className="flex w-full max-w-screen-2xl flex-1 flex-col gap-y-4 px-6 py-8 xl:mx-auto">
                 {jobs.map((job, index) => (
-                    <div key={index} className={classNames(isOpenDetail ? 'w-1/2' : 'w-full')}>
+                    <div key={index} className={classNames(isOpenDetail ? 'w-1/2 pr-6' : 'w-full')}>
                         <JobCard />
                     </div>
                 ))}
