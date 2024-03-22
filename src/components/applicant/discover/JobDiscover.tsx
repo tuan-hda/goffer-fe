@@ -8,7 +8,7 @@ const JobDiscover = () => {
     const isOpenDetail = useDiscoverStore((state) => state.jobDetailOpening);
     return (
         <div>
-            <div className="flex max-w-screen-2xl flex-1 flex-col gap-y-4 p-4 xl:mx-auto">
+            <div className="flex max-w-screen-xl flex-1 flex-col gap-y-4 p-4 xl:mx-auto">
                 {jobs.map((job, index) => (
                     <div
                         key={index}

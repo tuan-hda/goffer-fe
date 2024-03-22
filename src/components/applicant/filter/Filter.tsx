@@ -24,12 +24,12 @@ const Filter = () => {
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [searchValue, setSearchValue] = useState('');
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { tabKey, updateTabKey } = useDiscoverStore();
+    const { tabKey, updateTabKey, jobDetailOpening } = useDiscoverStore();
 
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollPos = window.scrollY;
-            setScrollDirection(prevScrollPos > currentScrollPos || currentScrollPos < 10 ? 'up' : 'down');
+            setScrollDirection(prevScrollPos > currentScrollPos || currentScrollPos < 64 ? 'up' : 'down');
             setPrevScrollPos(currentScrollPos);
         };
 
@@ -39,6 +39,10 @@ const Filter = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [prevScrollPos, scrollDirection]);
+
+    useEffect(() => {
+        if (jobDetailOpening) setScrollDirection('down');
+    }, [jobDetailOpening]);
 
     const handleTabChange = (key: Key) => {
         updateTabKey(key.toString());
