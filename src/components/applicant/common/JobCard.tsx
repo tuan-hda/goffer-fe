@@ -20,7 +20,7 @@ const JobCard = () => {
             onPress={openDetail}
             isPressable
             isBlurred
-            className="w-full max-w-screen-md border-none bg-background/10 p-4 dark:bg-default-100/50"
+            className="w-full max-w-screen-lg border-none bg-background/10 p-4 transition dark:bg-default-100/50"
             shadow="sm"
         >
             <CardHeader className="gap-4">
@@ -64,7 +64,7 @@ const JobCard = () => {
             </CardBody>
             <CardFooter className="gap-2">
                 {tags.map((tag, index) => (
-                    <Chip key={index} variant="flat">
+                    <Chip size="sm" key={index} variant="flat">
                         {tag}
                     </Chip>
                 ))}
