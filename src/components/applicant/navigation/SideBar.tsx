@@ -28,10 +28,14 @@ import useDiscoverStore from 'src/stores/discoverStore';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import useAuthStore from 'src/stores/authStore';
+import { shallow } from 'zustand/shallow';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
 const SideBar = () => {
+    // TODO: Remove logout from this file
+    const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
     const { data: user } = useSelfProfileQuery();
     const [collapsed, setCollapsed] = useState(true);
     const { sideBarPinned, updateSideBarPinned } = useDiscoverStore();
@@ -47,7 +51,7 @@ const SideBar = () => {
         <div className="fixed z-50 bg-white text-sm text-text" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             <Sidebar width={'280px'} className="child-bg ot !border-none" collapsed={collapsed}>
                 <Menu
-                    className="bg-pale h-full"
+                    className="h-full bg-pale"
                     menuItemStyles={{
                         button: ({ active }) => {
                             return {
@@ -105,67 +109,161 @@ const SideBar = () => {
                         <div className="mx-[14px]">
                             <Link
                                 to="/app/individual"
-                                className="-mx-0.5 mb-5 mt-7 flex items-center gap-3 rounded-lg p-2 transition hover:bg-gray-100"
+                                className="relative -mx-0.5 mb-5 mt-7 flex items-center gap-3 rounded-lg p-2 transition hover:bg-gray-100"
                             >
                                 <Avatar className="h-7 w-7" src={user?.avatar} />
-                                <p>{user?.name}</p>
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-12 overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    {user?.name}
+                                </p>
                             </Link>
+                            <button className="flex w-full items-center justify-start gap-[18px] rounded-lg p-2 text-primary transition hover:bg-gray-100">
+                                <TbSparkles className="text-xl" />{' '}
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[60px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Ask Goffer
+                                </p>
+                            </button>
                             <Link
-                                to="/app/individual"
-                                className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
+                                to="/app/individual/notifications"
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
                             >
-                                <TbHome className="text-xl" /> <p>Home</p>
+                                <TbNotification className="text-xl" />{' '}
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Notifications
+                                </p>
                             </Link>
                             <Link
                                 to="/app/wallet"
-                                className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
                             >
-                                <TbSparkles className="text-xl" /> <p>Ask Goffer</p>
-                            </Link>
-                            <Link
-                                to="/app/wallet"
-                                className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
-                            >
-                                <TbNotification className="text-xl" /> <p>Notifications</p>
-                            </Link>
-                            <Link
-                                to="/app/wallet"
-                                className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
-                            >
-                                <TbSettings className="text-xl" /> <p>Settings</p>
+                                <TbSettings className="text-xl" />{' '}
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Settings
+                                </p>
                             </Link>
                             <div className="mx-2 my-4 border-t border-t-gray-200/70" />
                             <Link
                                 to="/app/discover"
-                                className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
                             >
-                                <TbCompass className="text-xl" /> <p>Discover</p>
-                            </Link>
-                            <Link
-                                to="/app/wallet"
-                                className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
-                            >
-                                <TbPaint className="text-xl" /> <p>Portfolio</p>
+                                <TbCompass className="text-xl" />{' '}
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Discover
+                                </p>
                             </Link>
                             <Link
                                 to="/app/discover"
-                                className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
                             >
-                                <TbBaguette className="text-xl" /> <p>Jobs</p>
+                                <TbBaguette className="text-xl" />{' '}
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Jobs
+                                </p>
                             </Link>
                             <Link
                                 to="/app/wallet"
-                                className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
                             >
-                                <TbWallet className="text-xl" /> <p>Wallet</p>
+                                <TbPaint className="text-xl" />{' '}
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Portfolio
+                                </p>
+                            </Link>
+
+                            <Link
+                                to="/app/wallet"
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
+                            >
+                                <TbWallet className="text-xl" />{' '}
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Wallet
+                                </p>
                             </Link>
                         </div>
                         <div className="mx-3 mt-auto">
-                            <button className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
-                                <TbHelp className="text-xl" /> <p>Help</p>
+                            <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
+                                <TbHelp className="text-xl" />{' '}
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Help
+                                </p>
                             </button>
-                            <button className="flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
-                                <TbLogout className="text-xl" /> <p>Log out</p>
+                            <button
+                                onClick={logout}
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
+                            >
+                                <TbLogout className="text-xl" />{' '}
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Log out
+                                </p>
                             </button>
                         </div>
                     </div>

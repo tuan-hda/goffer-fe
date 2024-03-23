@@ -4,8 +4,6 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import CursorTrailEffect from '../components/common/CursorTrailEffect';
 import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
 import { TbArrowRight } from 'react-icons/tb';
-import useAuthStore from 'src/stores/authStore';
-import { shallow } from 'zustand/shallow';
 
 const paths = [
     '/',
@@ -20,9 +18,6 @@ const paths = [
 ];
 
 const LandingLayout = () => {
-    // TODO: Remove logout from this file
-    const [logout, access] = useAuthStore((state) => [state.logOut, state.access], shallow);
-
     const location = useLocation();
     const { data: user } = useSelfProfileQuery();
     const navigate = useNavigate();
@@ -143,7 +138,6 @@ const LandingLayout = () => {
                     </Link>
                 </div>
             </div>
-            {access && <button onClick={logout}>Logout</button>}
         </div>
     );
 };
