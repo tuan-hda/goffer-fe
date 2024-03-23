@@ -4,23 +4,31 @@ import { useState } from 'react';
 import { TbCheck, TbChevronLeft, TbEye, TbEyeClosed } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
-type SignUpSecondStepProps = {
+type SetPasswordStepProps = {
     password: string;
     setPassword: React.Dispatch<React.SetStateAction<string>>;
     isValidPassword: boolean;
     loading: boolean;
     handleContinue: () => void;
     setStep: React.Dispatch<React.SetStateAction<number>>;
+    title?: string;
+    showGoBack?: boolean;
+    submitTitle?: string;
+    showLoginLink?: boolean;
 };
 
-const SignUpSecondStep = ({
+const SetPasswordStep = ({
     password,
     setPassword,
     isValidPassword,
     loading,
     handleContinue,
     setStep,
-}: SignUpSecondStepProps) => {
+    title = 'Enter your password',
+    showGoBack = true,
+    submitTitle = 'Sign up',
+    showLoginLink = true,
+}: SetPasswordStepProps) => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirm, setShowConfirm] = useState<boolean>(false);
     const [confirmPassword, setConfirmPassword] = useState<string>('');
@@ -67,13 +75,15 @@ const SignUpSecondStep = ({
 
     return (
         <>
-            <button onClick={handleBack} className="group relative flex w-fit items-center gap-2">
-                <TbChevronLeft />
-                Go back
-                <div className="absolute bottom-0 left-0 hidden w-full border-b-1 border-text group-hover:block" />
-            </button>
+            {showGoBack && (
+                <button onClick={handleBack} className="group relative flex w-fit items-center gap-2">
+                    <TbChevronLeft />
+                    Go back
+                    <div className="absolute bottom-0 left-0 hidden w-full border-b-1 border-text group-hover:block" />
+                </button>
+            )}
             <img alt="Logo" src="/logo.svg" className="mt-4 h-8 w-8 " />
-            <h1 className="mt-3 font-serif text-xl font-bold">Enter your password</h1>
+            <h1 className="mt-3 font-serif text-xl font-bold">{title}</h1>
 
             <form className="mt-3" onSubmit={handleSubmit}>
                 <label htmlFor="password" className="mt-3 block">
@@ -166,15 +176,17 @@ const SignUpSecondStep = ({
                     fullWidth
                     type="submit"
                 >
-                    Sign up
+                    {submitTitle}
                 </Button>
             </form>
 
-            <Link to="/auth/login" className="mt-6 block hover:underline">
-                Already have an account? <span className="text-primary">Login</span>
-            </Link>
+            {showLoginLink && (
+                <Link to="/auth/login" className="mt-6 block hover:underline">
+                    Already have an account? <span className="text-primary">Login</span>
+                </Link>
+            )}
         </>
     );
 };
 
-export default SignUpSecondStep;
+export default SetPasswordStep;

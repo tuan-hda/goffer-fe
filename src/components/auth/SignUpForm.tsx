@@ -3,7 +3,7 @@ import { checkExistEmailService } from 'src/services/users.service';
 import { validateEmail } from 'src/utils/regex';
 import toast from 'react-hot-toast';
 import SignUpFirstStep from './SignUpFirstStep';
-import SignUpSecondStep from './SignUpSecondStep';
+import SetPasswordStep from './SetPasswordStep';
 import { signUpService } from 'src/services/auth.service';
 import ConfirmEmail from './ConfirmEmail';
 import { AuthToken, Token } from 'src/types/token.type';
@@ -92,7 +92,7 @@ const SignUpForm = ({ type = 'individual' }: SignUpFormProps) => {
                 />
             )}
             {step === 1 && (
-                <SignUpSecondStep
+                <SetPasswordStep
                     setPassword={setPassword}
                     password={password}
                     handleContinue={handleContinue}
