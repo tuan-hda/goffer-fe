@@ -7,7 +7,7 @@ import { uploadFileService } from 'src/services/file.service';
 import { StartedInfo } from 'src/types/start.type';
 
 type FourthStepProps = {
-    onContinue: () => void;
+    onContinue: () => Promise<void>;
     onBack: () => void;
     info: StartedInfo;
     setInfo: React.Dispatch<React.SetStateAction<StartedInfo>>;
@@ -17,9 +17,10 @@ const FourthStep = ({ onContinue, onBack, info, setInfo }: FourthStepProps) => {
     const ref = useRef<HTMLInputElement>(null);
     const refDoc = info.refDoc;
     const setRefDoc = (refDoc: string) => setInfo((prev) => ({ ...prev, refDoc }));
-    const [type, setType] = useState<'default' | 'linkedin' | 'file'>('file');
+    const [type, setType] = useState<'default' | 'linkedin' | 'file'>('default');
     const [loading, setLoading] = useState(false);
-    const [name, setName] = useState('Academic Transcript.pdf');
+    const [fileLoading, setFileLoading] = useState(false);
+    const [name, setName] = useState('');
 
     const [isValid, setIsValid] = useState(false);
 
@@ -51,7 +52,7 @@ const FourthStep = ({ onContinue, onBack, info, setInfo }: FourthStepProps) => {
         const file = e.target.files?.[0];
         const name = file?.name;
         if (file) {
-            setLoading(true);
+            setFileLoading(true);
             const cvFile = (await upload(file))?.file;
             if (cvFile) {
                 setRefDoc(cvFile.url);
@@ -59,14 +60,32 @@ const FourthStep = ({ onContinue, onBack, info, setInfo }: FourthStepProps) => {
                 setType('file');
                 ref.current!.files = null;
             }
-            setLoading(false);
+            setFileLoading(false);
         }
     };
 
-    const handleDelete = () => {
+    const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
         setRefDoc('');
         setName('');
         setType('default');
+    };
+
+    const handleFinish = async () => {
+        try {
+            setLoading(true);
+            await onContinue();
+        } catch (error) {
+            if (isAxiosError(error)) {
+                return toast.error(
+                    error.response?.data?.message || 'A mysterious error occurred. Please try again later.',
+                );
+            }
+            toast.error('A mysterious error occurred. Please try again later.');
+            console.log('Error update updating user:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -89,9 +108,9 @@ const FourthStep = ({ onContinue, onBack, info, setInfo }: FourthStepProps) => {
                 {type === 'default' && (
                     <>
                         <Button
-                            isLoading={loading}
+                            isLoading={fileLoading}
                             onClick={() => ref.current?.click()}
-                            className="w-[140px] border"
+                            className="w-[140px] flex-shrink-0 border"
                             variant="faded"
                         >
                             <TbUpload className="text-base" /> Upload CV
@@ -107,9 +126,14 @@ const FourthStep = ({ onContinue, onBack, info, setInfo }: FourthStepProps) => {
                     </>
                 )}
                 {type === 'file' && name && (
-                    <div className="group relative flex w-fit max-w-full items-center gap-2 rounded-lg border p-4 text-sm">
-                        <TbFileUpload className="text-base" />
-                        {name}
+                    <a
+                        target="_blank"
+                        href={info.refDoc}
+                        rel="noreferrer"
+                        className="group relative flex w-fit max-w-full items-center gap-3 rounded-lg border p-4 text-left text-sm"
+                    >
+                        <TbFileUpload className="flex-shrink-0 text-base" />
+                        <p className="min-w-0">{name}</p>
                         <button
                             type="button"
                             onClick={handleDelete}
@@ -117,20 +141,24 @@ const FourthStep = ({ onContinue, onBack, info, setInfo }: FourthStepProps) => {
                         >
                             <TbX />
                         </button>
-                    </div>
+                    </a>
                 )}
 
                 <div className="mt-6 flex items-center gap-3">
                     <Button onClick={onBack} isIconOnly radius="full" variant="flat">
                         <TbChevronLeft className="text-lg" />
                     </Button>
-                    <Button onClick={onBack} variant="flat">
+                    <Button
+                        isDisabled={loading || fileLoading || type !== 'default'}
+                        onClick={handleFinish}
+                        variant="flat"
+                    >
                         Skip
                     </Button>
                     <Button
                         type="submit"
-                        isDisabled={!refDoc || loading || (!isValid && !name) || type === 'default'}
-                        onClick={onContinue}
+                        isDisabled={!refDoc || loading || fileLoading || (!isValid && !name) || type === 'default'}
+                        onClick={handleFinish}
                         size="md"
                         color="primary"
                     >

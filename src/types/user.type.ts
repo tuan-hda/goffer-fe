@@ -7,6 +7,16 @@ export type User = {
     isEmailVerified: boolean;
     isBanned: boolean;
     initialType: 'individual' | 'organization';
+    skills?: string[];
+    refDoc?: string;
+};
+
+export type UpdateUser = {
+    password?: string;
+    name?: string;
+    avatar?: string;
+    skills?: string[];
+    refDoc?: string;
 };
 
 export type SignUpRequest = {

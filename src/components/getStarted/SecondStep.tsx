@@ -1,6 +1,6 @@
 import { Button, Input } from '@nextui-org/react';
 import { useMemo, useState } from 'react';
-import { TbChevronLeft, TbX } from 'react-icons/tb';
+import { TbCheck, TbChevronLeft, TbX } from 'react-icons/tb';
 import { StartedInfo } from 'src/types/start.type';
 
 export type SecondStepProps = {
@@ -17,15 +17,19 @@ const SecondStep = ({ onContinue, onBack, info, setInfo }: SecondStepProps) => {
         setInfo((prev) => ({ ...prev, skills }));
     };
 
+    const addSkill = (skill: string) => {
+        if (skill) {
+            const newSkills = new Set(skills);
+            newSkills.add(skill);
+            setSkills(newSkills);
+            setValue('');
+        }
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            if (value) {
-                const newSkills = new Set(skills);
-                newSkills.add(value);
-                setSkills(newSkills);
-                setValue('');
-            }
+            addSkill(value);
         }
     };
 
@@ -58,16 +62,21 @@ const SecondStep = ({ onContinue, onBack, info, setInfo }: SecondStepProps) => {
                 </div>
             )}
             <form>
-                <Input
-                    onKeyDown={handleKeyDown}
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    className="mt-5 w-[240px]"
-                    placeholder="Type and enter to add"
-                    classNames={{
-                        inputWrapper: 'h-10',
-                    }}
-                />
+                <div className="mt-5 flex gap-2">
+                    <Input
+                        onKeyDown={handleKeyDown}
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        className="w-[240px]"
+                        placeholder="Type and enter to add"
+                        classNames={{
+                            inputWrapper: 'h-10',
+                        }}
+                    />
+                    <Button onClick={() => addSkill(value)} className="flex items-center" variant="flat">
+                        <TbCheck /> Add
+                    </Button>
+                </div>
                 <p className="mt-2 text-sm text-text/60">Add at least 1 skill</p>
                 <div className="mt-6 flex items-center gap-3">
                     <Button onClick={onBack} isIconOnly radius="full" variant="flat">
