@@ -5,6 +5,7 @@ import WhoAreWe from '../pages/WhoAreWe';
 import { Discover, JobDiscover, PeopleDiscover } from 'src/components/applicant/discover';
 import { AppLayout, ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
 import Test from 'src/pages/Test';
+import Editor from 'src/components/common/editor/Editor';
 
 const routesConfig: RouteObject[] = [
     {
@@ -21,6 +22,10 @@ const routesConfig: RouteObject[] = [
                     { path: 'trusted-by', element: <TrustedBy /> },
                     { path: 'pricing', element: <Pricing /> },
                 ],
+            },
+            {
+                path: '/editor',
+                element: <Editor />,
             },
             {
                 path: '/about-us',
