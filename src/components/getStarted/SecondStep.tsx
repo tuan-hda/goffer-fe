@@ -37,7 +37,7 @@ const SecondStep = ({ onContinue, onBack, info, setInfo }: SecondStepProps) => {
 
     return (
         <div className="flex-1">
-            <p className="text-sm font-light text-black/40">Step 2/5</p>
+            <p className="text-sm font-light text-black/40">Step 2/4</p>
             <h1 className="mt-4 font-serif text-4xl">Tell us your skills</h1>
             {skills.size > 0 && (
                 <div className="mt-4 flex flex-wrap gap-1">
