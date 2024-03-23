@@ -13,6 +13,9 @@ export default {
                 serif: ['EB Garamond', 'serif'],
             },
             colors: {
+                pale: {
+                    DEFAULT: '#fefcf5',
+                },
                 beige: {
                     DEFAULT: '#F0DCC8',
                 },

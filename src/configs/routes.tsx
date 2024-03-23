@@ -77,6 +77,9 @@ const routesConfig: RouteObject[] = [
                         path: '/app/get-started',
                         element: <GetStarted />,
                     },
+                    {
+                        path: '/app/settings',
+                    },
                 ],
             },
             { path: '*', element: <NotFound /> },
