@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+.paper-noise {
     background-image: url('/background.png');
     background-repeat: repeat;
     background-size: 280px;
@@ -131,4 +131,14 @@ input[type='number']::-webkit-outer-spin-button {
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+
+.child-bg > * {
+    --bg-color: #fefcf5;
+    background-color: var(--bg-color) !important;
+}
+
+.ps-collapsed {
+    width: 68px !important;
+    min-width: 68px !important;
 }

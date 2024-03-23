@@ -86,7 +86,7 @@ const LandingLayout = () => {
     }, []);
 
     return (
-        <div className="h-screen w-full">
+        <div className="paper-noise h-screen w-full">
             <Outlet />
             <button ref={ref} className="absolute" />
             <CursorTrailEffect />
