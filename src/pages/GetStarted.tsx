@@ -1,11 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FirstStep, SecondStep, ThirdStep } from 'src/components/getStarted';
 import FourthStep from 'src/components/getStarted/FourthStep';
+import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import { updateUserService } from 'src/services/users.service';
 import { StartedInfo } from 'src/types/start.type';
+import { UpdateUser } from 'src/types/user.type';
 
 const GetStarted = () => {
-    const [step, setStep] = useState(3);
+    const navigate = useNavigate();
+    const { data: user, refetch } = useSelfProfileQuery();
+    const [step, setStep] = useState(0);
     const [info, setInfo] = useState<StartedInfo>({});
+
+    useEffect(() => {
+        if (user) {
+            setInfo({
+                name: user.name,
+                avatar: user.avatar,
+            });
+        }
+    }, [user]);
 
     const handleContinue = () => {
         setStep((prev) => prev + 1);
@@ -13,6 +28,19 @@ const GetStarted = () => {
 
     const handleBack = () => {
         setStep((prev) => prev - 1);
+    };
+
+    const handleSubmit = async () => {
+        const { skills, ...rest } = info;
+        const data: UpdateUser = {
+            ...rest,
+        };
+        if (skills && skills.size > 0) {
+            data.skills = Array.from(skills);
+        }
+        await updateUserService(data);
+        await refetch();
+        navigate(`/app/${user?.initialType}`);
     };
 
     return (
@@ -27,7 +55,7 @@ const GetStarted = () => {
                         <ThirdStep onBack={handleBack} onContinue={handleContinue} info={info} setInfo={setInfo} />
                     )}
                     {step === 3 && (
-                        <FourthStep onBack={handleBack} onContinue={handleContinue} info={info} setInfo={setInfo} />
+                        <FourthStep onBack={handleBack} onContinue={handleSubmit} info={info} setInfo={setInfo} />
                     )}
                     <img src="/trivia4.png" alt="Trivia-4" className="h-[360px] rounded-lg" />
                 </div>
