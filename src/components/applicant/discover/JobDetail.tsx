@@ -6,7 +6,7 @@ import { TbBuilding, TbHeart, TbHeartFilled, TbMapPin } from 'react-icons/tb';
 import { CgMoreAlt } from 'react-icons/cg';
 import { GiDuration } from 'react-icons/gi';
 import Process from '../common/Process';
-import Tiptap from '../common/Tiptap';
+import Editor from 'src/components/common/editor/Editor';
 
 const JobDetail = () => {
     const tags = ['TypeScript', 'Material UI', 'Redux', 'React', 'Axios', 'RESTfull API'];
@@ -98,7 +98,7 @@ const JobDetail = () => {
                     ))}
                 </div>
                 <p className="my-4 text-lg font-semibold text-default-700">About the job</p>
-                <Tiptap />
+                <Editor />
             </CardBody>
         </Card>
     );
