@@ -71,3 +71,16 @@ export const logoutService = async () => baseAxios.post('/auth/logout');
 export const getGoogleAuthUrl = (authType: 'login' | 'register') => {
     return `https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.GOOGLE_CLIENT_ID}&redirect_uri=${config.BACKEND_BASE_URL}/${config.BACKEND_VERSION}/auth/${authType}/google/callback&response_type=code&scope=email%20profile`;
 };
+
+export const forgotPasswordService = async (email: string) => noAuthAxios.post('/auth/forgot-password', { email });
+
+export const resetPasswordService = async (password: string, token: string) =>
+    noAuthAxios.post(
+        '/auth/reset-password',
+        { password },
+        {
+            params: {
+                token,
+            },
+        },
+    );

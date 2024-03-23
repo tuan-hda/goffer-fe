@@ -1,4 +1,4 @@
-import { GoogleProfile, User } from 'src/types/user.type';
+import { GoogleProfile, UpdateUser, User } from 'src/types/user.type';
 import { baseAxios, noAuthAxios } from './base';
 import axios from 'axios';
 import config from 'src/configs/config';
@@ -24,3 +24,5 @@ export const googleProfileService = async (accessToken: string) => {
         })
     ).data;
 };
+
+export const updateUserService = (user: UpdateUser) => baseAxios.put('/users/self', user);
