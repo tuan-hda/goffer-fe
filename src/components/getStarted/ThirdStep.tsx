@@ -42,23 +42,30 @@ const ThirdStep = ({ onContinue, onBack, info, setInfo }: ThirdStepProps) => {
             const image = (await upload(file))?.file;
             if (image) {
                 setAvatar(image.url);
-                ref.current!.value = '';
+                ref.current!.files = null;
             }
             setLoading(false);
         }
     };
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (loading) return;
+        if (!avatar) return;
+        onContinue();
+    };
+
     return (
         <div>
-            <p className="text-sm font-light text-black/40">Step 3/5</p>
+            <p className="text-sm font-light text-black/40">Step 3/4</p>
             <h1 className="mt-4 font-serif text-4xl">Set your avatar</h1>
-            <form /*onSubmit={handleSubmit}*/>
+            <form onSubmit={handleSubmit}>
                 {!avatar || loading ? (
                     <Button
                         isLoading={loading}
                         onClick={() => ref.current?.click()}
-                        className="mt-5 w-[200px]"
-                        variant="flat"
+                        className="mt-5 w-[200px] border"
+                        variant="faded"
                     >
                         <TbCamera className="text-base" /> Upload
                     </Button>
@@ -79,13 +86,7 @@ const ThirdStep = ({ onContinue, onBack, info, setInfo }: ThirdStepProps) => {
                     <Button onClick={onBack} isIconOnly radius="full" variant="flat">
                         <TbChevronLeft className="text-lg" />
                     </Button>
-                    <Button
-                        type="submit"
-                        isDisabled={!avatar || loading}
-                        onClick={onContinue}
-                        size="md"
-                        color="primary"
-                    >
+                    <Button type="submit" isDisabled={!avatar || loading} size="md" color="primary">
                         Continue
                     </Button>
                 </div>
