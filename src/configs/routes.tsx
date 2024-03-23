@@ -5,6 +5,7 @@ import WhoAreWe from '../pages/WhoAreWe';
 import { Discover, JobDiscover, PeopleDiscover } from 'src/components/applicant/discover';
 import { AppLayout, ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
 import Test from 'src/pages/Test';
+import Editor from 'src/components/common/editor/Editor';
 
 const routesConfig: RouteObject[] = [
     {
@@ -47,7 +48,7 @@ const routesConfig: RouteObject[] = [
                         element: <ApplicantLayout />,
                         children: [
                             { index: true, element: <Navigate to="home" /> },
-                            { path: '/app/individual/home', element: <>Home</> },
+                            { path: '/app/individual/home', element: <Editor /> },
                             {
                                 path: '/app/individual/discover',
                                 element: <Discover />,
