@@ -13,7 +13,15 @@ import FileHandler from '@tiptap-pro/extension-file-handler';
 import Image from '@tiptap/extension-image';
 import fileHandlerConfig from './configs/fileConfig';
 import Mathematics from '@tiptap-pro/extension-mathematics';
-import mathematicConfig from './configs/mathematicconfig';
+import mathematicConfig from './configs/mathematicConfig';
+import { TbBlockquote, TbBold, TbCode, TbH1, TbH2, TbH3, TbItalic, TbStrikethrough } from 'react-icons/tb';
+import { HiMiniListBullet } from 'react-icons/hi2';
+import { GoListOrdered } from 'react-icons/go';
+import { PiCodeBlock, PiTextIndent, PiTextOutdent } from 'react-icons/pi';
+import { BiRedo, BiUndo } from 'react-icons/bi';
+import { CgFormatColor } from 'react-icons/cg';
+import OrderedList from '@tiptap/extension-ordered-list';
+import { orderedListConfig } from './configs/listConfig';
 
 const MenuBar = () => {
     const { editor } = useCurrentEditor();
@@ -23,124 +31,160 @@ const MenuBar = () => {
     }
 
     return (
-        <>
+        <div className="flex flex-row flex-wrap gap-1">
             <Button
-                onClick={() => editor.chain().focus().toggleBold().run()}
-                disabled={!editor.can().chain().focus().toggleBold().run()}
-                className={editor.isActive('bold') ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleBold().run()}
+                isDisabled={!editor.can().chain().focus().toggleBold().run()}
+                variant={editor.isActive('bold') ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                bold
+                <TbBold size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleItalic().run()}
-                disabled={!editor.can().chain().focus().toggleItalic().run()}
-                className={editor.isActive('italic') ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleItalic().run()}
+                isDisabled={editor.can().chain().focus().toggleItalic().run()}
+                variant={editor.isActive('italic') ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                italic
+                <TbItalic size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleStrike().run()}
-                disabled={!editor.can().chain().focus().toggleStrike().run()}
-                className={editor.isActive('strike') ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleStrike().run()}
+                isDisabled={!editor.can().chain().focus().toggleStrike().run()}
+                variant={editor.isActive('strike') ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                strike
+                <TbStrikethrough size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleCode().run()}
-                disabled={!editor.can().chain().focus().toggleCode().run()}
-                className={editor.isActive('code') ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleCode().run()}
+                isDisabled={!editor.can().chain().focus().toggleCode().run()}
+                variant={editor.isActive('code') ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                code
-            </Button>
-            <Button onClick={() => editor.chain().focus().unsetAllMarks().run()}>clear marks</Button>
-            <Button onClick={() => editor.chain().focus().clearNodes().run()}>clear nodes</Button>
-            <Button
-                onClick={() => editor.chain().focus().setParagraph().run()}
-                className={editor.isActive('paragraph') ? 'is-active' : ''}
-            >
-                paragraph
+                <TbCode size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-                className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                variant={editor.isActive('heading', { level: 1 }) ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                h1
+                <TbH1 size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-                className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                variant={editor.isActive('heading', { level: 2 }) ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                h2
+                <TbH2 size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-                className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+                variant={editor.isActive('heading', { level: 3 }) ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                h3
+                <TbH3 size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-                className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleBulletList().run()}
+                variant={editor.isActive('bulletList') ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                h4
+                <HiMiniListBullet size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-                className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleOrderedList().run()}
+                variant={editor.isActive('orderedList') ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                h5
+                <GoListOrdered size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-                className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().sinkListItem('listItem').run()}
+                isDisabled={!editor.can().sinkListItem('listItem')}
+                variant="light"
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                h6
+                <PiTextIndent size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleBulletList().run()}
-                className={editor.isActive('bulletList') ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().liftListItem('listItem').run()}
+                isDisabled={!editor.can().liftListItem('listItem')}
+                variant="light"
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                bullet list
+                <PiTextOutdent size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                className={editor.isActive('orderedList') ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleCodeBlock().run()}
+                variant={editor.isActive('codeBlock') ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                ordered list
+                <PiCodeBlock size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-                className={editor.isActive('codeBlock') ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().toggleBlockquote().run()}
+                variant={editor.isActive('blockquote') ? 'solid' : 'light'}
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                code block
+                <TbBlockquote size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                className={editor.isActive('blockquote') ? 'is-active' : ''}
+                onPress={() => editor.chain().focus().undo().run()}
+                isDisabled={!editor.can().chain().focus().undo().run()}
+                variant="light"
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                blockquote
-            </Button>
-            <Button onClick={() => editor.chain().focus().setHorizontalRule().run()}>horizontal rule</Button>
-            <Button onClick={() => editor.chain().focus().setHardBreak().run()}>hard break</Button>
-            <Button
-                onClick={() => editor.chain().focus().undo().run()}
-                disabled={!editor.can().chain().focus().undo().run()}
-            >
-                undo
+                <BiUndo size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().redo().run()}
-                disabled={!editor.can().chain().focus().redo().run()}
+                onPress={() => editor.chain().focus().redo().run()}
+                isDisabled={!editor.can().chain().focus().redo().run()}
+                variant="light"
+                size="sm"
+                radius="sm"
+                isIconOnly
             >
-                redo
+                <BiRedo size={16} />
             </Button>
             <Button
-                onClick={() => editor.chain().focus().setColor('#958DF1').run()}
-                className={editor.isActive('textStyle', { color: '#958DF1' }) ? 'is-active' : ''}
+                size="sm"
+                radius="sm"
+                isIconOnly
+                onPress={() => editor.chain().focus().setColor('#958DF1').run()}
+                variant={editor.isActive('textStyle', { color: '#958DF1' }) ? 'solid' : 'light'}
             >
-                purple
+                <CgFormatColor size={16} color="#958DF1" />
             </Button>
-        </>
+        </div>
     );
 };
 
@@ -154,6 +198,7 @@ const extensions = [
     Paragraph,
     Text,
     Image,
+    OrderedList.configure(orderedListConfig),
     FileHandler.configure(fileHandlerConfig),
     Mathematics.configure(mathematicConfig),
 ];
@@ -194,9 +239,11 @@ display: none;
 
 const Editor = () => {
     return (
-        <EditorProvider slotBefore={<MenuBar />} extensions={extensions} content={content}>
-            <>Children</>
-        </EditorProvider>
+        <div className="p-10">
+            <EditorProvider slotBefore={<MenuBar />} extensions={extensions} content={content}>
+                <></>
+            </EditorProvider>
+        </div>
     );
 };
 export default Editor;
