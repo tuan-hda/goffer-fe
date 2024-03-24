@@ -8,12 +8,27 @@ import {
     TbLogout,
 } from 'react-icons/tb';
 import { PiCompass, PiUserCircle } from 'react-icons/pi';
-import { useEffect, useState } from 'react';
+import { ComponentPropsWithoutRef, useEffect, useState } from 'react';
 import useDiscoverStore from 'src/stores/discoverStore';
-import { Link } from 'react-router-dom';
+import { NavLink, useMatch } from 'react-router-dom';
 import classNames from 'classnames';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
+
+type MenuItemProps = ComponentPropsWithoutRef<typeof MenuItem>;
+interface CustomMenuItemProps extends MenuItemProps {
+    to: string;
+    icon: React.ReactNode;
+}
+const CustomMenuItem = ({ to, icon, children }: CustomMenuItemProps) => {
+    const match = useMatch({ path: to.slice(1), end: false });
+
+    return (
+        <MenuItem active={!!match} onClick={() => console.log(match)} component={<NavLink to={to} />} icon={icon}>
+            {children}
+        </MenuItem>
+    );
+};
 
 const SideBar = () => {
     const [collapsed, setCollapsed] = useState(true);
@@ -21,6 +36,7 @@ const SideBar = () => {
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
     const onMouseLeave = () => setCollapsed(!sideBarPinned && true);
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
+    const user = 'user_id';
 
     useEffect(() => {
         setCollapsed(!sideBarPinned);
@@ -35,7 +51,7 @@ const SideBar = () => {
                         button: ({ active }) => {
                             return {
                                 color: active ? textColor : '#A0A2AA',
-                                backgroundColor: active ? '#27272A' : undefined,
+                                backgroundColor: active ? '#3F3F46' : undefined,
                                 borderRadius: '14px !important',
                                 '&:hover': {
                                     backgroundColor: 'hsl(var(--nextui-default)/0.4)',
@@ -48,7 +64,7 @@ const SideBar = () => {
                 >
                     <MenuItem
                         icon={<img src="/logo-inverted.svg" alt="logo" className="h-[35px] w-[35px]" />}
-                        component={<Link to="/" />}
+                        component={<NavLink to="/" />}
                         suffix={
                             <Button isIconOnly variant="light" onPress={togglePinned}>
                                 {sideBarPinned ? (
@@ -75,7 +91,13 @@ const SideBar = () => {
                     >
                         <CardHeader className={classNames(collapsed ? 'justify-center' : 'justify-between')}>
                             <div className=" flex items-center justify-center gap-3">
-                                <Avatar isBordered radius="full" size="md" src="/avatars/avatar-1.png" />
+                                <Avatar
+                                    isBordered
+                                    color="primary"
+                                    radius="full"
+                                    size="md"
+                                    src="/avatars/avatar-1.png"
+                                />
                                 {!collapsed && (
                                     <div className="flex flex-col items-start justify-center gap-1">
                                         <h4 className="max-w-28 overflow-hidden text-ellipsis text-nowrap text-small font-semibold leading-none text-primary-foreground">
@@ -93,13 +115,19 @@ const SideBar = () => {
                         </CardHeader>
                     </Card>
 
-                    <MenuItem active icon={<TbHomeEco size={28} />}>
+                    <CustomMenuItem to="/app/individual/home" icon={<TbHomeEco size={28} />}>
                         Home
+                    </CustomMenuItem>
+                    <CustomMenuItem to="/app/individual/discover" icon={<PiCompass size={28} />}>
+                        Discover
+                    </CustomMenuItem>
+                    <CustomMenuItem to={`/app/individual/${user}`} icon={<PiUserCircle size={28} />}>
+                        Profile
+                    </CustomMenuItem>
+                    <MenuItem disabled className="flex flex-1 flex-row" />
+                    <MenuItem onClick={() => console.log('first')} icon={<TbLogout size={28} />}>
+                        Log out
                     </MenuItem>
-                    <MenuItem icon={<PiCompass size={28} />}>Discover</MenuItem>
-                    <MenuItem icon={<PiUserCircle size={28} />}>Profile</MenuItem>
-                    <MenuItem disabled className=" flex flex-1 flex-row" />
-                    <MenuItem icon={<TbLogout size={28} />}>Log out</MenuItem>
                 </Menu>
             </Sidebar>
         </div>
