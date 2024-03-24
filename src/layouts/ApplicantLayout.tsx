@@ -1,5 +1,5 @@
 import Discover from 'src/components/applicant/discover/Discover';
-import { Footer, Header } from '../components/applicant';
+import { Header } from '../components/applicant';
 import useDiscoverStore from 'src/stores/discoverStore';
 import classNames from 'classnames';
 
