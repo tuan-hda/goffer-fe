@@ -12,7 +12,7 @@ const Discover = () => {
 
     return (
         <div className="flex flex-col">
-            {/* <Filter /> */}
+            <Filter />
             <Outlet />
         </div>
     );

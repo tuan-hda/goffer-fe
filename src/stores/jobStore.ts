@@ -4,29 +4,29 @@ import { persist } from 'zustand/middleware';
 
 type State = {
     tabKey: string;
-    sideBarPinned: boolean;
+    jobDetailOpening: boolean;
 };
 
 type Action = {
     updateTabKey: (_: State['tabKey']) => void;
-    updateSideBarPinned: (_: State['sideBarPinned']) => void;
+    updateJobDetailOpening: (_: State['jobDetailOpening']) => void;
 };
 
 // Create your store, which includes both state and (optionally) actions
-const useDiscoverStore = create<State & Action>()(
+const useJobStore = create<State & Action>()(
     immer(
         persist(
             (set) => ({
-                tabKey: 'people',
-                sideBarPinned: false,
+                tabKey: 'all',
+                jobDetailOpening: false,
                 updateTabKey: (tabKey) => set(() => ({ tabKey: tabKey })),
-                updateSideBarPinned: (pinned) => set(() => ({ sideBarPinned: pinned })),
+                updateJobDetailOpening: (opening) => set(() => ({ jobDetailOpening: opening })),
             }),
             {
-                name: 'discover-store',
+                name: 'job-store',
             },
         ),
     ),
 );
 
-export default useDiscoverStore;
+export default useJobStore;

@@ -72,7 +72,7 @@ const items: Item[] = [
     {
         type: 'link',
         element: {
-            path: '/app/discover',
+            path: '/app/individual/discover',
             startContent: <TbCompass className="text-xl" />,
             content: 'Discover',
         },
@@ -81,7 +81,7 @@ const items: Item[] = [
     {
         type: 'link',
         element: {
-            path: '/app/discover/jobs',
+            path: '/app/individual/jobs',
             startContent: <TbBaguette className="text-xl" />,
             content: 'Jobs',
         },
@@ -133,7 +133,7 @@ const SideBar = () => {
                         button: ({ active }) => {
                             return {
                                 color: active ? textColor : '#A0A2AA',
-                                backgroundColor: active ? '#3F3F46' : undefined,
+                                backgroundColor: active ? '#F4E1D0' : undefined,
                                 borderRadius: '14px !important',
                                 '&:hover': {
                                     backgroundColor: 'hsl(var(--nextui-default)/0.4)',
@@ -173,7 +173,7 @@ const SideBar = () => {
                         <div className="mx-[14px]">
                             <Link
                                 to="/app/individual"
-                                className="relative -mx-0.5 mb-5 mt-7 flex items-center gap-3 rounded-lg p-2 transition hover:bg-gray-100"
+                                className="relative -mx-0.5 mb-5 mt-7 flex items-center gap-3 rounded-lg p-2 transition hover:bg-beige/70"
                             >
                                 <Avatar className="h-7 w-7" src={user?.avatar} />
                                 <p
@@ -195,7 +195,7 @@ const SideBar = () => {
                             ))}
                         </div>
                         <div className="mx-3 mt-auto">
-                            <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
+                            <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-beige/70">
                                 <TbHelp className="text-xl" />
                                 <p
                                     className={classNames(
@@ -210,7 +210,7 @@ const SideBar = () => {
                             </button>
                             <button
                                 onClick={logout}
-                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-beige/70"
                             >
                                 <TbLogout className="text-xl" />
                                 <p

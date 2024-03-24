@@ -12,12 +12,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     return (
         <div className="relative bg-pale">
             <SideBar />
-            <div
-                className={classNames(
-                    'transition-all',
-                    !sideBarPinned ? 'ml-[67px] w-[calc(100%-67px)]' : 'ml-[280px] w-[calc(100%-280px)]',
-                )}
-            >
+            <div className={classNames('transition-all', !sideBarPinned ? '' : 'ml-[280px] w-[calc(100%-280px)]')}>
                 {children}
             </div>
         </div>

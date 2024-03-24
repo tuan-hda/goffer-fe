@@ -7,10 +7,12 @@ import { CgMoreAlt } from 'react-icons/cg';
 import { GiDuration } from 'react-icons/gi';
 import Process from '../common/Process';
 import Editor from 'src/components/common/editor/Editor';
+import useJobStore from 'src/stores/jobStore';
 
 const JobDetail = () => {
     const tags = ['TypeScript', 'Material UI', 'Redux', 'React', 'Axios', 'RESTfull API'];
-    const { jobDetailOpening, sideBarPinned, updateJobDetailOpening } = useDiscoverStore();
+    const { sideBarPinned } = useDiscoverStore();
+    const { jobDetailOpening, updateJobDetailOpening } = useJobStore();
     const liked = false;
 
     return (
@@ -18,11 +20,11 @@ const JobDetail = () => {
             isBlurred
             isFooterBlurred
             className={classNames(
-                'fixed right-0 top-16 h-[calc(100vh-64px)] pb-2 transition dark:bg-default-100/50 md:max-w-[624px]',
+                'bg-image fixed right-0 top-[68px] h-[calc(100vh-72px)] pb-2 transition dark:bg-default-100/50 md:max-w-[624px]',
                 jobDetailOpening ? 'translate-x-0' : 'translate-x-[calc(50vw-40px)]  shadow-none',
                 sideBarPinned
-                    ? 'left-[calc(50vw+124px)] w-[calc(50vw-140px)] xl:left-[calc(50vw+120px)]'
-                    : 'left-[calc(50vw+40px)] w-[calc(50vw-56px)] xl:left-[calc(50vw+36px)]',
+                    ? 'left-[calc(50vw+136px)] w-[calc(50vw-160px)] xl:left-[calc(50vw+136px)]'
+                    : 'left-[calc(50vw+32px)] w-[calc(50vw-56px)] xl:left-[calc(50vw+32px)]',
             )}
         >
             <Button
@@ -82,7 +84,7 @@ const JobDetail = () => {
                     <Chip
                         startContent={<TbBuilding />}
                         variant="light"
-                        className=" text-[10px] font-medium text-default-500"
+                        className="text-sm font-medium text-default-500"
                     >
                         1-10 employees
                     </Chip>
