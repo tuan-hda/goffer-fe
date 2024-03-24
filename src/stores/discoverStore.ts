@@ -1,4 +1,6 @@
 import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
+import { persist } from 'zustand/middleware';
 
 type State = {
     tabKey: string;
@@ -13,13 +15,22 @@ type Action = {
 };
 
 // Create your store, which includes both state and (optionally) actions
-const useDiscoverStore = create<State & Action>((set) => ({
-    tabKey: 'jobs',
-    sideBarPinned: false,
-    jobDetailOpening: false,
-    updateTabKey: (tabKey) => set(() => ({ tabKey: tabKey })),
-    updateSideBarPinned: (pinned) => set(() => ({ sideBarPinned: pinned })),
-    updateJobDetailOpening: (opening) => set(() => ({ jobDetailOpening: opening })),
-}));
+const useDiscoverStore = create<State & Action>()(
+    immer(
+        persist(
+            (set) => ({
+                tabKey: 'jobs',
+                sideBarPinned: false,
+                jobDetailOpening: false,
+                updateTabKey: (tabKey) => set(() => ({ tabKey: tabKey })),
+                updateSideBarPinned: (pinned) => set(() => ({ sideBarPinned: pinned })),
+                updateJobDetailOpening: (opening) => set(() => ({ jobDetailOpening: opening })),
+            }),
+            {
+                name: 'discover-store',
+            },
+        ),
+    ),
+);
 
 export default useDiscoverStore;

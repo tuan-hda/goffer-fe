@@ -3,7 +3,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { sendOtpVerificationEmail, verifyOtpEmail } from 'src/services/auth.service';
 import { Token } from 'src/types/token.type';
 import toast from 'react-hot-toast';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import classNames from 'classnames';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -43,8 +43,8 @@ const ConfirmEmail = ({ email, accessToken, onSuccess, initialType }: ConfirmEma
     const checkStillRemaining = useCallback(() => {
         const lastSentEmailStr = localStorage.getItem('lastSentEmail');
         if (lastSentEmailStr) {
-            const lastSentEmail = dayjs(lastSentEmailStr);
-            const diff = dayjs().diff(lastSentEmail, 'second');
+            const lastSentEmail = moment(lastSentEmailStr);
+            const diff = moment().diff(lastSentEmail, 'second');
             if (diff < COOLDOWN_RESEND_OTP) {
                 setRemainingTime(COOLDOWN_RESEND_OTP - diff);
                 return true;
@@ -61,7 +61,7 @@ const ConfirmEmail = ({ email, accessToken, onSuccess, initialType }: ConfirmEma
     const sendVerificationEmail = useCallback(async (accessToken: string) => {
         try {
             setLoading(true);
-            localStorage.setItem('lastSentEmail', dayjs().toISOString());
+            localStorage.setItem('lastSentEmail', moment().toISOString());
             await sendOtpVerificationEmail(accessToken);
             setRemainingTime(COOLDOWN_RESEND_OTP);
         } catch (error) {

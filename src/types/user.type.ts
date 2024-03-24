@@ -9,6 +9,8 @@ export type User = {
     initialType: 'individual' | 'organization';
     skills?: string[];
     refDoc?: string;
+    gender?: string;
+    dob?: Date;
 };
 
 export type UpdateUser = {
@@ -17,6 +19,8 @@ export type UpdateUser = {
     avatar?: string;
     skills?: string[];
     refDoc?: string;
+    gender?: string;
+    dob?: Date;
 };
 
 export type SignUpRequest = {

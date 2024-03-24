@@ -11,7 +11,7 @@ const AppLayout = () => {
     const access = useAuthStore((state) => state.access);
     const location = useLocation();
     const match = matchRoutes([{ path: '/auth' }], location);
-    const getStarted = matchRoutes([{ path: '/app/get-started' }], location);
+    const getStarted = matchRoutes([{ path: '/get-started' }], location);
 
     if (isLoading || (access === undefined && !user))
         return (
@@ -48,7 +48,7 @@ const AppLayout = () => {
         );
 
     if (user && (!user.name || !user.skills || user.skills.length === 0 || !user.avatar) && !getStarted) {
-        return <Navigate to="/app/get-started" />;
+        return <Navigate to="/get-started" />;
     }
 
     if (user)
