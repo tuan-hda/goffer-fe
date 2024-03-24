@@ -98,7 +98,6 @@ const LoginForm = ({
                     Login
                 </Button>
             </form>
-
             <Link to="/auth/sign-up" className="mt-6 block hover:underline">
                 New to Goffer? Join our platform. <span className="text-primary">Sign up</span>
             </Link>

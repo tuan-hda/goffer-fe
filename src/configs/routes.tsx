@@ -1,4 +1,4 @@
-import { RouteObject } from 'react-router-dom';
+import { Navigate, RouteObject } from 'react-router-dom';
 import {
     AboutUs,
     ContactUs,
@@ -14,8 +14,10 @@ import {
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
+import { Discover, JobDiscover, PeopleDiscover } from 'src/components/applicant/discover';
 import { AppLayout, ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
 import Test from 'src/pages/Test';
+import Editor from 'src/components/common/editor/Editor';
 
 const routesConfig: RouteObject[] = [
     {
@@ -76,6 +78,30 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/get-started',
                         element: <GetStarted />,
+                    },
+                ],
+            },
+            {
+                path: '/app',
+                element: <AppLayout />,
+                children: [
+                    {
+                        path: '/app/individual',
+                        element: <ApplicantLayout />,
+                        children: [
+                            { index: true, element: <Navigate to="home" /> },
+                            { path: '/app/individual/home', element: <Editor /> },
+                            {
+                                path: '/app/individual/discover',
+                                element: <Discover />,
+                                children: [
+                                    { path: '/app/individual/discover/jobs', element: <JobDiscover /> },
+                                    { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
+                                    { path: '/app/individual/discover/companies', element: <>Companies</> },
+                                ],
+                            },
+                            { path: '/app/individual/:user_id', element: <>User Profile</> },
+                        ],
                     },
                 ],
             },

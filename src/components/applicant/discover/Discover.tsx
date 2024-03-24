@@ -1,30 +1,21 @@
-import PeopleDiscover from './PeopleDiscover'
-import Filter from '../filter/Filter'
-import useDiscoverStore from 'src/stores/discoverStore'
-import JobDiscover from './JobDiscover'
+import useDiscoverStore from 'src/stores/discoverStore';
+import Filter from '../filter/Filter';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Discover = () => {
-  const tabKey = useDiscoverStore(state=>state.tabKey)
-  
-  const renderTabContent = ()=>{
-    switch (tabKey) {
-      case 'jobs':
-        return <JobDiscover/>;
-      case 'people':
-        return <PeopleDiscover/>;
-      case 'companies':
-        return <></>;
-      default:
-        return <></>;
-    }
-  }
+    const navigate = useNavigate();
+    const tabKey = useDiscoverStore((state) => state.tabKey);
+    useEffect(() => {
+        navigate(`${tabKey}`, { replace: true });
+    }, [tabKey, navigate]);
 
-  return (
-    <div className='flex flex-col'>
-        <Filter />
-        {renderTabContent()}
-    </div>
-  )
-}
+    return (
+        <div className="flex flex-col">
+            {/* <Filter /> */}
+            <Outlet />
+        </div>
+    );
+};
 
-export default Discover
+export default Discover;
