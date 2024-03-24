@@ -82,7 +82,7 @@ const Account = () => {
             <div className="mt-5">
                 <label htmlFor="name">Name</label>
                 <Input
-                    className="mt-1 rounded-lg"
+                    className="mt-1 rounded-lg bg-white"
                     onChange={(e) => handleChange('name')(e.target.value)}
                     id="name"
                     placeholder="Your name here"
@@ -113,7 +113,7 @@ const Account = () => {
             <div className="mt-5">
                 <p>Gender</p>
                 <Select value={curr?.gender} onValueChange={(value) => handleChange('gender')(value)}>
-                    <SelectTrigger id="gender" className="mt-1 w-[180px] rounded-lg">
+                    <SelectTrigger id="gender" className="mt-1 w-[180px] rounded-lg bg-white">
                         <SelectValue placeholder="Select gender" />
                     </SelectTrigger>
                     <SelectContent>
