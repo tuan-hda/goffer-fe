@@ -1,37 +1,108 @@
-import { Avatar, Button, Card, CardHeader } from '@nextui-org/react';
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
+import { Avatar } from '@nextui-org/react';
+import { Sidebar, Menu } from 'react-pro-sidebar';
 import {
     TbBaguette,
-    TbChevronRight,
     TbCompass,
-    TbGlobe,
     TbHelp,
-    TbHome,
-    TbHomeEco,
-    TbLayoutSidebarLeftCollapse,
     TbLayoutSidebarLeftCollapseFilled,
-    TbLayoutSidebarLeftExpand,
     TbLayoutSidebarLeftExpandFilled,
-    TbLayoutSidebarRightCollapseFilled,
     TbLogout,
-    TbNetwork,
     TbNotification,
     TbPaint,
     TbSettings,
-    TbSettings2,
     TbSparkles,
     TbWallet,
 } from 'react-icons/tb';
-import { PiCompass, PiUserCircle } from 'react-icons/pi';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import useDiscoverStore from 'src/stores/discoverStore';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, matchRoutes, useLocation } from 'react-router-dom';
 import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
 import useAuthStore from 'src/stores/authStore';
 import { shallow } from 'zustand/shallow';
+import SidebarItem from './SidebarItem';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
+
+type ButtonItem = {
+    type: 'button';
+    element: {
+        startContent: React.ReactNode;
+        content: React.ReactNode;
+    };
+    divider?: boolean;
+};
+
+type LinkItem = {
+    type: 'link';
+    element: {
+        path: string;
+        startContent: React.ReactNode;
+        content: React.ReactNode;
+    };
+    divider?: boolean;
+};
+
+export type Item = ButtonItem | LinkItem;
+
+const items: Item[] = [
+    {
+        type: 'button',
+        element: {
+            startContent: <TbSparkles className="text-xl" />,
+            content: 'Ask Goffer',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/individual/notifications',
+            startContent: <TbNotification className="text-xl" />,
+            content: 'Notifications',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/settings',
+            startContent: <TbSettings className="text-xl" />,
+            content: 'Settings',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/discover',
+            startContent: <TbCompass className="text-xl" />,
+            content: 'Discover',
+        },
+        divider: true,
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/discover/jobs',
+            startContent: <TbBaguette className="text-xl" />,
+            content: 'Jobs',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/discover/portfolio',
+            startContent: <TbPaint className="text-xl" />,
+            content: 'Portfolio',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/individual/wallet',
+            startContent: <TbWallet className="text-xl" />,
+            content: 'Wallet',
+        },
+    },
+];
 
 const SideBar = () => {
     // TODO: Remove logout from this file
@@ -43,13 +114,21 @@ const SideBar = () => {
     const onMouseLeave = () => setCollapsed(!sideBarPinned && true);
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
 
+    const location = useLocation();
+    const matches = matchRoutes(
+        items.filter((item) => item.type === 'link').map((item) => (item as LinkItem).element),
+        location,
+    );
+
     useEffect(() => {
         setCollapsed(!sideBarPinned);
     }, [sideBarPinned]);
 
+    console.log(matches);
+
     return (
         <div className="fixed z-50 bg-white text-sm text-text" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-            <Sidebar width={'280px'} className="child-bg ot !border-none" collapsed={collapsed}>
+            <Sidebar width={'280px'} className="child-bg border-r !border-r-gray-200/70" collapsed={collapsed}>
                 <Menu
                     className="h-full bg-pale"
                     menuItemStyles={{
@@ -67,19 +146,6 @@ const SideBar = () => {
                         },
                     }}
                 >
-                    {/* <MenuItem
-                        component={<Link to="/" />}
-                        suffix={
-                            <Button isIconOnly variant="light" onPress={togglePinned}>
-                                {sideBarPinned ? (
-                                    <TbLayoutSidebarLeftCollapse size={28} color="white" />
-                                ) : (
-                                    <TbLayoutSidebarLeftExpand size={28} color="white" />
-                                )}
-                            </Button>
-                        }
-                        className="sidebar_header"
-                    ></MenuItem> */}
                     <div className={classNames('flex items-center gap-3 px-5', collapsed && 'pt-0.5')}>
                         <Link to={`/app/${user?.initialType}`} className="flex items-center gap-[10px]">
                             <img src="/logo.svg" className="h-7 w-7" alt="logo" />
@@ -123,121 +189,16 @@ const SideBar = () => {
                                     {user?.name}
                                 </p>
                             </Link>
-                            <button className="flex w-full items-center justify-start gap-[18px] rounded-lg p-2 text-primary transition hover:bg-gray-100">
-                                <TbSparkles className="text-xl" />{' '}
-                                <p
-                                    className={classNames(
-                                        'pointer-events-auto absolute left-[60px] overflow-hidden whitespace-nowrap opacity-100 transition',
-                                        collapsed
-                                            ? 'pointer-events-none !opacity-0'
-                                            : 'pointer-events-auto opacity-100',
-                                    )}
-                                >
-                                    Ask Goffer
-                                </p>
-                            </button>
-                            <Link
-                                to="/app/individual/notifications"
-                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
-                            >
-                                <TbNotification className="text-xl" />{' '}
-                                <p
-                                    className={classNames(
-                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
-                                        collapsed
-                                            ? 'pointer-events-none !opacity-0'
-                                            : 'pointer-events-auto opacity-100',
-                                    )}
-                                >
-                                    Notifications
-                                </p>
-                            </Link>
-                            <Link
-                                to="/app/wallet"
-                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
-                            >
-                                <TbSettings className="text-xl" />{' '}
-                                <p
-                                    className={classNames(
-                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
-                                        collapsed
-                                            ? 'pointer-events-none !opacity-0'
-                                            : 'pointer-events-auto opacity-100',
-                                    )}
-                                >
-                                    Settings
-                                </p>
-                            </Link>
-                            <div className="mx-2 my-4 border-t border-t-gray-200/70" />
-                            <Link
-                                to="/app/discover"
-                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
-                            >
-                                <TbCompass className="text-xl" />{' '}
-                                <p
-                                    className={classNames(
-                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
-                                        collapsed
-                                            ? 'pointer-events-none !opacity-0'
-                                            : 'pointer-events-auto opacity-100',
-                                    )}
-                                >
-                                    Discover
-                                </p>
-                            </Link>
-                            <Link
-                                to="/app/discover"
-                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
-                            >
-                                <TbBaguette className="text-xl" />{' '}
-                                <p
-                                    className={classNames(
-                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
-                                        collapsed
-                                            ? 'pointer-events-none !opacity-0'
-                                            : 'pointer-events-auto opacity-100',
-                                    )}
-                                >
-                                    Jobs
-                                </p>
-                            </Link>
-                            <Link
-                                to="/app/wallet"
-                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
-                            >
-                                <TbPaint className="text-xl" />{' '}
-                                <p
-                                    className={classNames(
-                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
-                                        collapsed
-                                            ? 'pointer-events-none !opacity-0'
-                                            : 'pointer-events-auto opacity-100',
-                                    )}
-                                >
-                                    Portfolio
-                                </p>
-                            </Link>
-
-                            <Link
-                                to="/app/wallet"
-                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
-                            >
-                                <TbWallet className="text-xl" />{' '}
-                                <p
-                                    className={classNames(
-                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
-                                        collapsed
-                                            ? 'pointer-events-none !opacity-0'
-                                            : 'pointer-events-auto opacity-100',
-                                    )}
-                                >
-                                    Wallet
-                                </p>
-                            </Link>
+                            {items.map((item, index) => (
+                                <Fragment key={index}>
+                                    {item.divider && <div className="mx-2 my-4 border-t border-t-gray-200/70" />}
+                                    <SidebarItem matches={matches} collapsed={collapsed} item={item} />
+                                </Fragment>
+                            ))}
                         </div>
                         <div className="mx-3 mt-auto">
                             <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
-                                <TbHelp className="text-xl" />{' '}
+                                <TbHelp className="text-xl" />
                                 <p
                                     className={classNames(
                                         'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
@@ -253,7 +214,7 @@ const SideBar = () => {
                                 onClick={logout}
                                 className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
                             >
-                                <TbLogout className="text-xl" />{' '}
+                                <TbLogout className="text-xl" />
                                 <p
                                     className={classNames(
                                         'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
@@ -267,44 +228,6 @@ const SideBar = () => {
                             </button>
                         </div>
                     </div>
-
-                    {/* <Card
-                        isPressable
-                        shadow="none"
-                        radius="lg"
-                        fullWidth={collapsed}
-                        className={classNames(
-                            'hover my-12 border border-transparent bg-transparent',
-                            !collapsed && 'mx-5 w-[216px] border-primary-foreground bg-transparent',
-                        )}
-                    >
-                        <CardHeader className={classNames(collapsed ? 'justify-center' : 'justify-between')}>
-                            <div className=" flex items-center justify-center gap-3">
-                                <Avatar isBordered radius="full" size="md" src="/avatars/avatar-1.png" />
-                                {!collapsed && (
-                                    <div className="flex flex-col items-start justify-center gap-1">
-                                        <h4 className="max-w-28 overflow-hidden text-ellipsis text-nowrap text-small font-semibold leading-none text-primary-foreground">
-                                            Zoey Lang
-                                        </h4>
-                                        <h5 className="text-small tracking-tight text-default-400">@zoeylang</h5>
-                                    </div>
-                                )}
-                            </div>
-                            {!collapsed && (
-                                <Button radius="full" size="sm" isIconOnly variant="light">
-                                    <TbChevronRight size={20} color="white" />
-                                </Button>
-                            )}
-                        </CardHeader>
-                    </Card>
-
-                    <MenuItem active icon={<TbHomeEco size={28} />}>
-                        Home
-                    </MenuItem>
-                    <MenuItem icon={<PiCompass size={28} />}>Discover</MenuItem>
-                    <MenuItem icon={<PiUserCircle size={28} />}>Profile</MenuItem>
-                    <MenuItem disabled className=" flex flex-1 flex-row" />
-                    <MenuItem icon={<TbLogout size={28} />}>Log out</MenuItem> */}
                 </Menu>
             </Sidebar>
         </div>
