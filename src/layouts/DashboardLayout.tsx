@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import SideBar from 'src/components/applicant/navigation/SideBar';
+import SideBar from 'src/components/navigation/SideBar';
 import useDiscoverStore from 'src/stores/discoverStore';
 
 type DashboardLayoutProps = {

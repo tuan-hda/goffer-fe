@@ -62,8 +62,7 @@ const routesConfig: RouteObject[] = [
                         path: '/app/individual',
                         element: <ApplicantLayout />,
                         children: [
-                            { index: true, element: <Navigate to="home" /> },
-                            { path: '/app/individual/home', element: <Editor /> },
+                            { path: '/app/individual', element: <Editor /> },
                             {
                                 path: '/app/individual/discover',
                                 element: <Discover />,
