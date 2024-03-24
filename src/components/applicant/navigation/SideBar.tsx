@@ -135,7 +135,7 @@ const SideBar = () => {
                         button: ({ active }) => {
                             return {
                                 color: active ? textColor : '#A0A2AA',
-                                backgroundColor: active ? '#27272A' : undefined,
+                                backgroundColor: active ? '#3F3F46' : undefined,
                                 borderRadius: '14px !important',
                                 '&:hover': {
                                     backgroundColor: 'hsl(var(--nextui-default)/0.4)',
