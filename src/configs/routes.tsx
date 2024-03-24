@@ -62,38 +62,6 @@ const routesConfig: RouteObject[] = [
                         path: '/app/individual',
                         element: <ApplicantLayout />,
                         children: [
-                            {
-                                path: '/app/individual/discover',
-                                element: <></>,
-                                children: [
-                                    { path: '/app/individual/discover/jobs', element: <></> },
-                                    { path: '/app/individual/discover/people', element: <></> },
-                                    { path: '/app/individual/discover/companies', element: <></> },
-                                ],
-                            },
-                            { path: '/app/individual/tab2', element: <></> },
-                            { path: '/app/individual/tab3', element: <></> },
-                            { path: '/app/individual/tab4', element: <></> },
-                        ],
-                    },
-                    {
-                        path: '/app/get-started',
-                        element: <GetStarted />,
-                    },
-                    {
-                        path: '/app/settings',
-                        element: <Settings />,
-                    },
-                ],
-            },
-            {
-                path: '/app',
-                element: <AppLayout />,
-                children: [
-                    {
-                        path: '/app/individual',
-                        element: <ApplicantLayout />,
-                        children: [
                             { index: true, element: <Navigate to="home" /> },
                             { path: '/app/individual/home', element: <Editor /> },
                             {
@@ -108,7 +76,16 @@ const routesConfig: RouteObject[] = [
                             { path: '/app/individual/:user_id', element: <>User Profile</> },
                         ],
                     },
+
+                    {
+                        path: '/app/settings',
+                        element: <Settings />,
+                    },
                 ],
+            },
+            {
+                path: '/get-started',
+                element: <GetStarted />,
             },
             { path: '*', element: <NotFound /> },
         ],
