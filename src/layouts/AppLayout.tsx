@@ -54,7 +54,7 @@ const AppLayout = () => {
     if (user)
         return (
             <DashboardLayout>
-                <Outlet />;
+                <Outlet />
             </DashboardLayout>
         );
 };
