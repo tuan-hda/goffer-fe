@@ -4,6 +4,7 @@ import useAuthStore from 'src/stores/authStore';
 import AuthTwoSection from './AuthTwoSection';
 import ConfirmEmail from 'src/components/auth/ConfirmEmail';
 import { Spinner } from '@nextui-org/react';
+import DashboardLayout from './DashboardLayout';
 
 const AppLayout = () => {
     const { data: user, isLoading } = useSelfProfileQuery();
@@ -50,7 +51,12 @@ const AppLayout = () => {
         return <Navigate to="/app/get-started" />;
     }
 
-    if (user) return <Outlet />;
+    if (user)
+        return (
+            <DashboardLayout>
+                <Outlet />
+            </DashboardLayout>
+        );
 };
 
 export default AppLayout;

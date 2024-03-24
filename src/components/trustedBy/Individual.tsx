@@ -42,7 +42,7 @@ const Individual = () => {
         <TrustedByLayout title="Individual" blendTitleOnly className="max-w-[1200px]">
             <div
                 ref={(node) => setParentWidth(node?.getBoundingClientRect().width || 0)}
-                className="h-full w-full relative invert"
+                className="relative h-full w-full invert"
             >
                 {parentWidth !== 0 &&
                     individualList.map((item, index) => (
@@ -58,7 +58,7 @@ const Individual = () => {
                             initial={{
                                 rotate: item.specs[0],
                                 left:
-                                    (Math.min(256 * individualList.length, parentWidth) / individualList.length) *
+                                    (Math.min(280 * individualList.length, parentWidth) / individualList.length) *
                                         index -
                                     index * 30,
                                 top: `calc(50% + ${item.specs[1] + (index + 1) * 110 - index * 100}px)`,
@@ -70,7 +70,7 @@ const Individual = () => {
                                 zIndex: 3 - index,
                                 top: `calc(50% + ${item.specs[1]}px)`,
                                 left:
-                                    (Math.min(256 * individualList.length, parentWidth) / individualList.length) *
+                                    (Math.min(280 * individualList.length, parentWidth) / individualList.length) *
                                     index,
                                 translateY: '-50%',
                                 transition: {
@@ -79,9 +79,9 @@ const Individual = () => {
                                     delay: index * 0.1,
                                 },
                             }}
-                            className="absolute p-6 flex flex-col invert group rounded-2xl h-[360px] w-64 shadow-2xl"
+                            className="group absolute flex h-[360px] w-64 flex-col rounded-2xl p-6 shadow-2xl invert"
                         >
-                            <img src={item.img} alt="author" className="object-cover rounded-full h-16 w-16" />
+                            <img src={item.img} alt="author" className="h-16 w-16 rounded-full object-cover" />
                             <p className="mt-4 text-text">&quot;{item.content}&quot;</p>
                             <p className="mt-auto font-semibold">- {item.author}</p>
                         </motion.div>

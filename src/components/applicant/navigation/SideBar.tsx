@@ -1,52 +1,136 @@
-import { Avatar, Button, Card, CardHeader } from '@nextui-org/react';
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
+import { Avatar } from '@nextui-org/react';
+import { Sidebar, Menu } from 'react-pro-sidebar';
 import {
-    TbChevronRight,
-    TbHomeEco,
-    TbLayoutSidebarLeftCollapse,
-    TbLayoutSidebarLeftExpand,
+    TbBaguette,
+    TbCompass,
+    TbHelp,
+    TbLayoutSidebarLeftCollapseFilled,
+    TbLayoutSidebarLeftExpandFilled,
     TbLogout,
+    TbNotification,
+    TbPaint,
+    TbSettings,
+    TbSparkles,
+    TbWallet,
 } from 'react-icons/tb';
-import { PiCompass, PiUserCircle } from 'react-icons/pi';
-import { ComponentPropsWithoutRef, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import useDiscoverStore from 'src/stores/discoverStore';
-import { NavLink, useMatch } from 'react-router-dom';
 import classNames from 'classnames';
+import { Link, matchRoutes, useLocation } from 'react-router-dom';
+import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import useAuthStore from 'src/stores/authStore';
+import { shallow } from 'zustand/shallow';
+import SidebarItem from './SidebarItem';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
-type MenuItemProps = ComponentPropsWithoutRef<typeof MenuItem>;
-interface CustomMenuItemProps extends MenuItemProps {
-    to: string;
-    icon: React.ReactNode;
-}
-const CustomMenuItem = ({ to, icon, children }: CustomMenuItemProps) => {
-    const match = useMatch({ path: to.slice(1), end: false });
-
-    return (
-        <MenuItem active={!!match} onClick={() => console.log(match)} component={<NavLink to={to} />} icon={icon}>
-            {children}
-        </MenuItem>
-    );
+type ButtonItem = {
+    type: 'button';
+    element: {
+        startContent: React.ReactNode;
+        content: React.ReactNode;
+    };
+    divider?: boolean;
 };
 
+type LinkItem = {
+    type: 'link';
+    element: {
+        path: string;
+        startContent: React.ReactNode;
+        content: React.ReactNode;
+    };
+    divider?: boolean;
+};
+
+export type Item = ButtonItem | LinkItem;
+
+const items: Item[] = [
+    {
+        type: 'button',
+        element: {
+            startContent: <TbSparkles className="text-xl" />,
+            content: 'Ask Goffer',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/individual/notifications',
+            startContent: <TbNotification className="text-xl" />,
+            content: 'Notifications',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/settings',
+            startContent: <TbSettings className="text-xl" />,
+            content: 'Settings',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/discover',
+            startContent: <TbCompass className="text-xl" />,
+            content: 'Discover',
+        },
+        divider: true,
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/discover/jobs',
+            startContent: <TbBaguette className="text-xl" />,
+            content: 'Jobs',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/discover/portfolio',
+            startContent: <TbPaint className="text-xl" />,
+            content: 'Portfolio',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/individual/wallet',
+            startContent: <TbWallet className="text-xl" />,
+            content: 'Wallet',
+        },
+    },
+];
+
 const SideBar = () => {
+    // TODO: Remove logout from this file
+    const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
+    const { data: user } = useSelfProfileQuery();
     const [collapsed, setCollapsed] = useState(true);
     const { sideBarPinned, updateSideBarPinned } = useDiscoverStore();
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
     const onMouseLeave = () => setCollapsed(!sideBarPinned && true);
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
-    const user = 'user_id';
+
+    const location = useLocation();
+    const matches = matchRoutes(
+        items.filter((item) => item.type === 'link').map((item) => (item as LinkItem).element),
+        location,
+    );
 
     useEffect(() => {
         setCollapsed(!sideBarPinned);
     }, [sideBarPinned]);
 
+    console.log(matches);
+
     return (
-        <div className="fixed z-50" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-            <Sidebar width={'256px'} collapsed={collapsed}>
+        <div className="fixed z-50 bg-white text-sm text-text" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+            <Sidebar width={'280px'} className="child-bg border-r !border-r-gray-200/70" collapsed={collapsed}>
                 <Menu
-                    className="h-full"
+                    className="h-full bg-pale"
                     menuItemStyles={{
                         button: ({ active }) => {
                             return {
@@ -62,72 +146,88 @@ const SideBar = () => {
                         },
                     }}
                 >
-                    <MenuItem
-                        icon={<img src="/logo-inverted.svg" alt="logo" className="h-[35px] w-[35px]" />}
-                        component={<NavLink to="/" />}
-                        suffix={
-                            <Button isIconOnly variant="light" onPress={togglePinned}>
-                                {sideBarPinned ? (
-                                    <TbLayoutSidebarLeftCollapse size={28} color="white" />
-                                ) : (
-                                    <TbLayoutSidebarLeftExpand size={28} color="white" />
-                                )}
-                            </Button>
-                        }
-                        className="sidebar_header"
-                    >
-                        <p className="pr-8 text-left text-3xl font-semibold text-primary-foreground">Goffer</p>
-                    </MenuItem>
-
-                    <Card
-                        isPressable
-                        shadow="none"
-                        radius="lg"
-                        fullWidth={collapsed}
-                        className={classNames(
-                            'hover my-12 border border-transparent bg-transparent',
-                            !collapsed && 'mx-5 w-[216px] border-primary-foreground bg-transparent',
-                        )}
-                    >
-                        <CardHeader className={classNames(collapsed ? 'justify-center' : 'justify-between')}>
-                            <div className=" flex items-center justify-center gap-3">
-                                <Avatar
-                                    isBordered
-                                    color="primary"
-                                    radius="full"
-                                    size="md"
-                                    src="/avatars/avatar-1.png"
-                                />
-                                {!collapsed && (
-                                    <div className="flex flex-col items-start justify-center gap-1">
-                                        <h4 className="max-w-28 overflow-hidden text-ellipsis text-nowrap text-small font-semibold leading-none text-primary-foreground">
-                                            Zoey Lang
-                                        </h4>
-                                        <h5 className="text-small tracking-tight text-default-400">@zoeylang</h5>
-                                    </div>
-                                )}
-                            </div>
+                    <div className={classNames('flex items-center gap-3 px-5', collapsed && 'pt-0.5')}>
+                        <Link to={`/app/${user?.initialType}`} className="flex items-center gap-[10px]">
+                            <img src="/logo.svg" className="h-7 w-7" alt="logo" />
                             {!collapsed && (
-                                <Button radius="full" size="sm" isIconOnly variant="light">
-                                    <TbChevronRight size={20} color="white" />
-                                </Button>
+                                <p className="text-left font-serif text-3xl font-black leading-[32px] text-text">
+                                    Goffer
+                                </p>
                             )}
-                        </CardHeader>
-                    </Card>
-
-                    <CustomMenuItem to="/app/individual/home" icon={<TbHomeEco size={28} />}>
-                        Home
-                    </CustomMenuItem>
-                    <CustomMenuItem to="/app/individual/discover" icon={<PiCompass size={28} />}>
-                        Discover
-                    </CustomMenuItem>
-                    <CustomMenuItem to={`/app/individual/${user}`} icon={<PiUserCircle size={28} />}>
-                        Profile
-                    </CustomMenuItem>
-                    <MenuItem disabled className="flex flex-1 flex-row" />
-                    <MenuItem onClick={() => console.log('first')} icon={<TbLogout size={28} />}>
-                        Log out
-                    </MenuItem>
+                        </Link>
+                        {!collapsed && (
+                            <>
+                                {sideBarPinned ? (
+                                    <TbLayoutSidebarLeftCollapseFilled
+                                        onClick={togglePinned}
+                                        className="ml-auto cursor-pointer text-2xl"
+                                    />
+                                ) : (
+                                    <TbLayoutSidebarLeftExpandFilled
+                                        onClick={togglePinned}
+                                        className="ml-auto cursor-pointer text-2xl"
+                                    />
+                                )}
+                            </>
+                        )}
+                    </div>
+                    <div className="flex h-full w-full flex-col">
+                        <div className="mx-[14px]">
+                            <Link
+                                to="/app/individual"
+                                className="relative -mx-0.5 mb-5 mt-7 flex items-center gap-3 rounded-lg p-2 transition hover:bg-gray-100"
+                            >
+                                <Avatar className="h-7 w-7" src={user?.avatar} />
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-12 overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    {user?.name}
+                                </p>
+                            </Link>
+                            {items.map((item, index) => (
+                                <Fragment key={index}>
+                                    {item.divider && <div className="mx-2 my-4 border-t border-t-gray-200/70" />}
+                                    <SidebarItem matches={matches} collapsed={collapsed} item={item} />
+                                </Fragment>
+                            ))}
+                        </div>
+                        <div className="mx-3 mt-auto">
+                            <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
+                                <TbHelp className="text-xl" />
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Help
+                                </p>
+                            </button>
+                            <button
+                                onClick={logout}
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
+                            >
+                                <TbLogout className="text-xl" />
+                                <p
+                                    className={classNames(
+                                        'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                                        collapsed
+                                            ? 'pointer-events-none !opacity-0'
+                                            : 'pointer-events-auto opacity-100',
+                                    )}
+                                >
+                                    Log out
+                                </p>
+                            </button>
+                        </div>
+                    </div>
                 </Menu>
             </Sidebar>
         </div>

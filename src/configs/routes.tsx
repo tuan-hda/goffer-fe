@@ -11,6 +11,7 @@ import {
     ForgotPassword,
     ResetPassword,
     GetStarted,
+    Settings,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -78,6 +79,10 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/get-started',
                         element: <GetStarted />,
+                    },
+                    {
+                        path: '/app/settings',
+                        element: <Settings />,
                     },
                 ],
             },
