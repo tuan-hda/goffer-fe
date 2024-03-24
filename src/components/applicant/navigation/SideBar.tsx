@@ -108,7 +108,7 @@ const SideBar = () => {
     // TODO: Remove logout from this file
     const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
     const { data: user } = useSelfProfileQuery();
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(false);
     const { sideBarPinned, updateSideBarPinned } = useDiscoverStore();
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
     const onMouseLeave = () => setCollapsed(!sideBarPinned && true);
@@ -123,8 +123,6 @@ const SideBar = () => {
     useEffect(() => {
         setCollapsed(!sideBarPinned);
     }, [sideBarPinned]);
-
-    console.log(matches);
 
     return (
         <div className="fixed z-50 bg-white text-sm text-text" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
