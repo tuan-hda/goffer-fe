@@ -4,6 +4,7 @@ import { TbHeart, TbHeartFilled } from 'react-icons/tb';
 import { MdVerified, MdOutlinePayments } from 'react-icons/md';
 import { GiDuration } from 'react-icons/gi';
 import useJobStore from 'src/stores/jobStore';
+import { Badge } from 'src/components/ui/badge';
 
 const JobCard = () => {
     const [liked, setLiked] = useState(false);
@@ -64,9 +65,9 @@ const JobCard = () => {
             </CardBody>
             <CardFooter className="gap-2">
                 {tags.map((tag, index) => (
-                    <Chip size="sm" key={index} variant="flat">
+                    <Badge key={index} variant="outline">
                         {tag}
-                    </Chip>
+                    </Badge>
                 ))}
             </CardFooter>
         </Card>
