@@ -94,7 +94,7 @@
 
 ::selection {
     color: #333;
-    background: var(--main-background);
+    background: #c0d6ef;
 }
 
 * {
