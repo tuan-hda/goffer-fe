@@ -4,6 +4,7 @@ import { TbHeart, TbHeartFilled } from 'react-icons/tb';
 import { MdVerified, MdOutlinePayments } from 'react-icons/md';
 import { GiDuration } from 'react-icons/gi';
 import useJobStore from 'src/stores/jobStore';
+import { Badge } from 'src/components/ui/badge';
 
 const JobCard = () => {
     const [liked, setLiked] = useState(false);
@@ -20,8 +21,8 @@ const JobCard = () => {
             onPress={openDetail}
             isPressable
             isBlurred
-            className="bg-image w-full max-w-screen-lg border-none p-4 transition dark:bg-default-100/50"
-            shadow="sm"
+            className="w-full max-w-screen-lg border-none bg-background/60 p-4 transition dark:bg-default-100/50"
+            shadow="md"
         >
             <CardHeader className="gap-4">
                 <Image alt="Album cover" className="object-cover" height={60} width={60} src="/logo.svg" />
@@ -64,9 +65,9 @@ const JobCard = () => {
             </CardBody>
             <CardFooter className="gap-2">
                 {tags.map((tag, index) => (
-                    <Chip size="sm" key={index} variant="flat">
+                    <Badge key={index} variant="outline">
                         {tag}
-                    </Chip>
+                    </Badge>
                 ))}
             </CardFooter>
         </Card>

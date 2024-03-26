@@ -15,6 +15,7 @@ import classNames from 'classnames';
 import { RiSearchLine } from 'react-icons/ri';
 import { HiOutlineAdjustments } from 'react-icons/hi';
 import useJobStore from 'src/stores/jobStore';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'src/components/ui/select';
 
 const JobFilter = () => {
     const [scrollDirection, setScrollDirection] = useState('up');
@@ -56,7 +57,7 @@ const JobFilter = () => {
     return (
         <div
             className={classNames(
-                'bg-image sticky top-16 z-30 hidden w-full max-w-screen-2xl self-center rounded-b-2xl py-6 shadow-md transition md:flex',
+                'sticky top-16 z-30 hidden w-full max-w-screen-2xl self-center rounded-b-2xl bg-pale py-6 shadow-md transition md:flex',
                 scrollDirection === 'down' ? '-translate-y-[164px]' : 'translate-y-0',
             )}
         >
@@ -100,6 +101,7 @@ const JobFilter = () => {
                             onPress={onOpen}
                             radius="full"
                             variant="ghost"
+                            className=" border-1 border-default"
                             startContent={<HiOutlineAdjustments size={20} className="text-default-700" />}
                         >
                             Filter
@@ -122,6 +124,15 @@ const JobFilter = () => {
                                 )}
                             </ModalContent>
                         </Modal>
+                        <Select>
+                            <SelectTrigger className="w-[180px] rounded-full border-1 border-default">
+                                <SelectValue placeholder="Sort" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="light">Most relevant</SelectItem>
+                                <SelectItem value="dark">Newest</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </>
                 </div>
             </div>

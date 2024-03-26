@@ -7,7 +7,7 @@ const Discover = () => {
     const navigate = useNavigate();
     const tabKey = useDiscoverStore((state) => state.tabKey);
     useEffect(() => {
-        navigate(`${tabKey}`, { replace: true });
+        navigate(tabKey, { replace: true });
     }, [tabKey, navigate]);
 
     return (

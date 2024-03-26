@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import JobCard from '../common/JobCard';
+import JobCard from '../../common/JobCard';
 import JobDetail from './JobDetail';
-import JobFilter from '../filter/JobFilter';
+import JobFilter from '../../filter/JobFilter';
 import useJobStore from 'src/stores/jobStore';
 
 const JobDiscover = () => {
