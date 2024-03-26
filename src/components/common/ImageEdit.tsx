@@ -6,16 +6,16 @@ import toast from 'react-hot-toast';
 import { TbCamera } from 'react-icons/tb';
 import { uploadFileService } from 'src/services/file.service';
 
-type AvatarEditProps = {
-    avatar?: string;
-    setAvatar: (_: string) => void;
+type ImageEditProps = {
+    image?: string;
+    setImage: (_: string) => void;
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     className?: string;
     uploadClassName?: string;
 };
 
-const AvatarEdit = ({ avatar, setAvatar, loading, setLoading, className, uploadClassName }: AvatarEditProps) => {
+const ImageEdit = ({ image, setImage, loading, setLoading, className, uploadClassName }: ImageEditProps) => {
     const ref = useRef<HTMLInputElement>(null);
 
     const upload = async (file: File) => {
@@ -38,7 +38,7 @@ const AvatarEdit = ({ avatar, setAvatar, loading, setLoading, className, uploadC
             setLoading(true);
             const image = (await upload(file))?.file;
             if (image) {
-                setAvatar(image.url);
+                setImage(image.url);
                 ref.current!.files = null;
             }
             setLoading(false);
@@ -47,7 +47,7 @@ const AvatarEdit = ({ avatar, setAvatar, loading, setLoading, className, uploadC
 
     return (
         <>
-            {!avatar || loading ? (
+            {!image || loading ? (
                 <Button
                     isLoading={loading}
                     onClick={() => ref.current?.click()}
@@ -62,7 +62,7 @@ const AvatarEdit = ({ avatar, setAvatar, loading, setLoading, className, uploadC
                     type="button"
                     className={classNames('group relative mx-auto block h-[100px] w-[100px] rounded-full', className)}
                 >
-                    <Avatar src={avatar} className="h-full w-full" />
+                    <Avatar src={image} className="h-full w-full" />
                     <div className="absolute left-0 top-0 flex h-full w-full rounded-full bg-gray-500/50 opacity-0 transition group-hover:opacity-100">
                         <span className="m-auto text-sm text-white">Change</span>
                     </div>
@@ -73,4 +73,4 @@ const AvatarEdit = ({ avatar, setAvatar, loading, setLoading, className, uploadC
     );
 };
 
-export default AvatarEdit;
+export default ImageEdit;

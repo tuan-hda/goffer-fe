@@ -11,6 +11,7 @@ import {
 } from 'src/components/ui/dropdown-menu';
 import { TbHomePlus } from 'react-icons/tb';
 import { Button } from '../ui/button';
+import { Link } from 'react-router-dom';
 
 type UserPopoverProps = {
     collapsed: boolean;
@@ -54,12 +55,15 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                 <p className="px-2 text-left text-sm text-text/60">You have no organizations.</p>
                 <div className="mb-2 mt-[10px] px-2">
                     <Button
+                        asChild
                         size="sm"
                         variant="outline"
                         className="flex w-full items-center gap-2 text-sm transition hover:text-text"
                     >
-                        <TbHomePlus className="text-base" />
-                        <span>New organization</span>
+                        <Link to="/organization/new">
+                            <TbHomePlus className="text-base" />
+                            <span>New organization</span>
+                        </Link>
                     </Button>
                 </div>
             </DropdownMenuContent>

@@ -1,4 +1,4 @@
-import { Navigate, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import {
     AboutUs,
     ContactUs,
@@ -12,6 +12,7 @@ import {
     ResetPassword,
     GetStarted,
     Settings,
+    NewOrganization,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -81,6 +82,10 @@ const routesConfig: RouteObject[] = [
                         element: <Settings />,
                     },
                 ],
+            },
+            {
+                path: '/organization/new',
+                element: <NewOrganization />,
             },
             {
                 path: '/get-started',
