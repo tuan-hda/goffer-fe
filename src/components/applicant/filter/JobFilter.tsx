@@ -57,7 +57,7 @@ const JobFilter = () => {
     return (
         <div
             className={classNames(
-                'bg-image sticky top-16 z-30 hidden w-full max-w-screen-2xl self-center rounded-b-2xl py-6 shadow-md transition md:flex',
+                'sticky top-16 z-30 hidden w-full max-w-screen-2xl self-center rounded-b-2xl bg-pale py-6 shadow-md transition md:flex',
                 scrollDirection === 'down' ? '-translate-y-[164px]' : 'translate-y-0',
             )}
         >
