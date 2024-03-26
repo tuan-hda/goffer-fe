@@ -1,24 +1,12 @@
-import {
-    BreadcrumbItem,
-    Breadcrumbs,
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Chip,
-    Divider,
-} from '@nextui-org/react';
+import { BreadcrumbItem, Breadcrumbs, Button, Card, CardBody, CardFooter, Chip } from '@nextui-org/react';
 import classNames from 'classnames';
 import useDiscoverStore from 'src/stores/discoverStore';
 import { MdOutlineArrowRight } from 'react-icons/md';
 import { TbBuilding, TbHeart, TbHeartFilled, TbMapPin } from 'react-icons/tb';
 import { CgMoreAlt } from 'react-icons/cg';
 import { GiDuration } from 'react-icons/gi';
-import Editor from 'src/components/common/editor/Editor';
 import useJobStore from 'src/stores/jobStore';
 import { Badge } from 'src/components/ui/badge';
-import Process from '../common/Process';
 
 const JobDetail = () => {
     const { sideBarPinned } = useDiscoverStore();
@@ -38,10 +26,9 @@ const JobDetail = () => {
 
     return (
         <Card
-            isBlurred
             isFooterBlurred
             className={classNames(
-                'fixed right-0 top-[68px] h-[calc(100vh-72px)] border-none pb-2 transition dark:bg-default-100/50 md:max-w-[624px]',
+                'fixed right-0 top-[68px] h-[calc(100vh-72px)] border-none bg-background/60 pt-2 transition dark:bg-default-100/50 md:max-w-[624px]',
                 jobDetailOpening ? 'translate-x-0' : 'translate-x-[calc(50vw-40px)]  shadow-none',
                 sideBarPinned
                     ? 'left-[calc(50vw+136px)] w-[calc(50vw-160px)] xl:left-[calc(50vw+136px)]'
@@ -120,26 +107,10 @@ const JobDetail = () => {
                     allows then this might be the place for
                 </p>
             </CardBody>
-            <CardFooter className="justify-between border-t-1 border-zinc-100/50">
-                <div>
-                    <p className="font-serif text-2xl font-black text-text">Senior Frontend Developer (React)</p>
-                    <Breadcrumbs
-                        size="sm"
-                        variant="light"
-                        radius="full"
-                        classNames={{
-                            list: 'gap-y-2',
-                        }}
-                    >
-                        {process.map((item, index) => (
-                            <BreadcrumbItem key={index} isCurrent={true} className="capitalize">
-                                {item}
-                            </BreadcrumbItem>
-                        ))}
-                    </Breadcrumbs>
-                </div>
-                <div className="flex flex-row gap-4">
-                    <Button color="primary" variant="solid" radius="full">
+            <CardFooter className="absolute bottom-0 z-10 justify-between overflow-hidden border-t-1 border-zinc-100/50 py-2 shadow-small before:bg-background/10">
+                <p className="w-3/5 font-serif text-xl font-black text-text">Senior Frontend Developer (React)</p>
+                <div className="flex flex-row items-center gap-4">
+                    <Button color="primary" size="sm" variant="solid" radius="full">
                         Apply
                     </Button>
                     <Button
@@ -163,6 +134,20 @@ const JobDetail = () => {
                         <CgMoreAlt size={28} />
                     </Button>
                 </div>
+                {/* <Breadcrumbs
+                    size="sm"
+                    variant="light"
+                    radius="full"
+                    classNames={{
+                        list: 'gap-y-2',
+                    }}
+                >
+                    {process.map((item, index) => (
+                        <BreadcrumbItem key={index} isCurrent={true} className="capitalize">
+                            {item}
+                        </BreadcrumbItem>
+                    ))}
+                </Breadcrumbs> */}
             </CardFooter>
         </Card>
     );

@@ -30,7 +30,7 @@ const SidebarItem = ({ item, collapsed, matches }: SidebarItemProps) => {
             to={item.element.path}
             className={classNames(
                 'flex w-full items-center justify-start gap-[18px] rounded-lg py-2 pl-[9px] pr-2 text-text transition hover:bg-beige/70',
-                matches && matches.length > 0 && matches[0].pathname === item.element.path ? 'bg-beige' : '',
+                matches && matches.length > 0 && item.element.path.includes(matches[0].pathname) ? 'bg-beige' : '',
             )}
         >
             {item.element.startContent}
