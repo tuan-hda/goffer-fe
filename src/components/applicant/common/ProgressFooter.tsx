@@ -1,12 +1,14 @@
-import { Button } from '@nextui-org/react';
-import React from 'react';
+import { Button, Progress } from '@nextui-org/react';
 
 const ProgressFooter = () => {
     return (
-        <div className="absolute bottom-0 left-0 flex h-16 w-screen flex-row items-center bg-pale/50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-            <Button color="primary" radius="sm" variant="solid">
-                Apply to this job
-            </Button>
+        <div className="fixed bottom-0 left-0 h-20 w-full bg-pale shadow-inner">
+            <Progress size="sm" color="primary" aria-label="Loading..." value={70} />
+            <div className="mx-auto flex h-full max-w-screen-md flex-row items-center justify-end">
+                <Button className="mb-1" color="primary" radius="sm" variant="solid">
+                    Apply to this job
+                </Button>
+            </div>
         </div>
     );
 };
