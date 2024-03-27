@@ -13,7 +13,7 @@ const SecondStep = ({ setStep }: SecondStepProps) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setStep(2);
+        setStep(3);
     };
 
     return (

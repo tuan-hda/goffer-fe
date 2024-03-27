@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { TbChevronLeft } from 'react-icons/tb';
-import { FirstStep, SecondStep } from 'src/components/newOrg';
-import { Button } from 'src/components/ui/button';
+import { FirstStep, SecondStep, ThirdStep } from 'src/components/newOrg';
 import { Progress } from 'src/components/ui/progress';
 
 const NewOrganization = () => {
@@ -16,15 +15,17 @@ const NewOrganization = () => {
                 className="absolute bottom-[16vh] left-[65vw] w-[35vw] -translate-x-1/2 opacity-50"
             />
             <div className="relative flex h-screen w-full bg-pale/50  text-base backdrop-blur-xl">
-                <Button variant="ghost" className="absolute left-4 top-4 gap-2">
+                <button className="group absolute left-4 top-4 flex gap-2 text-sm">
                     <TbChevronLeft className="text-xl" /> Go back
-                </Button>
+                    <div className="absolute -bottom-1 ml-1 w-full border-t opacity-0 transition group-hover:opacity-100" />
+                </button>
 
-                <div className="m-auto w-80">
-                    <Progress className="mb-6 h-[6px]" value={(step / 4) * 100} />
+                <div className="m-auto min-w-80">
+                    <Progress className="mx-auto mb-6 h-[6px] w-80" value={(step / 4) * 100} />
                     <h1 className="text-center font-serif text-3xl font-medium">New organization</h1>
                     {step === 1 && <FirstStep setStep={setStep} />}
                     {step === 2 && <SecondStep setStep={setStep} />}
+                    {step === 3 && <ThirdStep setStep={setStep} />}
                 </div>
             </div>
         </div>
