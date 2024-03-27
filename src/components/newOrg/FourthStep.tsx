@@ -1,22 +1,28 @@
 import { Button } from '../ui/button';
-import { TbChevronDown, TbChevronLeft, TbGlobe, TbShield, TbSparkles } from 'react-icons/tb';
+import { TbChevronLeft, TbLockOff, TbLockOpen, TbSparkles } from 'react-icons/tb';
 import { Input } from '../ui/input';
-import { useState } from 'react';
 import classNames from 'classnames';
 import { Textarea } from '../ui/textarea';
+import { NewOrganization } from 'src/types/organization.type';
 
 type FourthStepProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
+    data: NewOrganization;
+    setData: React.Dispatch<React.SetStateAction<NewOrganization>>;
+    handleSubmit: (_: React.FormEvent<HTMLFormElement>) => void;
 };
 
-const FourthStep = ({ setStep }: FourthStepProps) => {
-    const [expand, setExpand] = useState(false);
-    const [visibility, setVisibility] = useState('');
+const FourthStep = ({ setStep, data, setData, handleSubmit }: FourthStepProps) => {
+    const handleChange =
+        (key: string) => (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+            setData((prev) => ({ ...prev, [key]: e.target.value }));
+        };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setStep(4);
+    const setVisibility = (visibility: string) => () => {
+        setData((prev) => ({ ...prev, visibility }) as NewOrganization);
     };
+
+    const disabled = !data.email || !data.website || !data.visibility;
 
     return (
         <form className="m-auto flex w-80 flex-col text-center" onSubmit={handleSubmit}>
@@ -27,62 +33,67 @@ const FourthStep = ({ setStep }: FourthStepProps) => {
                 <label htmlFor="email" className="block w-full text-left font-semibold">
                     Corporate email
                 </label>
-                <Input id="email" placeholder="name@email.com" className="mt-1 h-10 rounded-xl" />
+                <Input
+                    value={data.email}
+                    onChange={handleChange('email')}
+                    id="email"
+                    placeholder="name@email.com"
+                    className="mt-1 h-10 rounded-xl"
+                />
 
                 <label htmlFor="website" className="mt-4 block w-full text-left font-semibold">
                     Website
                 </label>
-                <Input id="website" placeholder="https://domain.com" className="mt-1 h-10 rounded-xl" />
+                <Input
+                    value={data.website}
+                    onChange={handleChange('website')}
+                    id="website"
+                    placeholder="https://domain.com"
+                    className="mt-1 h-10 rounded-xl"
+                />
 
                 <p className="mt-4 block w-full text-left font-semibold">Visibility</p>
                 <div className="mt-1 flex items-center gap-3">
                     <Button
-                        onClick={() => setVisibility('public')}
+                        onClick={setVisibility('public')}
                         variant="outline"
                         className={classNames(
                             'h-40 flex-1 flex-col gap-2 whitespace-normal rounded-xl p-6',
-                            visibility === 'public'
-                                ? 'border-primary bg-orange-500/30 hover:bg-orange-500/30'
+                            data.visibility === 'public'
+                                ? 'border-primary bg-orange-300/30 hover:bg-orange-300/30'
                                 : 'bg-white/30',
                         )}
                     >
                         <span>Public</span>
-                        <TbGlobe className="text-xl" />
+                        <TbLockOpen className="text-xl" />
                         <p className="text-text/60">Everyone can find company</p>
                     </Button>
                     <Button
-                        onClick={() => setVisibility('private')}
+                        onClick={setVisibility('private')}
                         variant="outline"
                         className={classNames(
                             'h-40 flex-1 flex-col gap-2 whitespace-normal rounded-xl p-6',
-                            visibility === 'private'
-                                ? 'border-primary bg-orange-500/30 hover:bg-orange-500/30'
+                            data.visibility === 'private'
+                                ? 'border-primary bg-orange-300/30 hover:bg-orange-300/30'
                                 : 'bg-white/30',
                         )}
                     >
                         <span>Private</span>
-                        <TbShield className="text-xl" />
+                        <TbLockOff className="text-xl" />
                         <p className="text-text/60">Only those who you invited can</p>
                     </Button>
                 </div>
 
-                <button onClick={() => setExpand((prev) => !prev)} className="mt-4 flex gap-2 font-semibold">
-                    <TbChevronDown className={classNames('text-lg transition', expand && 'rotate-90')} />
-                    Optional
-                </button>
-
-                {expand && (
-                    <>
-                        <label htmlFor="description" className="mt-2 block w-full text-left font-semibold">
-                            Description
-                        </label>
-                        <Textarea
-                            id="description"
-                            placeholder="Brief your description about company here"
-                            className="mt-1 h-10 rounded-xl"
-                        />
-                    </>
-                )}
+                <label htmlFor="description" className="mt-4 block w-full text-left font-semibold">
+                    Description
+                </label>
+                <Textarea
+                    value={data.description}
+                    onChange={handleChange('description')}
+                    id="description"
+                    placeholder="Brief your description about company here"
+                    className="scroll-hidden mt-1 h-10 rounded-xl"
+                />
             </div>
 
             <div className="mx-auto mt-5 flex w-80 items-center gap-2">
@@ -96,7 +107,7 @@ const FourthStep = ({ setStep }: FourthStepProps) => {
                     <TbChevronLeft className="text-lg" />
                     Back
                 </Button>
-                <Button type="submit" size="lg" className="flex-1 rounded-xl">
+                <Button disabled={disabled} type="submit" size="lg" className="flex-1 rounded-xl">
                     Pay & Finish <TbSparkles className="ml-1 text-lg" />
                 </Button>
             </div>

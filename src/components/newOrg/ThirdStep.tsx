@@ -1,8 +1,12 @@
+import { NewOrganization } from 'src/types/organization.type';
 import { Button } from '../ui/button';
-import { TbChevronLeft, TbSparkles } from 'react-icons/tb';
+import { TbChevronLeft } from 'react-icons/tb';
+import classNames from 'classnames';
 
 type ThirdStepProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
+    data: NewOrganization;
+    setData: React.Dispatch<React.SetStateAction<NewOrganization>>;
 };
 
 const fields = [
@@ -36,10 +40,15 @@ const fields = [
     },
 ];
 
-const ThirdStep = ({ setStep }: ThirdStepProps) => {
+const ThirdStep = ({ setStep, data, setData }: ThirdStepProps) => {
+    const _field = data.field;
+    const setField = (field: string) => () => {
+        setData((prev) => ({ ...prev, field }));
+        setStep(4);
+    };
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setStep(4);
     };
 
     return (
@@ -49,9 +58,15 @@ const ThirdStep = ({ setStep }: ThirdStepProps) => {
             <div className="mx-auto mb-5 mt-5 grid grid-cols-4 justify-center gap-6">
                 {fields.map((field, index) => (
                     <Button
+                        onClick={setField(field.name)}
                         type="button"
                         variant="outline"
-                        className="relative aspect-square h-36 w-60 items-start justify-start rounded-xl bg-white/20 p-6 text-base shadow-medium"
+                        className={classNames(
+                            'relative aspect-square h-36 w-60 items-start justify-start rounded-xl p-6 text-base shadow-medium',
+                            field.name === _field
+                                ? 'border-primary bg-orange-300/30 hover:bg-orange-300/30'
+                                : 'bg-white/20',
+                        )}
                         key={index}
                     >
                         {field.name}
@@ -81,9 +96,6 @@ const ThirdStep = ({ setStep }: ThirdStepProps) => {
                 >
                     <TbChevronLeft className="text-lg" />
                     Back
-                </Button>
-                <Button type="submit" size="lg" className="flex-1 rounded-xl">
-                    Continue <TbSparkles className="ml-1 text-lg" />
                 </Button>
             </div>
         </form>

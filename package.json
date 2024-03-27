@@ -20,6 +20,7 @@
         "@radix-ui/react-select": "^2.0.0",
         "@radix-ui/react-slot": "^1.0.2",
         "@react-oauth/google": "^0.12.1",
+        "@stripe/stripe-js": "^3.1.0",
         "@tanstack/react-query": "^5.28.0",
         "axios": "^1.6.7",
         "class-variance-authority": "^0.7.0",
@@ -43,7 +44,6 @@
         "react-icons": "^5.0.1",
         "react-pro-sidebar": "^1.1.0",
         "react-router-dom": "^6.22.1",
-        "simple-zustand-devtools": "^1.1.0",
         "swr": "^2.2.5",
         "tailwind-merge": "^2.2.2",
         "tailwindcss-animate": "^1.0.7",
@@ -72,6 +72,7 @@
         "postcss": "^8.4.35",
         "prettier": "^3.2.5",
         "prettier-plugin-tailwindcss": "^0.5.12",
+        "simple-zustand-devtools": "^1.1.0",
         "tailwindcss": "^3.4.1",
         "typescript": "^5.2.2",
         "vite": "^5.1.4"
