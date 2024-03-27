@@ -31,7 +31,7 @@ const fields = [
         img: '/entertainment.png',
     },
     {
-        name: 'Entertainment',
+        name: 'Translation',
         img: '/translator.png',
     },
 ];
@@ -74,7 +74,7 @@ const ThirdStep = ({ setStep }: ThirdStepProps) => {
             <div className="mx-auto mt-5 flex w-80 items-center gap-2">
                 <Button
                     type="button"
-                    onClick={() => setStep(1)}
+                    onClick={() => setStep(2)}
                     size="lg"
                     variant="outline"
                     className="flex-1 gap-1 rounded-xl"
