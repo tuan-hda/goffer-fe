@@ -4,17 +4,23 @@ import { Input } from '../ui/input';
 import classNames from 'classnames';
 import { Textarea } from '../ui/textarea';
 import { NewOrganization } from 'src/types/organization.type';
+import validator from 'validator';
+import { Spinner } from '@nextui-org/react';
 
 type FourthStepProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
     data: NewOrganization;
     setData: React.Dispatch<React.SetStateAction<NewOrganization>>;
     handleSubmit: (_: React.FormEvent<HTMLFormElement>) => void;
+    loading: boolean;
 };
 
-const FourthStep = ({ setStep, data, setData, handleSubmit }: FourthStepProps) => {
+const FourthStep = ({ loading, setStep, data, setData, handleSubmit }: FourthStepProps) => {
     const handleChange =
         (key: string) => (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+            if (key === 'description' && e.target.value.length > 200) {
+                return;
+            }
             setData((prev) => ({ ...prev, [key]: e.target.value }));
         };
 
@@ -22,10 +28,20 @@ const FourthStep = ({ setStep, data, setData, handleSubmit }: FourthStepProps) =
         setData((prev) => ({ ...prev, visibility }) as NewOrganization);
     };
 
-    const disabled = !data.email || !data.website || !data.visibility;
+    const disabled =
+        !data.email ||
+        !data.website ||
+        !data.visibility ||
+        !data.description ||
+        !validator.isEmail(data.email) ||
+        !validator.isURL(data.website);
 
     return (
         <form className="m-auto flex w-80 flex-col text-center" onSubmit={handleSubmit}>
+            <div className="flex items-center justify-center gap-4">
+                <img src={data.logo} className="h-11 w-11 rounded-full object-cover" alt="logo" />
+                <h1 className="text-center font-serif text-3xl font-medium">{data.name}</h1>
+            </div>
             <p className="mt-3 text-sm text-text/50">Step 4/4</p>
             <p className="mt-2">Just a little bit information</p>
 
@@ -55,6 +71,7 @@ const FourthStep = ({ setStep, data, setData, handleSubmit }: FourthStepProps) =
                 <p className="mt-4 block w-full text-left font-semibold">Visibility</p>
                 <div className="mt-1 flex items-center gap-3">
                     <Button
+                        type="button"
                         onClick={setVisibility('public')}
                         variant="outline"
                         className={classNames(
@@ -69,6 +86,7 @@ const FourthStep = ({ setStep, data, setData, handleSubmit }: FourthStepProps) =
                         <p className="text-text/60">Everyone can find company</p>
                     </Button>
                     <Button
+                        type="button"
                         onClick={setVisibility('private')}
                         variant="outline"
                         className={classNames(
@@ -94,10 +112,12 @@ const FourthStep = ({ setStep, data, setData, handleSubmit }: FourthStepProps) =
                     placeholder="Brief your description about company here"
                     className="scroll-hidden mt-1 h-10 rounded-xl"
                 />
+                <p className="ml-auto mt-1 text-right text-text/60">{data.description.length}/200</p>
             </div>
 
-            <div className="mx-auto mt-5 flex w-80 items-center gap-2">
+            <div className="mx-auto mt-2 flex w-80 items-center gap-2">
                 <Button
+                    disabled={loading}
                     type="button"
                     onClick={() => setStep(3)}
                     size="lg"
@@ -107,7 +127,16 @@ const FourthStep = ({ setStep, data, setData, handleSubmit }: FourthStepProps) =
                     <TbChevronLeft className="text-lg" />
                     Back
                 </Button>
-                <Button disabled={disabled} type="submit" size="lg" className="flex-1 rounded-xl">
+                <Button disabled={disabled || loading} type="submit" size="lg" className="flex-1 rounded-xl">
+                    {loading && (
+                        <Spinner
+                            classNames={{
+                                circle1: 'border-t-black',
+                                circle2: 'border-t-black',
+                            }}
+                            className="mr-1 scale-50"
+                        />
+                    )}
                     Pay & Finish <TbSparkles className="ml-1 text-lg" />
                 </Button>
             </div>

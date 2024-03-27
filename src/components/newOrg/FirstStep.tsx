@@ -17,6 +17,7 @@ const FirstStep = ({ setStep, data, setData }: FirstStepProps) => {
 
     return (
         <form className="text-center" onSubmit={handleSubmit}>
+            <h1 className="text-center font-serif text-3xl font-medium">New organization</h1>
             <p className="mt-3 text-sm text-text/50">Step 1/4</p>
             <p className="mt-2">What&apos;s your organization called?</p>
             <Input

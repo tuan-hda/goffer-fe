@@ -4,13 +4,15 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { TbChevronLeft } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
-import { FirstStep, FourthStep, SecondStep, ThirdStep } from 'src/components/newOrg';
+import { FirstStep, FourthStep, SecondStep, Success, ThirdStep } from 'src/components/newOrg';
 import { Progress } from 'src/components/ui/progress';
 import config from 'src/configs/config';
+import { createOrganizationService } from 'src/services/organizations.service';
 import { NewOrganization as NewOrganizationType } from 'src/types/organization.type';
 
 const NewOrganization = () => {
-    const [step, setStep] = useState(4);
+    const [loading, setLoading] = useState(false);
+    const [step, setStep] = useState(1);
     const [data, setData] = useState<NewOrganizationType>({
         name: '',
         logo: '',
@@ -32,12 +34,17 @@ const NewOrganization = () => {
 
     const newOrganization = async () => {
         try {
+            setLoading(true);
+            await createOrganizationService(data);
+            setStep(5);
         } catch (error) {
             if (isAxiosError(error)) {
                 return toast.error(error.response?.data.message || 'Failed to create organization');
             }
             toast.error('Failed to create organization');
             console.log('New organization error:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -60,14 +67,22 @@ const NewOrganization = () => {
             </button>
             <div className="scroll-hidden relative flex h-screen w-full overflow-y-auto bg-pale/30 py-6 text-base backdrop-blur-xl">
                 <div className="m-auto min-w-80">
-                    <Progress color="primary" className="mx-auto mb-6 h-[6px] w-80" value={(step / 4) * 100} />
-                    <h1 className="text-center font-serif text-3xl font-medium">New organization</h1>
+                    {step !== 5 && (
+                        <Progress color="primary" className="mx-auto mb-6 h-[6px] w-80" value={(step / 4) * 100} />
+                    )}
                     {step === 1 && <FirstStep data={data} setData={setData} setStep={setStep} />}
                     {step === 2 && <SecondStep data={data} setData={setData} setStep={setStep} />}
                     {step === 3 && <ThirdStep data={data} setData={setData} setStep={setStep} />}
                     {step === 4 && (
-                        <FourthStep handleSubmit={handleSubmit} data={data} setData={setData} setStep={setStep} />
+                        <FourthStep
+                            loading={loading}
+                            handleSubmit={handleSubmit}
+                            data={data}
+                            setData={setData}
+                            setStep={setStep}
+                        />
                     )}
+                    {step === 5 && <Success data={data} />}
                 </div>
             </div>
         </div>
