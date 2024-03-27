@@ -19,7 +19,7 @@ import { Discover, JobDiscover, PeopleDiscover } from 'src/components/applicant/
 import { AppLayout, ApplicantLayout, AuthLayout, FocusLayout, LandingLayout, RootLayout } from '../layouts';
 import Test from 'src/pages/Test';
 import Editor from 'src/components/common/editor/Editor';
-import { JobApply } from 'src/components/applicant/apply';
+import { Application, JobApply } from 'src/components/applicant/apply';
 
 const routesConfig: RouteObject[] = [
     {
@@ -92,7 +92,20 @@ const routesConfig: RouteObject[] = [
                 children: [
                     {
                         path: ':id',
-                        element: <JobApply />,
+                        children: [
+                            {
+                                index: true,
+                                element: <JobApply />,
+                            },
+                            {
+                                path: 'application',
+                                element: <Application />,
+                            },
+                        ],
+                    },
+                    {
+                        path: 'application',
+                        element: <Application />,
                     },
                 ],
             },
