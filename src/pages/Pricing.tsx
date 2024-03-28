@@ -79,6 +79,7 @@ const Pricing = () => {
                             ]}
                             isPrimary
                             pricing={20}
+                            additional={5}
                         />
                     ) : (
                         <div className="m-auto flex h-fit flex-col items-start gap-6 lg:flex-row">

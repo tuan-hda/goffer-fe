@@ -5,17 +5,14 @@ import classNames from 'classnames';
 import { Textarea } from '../ui/textarea';
 import { NewOrganization } from 'src/types/organization.type';
 import validator from 'validator';
-import { Spinner } from '@nextui-org/react';
 
 type FourthStepProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
     data: NewOrganization;
     setData: React.Dispatch<React.SetStateAction<NewOrganization>>;
-    handleSubmit: (_: React.FormEvent<HTMLFormElement>) => void;
-    loading: boolean;
 };
 
-const FourthStep = ({ loading, setStep, data, setData, handleSubmit }: FourthStepProps) => {
+const FourthStep = ({ setStep, data, setData }: FourthStepProps) => {
     const handleChange =
         (key: string) => (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
             if (key === 'description' && e.target.value.length > 200) {
@@ -36,13 +33,19 @@ const FourthStep = ({ loading, setStep, data, setData, handleSubmit }: FourthSte
         !validator.isEmail(data.email) ||
         !validator.isURL(data.website);
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (disabled) return;
+        setStep(5);
+    };
+
     return (
         <form className="m-auto flex w-80 flex-col text-center" onSubmit={handleSubmit}>
             <div className="flex items-center justify-center gap-4">
                 <img src={data.logo} className="h-11 w-11 rounded-full object-cover" alt="logo" />
                 <h1 className="text-center font-serif text-3xl font-medium">{data.name}</h1>
             </div>
-            <p className="mt-3 text-sm text-text/50">Step 4/4</p>
+            <p className="mt-3 text-sm text-text/50">Step 4/5</p>
             <p className="mt-2">Just a little bit information</p>
 
             <div className="mb-4 mt-6 text-sm">
@@ -117,7 +120,6 @@ const FourthStep = ({ loading, setStep, data, setData, handleSubmit }: FourthSte
 
             <div className="mx-auto mt-2 flex w-80 items-center gap-2">
                 <Button
-                    disabled={loading}
                     type="button"
                     onClick={() => setStep(3)}
                     size="lg"
@@ -127,17 +129,8 @@ const FourthStep = ({ loading, setStep, data, setData, handleSubmit }: FourthSte
                     <TbChevronLeft className="text-lg" />
                     Back
                 </Button>
-                <Button disabled={disabled || loading} type="submit" size="lg" className="flex-1 rounded-xl">
-                    {loading && (
-                        <Spinner
-                            classNames={{
-                                circle1: 'border-t-black',
-                                circle2: 'border-t-black',
-                            }}
-                            className="mr-1 scale-50"
-                        />
-                    )}
-                    Pay & Finish <TbSparkles className="ml-1 text-lg" />
+                <Button disabled={disabled} type="submit" size="lg" className="flex-1 rounded-xl">
+                    Continue <TbSparkles className="ml-1 text-lg" />
                 </Button>
             </div>
         </form>

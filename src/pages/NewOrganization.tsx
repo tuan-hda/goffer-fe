@@ -4,7 +4,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { TbChevronLeft } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
-import { FirstStep, FourthStep, SecondStep, Success, ThirdStep } from 'src/components/newOrg';
+import { FifthStep, FirstStep, FourthStep, SecondStep, Success, ThirdStep } from 'src/components/newOrg';
 import { Progress } from 'src/components/ui/progress';
 import config from 'src/configs/config';
 import { createOrganizationService } from 'src/services/organizations.service';
@@ -12,10 +12,10 @@ import { NewOrganization as NewOrganizationType } from 'src/types/organization.t
 
 const NewOrganization = () => {
     const [loading, setLoading] = useState(false);
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(5);
     const [data, setData] = useState<NewOrganizationType>({
-        name: '',
-        logo: '',
+        name: 'GitHub',
+        logo: 'https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png',
         field: '',
         email: '',
         website: '',
@@ -73,8 +73,9 @@ const NewOrganization = () => {
                     {step === 1 && <FirstStep data={data} setData={setData} setStep={setStep} />}
                     {step === 2 && <SecondStep data={data} setData={setData} setStep={setStep} />}
                     {step === 3 && <ThirdStep data={data} setData={setData} setStep={setStep} />}
-                    {step === 4 && (
-                        <FourthStep
+                    {step === 4 && <FourthStep data={data} setData={setData} setStep={setStep} />}
+                    {step === 5 && (
+                        <FifthStep
                             loading={loading}
                             handleSubmit={handleSubmit}
                             data={data}
@@ -82,7 +83,7 @@ const NewOrganization = () => {
                             setStep={setStep}
                         />
                     )}
-                    {step === 5 && <Success data={data} />}
+                    {step === 6 && <Success data={data} />}
                 </div>
             </div>
         </div>

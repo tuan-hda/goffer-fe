@@ -23,7 +23,7 @@ const SecondStep = ({ setStep, data, setData }: SecondStepProps) => {
     return (
         <form className="m-auto w-80 text-center" onSubmit={handleSubmit}>
             <h1 className="text-center font-serif text-3xl font-medium">{data.name}</h1>
-            <p className="mt-3 text-sm text-text/50">Step 2/4</p>
+            <p className="mt-3 text-sm text-text/50">Step 2/5</p>
             <p className="mt-2">You will need a logo</p>
             <ImageEdit
                 setImage={setImage}

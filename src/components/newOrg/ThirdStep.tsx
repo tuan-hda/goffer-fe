@@ -57,7 +57,7 @@ const ThirdStep = ({ setStep, data, setData }: ThirdStepProps) => {
                 <img src={data.logo} className="h-11 w-11 rounded-full object-cover" alt="logo" />
                 <h1 className="text-center font-serif text-3xl font-medium">{data.name}</h1>
             </div>
-            <p className="mt-3 text-sm text-text/50">Step 3/4</p>
+            <p className="mt-3 text-sm text-text/50">Step 3/5</p>
             <p className="mt-2">You are hiring in...</p>
             <div className="mx-auto mb-5 mt-5 grid grid-cols-4 justify-center gap-6">
                 {fields.map((field, index) => (

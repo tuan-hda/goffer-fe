@@ -1,10 +1,11 @@
 import { Button } from '@nextui-org/react';
-import { TbCheck } from 'react-icons/tb';
+import { TbCheck, TbInfoCircle } from 'react-icons/tb';
 import { AnimationControls, motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { fadeInPropsFn } from 'src/utils/animation';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
 type FadeInProps = {
     ctrls: AnimationControls;
@@ -13,9 +14,10 @@ type FadeInProps = {
     pricing: string | number;
     isPrimary?: boolean;
     features: string[];
+    additional?: number;
 };
 
-const PricingCard = ({ ctrls, title, description, pricing, isPrimary, features }: FadeInProps) => {
+const PricingCard = ({ ctrls, title, description, pricing, isPrimary, features, additional }: FadeInProps) => {
     const getFadeInProps = useMemo(() => {
         return fadeInPropsFn(ctrls);
     }, [ctrls]);
@@ -29,10 +31,25 @@ const PricingCard = ({ ctrls, title, description, pricing, isPrimary, features }
                 <p className="text-lg font-bold text-black">{title}</p>
                 <p className="text-text">{description}</p>
             </motion.div>
-            <motion.p {...getFadeInProps(0.6)} className="mt-4 font-serif text-5xl font-bold text-black">
+            <motion.p
+                {...getFadeInProps(0.6)}
+                className="mt-4 flex items-baseline font-serif text-5xl font-bold text-black"
+            >
                 {pricing !== 'Free' && '$'}
                 {pricing}
                 {pricing !== 'Free' && <span className="ml-1 font-serif text-xl font-normal text-text">/mo</span>}
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <div>
+                                <TbInfoCircle className="-mb-1 ml-1 text-xl text-text" />
+                            </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-black">
+                            <p>Plus ${additional} per additional member</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
             </motion.p>
             <motion.div {...getFadeInProps(0.9)}>
                 <Button
