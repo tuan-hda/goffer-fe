@@ -5,6 +5,16 @@ import { Form } from 'src/components/ui/form';
 import FormFieldItem from './FormFieldItem';
 import ProgressFooter from '../common/ProgressFooter';
 import { useNavigate } from 'react-router-dom';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
+
+function isValidPhoneNumber(phoneNumber: string): boolean {
+    try {
+        const parsedNumber = parsePhoneNumberFromString(phoneNumber);
+        return parsedNumber ? parsedNumber.isValid() : false;
+    } catch {
+        return false;
+    }
+}
 
 const formSchema = z.object({
     profilePicture: z.instanceof(File).optional(),
@@ -12,7 +22,9 @@ const formSchema = z.object({
     fullName: z.string().min(2, { message: 'Please enter your full name' }),
     location: z.string().optional(),
     email: z.string().email({ message: 'Please enter a valid email' }),
-    phoneNumber: z.string().min(1, { message: 'Please enter a valid phone number' }),
+    phoneNumber: z.string().refine((value) => isValidPhoneNumber(value), {
+        message: 'Please enter a valid phone number',
+    }),
     role: z.string().min(1, { message: 'Please enter your job role' }),
     lastCompany: z.string().optional(),
     linkedIn: z.string().optional(),
