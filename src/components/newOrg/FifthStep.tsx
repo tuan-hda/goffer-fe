@@ -1,7 +1,6 @@
 import { Button } from '../ui/button';
 import { TbChevronLeft, TbCircleCheckFilled, TbCoin } from 'react-icons/tb';
 import { NewOrganization } from 'src/types/organization.type';
-import validator from 'validator';
 import { Spinner } from '@nextui-org/react';
 
 type FourthStepProps = {
@@ -13,16 +12,8 @@ type FourthStepProps = {
 };
 
 const FourthStep = ({ loading, setStep, data, setData, handleSubmit }: FourthStepProps) => {
-    const disabled =
-        !data.email ||
-        !data.website ||
-        !data.visibility ||
-        !data.description ||
-        !validator.isEmail(data.email) ||
-        !validator.isURL(data.website);
-
     return (
-        <form className="m-auto flex w-[600px] flex-col text-center" onSubmit={handleSubmit}>
+        <form className="m-auto flex w-[620px] flex-col text-center" onSubmit={handleSubmit}>
             <div className="flex items-center justify-center gap-4">
                 <img src={data.logo} className="h-11 w-11 rounded-full object-cover" alt="logo" />
                 <h1 className="text-center font-serif text-3xl font-medium">{data.name}</h1>
@@ -39,22 +30,22 @@ const FourthStep = ({ loading, setStep, data, setData, handleSubmit }: FourthSte
                     subscribe organization license
                 </p>
             </div> */}
-            <div className="-ml-12 mb-4 flex items-center justify-center">
-                <img src="/ice-cube.png" className=" h-72 w-72" alt="ice-cube" />
-                <div className="w-80 text-left text-sm">
-                    <p className="mb-2 font-serif text-3xl font-semibold">subscribe to a license</p>
+            <div className="-ml-4 mb-4 flex items-center justify-center gap-2">
+                <img src="/ice-cube.png" className="h-72 w-72" alt="ice-cube" />
+                <div className="min-w-0 text-left text-sm">
+                    <p className="mb-2 font-serif text-3xl font-semibold">organization subscribe</p>
                     <p>You will be able to create and access your organization later after you subscribed a license.</p>
                     <div className="mt-3 flex items-center gap-2">
-                        <TbCircleCheckFilled className="text-lg" /> Hello world
+                        <TbCircleCheckFilled className="text-lg" /> Post jobs, browse candidates, & hire experts
                     </div>
                     <div className="mt-2 flex items-center gap-2">
-                        <TbCircleCheckFilled className="text-lg" /> Hello world
+                        <TbCircleCheckFilled className="text-lg" /> Audio and video response, with analytics
                     </div>
                     <div className="mt-2 flex items-center gap-2">
-                        <TbCircleCheckFilled className="text-lg" /> Hello world
+                        <TbCircleCheckFilled className="text-lg" /> Shared company workspace & payment methods
                     </div>
                     <div className="mt-2 flex items-center gap-2">
-                        <TbCircleCheckFilled className="text-lg" /> Hello world
+                        <TbCircleCheckFilled className="text-lg" /> Evaluate your candidate with AI
                     </div>
                 </div>
             </div>
@@ -71,7 +62,7 @@ const FourthStep = ({ loading, setStep, data, setData, handleSubmit }: FourthSte
                     <TbChevronLeft className="text-lg" />
                     Back
                 </Button>
-                <Button disabled={disabled || loading} type="submit" size="lg" className="flex-1 rounded-xl">
+                <Button disabled={loading} type="submit" size="lg" className="flex-1 rounded-xl">
                     {loading && (
                         <Spinner
                             classNames={{
@@ -81,7 +72,7 @@ const FourthStep = ({ loading, setStep, data, setData, handleSubmit }: FourthSte
                             className="mr-1 scale-50"
                         />
                     )}
-                    Proceed <TbCoin className="ml-1 text-lg" />
+                    Purchase <TbCoin className="ml-1 text-lg" />
                 </Button>
             </div>
         </form>
