@@ -3,6 +3,8 @@ import { UseFormReturn, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form } from 'src/components/ui/form';
 import FormFieldItem from './FormFieldItem';
+import ProgressFooter from '../common/ProgressFooter';
+import { useNavigate } from 'react-router-dom';
 
 const formSchema = z.object({
     profilePicture: z.instanceof(File).optional(),
@@ -30,7 +32,7 @@ export type FileItemProps = {
 
 export type TextItemProps = {
     form: UseFormReturn<z.infer<typeof formSchema>>;
-    type: 'text';
+    type: 'text' | 'phone number';
     label: string;
     name: StringSchemaFields[keyof StringSchemaFields];
     placeholder?: string;
@@ -68,7 +70,7 @@ const fields = [
         placeholder: 'your@email.com',
     },
     {
-        type: 'text',
+        type: 'phone number',
         label: 'Phone number',
         name: 'phoneNumber',
         placeholder: 'Your phone number',
@@ -82,7 +84,7 @@ const fields = [
     {
         type: 'text',
         label: 'Last Company (optional)',
-        name: 'fullName',
+        name: 'lastCompany',
         placeholder: 'Your current (or last) employer',
     },
     {
@@ -100,6 +102,7 @@ const fields = [
 ] as FormItemProps[];
 
 const Application = () => {
+    const navigate = useNavigate();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -137,10 +140,16 @@ const Application = () => {
                 </p>
             </div>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="flex grid-cols-2 flex-col gap-6 md:grid">
                     {fields.map((field) => (
                         <FormFieldItem {...field} form={form} key={field.name} />
                     ))}
+                    <ProgressFooter
+                        rate={0}
+                        onStartPress={() => navigate(-1)}
+                        endContent={'Next'}
+                        endProps={{ type: 'submit' }}
+                    />
                 </form>
             </Form>
         </div>

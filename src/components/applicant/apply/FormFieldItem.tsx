@@ -3,6 +3,13 @@ import { FileItemProps, FormItemProps, TextItemProps } from './Application';
 import { Avatar } from '@nextui-org/react';
 import { FormControl, FormField, FormItem, FormLabel } from 'src/components/ui/form';
 import { Input } from 'src/components/ui/input';
+import { defaultCountries, FlagImage, parseCountry, usePhoneInput } from 'react-international-phone';
+// eslint-disable-next-line import/no-unresolved
+import 'react-international-phone/style.css';
+import { useController } from 'react-hook-form';
+import { Command, CommandList, CommandEmpty, CommandGroup, CommandInput, CommandItem } from 'src/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/popover';
+import { Button } from 'src/components/ui/button';
 
 const ImageField = ({ form, name, label }: FileItemProps) => {
     const [profilePictureURL, setProfilePictureURL] = useState<string>();
@@ -14,20 +21,25 @@ const ImageField = ({ form, name, label }: FileItemProps) => {
         };
     }, [profilePictureURL]);
     return (
-        <div className="flex flex-row gap-3">
-            <Avatar isBordered radius="sm" src={profilePictureURL} className="h-20 w-24 self-center text-large" />
+        <div className="flex w-full flex-row gap-3">
+            <Avatar
+                isBordered
+                radius="sm"
+                src={profilePictureURL}
+                className="aspect-square h-20 w-20 self-center text-large"
+            />
             <FormField
                 control={form.control}
                 name={name}
                 render={({ field: { onChange, onBlur, name, ref } }) => (
-                    <FormItem className="my-2 flex flex-col justify-between">
+                    <FormItem className="my-2 flex w-[calc(100%-92px)] flex-col justify-between">
                         <FormLabel>{label}</FormLabel>
                         <FormControl>
                             {
                                 <Input
                                     type="file"
                                     id={'imageField' + name}
-                                    className="h-10 bg-white pt-2 text-gray-300"
+                                    className="h-10 bg-white pt-2 text-gray-500"
                                     name={name}
                                     ref={ref}
                                     onBlur={onBlur}
@@ -63,7 +75,7 @@ const FileField = ({ form, name, label }: FileItemProps) => {
                             <Input
                                 type="file"
                                 id={'fileField' + name}
-                                className="h-10 bg-white pt-2 text-gray-300"
+                                className="h-10 bg-white pt-2 text-gray-500"
                                 name={name}
                                 ref={ref}
                                 onBlur={onBlur}
@@ -92,7 +104,11 @@ const TextField = ({ form, name, label, placeholder }: TextItemProps) => {
                     <FormItem>
                         <FormLabel>{label}</FormLabel>
                         <FormControl>
-                            <Input className="h-10 bg-white text-gray-300" placeholder={placeholder} {...field} />
+                            <Input
+                                className="h-10 bg-white text-text focus-visible:border-none focus-visible:ring-2 focus-visible:ring-primary"
+                                placeholder={placeholder}
+                                {...field}
+                            />
                         </FormControl>
                     </FormItem>
                 )}
@@ -101,11 +117,95 @@ const TextField = ({ form, name, label, placeholder }: TextItemProps) => {
     );
 };
 
+const PhoneField = ({ form, label, placeholder }: TextItemProps) => {
+    const [open, setOpen] = useState(false);
+
+    const { field } = useController({
+        name: 'phoneNumber',
+        control: form.control,
+    });
+    const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } = usePhoneInput({
+        defaultCountry: 'us',
+        value: field.value,
+        countries: defaultCountries,
+        onChange: (data) => {
+            field.onChange(data.phone);
+        },
+    });
+
+    return (
+        <FormField
+            control={form.control}
+            name={'phoneNumber'}
+            render={({ field }) => (
+                <FormItem>
+                    <FormLabel>{label}</FormLabel>
+                    <FormControl>
+                        <div className="flex">
+                            <Popover open={open} onOpenChange={setOpen}>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        role="combobox"
+                                        aria-expanded={open}
+                                        className="w-40 justify-between"
+                                    >
+                                        {country.iso2}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-40 p-0">
+                                    <Command>
+                                        <CommandList>
+                                            <CommandInput placeholder="Search country..." />
+                                            <CommandEmpty>No country found.</CommandEmpty>
+                                            <CommandGroup>
+                                                {defaultCountries.map((c) => {
+                                                    const item = parseCountry(c);
+                                                    return (
+                                                        <CommandItem
+                                                            key={item.iso2}
+                                                            value={item.iso2}
+                                                            onSelect={(currentValue) => {
+                                                                setCountry(currentValue);
+                                                                setOpen(false);
+                                                            }}
+                                                        >
+                                                            <FlagImage
+                                                                iso2={item.iso2}
+                                                                style={{ marginRight: '8px' }}
+                                                            />
+                                                            <span className="mr-2">{item.name}</span>
+                                                            <span className="text-text">+{item.dialCode}</span>
+                                                        </CommandItem>
+                                                    );
+                                                })}
+                                            </CommandGroup>
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
+                            <Input
+                                className="h-10 bg-white text-text focus-visible:border-none focus-visible:ring-2 focus-visible:ring-primary"
+                                placeholder={placeholder}
+                                {...field}
+                                onChange={handlePhoneValueChange}
+                                value={inputValue}
+                                ref={inputRef}
+                            />
+                        </div>
+                    </FormControl>
+                </FormItem>
+            )}
+        />
+    );
+};
+
 const FormFieldItem = (props: FormItemProps) => {
     const { type } = props;
     if (type === 'image') return <ImageField {...props} />;
     else if (type === 'file') return <FileField {...props} />;
     else if (type === 'text') return <TextField {...props} />;
+    else if (type === 'phone number') return <PhoneField {...props} />;
 };
 
 export default FormFieldItem;
