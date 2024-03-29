@@ -8,7 +8,6 @@ import { FifthStep, FirstStep, FourthStep, SecondStep, Success, Cancel, ThirdSte
 import { Progress } from 'src/components/ui/progress';
 import config from 'src/configs/config';
 import { createOrganizationService } from 'src/services/organizations.service';
-import { createCheckoutSessionService } from 'src/services/payment.service';
 import { NewOrganization as NewOrganizationType } from 'src/types/organization.type';
 
 const NewOrganization = () => {
@@ -29,17 +28,15 @@ const NewOrganization = () => {
 
     const result = new URLSearchParams(location.search).get('result');
 
-    const makePayment = async () => {
+    const createOrganization = async () => {
         try {
+            setLoading(true);
             const stripe = await loadStripe(config.STRIPE_PUBLISHABLE_KEY);
             if (!stripe) {
                 throw new Error('Failed to load stripe');
             }
-            const session = await createCheckoutSessionService({
-                mode: 'subscription',
-                successUrl: `${window.location.origin}/organization/new?result=success&name=${data.name}`,
-                cancelUrl: `${window.location.origin}/organization/new?result=cancel`,
-            });
+
+            const session = await createOrganizationService(data);
 
             if (session.id) {
                 await stripe!.redirectToCheckout({ sessionId: session.id });
@@ -50,21 +47,6 @@ const NewOrganization = () => {
             }
             toast.error('Failed to create payment session');
             console.log('Failed to create payment session:', error);
-        }
-    };
-
-    const newOrganization = async () => {
-        try {
-            setLoading(true);
-            await makePayment();
-            // await createOrganizationService(data);
-            setStep(5);
-        } catch (error) {
-            if (isAxiosError(error)) {
-                return toast.error(error.response?.data.message || 'Failed to create organization');
-            }
-            toast.error('Failed to create organization');
-            console.log('New organization error:', error);
         } finally {
             setLoading(false);
         }
@@ -72,7 +54,7 @@ const NewOrganization = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await newOrganization();
+        await createOrganization();
     };
 
     return (
@@ -91,7 +73,7 @@ const NewOrganization = () => {
                 <div className="m-auto min-w-80">
                     {!result && (
                         <>
-                            <Progress color="primary" className="mx-auto mb-6 h-[6px] w-80" value={(step / 4) * 100} />
+                            <Progress color="primary" className="mx-auto mb-6 h-[6px] w-80" value={(step / 5) * 100} />
                             {step === 1 && <FirstStep data={data} setData={setData} setStep={setStep} />}
                             {step === 2 && <SecondStep data={data} setData={setData} setStep={setStep} />}
                             {step === 3 && <ThirdStep data={data} setData={setData} setStep={setStep} />}
@@ -106,7 +88,9 @@ const NewOrganization = () => {
                             )}
                         </>
                     )}
-                    {result === 'cancel' && <Cancel setData={setData} setStep={setStep} />}
+                    {(result === 'cancel' || result === 'error') && (
+                        <Cancel isError={result === 'error'} setData={setData} setStep={setStep} />
+                    )}
                     {result === 'success' && <Success />}
                 </div>
             </div>
