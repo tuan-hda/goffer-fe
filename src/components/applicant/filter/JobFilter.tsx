@@ -14,17 +14,15 @@ import {
 import classNames from 'classnames';
 import { RiSearchLine } from 'react-icons/ri';
 import { HiOutlineAdjustments } from 'react-icons/hi';
-import { TbHearts } from 'react-icons/tb';
-import useDiscoverStore from 'src/stores/discoverStore';
-import { useNavigate } from 'react-router-dom';
+import useJobStore from 'src/stores/jobStore';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'src/components/ui/select';
 
-const Filter = () => {
-    const navigate = useNavigate();
+const JobFilter = () => {
     const [scrollDirection, setScrollDirection] = useState('up');
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [searchValue, setSearchValue] = useState('');
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { tabKey, updateTabKey } = useDiscoverStore();
+    const { tabKey, updateTabKey, jobDetailOpening } = useJobStore();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -40,9 +38,20 @@ const Filter = () => {
         };
     }, [prevScrollPos, scrollDirection]);
 
+    useEffect(() => {
+        if (jobDetailOpening) {
+            if (window.scrollY < 172) {
+                window.scrollTo({
+                    top: 172,
+                    behavior: 'smooth',
+                });
+            }
+            setScrollDirection('down');
+        }
+    }, [jobDetailOpening]);
+
     const handleTabChange = (key: Key) => {
         updateTabKey(key.toString());
-        navigate(`/app/individual/discover/${key}`);
     };
 
     return (
@@ -82,8 +91,8 @@ const Filter = () => {
                         selectedKey={tabKey}
                         onSelectionChange={(key) => handleTabChange(key)}
                     >
-                        <Tab key="people" title="People" />
-                        <Tab key="companies" title="Companies" />
+                        <Tab key="all" title="All jobs" />
+                        <Tab key="applied" title="Applied" />
                     </Tabs>
                 </div>
                 <div className="flex items-center justify-around">
@@ -92,6 +101,7 @@ const Filter = () => {
                             onPress={onOpen}
                             radius="full"
                             variant="ghost"
+                            className=" border-1 border-default"
                             startContent={<HiOutlineAdjustments size={20} className="text-default-700" />}
                         >
                             Filter
@@ -114,19 +124,20 @@ const Filter = () => {
                                 )}
                             </ModalContent>
                         </Modal>
+                        <Select>
+                            <SelectTrigger className="w-[180px] rounded-full border-1 border-default">
+                                <SelectValue placeholder="Sort" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="light">Most relevant</SelectItem>
+                                <SelectItem value="dark">Newest</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </>
-
-                    <Button
-                        radius="full"
-                        variant="ghost"
-                        startContent={<TbHearts size={20} className="text-default-700" />}
-                    >
-                        Saved
-                    </Button>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Filter;
+export default JobFilter;

@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { TbHeart, TbHeartFilled } from 'react-icons/tb';
 import { MdVerified, MdOutlinePayments } from 'react-icons/md';
 import { GiDuration } from 'react-icons/gi';
-import useDiscoverStore from 'src/stores/discoverStore';
+import useJobStore from 'src/stores/jobStore';
+import { Badge } from 'src/components/ui/badge';
 
 const JobCard = () => {
     const [liked, setLiked] = useState(false);
     const toggleLike = () => setLiked(!liked);
     const tags = ['TypeScript', 'Material UI', 'Redux', 'React', 'Axios', 'RESTfull API'];
-    const { updateJobDetailOpening, jobDetailOpening } = useDiscoverStore();
+    const { updateJobDetailOpening, jobDetailOpening } = useJobStore();
 
     const openDetail = () => {
         updateJobDetailOpening(!jobDetailOpening);
@@ -20,8 +21,8 @@ const JobCard = () => {
             onPress={openDetail}
             isPressable
             isBlurred
-            className="w-full max-w-screen-lg border-none bg-background/10 p-4 transition dark:bg-default-100/50"
-            shadow="sm"
+            className="w-full max-w-screen-lg border-none bg-background/60 p-4 transition dark:bg-default-100/50"
+            shadow="md"
         >
             <CardHeader className="gap-4">
                 <Image alt="Album cover" className="object-cover" height={60} width={60} src="/logo.svg" />
@@ -64,9 +65,9 @@ const JobCard = () => {
             </CardBody>
             <CardFooter className="gap-2">
                 {tags.map((tag, index) => (
-                    <Chip size="sm" key={index} variant="flat">
+                    <Badge key={index} variant="outline">
                         {tag}
-                    </Chip>
+                    </Badge>
                 ))}
             </CardFooter>
         </Card>

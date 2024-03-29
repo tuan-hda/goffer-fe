@@ -145,6 +145,18 @@
     background-size: 280px;
 }
 
+.bg-image-beige-75 {
+    background-image: url('/background1.png');
+    background-repeat: repeat;
+    background-size: 280px;
+}
+
+.bg-image-pale-75 {
+    background-image: url('/background2.png');
+    background-repeat: repeat;
+    background-size: 280px;
+}
+
 .scroll-hidden::-webkit-scrollbar {
     display: none;
 }

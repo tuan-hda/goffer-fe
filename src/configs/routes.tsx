@@ -1,4 +1,4 @@
-import { RouteObject } from 'react-router-dom';
+import { Navigate, RouteObject } from 'react-router-dom';
 import {
     AboutUs,
     ContactUs,
@@ -17,9 +17,10 @@ import {
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
 import { Discover, JobDiscover, PeopleDiscover } from 'src/components/applicant/discover';
-import { AppLayout, ApplicantLayout, AuthLayout, LandingLayout, RootLayout } from '../layouts';
+import { AppLayout, ApplicantLayout, AuthLayout, FocusLayout, LandingLayout, RootLayout } from '../layouts';
 import Test from 'src/pages/Test';
 import Editor from 'src/components/common/editor/Editor';
+import { JobApply } from 'src/components/applicant/apply';
 
 const routesConfig: RouteObject[] = [
     {
@@ -64,6 +65,7 @@ const routesConfig: RouteObject[] = [
                         element: <ApplicantLayout />,
                         children: [
                             { path: '/app/individual', element: <Editor /> },
+                            { path: '/app/individual/home', element: <Editor /> },
                             {
                                 path: '/app/individual/discover',
                                 element: <Discover />,
@@ -74,26 +76,42 @@ const routesConfig: RouteObject[] = [
                                 ],
                             },
                             { path: '/app/individual/:user_id', element: <>User Profile</> },
+                            { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
+                            {
+                                path: '/app/individual/discover/companies',
+                                element: <div className="h-full">Companies</div>,
+                            },
                         ],
                     },
-
-                    {
-                        path: '/app/settings',
-                        element: <Settings />,
-                    },
+                    { path: '/app/individual/jobs', element: <JobDiscover /> },
                 ],
             },
+
             {
-                path: '/organization/new',
-                element: <NewOrganization />,
+                path: '/app/settings',
+                element: <Settings />,
             },
-            {
-                path: '/get-started',
-                element: <GetStarted />,
-            },
-            { path: '*', element: <NotFound /> },
         ],
     },
+    {
+        path: '/organization/new',
+        element: <NewOrganization />,
+    },
+    {
+        path: '/job',
+        element: <FocusLayout />,
+        children: [
+            {
+                path: ':id',
+                element: <JobApply />,
+            },
+        ],
+    },
+    {
+        path: '/get-started',
+        element: <GetStarted />,
+    },
+    { path: '*', element: <NotFound /> },
 ];
 
 if (process.env.NODE_ENV === 'development') {
