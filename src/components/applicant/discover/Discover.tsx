@@ -5,14 +5,14 @@ import { useEffect } from 'react';
 
 const Discover = () => {
     const navigate = useNavigate();
-    // const tabKey = useDiscoverStore((state) => state.tabKey);
-    // useEffect(() => {
-    //     navigate(`${tabKey}`, { replace: true });
-    // }, [tabKey, navigate]);
+    const tabKey = useDiscoverStore((state) => state.tabKey);
+    useEffect(() => {
+        navigate(tabKey, { replace: true });
+    }, [tabKey, navigate]);
 
     return (
         <div className="flex flex-col">
-            {/* <Filter /> */}
+            <Filter />
             <Outlet />
         </div>
     );
