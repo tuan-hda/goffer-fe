@@ -3,4 +3,5 @@ export default {
     BACKEND_VERSION: import.meta.env.VITE_BACKEND_VERSION || 'v1',
     GOOGLE_CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID,
     GOOGLE_ACCOUNT_API_BASE_URL: 'https://www.googleapis.com/oauth2/v2/userinfo',
+    STRIPE_PUBLISHABLE_KEY: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
 };

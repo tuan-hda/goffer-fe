@@ -12,6 +12,7 @@ import {
     ResetPassword,
     GetStarted,
     Settings,
+    NewOrganization,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -63,46 +64,54 @@ const routesConfig: RouteObject[] = [
                         path: '/app/individual',
                         element: <ApplicantLayout />,
                         children: [
-                            { index: true, element: <Navigate to="home" /> },
+                            { path: '/app/individual', element: <Editor /> },
                             { path: '/app/individual/home', element: <Editor /> },
                             {
                                 path: '/app/individual/discover',
                                 element: <Discover />,
                                 children: [
+                                    { path: '/app/individual/discover/jobs', element: <JobDiscover /> },
                                     { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
-                                    {
-                                        path: '/app/individual/discover/companies',
-                                        element: <div className="h-full">Companies</div>,
-                                    },
+                                    { path: '/app/individual/discover/companies', element: <>Companies</> },
                                 ],
                             },
-                            { path: '/app/individual/jobs', element: <JobDiscover /> },
+                            { path: '/app/individual/:user_id', element: <>User Profile</> },
+                            { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
+                            {
+                                path: '/app/individual/discover/companies',
+                                element: <div className="h-full">Companies</div>,
+                            },
                         ],
                     },
+                    { path: '/app/individual/jobs', element: <JobDiscover /> },
+                ],
+            },
 
-                    {
-                        path: '/app/settings',
-                        element: <Settings />,
-                    },
-                ],
-            },
             {
-                path: '/job',
-                element: <FocusLayout />,
-                children: [
-                    {
-                        path: ':id',
-                        element: <JobApply />,
-                    },
-                ],
+                path: '/app/settings',
+                element: <Settings />,
             },
-            {
-                path: '/get-started',
-                element: <GetStarted />,
-            },
-            { path: '*', element: <NotFound /> },
         ],
     },
+    {
+        path: '/organization/new',
+        element: <NewOrganization />,
+    },
+    {
+        path: '/job',
+        element: <FocusLayout />,
+        children: [
+            {
+                path: ':id',
+                element: <JobApply />,
+            },
+        ],
+    },
+    {
+        path: '/get-started',
+        element: <GetStarted />,
+    },
+    { path: '*', element: <NotFound /> },
 ];
 
 if (process.env.NODE_ENV === 'development') {

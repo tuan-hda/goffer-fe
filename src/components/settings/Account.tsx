@@ -14,7 +14,7 @@ import _ from 'lodash';
 import { isAxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { updateUserService } from 'src/services/users.service';
-import { AvatarEdit } from '../common';
+import { ImageEdit } from '../common';
 
 const Account = () => {
     const [loading, setLoading] = useState(false);
@@ -68,11 +68,11 @@ const Account = () => {
         <form onSubmit={handleSave} className="w-full rounded-xl p-6 text-sm shadow-medium">
             <h1 className="text-2xl">Account</h1>
             <div className="group relative mt-6 w-fit">
-                <AvatarEdit
-                    avatar={curr?.avatar}
+                <ImageEdit
+                    image={curr?.avatar}
                     loading={uploading}
                     setLoading={setUploading}
-                    setAvatar={(url) => setCurr((prev) => ({ ...prev, avatar: url }) as User)}
+                    setImage={(url) => setCurr((prev) => ({ ...prev, avatar: url }) as User)}
                 />
             </div>
             <div className="mt-5">

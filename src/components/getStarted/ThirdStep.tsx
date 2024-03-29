@@ -2,7 +2,7 @@ import { Button } from '@nextui-org/react';
 import { useState } from 'react';
 import { TbChevronLeft } from 'react-icons/tb';
 import { StartedInfo } from 'src/types/start.type';
-import { AvatarEdit } from '../common';
+import { ImageEdit } from '../common';
 
 type ThirdStepProps = {
     onContinue: () => void;
@@ -30,13 +30,13 @@ const ThirdStep = ({ onContinue, onBack, info, setInfo }: ThirdStepProps) => {
             <p className="text-sm font-light text-black/40">Step 3/4</p>
             <h1 className="mt-4 font-serif text-4xl">Set your avatar</h1>
             <form onSubmit={handleSubmit}>
-                <AvatarEdit
+                <ImageEdit
                     className="ml-[46px] mt-5"
                     uploadClassName="mt-5"
                     loading={loading}
                     setLoading={setLoading}
-                    avatar={avatar}
-                    setAvatar={setAvatar}
+                    image={avatar}
+                    setImage={setAvatar}
                 />
                 <div className="mt-6 flex items-center gap-3">
                     <Button onClick={onBack} isIconOnly radius="full" variant="flat">

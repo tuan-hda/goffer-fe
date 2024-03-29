@@ -10,3 +10,4 @@ export { default as ForgotPassword } from './ForgotPassword';
 export { default as ResetPassword } from './ResetPassword';
 export { default as GetStarted } from './GetStarted';
 export { default as Settings } from './Settings';
+export { default as NewOrganization } from './NewOrganization';
