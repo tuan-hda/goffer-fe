@@ -13,6 +13,8 @@ import {
     GetStarted,
     Settings,
     NewOrganization,
+    OrganizationHome,
+    OrgSettings,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -87,6 +89,14 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/settings',
                         element: <Settings />,
+                    },
+                    {
+                        path: '/app/organization/:domain',
+                        element: <OrganizationHome />,
+                    },
+                    {
+                        path: '/app/organization/:domain/settings',
+                        element: <OrgSettings />,
                     },
                 ],
             },

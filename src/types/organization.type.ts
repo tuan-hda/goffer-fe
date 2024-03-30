@@ -13,3 +13,5 @@ export type Organization = NewOrganization & {
     domain: string;
     owner: string;
 };
+
+export type EditOrganization = Partial<Organization>;
