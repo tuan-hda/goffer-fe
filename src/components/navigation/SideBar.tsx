@@ -15,12 +15,13 @@ import {
 import { Fragment, useEffect, useState } from 'react';
 import useDiscoverStore from 'src/stores/discoverStore';
 import classNames from 'classnames';
-import { Link, matchRoutes, useLocation } from 'react-router-dom';
+import { Link, matchRoutes, useLocation, useParams } from 'react-router-dom';
 import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
 import useAuthStore from 'src/stores/authStore';
 import { shallow } from 'zustand/shallow';
 import SidebarItem from './SidebarItem';
 import UserPopover from './UserPopover';
+import { Organization } from 'src/types/organization.type';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -104,7 +105,24 @@ const items: Item[] = [
     },
 ];
 
-const SideBar = () => {
+const orgItems: (_: string) => Item[] = (id: string) => [
+    {
+        type: 'link',
+        element: {
+            path: `/app/organization/${id}/settings`,
+            startContent: <TbSettings className="text-xl" />,
+            content: 'Settings',
+        },
+    },
+];
+
+type SideBarProps = {
+    org?: Organization;
+};
+
+const SideBar = ({ org }: SideBarProps) => {
+    const { domain } = useParams();
+
     // TODO: Remove logout from this file
     const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
     const { data: user } = useSelfProfileQuery();
@@ -144,12 +162,19 @@ const SideBar = () => {
                         },
                     }}
                 >
-                    <div className={classNames('flex items-center gap-3 px-5', collapsed && 'pt-0.5')}>
-                        <Link to={`/app/${user?.initialType}`} className="flex items-center gap-[10px]">
-                            <img src="/logo.svg" className="h-7 w-7" alt="logo" />
+                    <div className={classNames('flex items-center gap-3 px-5')}>
+                        <Link
+                            to={org ? `/app/organization/${org.domain}` : `/app/individual`}
+                            className="flex items-start gap-[10px]"
+                        >
+                            <img
+                                src={org ? org.logo : '/logo.svg'}
+                                className="h-7 min-h-7 w-7 min-w-7 flex-shrink-0 rounded-full"
+                                alt="logo"
+                            />
                             {!collapsed && (
-                                <p className="text-left font-serif text-3xl font-black leading-[32px] text-text">
-                                    Goffer
+                                <p className="min-w-0 text-left font-serif text-[28px] font-black leading-[28px] text-text">
+                                    {org ? 'Home' : 'Goffer'}
                                 </p>
                             )}
                         </Link>
@@ -172,7 +197,7 @@ const SideBar = () => {
                     <div className="flex h-full w-full flex-col">
                         <div className="mx-[14px]">
                             <UserPopover collapsed={collapsed} />
-                            {items.map((item, index) => (
+                            {(org ? orgItems(domain!) : items).map((item, index) => (
                                 <Fragment key={index}>
                                     {item.divider && <div className="mx-2 my-4 border-t border-t-gray-200/70" />}
                                     <SidebarItem matches={matches} collapsed={collapsed} item={item} />

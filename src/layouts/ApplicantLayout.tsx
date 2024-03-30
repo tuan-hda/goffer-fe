@@ -1,7 +1,7 @@
-import { Header } from '../components/applicant';
 import useDiscoverStore from 'src/stores/discoverStore';
 import classNames from 'classnames';
 import { Outlet } from 'react-router-dom';
+import { Header } from 'src/components/common';
 
 const ApplicantLayout = () => {
     const sideBarPinned = useDiscoverStore((state) => state.sideBarPinned);

@@ -11,7 +11,7 @@ import {
 } from 'src/components/ui/dropdown-menu';
 import { TbHomePlus } from 'react-icons/tb';
 import { Button } from '../ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import useListOrganizations from 'src/hooks/useListOrganizations';
 
 type UserPopoverProps = {
@@ -21,19 +21,21 @@ type UserPopoverProps = {
 const UserPopover = ({ collapsed }: UserPopoverProps) => {
     const { data: user } = useSelfProfileQuery();
     const { data: organizations } = useListOrganizations();
+    const { domain } = useParams();
+    const org = organizations?.results.find((org) => org.domain === domain);
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="mb-5 mt-7 w-full outline-none ring-0">
                 <button className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg p-2 transition hover:bg-gray-100">
-                    <Avatar className="h-7 w-7" src={user?.avatar} />
+                    <Avatar className="h-7 w-7 flex-shrink-0 bg-white" src={org ? org.logo : user?.avatar} />
                     <p
                         className={classNames(
-                            'pointer-events-auto absolute left-12 overflow-hidden whitespace-nowrap opacity-100 transition',
+                            'pointer-events-auto absolute left-12 min-w-0 overflow-hidden whitespace-nowrap opacity-100 transition',
                             collapsed ? 'pointer-events-none !opacity-0' : 'pointer-events-auto opacity-100',
                         )}
                     >
-                        {user?.name}
+                        {org ? org.name : user?.name}
                     </p>
                 </button>
             </DropdownMenuTrigger>
@@ -56,8 +58,11 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                 <DropdownMenuLabel>Organizations</DropdownMenuLabel>
                 {organizations?.results.map((organization) => (
                     <DropdownMenuItem key={organization.id}>
-                        <button className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-1 py-0.5 transition">
-                            <Avatar className="h-7 w-7" src={organization.logo} />
+                        <Link
+                            to={`/app/organization/${organization.domain}`}
+                            className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-1 py-0.5 transition"
+                        >
+                            <Avatar className="h-7 w-7 bg-white" src={organization.logo} />
                             <p
                                 className={classNames(
                                     'pointer-events-auto overflow-hidden whitespace-nowrap opacity-100 transition',
@@ -66,7 +71,7 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                             >
                                 {organization.name}
                             </p>
-                        </button>
+                        </Link>
                     </DropdownMenuItem>
                 ))}
                 {organizations?.results.length === 0 && (
