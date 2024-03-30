@@ -12,6 +12,7 @@ import {
 import { TbHomePlus } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
+import useListOrganizations from 'src/hooks/useListOrganizations';
 
 type UserPopoverProps = {
     collapsed: boolean;
@@ -19,6 +20,7 @@ type UserPopoverProps = {
 
 const UserPopover = ({ collapsed }: UserPopoverProps) => {
     const { data: user } = useSelfProfileQuery();
+    const { data: organizations } = useListOrganizations();
 
     return (
         <DropdownMenu>
@@ -52,7 +54,24 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Organizations</DropdownMenuLabel>
-                <p className="px-2 text-left text-sm text-text/60">You have no organizations.</p>
+                {organizations?.results.map((organization) => (
+                    <DropdownMenuItem key={organization.id}>
+                        <button className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-1 py-0.5 transition">
+                            <Avatar className="h-7 w-7" src={organization.logo} />
+                            <p
+                                className={classNames(
+                                    'pointer-events-auto overflow-hidden whitespace-nowrap opacity-100 transition',
+                                    collapsed ? 'pointer-events-none !opacity-0' : 'pointer-events-auto opacity-100',
+                                )}
+                            >
+                                {organization.name}
+                            </p>
+                        </button>
+                    </DropdownMenuItem>
+                ))}
+                {organizations?.results.length === 0 && (
+                    <p className="px-2 text-left text-sm text-text/60">You have no organizations.</p>
+                )}
                 <div className="mb-2 mt-[10px] px-2">
                     <Button
                         asChild

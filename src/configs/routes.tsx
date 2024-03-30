@@ -1,4 +1,4 @@
-import { Navigate, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import {
     AboutUs,
     ContactUs,
@@ -84,12 +84,11 @@ const routesConfig: RouteObject[] = [
                         ],
                     },
                     { path: '/app/individual/jobs', element: <JobDiscover /> },
+                    {
+                        path: '/app/settings',
+                        element: <Settings />,
+                    },
                 ],
-            },
-
-            {
-                path: '/app/settings',
-                element: <Settings />,
             },
         ],
     },

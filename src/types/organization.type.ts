@@ -7,3 +7,9 @@ export type NewOrganization = {
     visibility: 'public' | 'private' | '';
     description: string;
 };
+
+export type Organization = NewOrganization & {
+    id: string;
+    domain: string;
+    owner: string;
+};
