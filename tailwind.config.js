@@ -24,6 +24,9 @@ module.exports = {
                 serif: ['EB Garamond', 'serif'],
             },
             colors: {
+                'm-yellow': {
+                    DEFAULT: '#FFE0A9',
+                },
                 pale: {
                     DEFAULT: '#fefcf5',
                 },

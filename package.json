@@ -21,6 +21,7 @@
         "@radix-ui/react-popover": "^1.0.7",
         "@radix-ui/react-progress": "^1.0.3",
         "@radix-ui/react-select": "^2.0.0",
+        "@radix-ui/react-slider": "^1.1.2",
         "@radix-ui/react-slot": "^1.0.2",
         "@radix-ui/react-tooltip": "^1.0.7",
         "@react-oauth/google": "^0.12.1",
@@ -56,10 +57,10 @@
         "tailwind-merge": "^2.2.2",
         "tailwindcss-animate": "^1.0.7",
         "use-spring": "^0.2.4",
+        "validator": "^13.11.0",
         "wavesurfer.js": "^7.7.5",
         "yup": "^1.4.0",
         "zod": "^3.22.4",
-        "validator": "^13.11.0",
         "zustand": "^4.5.2"
     },
     "devDependencies": {

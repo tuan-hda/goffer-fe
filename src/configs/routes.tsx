@@ -13,9 +13,9 @@ import {
     GetStarted,
     Settings,
     NewOrganization,
-    OrganizationHome,
     OrgSettings,
     OrgJobs,
+    NewJob,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -88,32 +88,37 @@ const routesConfig: RouteObject[] = [
                         path: '/app/organization/:domain',
                         element: <OrgJobs />,
                     },
+
                     {
                         path: '/app/organization/:domain/settings',
                         element: <OrgSettings />,
                     },
                 ],
             },
-        ],
-    },
-    {
-        path: '/organization/new',
-        element: <NewOrganization />,
-    },
-    {
-        path: '/job',
-        element: <FocusLayout />,
-        children: [
             {
-                path: ':id',
+                path: '/organization/new',
+                element: <NewOrganization />,
+            },
+            {
+                path: '/app/organization/:domain/new',
+                element: <NewJob />,
+            },
+            {
+                path: '/job',
+                element: <FocusLayout />,
                 children: [
                     {
-                        index: true,
-                        element: <JobApply />,
-                    },
-                    {
-                        path: 'application',
-                        element: <Application />,
+                        path: ':id',
+                        children: [
+                            {
+                                index: true,
+                                element: <JobApply />,
+                            },
+                            {
+                                path: 'application',
+                                element: <Application />,
+                            },
+                        ],
                     },
                 ],
             },
