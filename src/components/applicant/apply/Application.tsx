@@ -159,14 +159,14 @@ const Application = () => {
                     {fields.map((field) => (
                         <FormFieldItem {...field} form={form} key={field.name} />
                     ))}
+                    <ProgressFooter
+                        rate={20}
+                        onStartPress={() => navigate(-1)}
+                        endContent={'Next'}
+                        endProps={{ type: 'submit' }}
+                    />
                 </form>
             </Form>
-            <ProgressFooter
-                rate={20}
-                onStartPress={() => navigate(-1)}
-                endContent={'Next'}
-                endProps={{ type: 'submit' }}
-            />
         </div>
     );
 };

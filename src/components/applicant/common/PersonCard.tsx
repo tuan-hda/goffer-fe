@@ -21,7 +21,7 @@ const PersonCard = () => {
     const toggleLoad = () => setIsLoaded(!isLoaded);
 
     return (
-        <Card isBlurred className="max-w-sm bg-background/60 dark:bg-default-100/50">
+        <Card isBlurred shadow="md" className="max-w-sm bg-background/60 dark:bg-default-100/50">
             <CardHeader className="justify-between">
                 <div className="flex gap-5">
                     <Avatar isBordered radius="full" size="md" src="/avatars/avatar-1.png" />
