@@ -42,7 +42,10 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
             <DropdownMenuContent className="w-[240px] rounded-xl">
                 <DropdownMenuLabel>Individual</DropdownMenuLabel>
                 <DropdownMenuItem>
-                    <button className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-1 py-0.5 transition">
+                    <Link
+                        to="/app/individual"
+                        className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-1 py-0.5 transition"
+                    >
                         <Avatar className="h-7 w-7" src={user?.avatar} />
                         <p
                             className={classNames(
@@ -52,7 +55,7 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                         >
                             {user?.name}
                         </p>
-                    </button>
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Organizations</DropdownMenuLabel>

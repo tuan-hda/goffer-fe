@@ -15,6 +15,7 @@ import {
     NewOrganization,
     OrganizationHome,
     OrgSettings,
+    OrgJobs,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -92,7 +93,7 @@ const routesConfig: RouteObject[] = [
                     },
                     {
                         path: '/app/organization/:domain',
-                        element: <OrganizationHome />,
+                        element: <OrgJobs />,
                     },
                     {
                         path: '/app/organization/:domain/settings',

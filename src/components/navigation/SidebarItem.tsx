@@ -5,14 +5,10 @@ import { Link } from 'react-router-dom';
 type SidebarItemProps = {
     item: Item;
     collapsed: boolean;
-    matches:
-        | {
-              pathname: string;
-          }[]
-        | null;
+    match?: Item;
 };
 
-const SidebarItem = ({ item, collapsed, matches }: SidebarItemProps) => {
+const SidebarItem = ({ item, collapsed, match }: SidebarItemProps) => {
     return item.type === 'button' ? (
         <button className="flex w-full items-center justify-start gap-[18px] rounded-lg py-2 pl-[9px] pr-2 text-primary transition hover:bg-gray-100">
             {item.element.startContent}
@@ -30,7 +26,7 @@ const SidebarItem = ({ item, collapsed, matches }: SidebarItemProps) => {
             to={item.element.path}
             className={classNames(
                 'flex w-full items-center justify-start gap-[18px] rounded-lg py-2 pl-[9px] pr-2 text-text transition hover:bg-gray-100',
-                matches && matches.length > 0 && matches[0].pathname === item.element.path ? 'bg-gray-100' : '',
+                match?.type === 'link' && match.element.path === item.element.path ? 'bg-gray-100' : '',
             )}
         >
             {item.element.startContent}

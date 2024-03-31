@@ -62,7 +62,7 @@ const ImageEdit = ({ image, setImage, loading, setLoading, className, uploadClas
                     type="button"
                     className={classNames('group relative mx-auto block h-[100px] w-[100px] rounded-full', className)}
                 >
-                    <Avatar src={image} className="h-full w-full" />
+                    <Avatar src={image} className="h-full w-full bg-white" />
                     <div className="absolute left-0 top-0 flex h-full w-full rounded-full bg-gray-500/50 opacity-0 transition group-hover:opacity-100">
                         <span className="m-auto text-sm text-white">Change</span>
                     </div>

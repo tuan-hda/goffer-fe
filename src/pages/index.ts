@@ -13,3 +13,4 @@ export { default as Settings } from './Settings';
 export { default as NewOrganization } from './NewOrganization';
 export { default as OrganizationHome } from './OrganizationHome';
 export { default as OrgSettings } from './OrgSettings';
+export { default as OrgJobs } from './OrgJobs';
