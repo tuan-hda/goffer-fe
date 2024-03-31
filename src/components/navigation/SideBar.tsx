@@ -73,7 +73,7 @@ const items: Item[] = [
     {
         type: 'link',
         element: {
-            path: '/app/discover',
+            path: '/app/individual/discover',
             startContent: <TbCompass className="text-xl" />,
             content: 'Discover',
         },
@@ -82,7 +82,7 @@ const items: Item[] = [
     {
         type: 'link',
         element: {
-            path: '/app/discover/jobs',
+            path: '/app/individual/jobs',
             startContent: <TbBaguette className="text-xl" />,
             content: 'Jobs',
         },

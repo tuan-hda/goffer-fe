@@ -23,7 +23,7 @@ import { Discover, JobDiscover, PeopleDiscover } from 'src/components/applicant/
 import { AppLayout, ApplicantLayout, AuthLayout, FocusLayout, LandingLayout, RootLayout } from '../layouts';
 import Test from 'src/pages/Test';
 import Editor from 'src/components/common/editor/Editor';
-import { JobApply } from 'src/components/applicant/apply';
+import { Application, JobApply } from 'src/components/applicant/apply';
 
 const routesConfig: RouteObject[] = [
     {
@@ -73,20 +73,13 @@ const routesConfig: RouteObject[] = [
                                 path: '/app/individual/discover',
                                 element: <Discover />,
                                 children: [
-                                    { path: '/app/individual/discover/jobs', element: <JobDiscover /> },
                                     { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
                                     { path: '/app/individual/discover/companies', element: <>Companies</> },
                                 ],
                             },
-                            { path: '/app/individual/:user_id', element: <>User Profile</> },
-                            { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
-                            {
-                                path: '/app/individual/discover/companies',
-                                element: <div className="h-full">Companies</div>,
-                            },
+                            { path: '/app/individual/jobs', element: <JobDiscover /> },
                         ],
                     },
-                    { path: '/app/individual/jobs', element: <JobDiscover /> },
                     {
                         path: '/app/settings',
                         element: <Settings />,
@@ -113,7 +106,16 @@ const routesConfig: RouteObject[] = [
         children: [
             {
                 path: ':id',
-                element: <JobApply />,
+                children: [
+                    {
+                        index: true,
+                        element: <JobApply />,
+                    },
+                    {
+                        path: 'application',
+                        element: <Application />,
+                    },
+                ],
             },
         ],
     },
