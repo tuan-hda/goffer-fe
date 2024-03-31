@@ -18,7 +18,7 @@ const Counter = ({ value = 1, setValue }: CounterProps) => {
     return (
         <div className="flex items-center gap-2">
             <Button
-                onClick={() => setValue(value - 1)}
+                onClick={() => setValue(Math.max(1, value - 1))}
                 type="button"
                 variant="ghost"
                 className="aspect-square rounded-full border border-gray-200 bg-gray-200"
