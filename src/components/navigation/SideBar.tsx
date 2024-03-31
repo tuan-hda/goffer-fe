@@ -15,8 +15,7 @@ import {
 import { Fragment, useEffect, useState } from 'react';
 import useDiscoverStore from 'src/stores/discoverStore';
 import classNames from 'classnames';
-import { Link, matchRoutes, useLocation, useParams } from 'react-router-dom';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import { Link, useLocation, matchPath, useParams } from 'react-router-dom';
 import useAuthStore from 'src/stores/authStore';
 import { shallow } from 'zustand/shallow';
 import SidebarItem from './SidebarItem';
@@ -38,6 +37,7 @@ type LinkItem = {
     type: 'link';
     element: {
         path: string;
+        pattern?: string;
         startContent: React.ReactNode;
         content: React.ReactNode;
     };
@@ -105,11 +105,28 @@ const items: Item[] = [
     },
 ];
 
-const orgItems: (_: string) => Item[] = (id: string) => [
+const orgItems: (_: string) => Item[] = (domain: string) => [
+    {
+        type: 'button',
+        element: {
+            startContent: <TbSparkles className="text-xl" />,
+            content: 'Ask Goffer',
+        },
+    },
     {
         type: 'link',
         element: {
-            path: `/app/organization/${id}/settings`,
+            path: `/app/organization/${domain}`,
+            pattern: '/app/organization/:domain',
+            startContent: <TbBaguette className="text-xl" />,
+            content: 'Jobs',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: `/app/organization/${domain}/settings`,
+            pattern: '/app/organization/:domain/settings',
             startContent: <TbSettings className="text-xl" />,
             content: 'Settings',
         },
@@ -125,7 +142,6 @@ const SideBar = ({ org }: SideBarProps) => {
 
     // TODO: Remove logout from this file
     const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
-    const { data: user } = useSelfProfileQuery();
     const [collapsed, setCollapsed] = useState(false);
     const { sideBarPinned, updateSideBarPinned } = useDiscoverStore();
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
@@ -133,10 +149,11 @@ const SideBar = ({ org }: SideBarProps) => {
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
 
     const location = useLocation();
-    const matches = matchRoutes(
-        items.filter((item) => item.type === 'link').map((item) => (item as LinkItem).element),
-        location,
-    );
+    const match = (domain ? orgItems(domain) : items).find((item) => {
+        if (item.type === 'link') {
+            return matchPath(item.element.pattern || item.element.path, location.pathname);
+        }
+    });
 
     useEffect(() => {
         setCollapsed(!sideBarPinned);
@@ -200,7 +217,7 @@ const SideBar = ({ org }: SideBarProps) => {
                             {(org ? orgItems(domain!) : items).map((item, index) => (
                                 <Fragment key={index}>
                                     {item.divider && <div className="mx-2 my-4 border-t border-t-gray-200/70" />}
-                                    <SidebarItem matches={matches} collapsed={collapsed} item={item} />
+                                    <SidebarItem match={match} collapsed={collapsed} item={item} />
                                 </Fragment>
                             ))}
                         </div>

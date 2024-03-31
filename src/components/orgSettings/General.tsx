@@ -1,43 +1,42 @@
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import classNames from 'classnames';
-import { TbCalendar } from 'react-icons/tb';
-import { Calendar } from '../ui/calendar';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
-import { Spinner } from '@nextui-org/react';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
-import { useEffect, useRef, useState } from 'react';
-import { User } from 'src/types/user.type';
-import moment from 'moment';
+import { useEffect, useState } from 'react';
 import _ from 'lodash';
-import { isAxiosError } from 'axios';
+import { ImageEdit, Loading } from '../common';
+import useCurrOrganization from 'src/hooks/useCurrOrganization';
+import { Organization } from 'src/types/organization.type';
+import { Textarea } from '../ui/textarea';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { TbChevronDown, TbInfoCircle } from 'react-icons/tb';
+import classNames from 'classnames';
+import { useAnimation, motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { updateUserService } from 'src/services/users.service';
-import { ImageEdit } from '../common';
+import { isAxiosError } from 'axios';
+import { updateOrganizationService } from 'src/services/organizations.service';
+import useListOrganizations from 'src/hooks/useListOrganizations';
 
 const General = () => {
+    const [expanded, setExpanded] = useState(false);
+    const ctrls = useAnimation();
+
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
 
-    const { data: user, refetch } = useSelfProfileQuery();
-    const [curr, setCurr] = useState<User>();
-    const old = useRef<User>();
+    const { data, refetch } = useCurrOrganization();
+    const { refetch: refetchList } = useListOrganizations();
+    const [curr, setCurr] = useState<Organization>();
 
     useEffect(() => {
-        setCurr(user);
-        old.current = user;
-    }, [user]);
+        setCurr(data);
+    }, [data]);
 
-    const handleDobChange = (date?: Date) => {
-        setCurr((prev) => ({ ...prev, dob: date }) as User);
-    };
+    const handleChange =
+        (name: keyof Organization) =>
+        (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+            setCurr((prev) => ({ ...prev, [name]: e.target.value }) as Organization);
+        };
 
-    const handleChange = (name: 'name' | 'gender') => (value: string) => {
-        setCurr((prev) => ({ ...prev, [name]: value }) as User);
-    };
-
-    const isInvalid = _.isEqual(curr, old.current);
+    const isInvalid = _.isEqual(curr, data);
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -45,13 +44,19 @@ const General = () => {
         try {
             setLoading(true);
             if (curr) {
-                await updateUserService({
+                await updateOrganizationService(curr.id, {
                     name: curr.name,
-                    avatar: curr.avatar,
-                    dob: curr.dob,
-                    gender: curr.gender,
+                    domain: curr.domain,
+                    email: curr.email,
+                    website: curr.website,
+                    description: curr.description,
+                    logo: curr.logo,
                 });
-                await refetch();
+                if (curr?.domain !== data?.domain) {
+                    window.location.pathname = `/app/organization/${curr?.domain}/settings`;
+                }
+                const list = [refetchList(), refetch()];
+                await Promise.all(list);
             }
         } catch (error) {
             if (isAxiosError(error)) {
@@ -64,75 +69,110 @@ const General = () => {
         }
     };
 
+    useEffect(() => {
+        ctrls.start(expanded ? 'visible' : 'hidden');
+    }, [ctrls, expanded]);
+
     return (
         <form onSubmit={handleSave} className="w-full rounded-xl p-6 text-sm shadow-medium">
             <h1 className="text-2xl">General</h1>
             <div className="group relative mt-6 w-fit">
                 <ImageEdit
-                    image={curr?.avatar}
+                    image={curr?.logo}
                     loading={uploading}
                     setLoading={setUploading}
-                    setImage={(url) => setCurr((prev) => ({ ...prev, avatar: url }) as User)}
+                    setImage={(url) => setCurr((prev) => ({ ...prev, logo: url }) as Organization)}
                 />
             </div>
             <div className="mt-5">
-                <label htmlFor="email">Email</label>
-                <Input disabled className="mt-1 rounded-lg" id="email" value={curr?.email} />
-            </div>
-            <div className="mt-5">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="domain" className="flex gap-1">
+                    Domain
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <TbInfoCircle />
+                            </TooltipTrigger>
+                            <TooltipContent className="bg-pale text-black shadow-medium">
+                                <p>
+                                    The domain is the unique identifier for your organization. It is used to create your
+                                    organization&apos;s workspace URL.
+                                </p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </label>
                 <Input
+                    onChange={handleChange('domain')}
+                    id="domain"
+                    value={curr?.domain}
                     className="mt-1 rounded-lg bg-white"
-                    onChange={(e) => handleChange('name')(e.target.value)}
-                    id="name"
-                    placeholder="Your name here"
-                    value={curr?.name}
                 />
             </div>
-            <div className="mt-5">
-                <p>Date of birth</p>
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            className={classNames(
-                                'mt-1 flex w-[240px] justify-start rounded-lg text-left font-normal',
-                                !curr?.dob && 'text-muted-foreground',
-                            )}
-                        >
-                            <TbCalendar className="mr-2 h-4 w-4" />
-                            {curr?.dob ? moment(curr.dob).format('MMMM Do, YYYY') : <span>Pick a date</span>}
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                        <Calendar mode="single" selected={curr?.dob} onSelect={handleDobChange} initialFocus />
-                    </PopoverContent>
-                </Popover>
-            </div>
-            <div className="mt-5">
-                <p>Gender</p>
-                <Select value={curr?.gender} onValueChange={(value) => handleChange('gender')(value)}>
-                    <SelectTrigger id="gender" className="mt-1 w-[180px] rounded-lg bg-white">
-                        <SelectValue placeholder="Select gender" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Gender</SelectLabel>
-                            <SelectItem value="male">Male</SelectItem>
-                            <SelectItem value="female">Female</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-            </div>
+
+            <button onClick={() => setExpanded((prev) => !prev)} className="mt-5 flex items-center gap-1">
+                Expand <TbChevronDown className={classNames('text-lg transition', expanded && '-rotate-90')} />
+            </button>
+
+            <motion.div
+                initial="hidden"
+                className="-mx-1 overflow-hidden px-1"
+                variants={{
+                    hidden: {
+                        height: 0,
+                    },
+                    visible: {
+                        height: 'auto',
+                    },
+                }}
+                animate={ctrls}
+            >
+                <div className="mt-5">
+                    <label htmlFor="name">Name</label>
+                    <Input
+                        className="mt-1 rounded-lg bg-white"
+                        onChange={handleChange('name')}
+                        id="name"
+                        placeholder="Your name here"
+                        value={curr?.name}
+                    />
+                </div>
+                <div className="mt-5">
+                    <label htmlFor="email">Corporate email</label>
+                    <Input
+                        onChange={handleChange('email')}
+                        className="mt-1 rounded-lg bg-white"
+                        id="email"
+                        value={curr?.email}
+                    />
+                </div>
+                <div className="mt-5">
+                    <label htmlFor="email">Website</label>
+                    <Input
+                        onChange={handleChange('website')}
+                        className="mt-1 rounded-lg bg-white"
+                        id="website"
+                        value={curr?.website}
+                    />
+                </div>
+                <div className="mt-5">
+                    <label htmlFor="email">Description</label>
+                    <Textarea
+                        onChange={handleChange('description')}
+                        className="mt-1 rounded-lg bg-white"
+                        id="description"
+                        value={curr?.description}
+                    />
+                </div>
+            </motion.div>
+
             <Button
                 type="submit"
                 disabled={loading || isInvalid}
                 className="mt-6 w-full rounded-lg"
                 variant="secondary"
             >
-                {loading && <Spinner size="sm" className="scale-50" />} Save
+                {loading && <Loading />}
+                Save
             </Button>
         </form>
     );
