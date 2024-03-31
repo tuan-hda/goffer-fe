@@ -1,7 +1,7 @@
 import { TbChevronLeft } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
-import { FirstStep } from 'src/components/newJob';
-import { Progress } from 'src/components/ui/progress';
+import { FirstPart, SecondPart, ThirdPart } from 'src/components/newJob';
+import { Button } from 'src/components/ui/button';
 import useCurrOrganization from 'src/hooks/useCurrOrganization';
 
 const NewJob = () => {
@@ -16,30 +16,31 @@ const NewJob = () => {
                 alt="bloom"
                 className="fixed bottom-[16vh] left-[65vw] w-[35vw] -translate-x-1/2 opacity-50"
             />
-            <button
-                onClick={() => navigate(`/app/organization/${curr?.domain}`)}
-                className="group fixed left-4 top-4 z-[1] flex gap-2 text-sm"
-            >
-                <TbChevronLeft className="text-xl" /> Go home
-                <div className="absolute -bottom-1 ml-1 w-full border-t opacity-0 transition group-hover:opacity-100" />
-            </button>
-            <div className="scroll-hidden relative flex h-screen w-full overflow-y-auto bg-pale/30 py-6 text-base backdrop-blur-xl">
-                <div className="m-auto h-[520px] w-[680px] overflow-hidden rounded-xl shadow-medium">
-                    <Progress value={20} color="primary" className="h-1" />
-                    <div className="h-[calc(100%-52px)]">
-                        <FirstStep />
-                    </div>
-                    <div className="flex h-[48px] w-full items-center justify-between border-t px-5">
-                        <button className="flex items-center justify-center gap-2 text-sm">
-                            <TbChevronLeft className="text-base" /> Back
-                        </button>
+            <div className="fixed left-0 right-0 top-0 z-[1] mx-auto h-16 w-full bg-white/40 px-8 shadow-sm backdrop-blur-md">
+                <div className="mx-auto flex h-full max-w-7xl items-center">
+                    <button
+                        onClick={() => navigate(`/app/organization/${curr?.domain}`)}
+                        className="group relative flex flex-shrink-0 gap-2 text-sm"
+                    >
+                        <TbChevronLeft className="text-xl" /> Go home
+                        <div className="absolute -bottom-1 ml-1 w-full border-t border-t-gray-700 opacity-0 transition group-hover:opacity-100" />
+                    </button>
+                    <Button className="ml-auto min-w-0 rounded-xl" variant="outline">
+                        Preview
+                    </Button>
 
-                        <button className="flex items-center justify-center gap-2 text-sm">
-                            Next
-                            <TbChevronLeft className="rotate-180 text-base" />
-                        </button>
-                    </div>
+                    <Button className="ml-4 min-w-0 rounded-xl">Publish</Button>
                 </div>
+            </div>
+            <div className="scroll-hidden relative flex h-screen w-full overflow-y-auto bg-pale/30 py-6 text-base backdrop-blur-xl">
+                <form className="mx-auto w-[620px]">
+                    <div className="h-16" />
+                    <h1 className="text-3xl">Let&apos;s set up your new job</h1>
+                    <FirstPart />
+                    <SecondPart />
+                    <ThirdPart />
+                    <div className="h-8" />
+                </form>
             </div>
         </div>
     );
