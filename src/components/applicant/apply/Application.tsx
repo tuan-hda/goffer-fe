@@ -4,8 +4,25 @@ import { z } from 'zod';
 import { Form } from 'src/components/ui/form';
 import FormFieldItem from './FormFieldItem';
 import ProgressFooter from '../common/ProgressFooter';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import ApplyQuestion from './ApplyQuestion';
+import { useEffect, useState } from 'react';
+
+const questions = [
+    {
+        question: 'What is your ideal work enviroment?',
+        desc: 'What is your ideal work enviroment?',
+    },
+    {
+        question: 'Walk me through a project you`re most proud of',
+        desc: 'What did you build, What was your role in it, who did you build it with...and what were the outcomes?',
+    },
+    {
+        question: 'Walk us through your origin story',
+        desc: 'We want to get to know YOU. How did you get to where you are today?',
+    },
+];
 
 function isValidPhoneNumber(phoneNumber: string): boolean {
     try {
@@ -120,6 +137,28 @@ const fields = [
 
 const Application = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const [stepNum, setStepNum] = useState(0);
+    const totalSteps = questions.length;
+
+    useEffect(() => {
+        const stepHash = location.hash;
+
+        if (!stepHash || stepHash === '') {
+            setStepNum(0);
+        } else {
+            const match = stepHash.match(/#step-(\d+)/);
+            const step = match ? parseInt(match[1], 10) : 0;
+            if (step >= 1 && step <= questions.length) {
+                setStepNum(step);
+            } else {
+                setStepNum(0);
+                navigate('#', { replace: true });
+            }
+        }
+    }, [location.hash, navigate]);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -140,6 +179,12 @@ const Application = () => {
         console.log(values);
     }
 
+    const handleNextStep = () => {
+        if (stepNum < questions.length) {
+            navigate(`#step-${stepNum + 1}`);
+        }
+    };
+
     return (
         <div className="mx-auto flex max-w-screen-md flex-col gap-9 p-7 pb-36">
             {/* Title */}
@@ -154,19 +199,24 @@ const Application = () => {
                     <span className="font-serif text-sm font-medium text-default-500">Full time</span>
                 </p>
             </div>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="flex grid-cols-2 flex-col gap-6 md:grid">
-                    {fields.map((field) => (
-                        <FormFieldItem {...field} form={form} key={field.name} />
-                    ))}
-                    <ProgressFooter
-                        rate={20}
-                        onStartPress={() => navigate(-1)}
-                        endContent={'Next'}
-                        endProps={{ type: 'submit' }}
-                    />
-                </form>
-            </Form>
+            {stepNum === 0 ? (
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex grid-cols-2 flex-col gap-6 md:grid">
+                        {fields.map((field) => (
+                            <FormFieldItem {...field} form={form} key={field.name} />
+                        ))}
+                    </form>
+                </Form>
+            ) : (
+                <ApplyQuestion total={totalSteps} number={stepNum} data={questions[stepNum - 1]} />
+            )}
+            <ProgressFooter
+                rate={(stepNum * 100) / totalSteps}
+                onStartPress={() => navigate(-1)}
+                endContent={stepNum < questions.length ? 'Next' : 'Submit'}
+                endProps={{ type: 'submit' }}
+                onEndPress={handleNextStep}
+            />
         </div>
     );
 };
