@@ -8,13 +8,13 @@ interface Props {
     onStartPress?: () => void;
     endContent?: ReactNode;
     onEndPress?: () => void;
-    startProps?:ButtonProps
-    endProps?:ButtonProps
+    startProps?: ButtonProps;
+    endProps?: ButtonProps;
 }
 
 const ProgressFooter = ({ rate, startContent, endContent, onStartPress, onEndPress, startProps, endProps }: Props) => {
     return (
-        <div className="fixed bottom-0 left-0 h-20 w-full bg-pale shadow-[0_-4px_6px_1px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1)]">
+        <div className="fixed bottom-0 left-0 h-20 w-full bg-pale shadow-[0_-4px_10px_2px_rgba(0,0,0,0.1),0_-2px_4px_-2px_rgba(0,0,0,0.1)]">
             {rate !== undefined && <Progress size="sm" color="primary" aria-label="Loading..." value={rate} />}
             <div className="mx-auto flex h-full max-w-screen-md flex-row items-center justify-between">
                 <div>

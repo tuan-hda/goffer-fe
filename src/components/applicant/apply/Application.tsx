@@ -18,7 +18,12 @@ function isValidPhoneNumber(phoneNumber: string): boolean {
 
 const formSchema = z.object({
     profilePicture: z.instanceof(File).optional(),
-    resume: z.instanceof(File).optional(),
+    resume: z
+        .instanceof(File)
+        .optional()
+        .refine((file) => file, {
+            message: 'Please select a valid file',
+        }),
     fullName: z.string().min(2, { message: 'Please enter your full name' }),
     location: z.string().optional(),
     email: z.string().email({ message: 'Please enter a valid email' }),
@@ -132,8 +137,6 @@ const Application = () => {
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
         console.log(values);
     }
 
@@ -156,14 +159,14 @@ const Application = () => {
                     {fields.map((field) => (
                         <FormFieldItem {...field} form={form} key={field.name} />
                     ))}
-                    <ProgressFooter
-                        rate={0}
-                        onStartPress={() => navigate(-1)}
-                        endContent={'Next'}
-                        endProps={{ type: 'submit' }}
-                    />
                 </form>
             </Form>
+            <ProgressFooter
+                rate={20}
+                onStartPress={() => navigate(-1)}
+                endContent={'Next'}
+                endProps={{ type: 'submit' }}
+            />
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FileItemProps, FormItemProps, TextItemProps } from './Application';
 import { Avatar } from '@nextui-org/react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from 'src/components/ui/form';
@@ -11,9 +11,17 @@ import { Command, CommandList, CommandEmpty, CommandGroup, CommandInput, Command
 import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/popover';
 import { Button } from 'src/components/ui/button';
 import { CaretSortIcon } from '@radix-ui/react-icons';
+import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
 
 const ImageField = ({ form, name, label }: FileItemProps) => {
+    const { data: user } = useSelfProfileQuery();
+
     const [profilePictureURL, setProfilePictureURL] = useState<string>();
+    const fileInputRef = useRef<null | HTMLInputElement>(null);
+
+    useEffect(() => {
+        user?.avatar && setProfilePictureURL(user.avatar);
+    }, [user]);
     useEffect(() => {
         return () => {
             if (profilePictureURL) {
@@ -25,8 +33,10 @@ const ImageField = ({ form, name, label }: FileItemProps) => {
         <div className="flex w-full flex-row gap-3">
             <Avatar
                 isBordered
+                color="primary"
                 radius="sm"
                 src={profilePictureURL}
+                onClick={() => fileInputRef.current?.click()}
                 className="aspect-square h-20 w-20 self-center text-large"
             />
             <FormField
@@ -42,7 +52,11 @@ const ImageField = ({ form, name, label }: FileItemProps) => {
                                     id={'imageField' + name}
                                     className="h-10 bg-white pt-2 text-gray-500 focus-visible:border-none focus-visible:ring-1 focus-visible:ring-primary"
                                     name={name}
-                                    ref={ref}
+                                    accept="image/*"
+                                    ref={(e) => {
+                                        ref(e);
+                                        fileInputRef.current = e;
+                                    }}
                                     onBlur={onBlur}
                                     onChange={(event) => {
                                         const files = event.target.files;
@@ -81,6 +95,7 @@ const FileField = ({ form, name, label }: FileItemProps) => {
                                 name={name}
                                 ref={ref}
                                 onBlur={onBlur}
+                                accept="application/pdf"
                                 onChange={(event) => {
                                     const files = event.target.files;
                                     if (files) {
@@ -122,7 +137,7 @@ const TextField = ({ form, name, label, placeholder }: TextItemProps) => {
 };
 
 const PhoneField = ({ form, label, placeholder }: TextItemProps) => {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const { field } = useController({
         name: 'phoneNumber',
@@ -169,9 +184,9 @@ const PhoneField = ({ form, label, placeholder }: TextItemProps) => {
                                                     return (
                                                         <CommandItem
                                                             key={item.iso2}
-                                                            value={item.iso2}
-                                                            onSelect={(currentValue) => {
-                                                                setCountry(currentValue);
+                                                            value={item.name}
+                                                            onSelect={() => {
+                                                                setCountry(item.iso2);
                                                                 setOpen(false);
                                                             }}
                                                         >

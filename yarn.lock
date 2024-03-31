@@ -6189,6 +6189,11 @@ vite@^5.1.4:
   optionalDependencies:
     fsevents "~2.3.3"
 
+wavesurfer.js@^7.7.5:
+  version "7.7.5"
+  resolved "https://registry.yarnpkg.com/wavesurfer.js/-/wavesurfer.js-7.7.5.tgz#fc63eddb734e277366b9cf87a214ab82a4d9702e"
+  integrity sha512-LegTsXbIwbpAp4IbE+yltF+behavUp4OufpPHCWA+NYqv0+Y3T2M1y6MrdF/QmfYnb7ZiUsOLXtSHe2OhgCPiw==
+
 which-boxed-primitive@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/which-boxed-primitive/-/which-boxed-primitive-1.0.2.tgz"
