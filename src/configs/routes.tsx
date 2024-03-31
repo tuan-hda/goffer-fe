@@ -1,4 +1,4 @@
-import { Navigate, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import {
     AboutUs,
     ContactUs,
@@ -12,6 +12,10 @@ import {
     ResetPassword,
     GetStarted,
     Settings,
+    NewOrganization,
+    OrganizationHome,
+    OrgSettings,
+    OrgJobs,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -63,45 +67,49 @@ const routesConfig: RouteObject[] = [
                         path: '/app/individual',
                         element: <ApplicantLayout />,
                         children: [
-                            { index: true, element: <Navigate to="home" /> },
+                            { path: '/app/individual', element: <Editor /> },
                             { path: '/app/individual/home', element: <Editor /> },
                             {
                                 path: '/app/individual/discover',
                                 element: <Discover />,
                                 children: [
                                     { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
-                                    {
-                                        path: '/app/individual/discover/companies',
-                                        element: <div className="h-full">Companies</div>,
-                                    },
+                                    { path: '/app/individual/discover/companies', element: <>Companies</> },
                                 ],
                             },
                             { path: '/app/individual/jobs', element: <JobDiscover /> },
                         ],
                     },
-
                     {
                         path: '/app/settings',
                         element: <Settings />,
                     },
+                    {
+                        path: '/app/organization/:domain',
+                        element: <OrgJobs />,
+                    },
+                    {
+                        path: '/app/organization/:domain/settings',
+                        element: <OrgSettings />,
+                    },
                 ],
             },
+        ],
+    },
+    {
+        path: '/organization/new',
+        element: <NewOrganization />,
+    },
+    {
+        path: '/job',
+        element: <FocusLayout />,
+        children: [
             {
-                path: '/job',
-                element: <FocusLayout />,
+                path: ':id',
                 children: [
                     {
-                        path: ':id',
-                        children: [
-                            {
-                                index: true,
-                                element: <JobApply />,
-                            },
-                            {
-                                path: 'application',
-                                element: <Application />,
-                            },
-                        ],
+                        index: true,
+                        element: <JobApply />,
                     },
                     {
                         path: 'application',
@@ -109,13 +117,13 @@ const routesConfig: RouteObject[] = [
                     },
                 ],
             },
-            {
-                path: '/get-started',
-                element: <GetStarted />,
-            },
-            { path: '*', element: <NotFound /> },
         ],
     },
+    {
+        path: '/get-started',
+        element: <GetStarted />,
+    },
+    { path: '*', element: <NotFound /> },
 ];
 
 if (process.env.NODE_ENV === 'development') {

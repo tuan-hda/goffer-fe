@@ -1,4 +1,3 @@
-import { Avatar } from '@nextui-org/react';
 import { Sidebar, Menu } from 'react-pro-sidebar';
 import {
     TbBaguette,
@@ -16,11 +15,12 @@ import {
 import { Fragment, useEffect, useState } from 'react';
 import useDiscoverStore from 'src/stores/discoverStore';
 import classNames from 'classnames';
-import { Link, matchRoutes, useLocation } from 'react-router-dom';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import { Link, useLocation, matchPath, useParams } from 'react-router-dom';
 import useAuthStore from 'src/stores/authStore';
 import { shallow } from 'zustand/shallow';
 import SidebarItem from './SidebarItem';
+import UserPopover from './UserPopover';
+import { Organization } from 'src/types/organization.type';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -37,6 +37,7 @@ type LinkItem = {
     type: 'link';
     element: {
         path: string;
+        pattern?: string;
         startContent: React.ReactNode;
         content: React.ReactNode;
     };
@@ -72,7 +73,7 @@ const items: Item[] = [
     {
         type: 'link',
         element: {
-            path: '/app/individual/discover',
+            path: '/app/discover',
             startContent: <TbCompass className="text-xl" />,
             content: 'Discover',
         },
@@ -81,7 +82,7 @@ const items: Item[] = [
     {
         type: 'link',
         element: {
-            path: '/app/individual/jobs',
+            path: '/app/discover/jobs',
             startContent: <TbBaguette className="text-xl" />,
             content: 'Jobs',
         },
@@ -104,10 +105,43 @@ const items: Item[] = [
     },
 ];
 
-const SideBar = () => {
+const orgItems: (_: string) => Item[] = (domain: string) => [
+    {
+        type: 'button',
+        element: {
+            startContent: <TbSparkles className="text-xl" />,
+            content: 'Ask Goffer',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: `/app/organization/${domain}`,
+            pattern: '/app/organization/:domain',
+            startContent: <TbBaguette className="text-xl" />,
+            content: 'Jobs',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: `/app/organization/${domain}/settings`,
+            pattern: '/app/organization/:domain/settings',
+            startContent: <TbSettings className="text-xl" />,
+            content: 'Settings',
+        },
+    },
+];
+
+type SideBarProps = {
+    org?: Organization;
+};
+
+const SideBar = ({ org }: SideBarProps) => {
+    const { domain } = useParams();
+
     // TODO: Remove logout from this file
     const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
-    const { data: user } = useSelfProfileQuery();
     const [collapsed, setCollapsed] = useState(false);
     const { sideBarPinned, updateSideBarPinned } = useDiscoverStore();
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
@@ -115,10 +149,11 @@ const SideBar = () => {
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
 
     const location = useLocation();
-    const matches = matchRoutes(
-        items.filter((item) => item.type === 'link').map((item) => (item as LinkItem).element),
-        location,
-    );
+    const match = (domain ? orgItems(domain) : items).find((item) => {
+        if (item.type === 'link') {
+            return matchPath(item.element.pattern || item.element.path, location.pathname);
+        }
+    });
 
     useEffect(() => {
         setCollapsed(!sideBarPinned);
@@ -133,7 +168,7 @@ const SideBar = () => {
                         button: ({ active }) => {
                             return {
                                 color: active ? textColor : '#A0A2AA',
-                                backgroundColor: active ? '#F4E1D0' : undefined,
+                                backgroundColor: active ? '#3F3F46' : undefined,
                                 borderRadius: '14px !important',
                                 '&:hover': {
                                     backgroundColor: 'hsl(var(--nextui-default)/0.4)',
@@ -144,12 +179,19 @@ const SideBar = () => {
                         },
                     }}
                 >
-                    <div className={classNames('flex items-center gap-3 px-5', collapsed && 'pt-0.5')}>
-                        <Link to={`/app/${user?.initialType}`} className="flex items-center gap-[10px]">
-                            <img src="/logo.svg" className="h-7 w-7" alt="logo" />
+                    <div className={classNames('flex items-center gap-3 px-5')}>
+                        <Link
+                            to={org ? `/app/organization/${org.domain}` : `/app/individual`}
+                            className="flex items-start gap-[10px]"
+                        >
+                            <img
+                                src={org ? org.logo : '/logo.svg'}
+                                className="h-7 min-h-7 w-7 min-w-7 flex-shrink-0 rounded-full"
+                                alt="logo"
+                            />
                             {!collapsed && (
-                                <p className="text-left font-serif text-3xl font-black leading-[32px] text-text">
-                                    Goffer
+                                <p className="min-w-0 text-left font-serif text-[28px] font-black leading-[28px] text-text">
+                                    {org ? 'Home' : 'Goffer'}
                                 </p>
                             )}
                         </Link>
@@ -171,31 +213,16 @@ const SideBar = () => {
                     </div>
                     <div className="flex h-full w-full flex-col">
                         <div className="mx-[14px]">
-                            <Link
-                                to="/app/individual"
-                                className="relative -mx-0.5 mb-5 mt-7 flex items-center gap-3 rounded-lg p-2 transition hover:bg-beige/70"
-                            >
-                                <Avatar className="h-7 w-7" src={user?.avatar} />
-                                <p
-                                    className={classNames(
-                                        'pointer-events-auto absolute left-12 overflow-hidden whitespace-nowrap opacity-100 transition',
-                                        collapsed
-                                            ? 'pointer-events-none !opacity-0'
-                                            : 'pointer-events-auto opacity-100',
-                                    )}
-                                >
-                                    {user?.name}
-                                </p>
-                            </Link>
-                            {items.map((item, index) => (
+                            <UserPopover collapsed={collapsed} />
+                            {(org ? orgItems(domain!) : items).map((item, index) => (
                                 <Fragment key={index}>
                                     {item.divider && <div className="mx-2 my-4 border-t border-t-gray-200/70" />}
-                                    <SidebarItem matches={matches} collapsed={collapsed} item={item} />
+                                    <SidebarItem match={match} collapsed={collapsed} item={item} />
                                 </Fragment>
                             ))}
                         </div>
                         <div className="mx-3 mt-auto">
-                            <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-beige/70">
+                            <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
                                 <TbHelp className="text-xl" />
                                 <p
                                     className={classNames(
@@ -210,7 +237,7 @@ const SideBar = () => {
                             </button>
                             <button
                                 onClick={logout}
-                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-beige/70"
+                                className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
                             >
                                 <TbLogout className="text-xl" />
                                 <p
