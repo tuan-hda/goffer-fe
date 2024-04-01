@@ -1,7 +1,7 @@
-import { SignUpGoogle, SignUpRequest, User } from 'src/types/user.type';
+import { SignUpGoogle, SignUpRequest, User } from '@/types/user.type';
 import { baseAxios, noAuthAxios } from './base';
-import { AuthToken } from 'src/types/token.type';
-import config from 'src/configs/config';
+import { AuthToken } from '@/types/token.type';
+import config from '@/configs/config';
 
 export const signUpService = async (user: SignUpRequest, type: string) => {
     return noAuthAxios.post<{

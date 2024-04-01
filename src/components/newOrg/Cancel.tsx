@@ -1,4 +1,4 @@
-import { NewOrganization } from 'src/types/organization.type';
+import { NewOrganization } from '@/types/organization.type';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
 

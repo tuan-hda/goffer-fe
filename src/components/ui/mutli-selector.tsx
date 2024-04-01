@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { TbX as X } from 'react-icons/tb';
 
-import { Command, CommandGroup, CommandItem, CommandList } from 'src/components/ui/command';
+import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Command as CommandPrimitive, useCommandState } from 'cmdk';
 import { useEffect, forwardRef } from 'react';
-import { Badge } from 'src/components/ui/badge';
-import { cn } from 'src/lib/utils';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 export interface Option {
     value: string;

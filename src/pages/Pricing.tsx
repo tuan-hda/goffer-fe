@@ -1,7 +1,7 @@
 import { useAnimation, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { fadeInPropsFn } from '../utils/animation';
-import PricingCard from 'src/components/pricing/PricingCard';
+import PricingCard from '@/components/pricing/PricingCard';
 
 const Pricing = () => {
     const [isIndividual, setIsIndividual] = useState(false);

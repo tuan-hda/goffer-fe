@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Individual, Organization } from 'src/components/trustedBy';
+import { Individual, Organization } from '@/components/trustedBy';
 
 const TrustedBy = () => {
     const [type, setType] = useState<'organization' | 'individual'>('organization');

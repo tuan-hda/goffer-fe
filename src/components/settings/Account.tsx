@@ -6,14 +6,14 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
 import { Spinner } from '@nextui-org/react';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { useEffect, useRef, useState } from 'react';
-import { User } from 'src/types/user.type';
+import { User } from '@/types/user.type';
 import moment from 'moment';
 import _ from 'lodash';
 import { isAxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { updateUserService } from 'src/services/users.service';
+import { updateUserService } from '@/services/users.service';
 import { ImageEdit } from '../common';
 
 const Account = () => {

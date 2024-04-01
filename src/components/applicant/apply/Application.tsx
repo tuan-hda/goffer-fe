@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { UseFormReturn, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Form } from 'src/components/ui/form';
+import { Form } from '@/components/ui/form';
 import FormFieldItem from './FormFieldItem';
 import ProgressFooter from '../common/ProgressFooter';
 import { useLocation, useNavigate } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FirstStep, OrganizationSignUp } from 'src/components/auth';
-import IndividualSignUp from 'src/components/auth/IndividualSignUp';
+import { FirstStep, OrganizationSignUp } from '@/components/auth';
+import IndividualSignUp from '@/components/auth/IndividualSignUp';
 
 const SignUp = () => {
     const location = useLocation();

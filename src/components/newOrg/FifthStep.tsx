@@ -1,6 +1,6 @@
 import { Button } from '../ui/button';
 import { TbChevronLeft, TbCircleCheckFilled, TbInfoCircle } from 'react-icons/tb';
-import { NewOrganization } from 'src/types/organization.type';
+import { NewOrganization } from '@/types/organization.type';
 import { Spinner } from '@nextui-org/react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 

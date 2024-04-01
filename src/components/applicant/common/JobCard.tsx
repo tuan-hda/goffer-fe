@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { TbHeart, TbHeartFilled } from 'react-icons/tb';
 import { MdVerified, MdOutlinePayments } from 'react-icons/md';
 import { GiDuration } from 'react-icons/gi';
-import useJobStore from 'src/stores/jobStore';
-import { Badge } from 'src/components/ui/badge';
+import useJobStore from '@/stores/jobStore';
+import { Badge } from '@/components/ui/badge';
 
 const JobCard = () => {
     const [liked, setLiked] = useState(false);

@@ -1,6 +1,6 @@
-import { EditOrganization, NewOrganization, Organization } from 'src/types/organization.type';
+import { EditOrganization, NewOrganization, Organization } from '@/types/organization.type';
 import { baseAxios } from './base';
-import { List } from 'src/types/list.type';
+import { List } from '@/types/list.type';
 
 export const createOrganizationService = async (data: NewOrganization) =>
     (await baseAxios.post<{ id: string }>('/organizations', data)).data;

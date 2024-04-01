@@ -1,12 +1,12 @@
 import { Button, Card, CardBody, CardHeader, Chip, Divider } from '@nextui-org/react';
 import classNames from 'classnames';
-import useDiscoverStore from 'src/stores/discoverStore';
+import useDiscoverStore from '@/stores/discoverStore';
 import { MdOutlineArrowRight } from 'react-icons/md';
 import { TbBuilding, TbHeart, TbHeartFilled, TbMapPin } from 'react-icons/tb';
 import { CgMoreAlt } from 'react-icons/cg';
 import { GiDuration } from 'react-icons/gi';
 import Process from '../common/Process';
-import Editor from 'src/components/common/editor/Editor';
+import Editor from '@/components/common/editor/Editor';
 
 const JobDetail = () => {
     const tags = ['TypeScript', 'Material UI', 'Redux', 'React', 'Axios', 'RESTfull API'];

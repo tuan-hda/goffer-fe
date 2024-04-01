@@ -1,5 +1,5 @@
 import { Button, Input } from '@nextui-org/react';
-import { StartedInfo } from 'src/types/start.type';
+import { StartedInfo } from '@/types/start.type';
 
 type FirstStepProps = {
     onContinue: () => void;

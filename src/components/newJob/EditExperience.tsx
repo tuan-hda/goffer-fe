@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { TbCheck } from 'react-icons/tb';
-import { Button } from 'src/components/ui/button';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from 'src/components/ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/popover';
+import { Button } from '@/components/ui/button';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const frameworks = [
     {

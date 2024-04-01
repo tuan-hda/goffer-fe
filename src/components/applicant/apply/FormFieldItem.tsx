@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { FileItemProps, FormItemProps, TextItemProps } from './Application';
 import { Avatar } from '@nextui-org/react';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from 'src/components/ui/form';
-import { Input } from 'src/components/ui/input';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { defaultCountries, FlagImage, parseCountry, usePhoneInput } from 'react-international-phone';
 // eslint-disable-next-line import/no-unresolved
 import 'react-international-phone/style.css';
 import { useController } from 'react-hook-form';
-import { Command, CommandList, CommandEmpty, CommandGroup, CommandInput, CommandItem } from 'src/components/ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from 'src/components/ui/popover';
-import { Button } from 'src/components/ui/button';
+import { Command, CommandList, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
 import { CaretSortIcon } from '@radix-ui/react-icons';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 
 const ImageField = ({ form, name, label }: FileItemProps) => {
     const { data: user } = useSelfProfileQuery();

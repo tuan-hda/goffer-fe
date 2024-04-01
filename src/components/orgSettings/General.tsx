@@ -3,8 +3,8 @@ import { Input } from '../ui/input';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { ImageEdit, Loading } from '../common';
-import useCurrOrganization from 'src/hooks/useCurrOrganization';
-import { Organization } from 'src/types/organization.type';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
+import { Organization } from '@/types/organization.type';
 import { Textarea } from '../ui/textarea';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { TbChevronDown, TbInfoCircle } from 'react-icons/tb';
@@ -12,8 +12,8 @@ import classNames from 'classnames';
 import { useAnimation, motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { isAxiosError } from 'axios';
-import { updateOrganizationService } from 'src/services/organizations.service';
-import useListOrganizations from 'src/hooks/useListOrganizations';
+import { updateOrganizationService } from '@/services/organizations.service';
+import useListOrganizations from '@/hooks/useListOrganizations';
 
 const General = () => {
     const [expanded, setExpanded] = useState(false);

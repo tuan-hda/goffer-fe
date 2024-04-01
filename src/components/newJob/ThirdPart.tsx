@@ -1,7 +1,10 @@
+import { PlateEditor } from '../editor/PlateEditor';
+
 const ThirdPart = () => {
     return (
         <div className="mt-8 h-fit w-full rounded-xl bg-white/80 p-8 text-sm shadow-small">
-            <p>Description</p>
+            <p className="mb-1">Description</p>
+            <PlateEditor />
         </div>
     );
 };

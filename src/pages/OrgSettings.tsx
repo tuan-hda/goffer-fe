@@ -1,6 +1,6 @@
 import { TbCricket, TbDropletHeart, TbSettings } from 'react-icons/tb';
 import { Breadcrumbs, BreadcrumbItem, Tab, Tabs } from '@nextui-org/react';
-import { General, Other } from 'src/components/orgSettings';
+import { General, Other } from '@/components/orgSettings';
 
 const OrgSettings = () => {
     return (

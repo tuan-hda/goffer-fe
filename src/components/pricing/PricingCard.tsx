@@ -2,7 +2,7 @@ import { Button } from '@nextui-org/react';
 import { TbCheck, TbInfoCircle } from 'react-icons/tb';
 import { AnimationControls, motion } from 'framer-motion';
 import { useMemo } from 'react';
-import { fadeInPropsFn } from 'src/utils/animation';
+import { fadeInPropsFn } from '@/utils/animation';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';

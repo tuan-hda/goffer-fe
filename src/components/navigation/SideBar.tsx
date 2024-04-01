@@ -13,14 +13,14 @@ import {
     TbWallet,
 } from 'react-icons/tb';
 import { Fragment, useEffect, useState } from 'react';
-import useDiscoverStore from 'src/stores/discoverStore';
+import useDiscoverStore from '@/stores/discoverStore';
 import classNames from 'classnames';
 import { Link, useLocation, matchPath, useParams } from 'react-router-dom';
-import useAuthStore from 'src/stores/authStore';
+import useAuthStore from '@/stores/authStore';
 import { shallow } from 'zustand/shallow';
 import SidebarItem from './SidebarItem';
 import UserPopover from './UserPopover';
-import { Organization } from 'src/types/organization.type';
+import { Organization } from '@/types/organization.type';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -221,7 +221,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                 </Fragment>
                             ))}
                         </div>
-                        <div className="mx-3 mt-auto">
+                        <div className="mx-4 mt-auto">
                             <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
                                 <TbHelp className="text-xl" />
                                 <p

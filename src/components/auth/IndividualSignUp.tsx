@@ -1,5 +1,5 @@
 import { TbCheck } from 'react-icons/tb';
-import AuthTwoSection from 'src/layouts/AuthTwoSection';
+import AuthTwoSection from '@/layouts/AuthTwoSection';
 import SignUpForm from './SignUpForm';
 
 const IndividualSignUp = () => {

@@ -1,8 +1,8 @@
 import { TbChevronLeft } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
-import { FirstPart, SecondPart, ThirdPart } from 'src/components/newJob';
-import { Button } from 'src/components/ui/button';
-import useCurrOrganization from 'src/hooks/useCurrOrganization';
+import { FirstPart, SecondPart, ThirdPart } from '@/components/newJob';
+import { Button } from '@/components/ui/button';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
 
 const NewJob = () => {
     const navigate = useNavigate();

@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
-import SideBar from 'src/components/navigation/SideBar';
-import useListOrganizations from 'src/hooks/useListOrganizations';
-import useDiscoverStore from 'src/stores/discoverStore';
+import SideBar from '@/components/navigation/SideBar';
+import useListOrganizations from '@/hooks/useListOrganizations';
+import useDiscoverStore from '@/stores/discoverStore';
 
 type DashboardLayoutProps = {
     children: React.ReactNode;

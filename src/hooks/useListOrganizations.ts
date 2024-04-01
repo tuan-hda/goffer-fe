@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { listOrganizationsService } from 'src/services/organizations.service';
+import { listOrganizationsService } from '@/services/organizations.service';
 
 const useListOrganizations = () => {
     return useQuery({ queryKey: ['listOrganizations'], queryFn: listOrganizationsService });

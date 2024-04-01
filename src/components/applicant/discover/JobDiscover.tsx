@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import JobCard from '../common/JobCard';
 import JobDetail from './JobDetail';
-import useDiscoverStore from 'src/stores/discoverStore';
+import useDiscoverStore from '@/stores/discoverStore';
 
 const JobDiscover = () => {
     const jobs = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];

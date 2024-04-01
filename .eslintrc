@@ -12,21 +12,29 @@
     "react": {
       "version": "detect"
     },
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
     "import/resolver": {
-      "node": {
-        "paths": [
-          "."
+      "alias": {
+        "map": [
+          [
+            "@",
+            "./src/"
+          ]
         ],
         "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
+          ".js"
         ]
       }
     }
   },
   "rules": {
+    // turn on errors for missing imports
+    "import/no-unresolved": "error",
     "no-unused-vars": [
       "error",
       {
