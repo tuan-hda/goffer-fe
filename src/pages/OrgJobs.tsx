@@ -27,7 +27,7 @@ const OrgJobs = () => {
 
                 <Button asChild className="rounded-xl font-normal">
                     <Link to={`/app/organization/${data?.domain}/new`}>
-                        <TbPlus className="mr-2 text-base" />
+                        <TbPlus className="-ml-1 mr-2 text-base" />
                         Set up new job
                     </Link>
                 </Button>
