@@ -11,7 +11,7 @@ type ThirdStepProps = {
 
 const fields = [
     {
-        name: 'Computer Science',
+        name: 'Engineering',
         img: '/macbook.png',
     },
     {
