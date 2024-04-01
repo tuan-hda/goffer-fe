@@ -56,10 +56,9 @@
         "tailwind-merge": "^2.2.2",
         "tailwindcss-animate": "^1.0.7",
         "use-spring": "^0.2.4",
-        "wavesurfer.js": "^7.7.5",
+        "validator": "^13.11.0",
         "yup": "^1.4.0",
         "zod": "^3.22.4",
-        "validator": "^13.11.0",
         "zustand": "^4.5.2"
     },
     "devDependencies": {
