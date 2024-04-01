@@ -29,7 +29,7 @@ const NewJob = () => {
                         Preview
                     </Button>
 
-                    <Button className="ml-4 min-w-0 rounded-xl">Publish</Button>
+                    <Button className="ml-2 min-w-0 rounded-xl">Publish</Button>
                 </div>
             </div>
             <div className="scroll-hidden relative flex h-screen w-full overflow-y-auto bg-pale/30 py-6 text-base backdrop-blur-xl">

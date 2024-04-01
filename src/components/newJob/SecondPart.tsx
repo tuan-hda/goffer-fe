@@ -1,4 +1,5 @@
 import MultipleSelector, { Option } from '../ui/mutli-selector';
+import EditExperience from './EditExperience';
 
 const OPTIONS: Option[] = [
     { label: 'nextjs', value: 'nextjs' },
@@ -16,8 +17,14 @@ const OPTIONS: Option[] = [
 
 const SecondPart = () => {
     return (
-        <div className="mt-8 h-fit w-full rounded-xl bg-white/70 p-8 text-sm shadow-small">
-            <div className="flex items-center justify-between">
+        <div className="mt-8 h-fit w-full rounded-xl bg-white/80 p-8 text-sm shadow-small">
+            <div className="flex justify-between gap-4">
+                <div className="flex-1">
+                    <p className="mb-1">Experience</p>
+                    <EditExperience />
+                </div>
+            </div>
+            <div className="mt-6 flex items-center justify-between">
                 <p>Skills required</p>
                 <p>0/3</p>
             </div>
