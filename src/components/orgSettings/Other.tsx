@@ -14,8 +14,8 @@ import { useState } from 'react';
 import { Spinner } from '@nextui-org/react';
 import { isAxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import useCurrOrganization from 'src/hooks/useCurrOrganization';
-import { deleteOrganizationService } from 'src/services/organizations.service';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
+import { deleteOrganizationService } from '@/services/organizations.service';
 
 const Other = () => {
     const [loading, setLoading] = useState(false);

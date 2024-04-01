@@ -3,8 +3,8 @@ import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
 import { isAxiosError } from 'axios';
 import { FcGoogle } from 'react-icons/fc';
 import toast from 'react-hot-toast';
-import { googleProfileService } from 'src/services/users.service';
-import { loginGoogleService, signUpGoogleService } from 'src/services/auth.service';
+import { googleProfileService } from '@/services/users.service';
+import { loginGoogleService, signUpGoogleService } from '@/services/auth.service';
 import { useState } from 'react';
 
 type GoogleLoginProps = {

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import config from 'src/configs/config';
-import useAuthStore from 'src/stores/authStore';
-// import { AuthToken } from 'src/types/token.type';
+import config from '@/configs/config';
+import useAuthStore from '@/stores/authStore';
+// import { AuthToken } from '@/types/token.type';
 
 export const baseAxios = axios.create({
     baseURL: `${config.BACKEND_BASE_URL}/${config.BACKEND_VERSION}`,

@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 
 const RootLayout = () => {
     useSelfProfileQuery();

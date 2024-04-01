@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthTwoSection from 'src/layouts/AuthTwoSection';
-import { loginService } from 'src/services/auth.service';
-import { validateEmail } from 'src/utils/regex';
+import AuthTwoSection from '@/layouts/AuthTwoSection';
+import { loginService } from '@/services/auth.service';
+import { validateEmail } from '@/utils/regex';
 import toast from 'react-hot-toast';
-import useAuthStore from 'src/stores/authStore';
-import { LoginForm } from 'src/components/auth';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import useAuthStore from '@/stores/authStore';
+import { LoginForm } from '@/components/auth';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 
 const Login = () => {
     const { setAccess } = useAuthStore();

@@ -1,7 +1,7 @@
-import { GoogleProfile, UpdateUser, User } from 'src/types/user.type';
+import { GoogleProfile, UpdateUser, User } from '@/types/user.type';
 import { baseAxios, noAuthAxios } from './base';
 import axios from 'axios';
-import config from 'src/configs/config';
+import config from '@/configs/config';
 
 export const checkExistEmailService = async (email: string) => {
     return noAuthAxios.get(`/users/check-email?email=${email}`);

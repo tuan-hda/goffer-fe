@@ -15,7 +15,7 @@ import classNames from 'classnames';
 import { RiSearchLine } from 'react-icons/ri';
 import { HiOutlineAdjustments } from 'react-icons/hi';
 import { TbHearts } from 'react-icons/tb';
-import useDiscoverStore from 'src/stores/discoverStore';
+import useDiscoverStore from '@/stores/discoverStore';
 import { useNavigate } from 'react-router-dom';
 
 const Filter = () => {

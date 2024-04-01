@@ -1,4 +1,4 @@
-import useDiscoverStore from 'src/stores/discoverStore';
+import useDiscoverStore from '@/stores/discoverStore';
 import Filter from '../filter/Filter';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';

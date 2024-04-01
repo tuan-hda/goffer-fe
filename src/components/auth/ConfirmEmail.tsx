@@ -1,13 +1,13 @@
 import { Spinner } from '@nextui-org/react';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
-import { sendOtpVerificationEmail, verifyOtpEmail } from 'src/services/auth.service';
-import { Token } from 'src/types/token.type';
+import { sendOtpVerificationEmail, verifyOtpEmail } from '@/services/auth.service';
+import { Token } from '@/types/token.type';
 import toast from 'react-hot-toast';
 import moment from 'moment';
 import classNames from 'classnames';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 
 type ConfirmEmailProps = {
     initialType: 'individual' | 'organization';

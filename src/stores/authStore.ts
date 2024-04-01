@@ -1,8 +1,8 @@
-import { Token } from 'src/types/token.type';
+import { Token } from '@/types/token.type';
 import { create } from 'zustand';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { immer } from 'zustand/middleware/immer';
-import { logoutService } from 'src/services/auth.service';
+import { logoutService } from '@/services/auth.service';
 import { googleLogout } from '@react-oauth/google';
 
 type AuthState = {

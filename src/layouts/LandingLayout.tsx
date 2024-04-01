@@ -2,7 +2,7 @@ import { Avatar, Tab, Tabs } from '@nextui-org/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import CursorTrailEffect from '../components/common/CursorTrailEffect';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { TbArrowRight } from 'react-icons/tb';
 
 const paths = [

@@ -1,7 +1,7 @@
 import { Button, Input } from '@nextui-org/react';
 import { useMemo, useState } from 'react';
 import { TbCheck, TbChevronLeft, TbX } from 'react-icons/tb';
-import { StartedInfo } from 'src/types/start.type';
+import { StartedInfo } from '@/types/start.type';
 
 export type SecondStepProps = {
     onContinue: () => void;

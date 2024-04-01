@@ -1,6 +1,6 @@
 import { TbAlignBoxLeftTop, TbCoinBitcoin, TbMaximize, TbSettings, TbUser } from 'react-icons/tb';
 import { Breadcrumbs, BreadcrumbItem, Tab, Tabs } from '@nextui-org/react';
-import { Account } from 'src/components/settings';
+import { Account } from '@/components/settings';
 
 const Settings = () => {
     return (

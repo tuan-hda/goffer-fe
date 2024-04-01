@@ -1,7 +1,7 @@
 import { Button } from '@nextui-org/react';
 import { useState } from 'react';
 import { TbChevronLeft } from 'react-icons/tb';
-import { StartedInfo } from 'src/types/start.type';
+import { StartedInfo } from '@/types/start.type';
 import { ImageEdit } from '../common';
 
 type ThirdStepProps = {

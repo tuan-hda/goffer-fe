@@ -1,7 +1,7 @@
 import { TbLocation } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { RadioGroup, RadioGroupItem } from 'src/components/ui/radio-group';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 

@@ -1,12 +1,12 @@
 import { BreadcrumbItem, Breadcrumbs, Button, Card, CardBody, CardFooter, Chip } from '@nextui-org/react';
 import classNames from 'classnames';
-import useDiscoverStore from 'src/stores/discoverStore';
+import useDiscoverStore from '@/stores/discoverStore';
 import { MdOutlineArrowRight } from 'react-icons/md';
 import { TbBuilding, TbHeart, TbHeartFilled, TbMapPin } from 'react-icons/tb';
 import { CgMoreAlt } from 'react-icons/cg';
 import { GiDuration } from 'react-icons/gi';
-import useJobStore from 'src/stores/jobStore';
-import { Badge } from 'src/components/ui/badge';
+import useJobStore from '@/stores/jobStore';
+import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
 
 const benefits = [

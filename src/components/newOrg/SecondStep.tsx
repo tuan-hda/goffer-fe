@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ImageEdit } from '../common';
 import { Button } from '../ui/button';
 import { TbChevronLeft, TbSparkles } from 'react-icons/tb';
-import { NewOrganization } from 'src/types/organization.type';
+import { NewOrganization } from '@/types/organization.type';
 
 type SecondStepProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;

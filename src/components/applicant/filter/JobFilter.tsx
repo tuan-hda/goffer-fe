@@ -14,8 +14,8 @@ import {
 import classNames from 'classnames';
 import { RiSearchLine } from 'react-icons/ri';
 import { HiOutlineAdjustments } from 'react-icons/hi';
-import useJobStore from 'src/stores/jobStore';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'src/components/ui/select';
+import useJobStore from '@/stores/jobStore';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const JobFilter = () => {
     const [scrollDirection, setScrollDirection] = useState('up');

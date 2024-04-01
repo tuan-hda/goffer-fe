@@ -1,8 +1,8 @@
 import { Navigate, Outlet, matchRoutes, useLocation } from 'react-router-dom';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
-import useAuthStore from 'src/stores/authStore';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import useAuthStore from '@/stores/authStore';
 import AuthTwoSection from './AuthTwoSection';
-import ConfirmEmail from 'src/components/auth/ConfirmEmail';
+import ConfirmEmail from '@/components/auth/ConfirmEmail';
 import { Spinner } from '@nextui-org/react';
 import DashboardLayout from './DashboardLayout';
 

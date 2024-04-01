@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import { TbCamera } from 'react-icons/tb';
-import { uploadFileService } from 'src/services/file.service';
+import { uploadFileService } from '@/services/file.service';
 
 type AvatarEditProps = {
     avatar?: string;

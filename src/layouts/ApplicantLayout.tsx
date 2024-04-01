@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Outlet } from 'react-router-dom';
-import { Header } from 'src/components/common';
+import { Header } from '@/components/common';
 
 const ApplicantLayout = () => {
     return (

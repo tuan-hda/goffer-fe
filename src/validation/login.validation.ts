@@ -1,4 +1,4 @@
-import { validateEmail } from 'src/utils/regex';
+import { validateEmail } from '@/utils/regex';
 import * as Yup from 'yup';
 
 export const loginSchema = Yup.object({

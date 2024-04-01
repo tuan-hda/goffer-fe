@@ -2,9 +2,9 @@ import { QueryClient, QueryClientProvider, QueryCache } from '@tanstack/react-qu
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { isAxiosError } from 'axios';
 import { useCallback, useRef, useState } from 'react';
-import { baseAxios } from 'src/services/base';
-import useAuthStore from 'src/stores/authStore';
-import { AuthToken } from 'src/types/token.type';
+import { baseAxios } from '@/services/base';
+import useAuthStore from '@/stores/authStore';
+import { AuthToken } from '@/types/token.type';
 import shallow from 'zustand/shallow';
 
 type QueryProviderProps = {

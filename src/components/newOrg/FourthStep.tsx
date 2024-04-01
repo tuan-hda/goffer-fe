@@ -3,7 +3,7 @@ import { TbChevronLeft, TbLockOff, TbLockOpen, TbSparkles } from 'react-icons/tb
 import { Input } from '../ui/input';
 import classNames from 'classnames';
 import { Textarea } from '../ui/textarea';
-import { NewOrganization } from 'src/types/organization.type';
+import { NewOrganization } from '@/types/organization.type';
 import validator from 'validator';
 
 type FourthStepProps = {

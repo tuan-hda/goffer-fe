@@ -1,6 +1,6 @@
 import { Avatar } from '@nextui-org/react';
 import classNames from 'classnames';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -8,11 +8,11 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from 'src/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import { TbHomePlus } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import { Link, useParams } from 'react-router-dom';
-import useListOrganizations from 'src/hooks/useListOrganizations';
+import useListOrganizations from '@/hooks/useListOrganizations';
 
 type UserPopoverProps = {
     collapsed: boolean;

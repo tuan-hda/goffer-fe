@@ -1,4 +1,4 @@
-import { CloudinaryFile } from 'src/types/file.type';
+import { CloudinaryFile } from '@/types/file.type';
 import { baseAxios } from './base';
 
 export const uploadFileService = async (file: File, type?: string) => {

@@ -1,9 +1,9 @@
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { TbBaguette, TbPlus } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
-import { JobList } from 'src/components/orgJobs';
-import { Button } from 'src/components/ui/button';
-import useCurrOrganization from 'src/hooks/useCurrOrganization';
+import { JobList } from '@/components/orgJobs';
+import { Button } from '@/components/ui/button';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
 
 const OrgJobs = () => {
     const { data } = useCurrOrganization();

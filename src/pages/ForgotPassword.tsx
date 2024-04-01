@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { TbChevronLeft } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
-import AuthTwoSection from 'src/layouts/AuthTwoSection';
-import { forgotPasswordService } from 'src/services/auth.service';
-import { validateEmail } from 'src/utils/regex';
+import AuthTwoSection from '@/layouts/AuthTwoSection';
+import { forgotPasswordService } from '@/services/auth.service';
+import { validateEmail } from '@/utils/regex';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');

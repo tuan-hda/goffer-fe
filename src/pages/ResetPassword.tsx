@@ -2,9 +2,9 @@ import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import SetPasswordStep from 'src/components/auth/SetPasswordStep';
-import AuthTwoSection from 'src/layouts/AuthTwoSection';
-import { resetPasswordService } from 'src/services/auth.service';
+import SetPasswordStep from '@/components/auth/SetPasswordStep';
+import AuthTwoSection from '@/layouts/AuthTwoSection';
+import { resetPasswordService } from '@/services/auth.service';
 
 const ResetPassword = () => {
     const navigate = useNavigate();

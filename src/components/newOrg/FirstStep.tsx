@@ -1,7 +1,7 @@
 import { TbSparkles } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { NewOrganization } from 'src/types/organization.type';
+import { NewOrganization } from '@/types/organization.type';
 
 type FirstStepProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;

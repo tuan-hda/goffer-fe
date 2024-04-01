@@ -19,11 +19,11 @@ import {
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
-import { Discover, JobDiscover, PeopleDiscover } from 'src/components/applicant/discover';
+import { Discover, JobDiscover, PeopleDiscover } from '@/components/applicant/discover';
 import { AppLayout, ApplicantLayout, AuthLayout, FocusLayout, LandingLayout, RootLayout } from '../layouts';
-import Test from 'src/pages/Test';
-import Editor from 'src/components/common/editor/Editor';
-import { Application, JobApply } from 'src/components/applicant/apply';
+import Test from '@/pages/Test';
+import Editor from '@/components/common/editor/Editor';
+import { Application, JobApply } from '@/components/applicant/apply';
 
 const routesConfig: RouteObject[] = [
     {

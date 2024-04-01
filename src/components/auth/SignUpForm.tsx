@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { checkExistEmailService } from 'src/services/users.service';
-import { validateEmail } from 'src/utils/regex';
+import { checkExistEmailService } from '@/services/users.service';
+import { validateEmail } from '@/utils/regex';
 import toast from 'react-hot-toast';
 import SignUpFirstStep from './SignUpFirstStep';
 import SetPasswordStep from './SetPasswordStep';
-import { signUpService } from 'src/services/auth.service';
+import { signUpService } from '@/services/auth.service';
 import ConfirmEmail from './ConfirmEmail';
-import { AuthToken, Token } from 'src/types/token.type';
-import useAuthStore from 'src/stores/authStore';
-import { User } from 'src/types/user.type';
+import { AuthToken, Token } from '@/types/token.type';
+import useAuthStore from '@/stores/authStore';
+import { User } from '@/types/user.type';
 
 type SignUpFormProps = {
     type?: 'individual' | 'organization';

@@ -4,11 +4,11 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { TbChevronLeft } from 'react-icons/tb';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FifthStep, FirstStep, FourthStep, SecondStep, Success, Cancel, ThirdStep } from 'src/components/newOrg';
-import { Progress } from 'src/components/ui/progress';
-import config from 'src/configs/config';
-import { createOrganizationService } from 'src/services/organizations.service';
-import { NewOrganization as NewOrganizationType } from 'src/types/organization.type';
+import { FifthStep, FirstStep, FourthStep, SecondStep, Success, Cancel, ThirdStep } from '@/components/newOrg';
+import { Progress } from '@/components/ui/progress';
+import config from '@/configs/config';
+import { createOrganizationService } from '@/services/organizations.service';
+import { NewOrganization as NewOrganizationType } from '@/types/organization.type';
 
 const NewOrganization = () => {
     const [loading, setLoading] = useState(false);

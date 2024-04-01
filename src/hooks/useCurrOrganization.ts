@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getOrganizationByDomainService } from 'src/services/organizations.service';
+import { getOrganizationByDomainService } from '@/services/organizations.service';
 
 const useCurrOrganization = (outerDomain?: string) => {
     const { domain } = useParams();

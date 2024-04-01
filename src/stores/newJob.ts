@@ -1,4 +1,4 @@
-import { NewJob } from 'src/types/job.type';
+import { NewJob } from '@/types/job.type';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 

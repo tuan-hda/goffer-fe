@@ -1,4 +1,4 @@
-import useNewJobStore from 'src/stores/newJob';
+import useNewJobStore from '@/stores/newJob';
 import { Input } from '../ui/input';
 import { shallow } from 'zustand/shallow';
 import { Counter } from '../common';

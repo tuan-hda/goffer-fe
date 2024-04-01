@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FirstStep, SecondStep, ThirdStep } from 'src/components/getStarted';
-import FourthStep from 'src/components/getStarted/FourthStep';
-import useSelfProfileQuery from 'src/hooks/useSelfProfileQuery';
-import { updateUserService } from 'src/services/users.service';
-import { StartedInfo } from 'src/types/start.type';
-import { UpdateUser } from 'src/types/user.type';
+import { FirstStep, SecondStep, ThirdStep } from '@/components/getStarted';
+import FourthStep from '@/components/getStarted/FourthStep';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { updateUserService } from '@/services/users.service';
+import { StartedInfo } from '@/types/start.type';
+import { UpdateUser } from '@/types/user.type';
 
 const GetStarted = () => {
     const navigate = useNavigate();
