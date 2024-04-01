@@ -113,7 +113,6 @@
         "tailwindcss-animate": "^1.0.7",
         "use-spring": "^0.2.4",
         "validator": "^13.11.0",
-        "wavesurfer.js": "^7.7.5",
         "yup": "^1.4.0",
         "zod": "^3.22.4",
         "zustand": "^4.5.2"
