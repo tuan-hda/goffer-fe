@@ -2,20 +2,8 @@ import useNewJobStore from '@/stores/newJob';
 import MultipleSelector, { Option } from '../ui/mutli-selector';
 import EditExperience from './EditExperience';
 import { shallow } from 'zustand/shallow';
-
-const OPTIONS: Option[] = [
-    { label: 'nextjs', value: 'nextjs' },
-    { label: 'React', value: 'react' },
-    { label: 'Remix', value: 'remix' },
-    { label: 'Vite', value: 'vite' },
-    { label: 'Nuxt', value: 'nuxt' },
-    { label: 'Vue', value: 'vue' },
-    { label: 'Svelte', value: 'svelte' },
-    { label: 'Angular', value: 'angular' },
-    { label: 'Ember', value: 'ember', disable: true },
-    { label: 'Gatsby', value: 'gatsby', disable: true },
-    { label: 'Astro', value: 'astro' },
-];
+import skills from '@/data/skills';
+import tools from '@/data/tools';
 
 const SecondPart = () => {
     const [data, setData] = useNewJobStore((state) => [state.data, state.setData], shallow);
@@ -42,7 +30,7 @@ const SecondPart = () => {
                 partialDelete={data.skills.length === 3}
                 value={data.skills.map((skill) => ({ label: skill, value: skill })) as Option[]}
                 onChange={handleMultiChange('skills')}
-                options={OPTIONS}
+                options={skills}
                 placeholder="Select skills required for this job..."
                 emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">no results found.</p>
@@ -58,7 +46,7 @@ const SecondPart = () => {
                 partialDelete={data.tools.length === 7}
                 value={data.tools.map((tool) => ({ label: tool, value: tool })) as Option[]}
                 onChange={handleMultiChange('tools')}
-                options={OPTIONS}
+                options={tools}
                 placeholder="Select skills required for this job..."
                 emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">no results found.</p>
