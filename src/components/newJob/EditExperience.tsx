@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { shallow } from 'zustand/shallow';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import useNewJobStore from '@/stores/newJob';
 
 const experienceList = [
     {
@@ -25,11 +26,10 @@ const experienceList = [
 ];
 
 const EditExperience = () => {
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('<1 year');
+    const [data, setData] = useNewJobStore((state) => [state.data, state.setData], shallow);
 
     return (
-        <Select>
+        <Select value={data.experience} onValueChange={(value) => setData((prev) => ({ ...prev, experience: value }))}>
             <SelectTrigger className="flex-1">
                 <SelectValue defaultValue={'<1 year'} />
             </SelectTrigger>

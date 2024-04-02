@@ -115,6 +115,7 @@
         "tailwind-merge": "^2.2.2",
         "tailwindcss-animate": "^1.0.7",
         "use-spring": "^0.2.4",
+        "uuid": "^9.0.1",
         "validator": "^13.11.0",
         "yup": "^1.4.0",
         "zod": "^3.22.4",

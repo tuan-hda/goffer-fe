@@ -3,10 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import { FirstPart, SecondPart, ThirdPart } from '@/components/newJob';
 import { Button } from '@/components/ui/button';
 import useCurrOrganization from '@/hooks/useCurrOrganization';
+import { useState } from 'react';
+import useNewJobStore from '@/stores/newJob';
+import { useEditorRef } from '@udecode/plate-common';
 
 const NewJob = () => {
     const navigate = useNavigate();
     const { data: curr } = useCurrOrganization();
+    const data = useNewJobStore((state) => state.data);
+    const [error, setError] = useState<string>('');
+    const editor = useEditorRef();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            console.log('data', data);
+            console.log('editor', editor.children);
+        } catch (error) {}
+    };
 
     return (
         <div>
@@ -33,7 +47,7 @@ const NewJob = () => {
                 </div>
             </div>
             <div className="scroll-hidden relative flex h-screen w-full overflow-y-auto bg-pale/30 py-6 text-base backdrop-blur-xl">
-                <form className="mx-auto w-[620px]">
+                <form onSubmit={handleSubmit} className="mx-auto w-[620px]">
                     <div className="h-16" />
                     <h1 className="text-3xl">Let&apos;s set up your new job</h1>
                     <FirstPart />
