@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { withCn, withProps } from '@udecode/cn';
@@ -34,14 +36,13 @@ export function withTooltip<T extends React.ComponentType<any> | keyof HTMLEleme
         if (tooltip && mounted) {
             return (
                 <TooltipProvider>
+                    <Tooltip {...tooltipProps}>
+                        <TooltipTrigger asChild>{component}</TooltipTrigger>
 
-                <Tooltip {...tooltipProps}>
-                    <TooltipTrigger asChild>{component}</TooltipTrigger>
-
-                    <TooltipPortal>
-                        <TooltipContent {...tooltipContentProps}>{tooltip}</TooltipContent>
-                    </TooltipPortal>
-                </Tooltip>
+                        <TooltipPortal>
+                            <TooltipContent {...tooltipContentProps}>{tooltip}</TooltipContent>
+                        </TooltipPortal>
+                    </Tooltip>
                 </TooltipProvider>
             );
         }
