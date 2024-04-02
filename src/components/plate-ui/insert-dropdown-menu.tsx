@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 import { ELEMENT_BLOCKQUOTE } from '@udecode/plate-block-quote';
@@ -127,7 +129,7 @@ export function InsertDropdownMenu(props: DropdownMenuProps) {
     return (
         <DropdownMenu modal={false} {...openState} {...props}>
             <DropdownMenuTrigger asChild>
-                <ToolbarButton pressed={openState.open} tooltip="Insert" isDropdown>
+                <ToolbarButton pressed={openState.open} isDropdown>
                     <Icons.add />
                 </ToolbarButton>
             </DropdownMenuTrigger>

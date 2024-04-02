@@ -1,4 +1,4 @@
-;
+'use client';
 
 import './code-block-element.css';
 
