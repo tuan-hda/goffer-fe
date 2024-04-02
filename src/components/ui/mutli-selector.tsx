@@ -21,6 +21,7 @@ interface GroupOption {
 }
 
 interface MultipleSelectorProps {
+    partialDelete?: boolean;
     value?: Option[];
     defaultOptions?: Option[];
     /** manually controlled options */
@@ -168,6 +169,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
             triggerSearchOnFocus = false,
             commandProps,
             inputProps,
+            partialDelete,
         }: MultipleSelectorProps,
         ref: React.Ref<MultipleSelectorRef>,
     ) => {
@@ -425,7 +427,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                                                         <CommandItem
                                                             key={option.value}
                                                             value={option.value}
-                                                            disabled={option.disable}
+                                                            disabled={option.disable || partialDelete}
                                                             onMouseDown={(e) => {
                                                                 e.preventDefault();
                                                                 e.stopPropagation();

@@ -1,5 +1,7 @@
+import useNewJobStore from '@/stores/newJob';
 import MultipleSelector, { Option } from '../ui/mutli-selector';
 import EditExperience from './EditExperience';
+import { shallow } from 'zustand/shallow';
 
 const OPTIONS: Option[] = [
     { label: 'nextjs', value: 'nextjs' },
@@ -16,6 +18,14 @@ const OPTIONS: Option[] = [
 ];
 
 const SecondPart = () => {
+    const [data, setData] = useNewJobStore((state) => [state.data, state.setData], shallow);
+
+    const handleMultiChange = (key: string) => (value: Option[]) => {
+        if (key === 'skills' && value.length > 3) return;
+        if (key === 'tools' && value.length > 7) return;
+        setData((prev) => ({ ...prev, [key]: value.map((v) => v.value) }));
+    };
+
     return (
         <div className="mt-8 h-fit w-full rounded-xl bg-white/80 p-8 text-sm shadow-small">
             <div className="flex justify-between gap-4">
@@ -26,9 +36,12 @@ const SecondPart = () => {
             </div>
             <div className="mt-6 flex items-center justify-between">
                 <p>Skills required</p>
-                <p>0/3</p>
+                <p>{data.skills.length}/3</p>
             </div>
             <MultipleSelector
+                partialDelete={data.skills.length === 3}
+                value={data.skills.map((skill) => ({ label: skill, value: skill })) as Option[]}
+                onChange={handleMultiChange('skills')}
                 options={OPTIONS}
                 placeholder="Select skills required for this job..."
                 emptyIndicator={
@@ -39,9 +52,12 @@ const SecondPart = () => {
 
             <div className="mt-4 flex items-center justify-between">
                 <p>Tools required</p>
-                <p>0/7</p>
+                <p>{data.tools.length}/7</p>
             </div>
             <MultipleSelector
+                partialDelete={data.tools.length === 7}
+                value={data.tools.map((tool) => ({ label: tool, value: tool })) as Option[]}
+                onChange={handleMultiChange('tools')}
                 options={OPTIONS}
                 placeholder="Select skills required for this job..."
                 emptyIndicator={

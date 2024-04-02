@@ -409,7 +409,7 @@ export function PlateEditor(props: PlateEditorProps) {
                             <FixedToolbarButtons />
                         </FixedToolbar>
 
-                        <Editor className="px-6 py-4" autoFocus focusRing={false} variant="ghost" size="sm" />
+                        <Editor className="rounded-b-xl px-6 py-4" focusRing={false} variant="ghost" size="sm" />
 
                         <FloatingToolbar>
                             <FloatingToolbarButtons />
