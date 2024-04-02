@@ -3,10 +3,19 @@ import JobCard from '../../common/JobCard';
 import JobDetail from './JobDetail';
 import JobFilter from '../../filter/JobFilter';
 import useJobStore from '@/stores/jobStore';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
+const jobs = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const JobDiscover = () => {
-    const jobs = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-    const isOpenDetail = useJobStore((state) => state.jobDetailOpening);
+    const navigate = useNavigate();
+    const { jobDetailOpening, tabKey } = useJobStore();
+
+    useEffect(() => {
+        if (tabKey === 'applied') navigate(tabKey, { replace: true });
+    }, [tabKey, navigate]);
+
     return (
         <div className="flex flex-col">
             <JobFilter />
@@ -14,7 +23,7 @@ const JobDiscover = () => {
                 {jobs.map((job, index) => (
                     <div
                         key={index}
-                        className={classNames('flex justify-center', isOpenDetail ? 'w-1/2 pr-4' : 'w-full')}
+                        className={classNames('flex justify-center', jobDetailOpening ? 'w-1/2 pr-4' : 'w-full')}
                     >
                         <JobCard />
                     </div>
