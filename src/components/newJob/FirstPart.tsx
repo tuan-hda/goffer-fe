@@ -40,14 +40,14 @@ const FirstStep = () => {
                     <label htmlFor="salary-from">Salary from</label>
                     <div className="relative">
                         <TbCoin className="absolute left-3 top-1/2 -translate-y-1/2 text-lg text-gray-500" />
-                        <Input id="salary-from" className="mt-1 rounded-lg pl-9" placeholder="Monthly salary..." />
+                        <Input id="salary-from" className="mt-1 rounded-lg pl-9" placeholder="Monthly salary from..." />
                     </div>
                 </div>
                 <div className="flex-1">
                     <label htmlFor="salary-to">Salary to</label>
                     <div className="relative">
                         <TbCoin className="absolute left-3 top-1/2 -translate-y-1/2 text-lg text-gray-500" />
-                        <Input id="salary-to" className="mt-1 rounded-lg pl-9" placeholder="Monthly salary..." />
+                        <Input id="salary-to" className="mt-1 rounded-lg pl-9" placeholder="Monthly salary to..." />
                     </div>
                 </div>
             </div>

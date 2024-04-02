@@ -8,6 +8,7 @@ import {
     isBlockAboveEmpty,
     isSelectionAtBlockStart,
     someNode,
+    PlateProps,
 } from '@udecode/plate-common';
 import { createParagraphPlugin, ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
 import {
@@ -390,11 +391,13 @@ const initialValue = [
     },
 ];
 
-export function PlateEditor() {
+type PlateEditorProps = Omit<PlateProps, 'children'>;
+
+export function PlateEditor(props: PlateEditorProps) {
     return (
         <DndProvider backend={HTML5Backend}>
             <CommentsProvider>
-                <Plate plugins={plugins} initialValue={initialValue}>
+                <Plate {...props} plugins={plugins}>
                     <div
                         className={classNames(
                             'relative',
