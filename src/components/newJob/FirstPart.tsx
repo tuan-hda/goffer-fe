@@ -13,8 +13,6 @@ const FirstStep = () => {
     const [data, setData] = useNewJobStore((state) => [state.data, state.setData], shallow);
     const [showSalaryTo, setShowSalaryTo] = useState(false);
 
-    console.log('render');
-
     useEffect(() => {
         if (!showSalaryTo)
             setData((prev) => {
