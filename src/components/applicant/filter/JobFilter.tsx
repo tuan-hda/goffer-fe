@@ -16,8 +16,10 @@ import { RiSearchLine } from 'react-icons/ri';
 import { HiOutlineAdjustments } from 'react-icons/hi';
 import useJobStore from '@/stores/jobStore';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useNavigate } from 'react-router-dom';
 
 const JobFilter = () => {
+    const navigate = useNavigate();
     const [scrollDirection, setScrollDirection] = useState('up');
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [searchValue, setSearchValue] = useState('');
@@ -51,7 +53,14 @@ const JobFilter = () => {
     }, [jobDetailOpening]);
 
     const handleTabChange = (key: Key) => {
-        updateTabKey(key.toString());
+        const newTabKey = key.toString();
+        updateTabKey(newTabKey);
+
+        if (newTabKey === 'all') {
+            navigate('/app/individual/jobs');
+        } else if (newTabKey === 'applied') {
+            navigate('/app/individual/jobs-applied');
+        }
     };
 
     return (

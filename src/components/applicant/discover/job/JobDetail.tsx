@@ -111,10 +111,10 @@ const JobDetail = () => {
             >
                 <MdOutlineArrowRight size={80} />
             </Button>
-            <CardBody className="pb-24">
+            <CardBody className="p-4 pb-24">
                 <JobContent />
             </CardBody>
-            <CardFooter className="absolute bottom-0 z-10 flex-col items-start overflow-hidden border-t-1 border-zinc-100/50 py-2 shadow-small before:bg-background/10">
+            <CardFooter className="absolute bottom-0 z-10 flex-col items-start overflow-hidden border-t-1 border-zinc-100/50 p-4 shadow-small before:bg-background/10">
                 <div className="mb-2 flex w-full flex-row  items-center justify-between">
                     <p className="w-3/5 truncate font-serif text-xl font-black text-text">
                         Senior Frontend Developer (React) Senior Frontend Developer (React) Senior Frontend Developer

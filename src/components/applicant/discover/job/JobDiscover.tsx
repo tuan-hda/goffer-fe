@@ -10,11 +10,17 @@ const jobs = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const JobDiscover = () => {
     const navigate = useNavigate();
-    const { jobDetailOpening, tabKey } = useJobStore();
+    const { jobDetailOpening, tabKey, updateTabKey } = useJobStore();
 
     useEffect(() => {
-        if (tabKey === 'applied') navigate(tabKey, { replace: true });
-    }, [tabKey, navigate]);
+        const path = location.pathname;
+        const appliedPath = '/app/individual/jobs-applied';
+        if (path.startsWith(appliedPath)) {
+            updateTabKey('applied');
+        } else {
+            updateTabKey('all');
+        }
+    }, [location, updateTabKey]);
 
     return (
         <div className="flex flex-col">
