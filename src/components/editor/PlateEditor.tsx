@@ -405,7 +405,7 @@ export function PlateEditor(props: PlateEditorProps) {
                             'rounded-xl border [&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4',
                         )}
                     >
-                        <FixedToolbar>
+                        <FixedToolbar className="!top-10">
                             <FixedToolbarButtons />
                         </FixedToolbar>
 
