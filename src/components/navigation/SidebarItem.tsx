@@ -26,7 +26,7 @@ const SidebarItem = ({ item, collapsed, match }: SidebarItemProps) => {
             to={item.element.path}
             className={classNames(
                 'flex w-full items-center justify-start gap-[18px] rounded-lg py-2 pl-[9px] pr-2 text-text transition hover:bg-beige/70',
-                match?.type === 'link' && match.element.path === item.element.path ? 'bbg-beige' : '',
+                match?.type === 'link' && match.element.path === item.element.path ? 'bg-beige/70' : '',
             )}
         >
             {item.element.startContent}

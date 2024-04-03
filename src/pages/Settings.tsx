@@ -4,7 +4,7 @@ import { Account } from '@/components/settings';
 
 const Settings = () => {
     return (
-        <div className="flex min-h-screen w-full flex-col bg-pale p-5 text-text">
+        <div className="flex min-h-screen w-full flex-col bg-pale px-6 py-5 text-text">
             <h1 className="mt-[6px] flex items-center gap-1 text-sm">
                 <Breadcrumbs>
                     <BreadcrumbItem>

@@ -22,6 +22,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 serif: ['EB Garamond', 'serif'],
+                'serif-2': ['Bitter', 'serif'],
             },
             colors: {
                 'm-yellow': {
