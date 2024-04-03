@@ -10,4 +10,9 @@ export type NewJob = {
     description: string;
     location: string;
     time: string;
+    orgId: string;
+};
+
+export type Job = NewJob & {
+    id: string;
 };

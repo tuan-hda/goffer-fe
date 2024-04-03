@@ -22,6 +22,7 @@ const initialData: NewJob = {
     location: 'Work from anywhere',
     time: 'Any working time',
     salaryTo: '',
+    orgId: '',
 };
 
 const useNewJobStore = create<State & Action>()(
