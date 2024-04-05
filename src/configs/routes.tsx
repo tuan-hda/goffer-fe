@@ -78,6 +78,10 @@ const routesConfig: RouteObject[] = [
                                 ],
                             },
                             { path: '/app/individual/jobs', element: <JobDiscover /> },
+                            {
+                                path: '/app/individual/jobs-applied',
+                                element: <JobDiscover />,
+                            },
                         ],
                     },
                     {
