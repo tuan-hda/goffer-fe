@@ -15,4 +15,5 @@ export type NewJob = {
 
 export type Job = NewJob & {
     id: string;
+    status: string;
 };
