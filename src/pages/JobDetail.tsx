@@ -1,4 +1,4 @@
-import { Overview } from '@/components/jobDetail';
+import { Overview, Sourcing } from '@/components/jobDetail';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { OrgLayout } from '@/layouts';
 import { Tab, Tabs } from '@nextui-org/react';
@@ -59,7 +59,9 @@ const JobDetail = () => {
                             <Tab key="overview" title="Overview">
                                 <Overview />
                             </Tab>
-                            <Tab key="sourcing" title="Sourcing"></Tab>
+                            <Tab key="sourcing" title="Sourcing">
+                                <Sourcing />
+                            </Tab>
                             <Tab key="insights" title="Insights"></Tab>
                             <Tab key="analytics" title="Analytics"></Tab>
                         </Tabs>
