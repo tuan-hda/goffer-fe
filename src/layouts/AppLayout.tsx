@@ -5,6 +5,7 @@ import AuthTwoSection from './AuthTwoSection';
 import ConfirmEmail from '@/components/auth/ConfirmEmail';
 import { Spinner } from '@nextui-org/react';
 import DashboardLayout from './DashboardLayout';
+import AutoCenterLayout from './AutoCenterLayout';
 
 const AppLayout = () => {
     const { data: user, isLoading } = useSelfProfileQuery();
@@ -54,7 +55,9 @@ const AppLayout = () => {
     if (user)
         return (
             <DashboardLayout>
-                <Outlet />
+                <AutoCenterLayout>
+                    <Outlet />
+                </AutoCenterLayout>
             </DashboardLayout>
         );
 };
