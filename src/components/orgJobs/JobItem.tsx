@@ -52,7 +52,7 @@ const JobItem = ({ data }: JobItemProps) => {
     return (
         <Card
             onClick={() => navigate(`/app/organization/${domain}/job/${data.id}`)}
-            className="cursor-pointer bg-white/70 text-sm shadow-none transition hover:shadow-small"
+            className="cursor-pointer bg-white/50 text-sm shadow-none transition hover:shadow-small"
         >
             <CardHeader className="pb-0 pt-4">
                 <CardTitle className="text-lg font-medium"> Senior Website Software Engineer</CardTitle>

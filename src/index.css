@@ -635,3 +635,7 @@ i.right-align {
 i.justify-align {
     background-image: url('/icons/justify.svg');
 }
+
+.transparentLeaf {
+    background-color: transparent !important;
+}
