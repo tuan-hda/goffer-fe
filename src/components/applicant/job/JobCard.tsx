@@ -1,7 +1,7 @@
-import { Card, CardBody, Button, Image, CardFooter, CardHeader, Chip, Divider, Avatar } from '@nextui-org/react';
+import { Card, CardBody, Button, CardFooter, CardHeader, Chip, Divider, Avatar } from '@nextui-org/react';
 import { useState } from 'react';
 import { TbBriefcase, TbCheck, TbHeart, TbHeartFilled } from 'react-icons/tb';
-import { MdVerified, MdOutlinePayments } from 'react-icons/md';
+import { MdOutlinePayments } from 'react-icons/md';
 import { GiDuration } from 'react-icons/gi';
 import useJobStore from '@/stores/jobStore';
 import { Badge } from '@/components/ui/badge';

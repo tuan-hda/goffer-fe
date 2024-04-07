@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import ProgressFooter from '../common/ProgressFooter';
-import { JobContent } from '../job/JobDetail';
+import JobContent from '../job/JobContent';
 
 const JobApply = () => {
     const navigate = useNavigate();
