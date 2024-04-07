@@ -7,3 +7,4 @@ export { default as AppLayout } from './AppLayout';
 export { default as FocusLayout } from './FocusLayout';
 export { default as OrgLayout } from './OrgLayout';
 export { default as AutoCenterLayout } from './AutoCenterLayout';
+export { default as OrgDetailLayout } from './OrgDetailLayout';

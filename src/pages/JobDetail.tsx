@@ -1,60 +1,123 @@
-import { Overview, Sourcing } from '@/components/jobDetail';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { OrgLayout } from '@/layouts';
+import { Insights, Overview, Sourcing } from '@/components/jobDetail';
+import { Button } from '@/components/ui/button';
+import { OrgDetailLayout, OrgLayout } from '@/layouts';
 import { Tab, Tabs } from '@nextui-org/react';
-import { useState } from 'react';
-import { TbCheck } from 'react-icons/tb';
+import {
+    TbArchive,
+    TbChevronDown,
+    TbClockCancel,
+    TbCloudStorm,
+    TbDots,
+    TbEye,
+    TbEyeOff,
+    TbGlobe,
+    TbPencil,
+    TbScooter,
+    TbSend,
+    TbShare,
+} from 'react-icons/tb';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const JobDetail = () => {
-    const [finished, setFinished] = useState(true);
-
     return (
         <OrgLayout>
-            <div className="mt-5 flex gap-8">
-                {!finished && (
-                    <Card className="h-fit max-w-[240px] border bg-white/70 text-sm shadow-none">
-                        <CardHeader>
-                            <CardTitle>Finish Job Setup</CardTitle>
-                            <CardDescription>
-                                Before you can publish your job, you need to finish all steps
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-1">
-                            <div className="flex items-center gap-4">
-                                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
-                                    <TbCheck />
-                                </div>
-                                <p>Basic information</p>
-                            </div>
-                            <div className="ml-[10px] h-6 border-l" />
-                            <div className="flex items-center gap-4">
-                                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
-                                    2
-                                </div>
-                                <p>Application questions</p>
-                            </div>
-                            <div className="ml-[10px] h-6 border-l" />
-                            <div className="flex items-center gap-4">
-                                <div className="flex h-5 w-5 items-center justify-center rounded-full border text-xs text-text">
-                                    3
-                                </div>
-                                <p>Custom feedback</p>
-                            </div>
-                            <div className="ml-[10px] h-6 border-l" />
-                            <div className="flex items-center gap-4">
-                                <div className="flex h-5 w-5 items-center justify-center rounded-full border text-xs text-text">
-                                    4
-                                </div>
-                                <p>Finalize</p>
-                            </div>
-                        </CardContent>
-                    </Card>
-                )}
+            <OrgDetailLayout>
                 <div className="w-full">
-                    <div className="text-3xl">
+                    <div className="flex items-center gap-4 text-3xl">
                         <h1>Senior Software Engineer</h1>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="ml-auto">
+                                <TbDots className="text-base" />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem>
+                                    <TbSend className="mr-2 text-base" /> Send invite
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <TbEye className="mr-2 text-base" /> View preview
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <TbPencil className="mr-2 text-base" /> Edit basic
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <TbScooter className="mr-2 text-base" /> Edit questions
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <TbCloudStorm className="mr-2 text-base" /> Custom feedback
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button size="icon" variant="ghost">
+                                        <TbShare className="text-lg" />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Share link</TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    className="gap-2 rounded-lg bg-primary/10 text-primary shadow-none hover:bg-primary/20 hover:text-primary"
+                                >
+                                    <TbEyeOff />
+                                    <span>Unpublished</span>
+                                    <TbChevronDown />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem className="gap-3">
+                                    <TbGlobe className="text-xl" />
+                                    <div className="min-w-0">
+                                        <p className="font-semibold">Published</p>
+                                        <p className="text-text/70">Job is open for applications.</p>
+                                    </div>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="gap-3">
+                                    <TbEyeOff className="text-xl" />
+
+                                    <div className="min-w-0">
+                                        <p className="font-semibold">Unpublished</p>
+                                        <p className="text-text/70">
+                                            Currently hidden, available after you finish all steps.
+                                        </p>
+                                    </div>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="gap-3">
+                                    <TbArchive className="text-xl" />
+                                    <div className="min-w-0">
+                                        <p className="font-semibold">Closed</p>
+                                        <p className="text-text/70">
+                                            Applications closed; no new submissions accepted.
+                                        </p>
+                                    </div>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="gap-3">
+                                    <TbClockCancel className="text-xl" />
+                                    <div className="min-w-0">
+                                        <p className="font-semibold">Expired</p>
+                                        <p className="text-text/70">
+                                            Posting has expired; no longer accepting new applications.
+                                        </p>
+                                    </div>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
-                    <div className="-ml-[6px] w-full">
+                    <div className="-mx-[6px] w-[calc(100%+12px)]">
                         <Tabs aria-label="Options" className="-ml-2" variant="underlined">
                             <Tab key="overview" title="Overview">
                                 <Overview />
@@ -62,12 +125,14 @@ const JobDetail = () => {
                             <Tab key="sourcing" title="Sourcing">
                                 <Sourcing />
                             </Tab>
-                            <Tab key="insights" title="Insights"></Tab>
+                            <Tab key="insights" title="Insights">
+                                <Insights />
+                            </Tab>
                             <Tab key="analytics" title="Analytics"></Tab>
                         </Tabs>
                     </div>
                 </div>
-            </div>
+            </OrgDetailLayout>
         </OrgLayout>
     );
 };

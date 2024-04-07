@@ -17,6 +17,7 @@ import {
     OrgJobs,
     NewJob,
     JobDetail,
+    Questions,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -96,6 +97,10 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/job/:id',
                         element: <JobDetail />,
+                    },
+                    {
+                        path: '/app/organization/:domain/job/:id/questions',
+                        element: <Questions />,
                     },
                 ],
             },

@@ -1,7 +1,10 @@
-import { TbClock, TbCoin, TbSchool, TbUser } from 'react-icons/tb';
+import { TbBrandLinkedin, TbClock, TbCoin, TbSchool, TbUser } from 'react-icons/tb';
 import { Badge } from '../ui/badge';
-import { Avatar } from '@nextui-org/react';
+import { Avatar, Image } from '@nextui-org/react';
 import { PlainPlate } from '../common';
+import { Card } from '../ui/card';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
 const Overview = () => {
     const job = {
@@ -94,7 +97,28 @@ const Overview = () => {
                 </div>
             </div>
 
-            <div className="min-w-0">
+            <div className="min-w-0 text-sm">
+                <p className="mb-2 text-xl">Share your opportunity</p>
+                <Card className="mb-6 flex flex-col items-center bg-white/50 p-6 shadow-none">
+                    <Image className="h-64" src="/map.png" />
+                    <p className="mt-2 text-text/70">Share your opportunity to outside world</p>
+                    <div className="mt-2 flex w-full justify-center gap-2">
+                        <Input
+                            className="max-w-xs flex-1"
+                            placeholder="https://awefjkawfawwefawefaewflekfjawelkfjaw-awefjwaeklfj.com"
+                        />
+                        <Button
+                            className="rounded-lg bg-black text-white hover:bg-black/80 hover:text-white"
+                            variant="outline"
+                        >
+                            Copy
+                        </Button>
+                        <Button variant="outline" size="icon" className="h-9 min-w-9">
+                            <TbBrandLinkedin className="text-lg" />
+                        </Button>
+                    </div>
+                </Card>
+
                 <p className="mb-2 text-xl">Description</p>
                 <PlainPlate data={JSON.parse(job.description)} />
             </div>
