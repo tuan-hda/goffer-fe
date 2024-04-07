@@ -1,150 +1,144 @@
 import { useState, useEffect, Key } from 'react';
-import {
-    Input,
-    Tabs,
-    Tab,
-    Button,
-    useDisclosure,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-} from '@nextui-org/react';
-import classNames from 'classnames';
+import { Input, Tabs, Tab, Button } from '@nextui-org/react';
 import { RiSearchLine } from 'react-icons/ri';
-import { HiOutlineAdjustments } from 'react-icons/hi';
 import useJobStore from '@/stores/jobStore';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useNavigate } from 'react-router-dom';
+import { Select, SelectItem, Selection } from '@nextui-org/react';
+import { MdOutlineCleaningServices } from 'react-icons/md';
 
-const JobFilter = () => {
-    const navigate = useNavigate();
-    const [scrollDirection, setScrollDirection] = useState('up');
-    const [prevScrollPos, setPrevScrollPos] = useState(0);
-    const [searchValue, setSearchValue] = useState('');
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { tabKey, updateTabKey, jobDetailOpening } = useJobStore();
+const sorts = ['Most relevant', 'Newest'];
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollPos = window.scrollY;
-            setScrollDirection(prevScrollPos > currentScrollPos || currentScrollPos < 64 ? 'up' : 'down');
-            setPrevScrollPos(currentScrollPos);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [prevScrollPos, scrollDirection]);
-
-    useEffect(() => {
-        if (jobDetailOpening) {
-            if (window.scrollY < 172) {
-                window.scrollTo({
-                    top: 172,
-                    behavior: 'smooth',
-                });
-            }
-            setScrollDirection('down');
-        }
-    }, [jobDetailOpening]);
+export const JobTab = () => {
+    const { tabKey, updateTabKey } = useJobStore();
 
     const handleTabChange = (key: Key) => {
         const newTabKey = key.toString();
         updateTabKey(newTabKey);
+    };
+    return (
+        <Tabs
+            radius="full"
+            size="lg"
+            aria-label="Job Tab"
+            classNames={{
+                base: 'h-12 w-full mx-auto',
+                tabList: 'h-full px-2 bg-beige/60 w-full',
+                tab: 'min-w-max',
+            }}
+            selectedKey={tabKey}
+            onSelectionChange={(key) => handleTabChange(key)}
+        >
+            <Tab key="all" title="All jobs" />
+            <Tab key="applied" title="Applied" />
+        </Tabs>
+    );
+};
 
-        if (newTabKey === 'all') {
-            navigate('/app/individual/jobs');
-        } else if (newTabKey === 'applied') {
-            navigate('/app/individual/jobs-applied');
-        }
+export const SearchBar = () => {
+    const [searchValue, setSearchValue] = useState('');
+    const [values, setValues] = useState<Selection>();
+
+    return (
+        <div className="flex flex-col items-center gap-4 md:flex-row">
+            <div className="w-full md:hidden">
+                <JobTab />
+            </div>
+
+            <Input
+                classNames={{
+                    base: 'w-full mx-auto min-w-60 md:max-w-xl hidden sm:flex bg-beige/60 focus-within:bg-beige p-0.5 rounded-full',
+                    input: 'text-medium text-default-700',
+                    inputWrapper: 'font-normal bg-white text-default-700 border-none shadow-none',
+                }}
+                radius="full"
+                placeholder="Search"
+                size="sm"
+                variant="bordered"
+                startContent={<RiSearchLine size={24} className="text-beige" />}
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                onClear={() => setSearchValue('')}
+                isClearable
+            />
+
+            <Select
+                placeholder="Sort by"
+                size="sm"
+                radius="full"
+                variant="bordered"
+                selectedKeys={values}
+                classNames={{
+                    base: 'md:max-w-40',
+                    trigger: 'data-[open=true]:border-default-400 data-[focus=true]:border-default-400',
+                }}
+                onSelectionChange={setValues}
+            >
+                {sorts.map((value) => (
+                    <SelectItem key={value} value={value}>
+                        {value}
+                    </SelectItem>
+                ))}
+            </Select>
+        </div>
+    );
+};
+
+interface SelectProps {
+    items: string[];
+    label?: string;
+    placeholder?: string;
+    onChange?: (_: Selection | undefined) => void;
+}
+
+export const AppSelect = ({ items, label, placeholder, onChange }: SelectProps) => {
+    const [values, setValues] = useState<Selection>();
+    const handleValuesChange = (newValues: Selection | undefined) => {
+        setValues(newValues);
+        onChange && onChange(newValues);
     };
 
     return (
-        <div
-            className={classNames(
-                'sticky top-16 z-30 hidden w-full max-w-screen-2xl self-center rounded-b-2xl bg-pale py-6 shadow-md transition md:flex',
-                scrollDirection === 'down' ? '-translate-y-[164px]' : 'translate-y-0',
-            )}
-        >
-            <div className="flex w-full flex-col gap-y-6">
-                <div className="mx-auto flex h-12 w-fit gap-x-2 rounded-full bg-beige">
-                    <Input
-                        classNames={{
-                            base: 'w-full min-w-96 md:max-w-xl hidden sm:flex h-full bg-beige/60 focus-within:bg-beige p-0.5 rounded-full',
-                            mainWrapper: 'h-full',
-                            input: 'text-medium text-default-700',
-                            inputWrapper:
-                                'h-full font-normal bg-white text-default-700 border border-beige border-0.5 shadow-none',
-                        }}
-                        radius="full"
-                        placeholder="Search"
-                        size="sm"
-                        variant="bordered"
-                        startContent={<RiSearchLine size={24} className="text-beige" />}
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        onClear={() => setSearchValue('')}
-                        isClearable
-                    />
-                    <Tabs
-                        radius="full"
-                        aria-label="Tabs radius"
-                        classNames={{
-                            tabList: 'bg-transparent h-full',
-                            tab: 'h-10 min-w-16 w-fit',
-                        }}
-                        selectedKey={tabKey}
-                        onSelectionChange={(key) => handleTabChange(key)}
-                    >
-                        <Tab key="all" title="All jobs" />
-                        <Tab key="applied" title="Applied" />
-                    </Tabs>
-                </div>
-                <div className="flex items-center justify-around">
-                    <>
-                        <Button
-                            onPress={onOpen}
-                            radius="full"
-                            variant="ghost"
-                            className=" border-1 border-default"
-                            startContent={<HiOutlineAdjustments size={20} className="text-default-700" />}
-                        >
-                            Filter
-                        </Button>
-                        <Modal isOpen={isOpen} size="4xl" onOpenChange={onOpenChange} placement="top-center">
-                            <ModalContent>
-                                {(onClose) => (
-                                    <>
-                                        <ModalHeader className="flex flex-col gap-1">All filters</ModalHeader>
-                                        <ModalBody></ModalBody>
-                                        <ModalFooter>
-                                            <Button radius="full" variant="bordered" onPress={onClose}>
-                                                Clear Filters
-                                            </Button>
-                                            <Button radius="full" color="primary" onPress={onClose}>
-                                                View Results
-                                            </Button>
-                                        </ModalFooter>
-                                    </>
-                                )}
-                            </ModalContent>
-                        </Modal>
-                        <Select>
-                            <SelectTrigger className="w-[180px] rounded-full border-1 border-default">
-                                <SelectValue placeholder="Sort" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="light">Most relevant</SelectItem>
-                                <SelectItem value="dark">Newest</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </>
-                </div>
+        <div>
+            <p className="mb-2 text-sm text-text">{label}</p>
+
+            <div className="flex items-center gap-x-4">
+                <Select
+                    // selectionMode="multiple"
+                    placeholder={placeholder}
+                    selectedKeys={values}
+                    onSelectionChange={handleValuesChange}
+                    size="sm"
+                    radius="sm"
+                    variant="bordered"
+                    classNames={{
+                        trigger: 'data-[open=true]:border-default-400 data-[focus=true]:border-default-400 border',
+                    }}
+                >
+                    {items.map((item) => (
+                        <SelectItem key={item} value={item}>
+                            {item}
+                        </SelectItem>
+                    ))}
+                </Select>
+
+                <Button variant="flat" onPress={() => setValues(new Set([]))} isIconOnly radius="full">
+                    <MdOutlineCleaningServices />
+                </Button>
             </div>
+        </div>
+    );
+};
+
+const JobFilter = () => {
+    const skills = ['Front-end', 'Back-end', 'Bridge Software Engineer'];
+    const locations = ['HCM City', 'Thu Duc', 'Tan Phu'];
+
+    return (
+        <div className="space-y-8">
+            <JobTab />
+
+            <AppSelect items={skills} label="Title" placeholder="Search for title" />
+
+            <AppSelect items={locations} label="Location" placeholder="e.g. San Francisco" />
         </div>
     );
 };
