@@ -104,7 +104,7 @@ const JobItem = ({ data }: JobItemProps) => {
                             'bg-red-100 text-red-500': data.status === 'closed',
                             'bg-primary/20 text-primary': data.status === 'expired',
                         },
-                        'rounded-full shadow-none',
+                        'rounded-lg font-normal shadow-none',
                     )}
                 >
                     <Icon status={data.status} />
