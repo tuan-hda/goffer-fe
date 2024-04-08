@@ -68,10 +68,6 @@ const JobCard = () => {
                         {tag}
                     </Badge>
                 ))}
-                <Badge className="gap-1 bg-[hsl(var(--nextui-success))] font-bold text-white">
-                    <TbCheck size={16} />
-                    Applied 2 days ago
-                </Badge>
             </CardFooter>
         </Card>
     );

@@ -5,15 +5,23 @@ import { TbArrowMoveDown, TbHeart, TbHeartFilled } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import JobContent from './JobContent';
+import toast from 'react-hot-toast';
 
 const process = ['sourced', 'applied', 'manager screen', 'on-site', 'hired'];
 
 const JobDetail = () => {
     const navigate = useNavigate();
     const [saved, setSaved] = useState(false);
+    const jobLink = 'http://localhost:5173/job/029';
 
     const onApply = () => {
         navigate('/job/029');
+    };
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(jobLink).then(() => {
+            toast.success('Job link copied to clipboard');
+        });
     };
 
     return (
@@ -65,8 +73,13 @@ const JobDetail = () => {
                     {/* Job link */}
                     <div>
                         <p className="mb-2 mt-10 font-serif text-lg font-semibold text-default-700">Job link</p>
-                        <Input isDisabled value={'http://localhost:5173/job/029'} />
-                        <p className=" mt-2 cursor-pointer font-semibold text-success hover:underline">Copy link</p>
+                        <Input readOnly classNames={{ input: 'font-semibold' }} value={jobLink} />
+                        <p
+                            className=" mt-2 cursor-pointer font-semibold text-success hover:underline"
+                            onClick={copyToClipboard}
+                        >
+                            Copy link
+                        </p>
                     </div>
                 </div>
             </div>

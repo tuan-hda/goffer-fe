@@ -10,7 +10,7 @@ const jobs = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 const jobsApplied = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const JobDiscover = () => {
-    const { jobDetailOpening, updateJobDetailOpening, tabKey, updateTabKey } = useJobStore();
+    const { jobDetailOpening, updateJobDetailOpening, tabKey } = useJobStore();
 
     return (
         <div className="mx-auto flex max-w-screen-xl">
