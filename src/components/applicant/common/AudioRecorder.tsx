@@ -206,14 +206,14 @@ const AudioRecorder = () => {
     };
 
     return (
-        <div className="relative flex items-center justify-around gap-6 rounded-full border bg-pale p-4 shadow-md">
+        <div className="relative flex items-center justify-around gap-6 rounded-full border bg-white p-4 shadow-none">
             <Button onPress={getStart().event} isIconOnly variant="flat" color={getStart().color} radius="full">
                 {getStart().Icon}
             </Button>
             <p>{formatTime(leftTime)}</p>
 
             {audioURL ? (
-                <Progress color="success" size="md" value={(leftTime / rightTime) * 100} />
+                <Progress className="h-2" color="success" size="md" value={(leftTime / rightTime) * 100} />
             ) : (
                 <canvas
                     ref={canvasRef}

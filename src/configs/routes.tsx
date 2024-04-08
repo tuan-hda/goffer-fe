@@ -1,4 +1,4 @@
-import { RouteObject } from 'react-router-dom';
+import { Outlet, RouteObject } from 'react-router-dom';
 import {
     AboutUs,
     ContactUs,
@@ -16,11 +16,25 @@ import {
     OrgSettings,
     OrgJobs,
     NewJob,
+    JobDetail,
+    Questions,
+    CustomFeedback,
+    Finalize,
+    ApplicantDetail,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
 import { Discover, JobDiscover, PeopleDiscover } from '@/components/applicant/discover';
-import { AppLayout, ApplicantLayout, AuthLayout, FocusLayout, LandingLayout, RootLayout } from '../layouts';
+import {
+    AppLayout,
+    ApplicantLayout,
+    AuthLayout,
+    FocusLayout,
+    LandingLayout,
+    OrgDetailLayout,
+    OrgLayout,
+    RootLayout,
+} from '../layouts';
 import Test from '@/pages/Test';
 import Editor from '@/components/common/editor/Editor';
 import { Application, JobApply } from '@/components/applicant/apply';
@@ -88,10 +102,41 @@ const routesConfig: RouteObject[] = [
                         path: '/app/organization/:domain',
                         element: <OrgJobs />,
                     },
-
                     {
                         path: '/app/organization/:domain/settings',
                         element: <OrgSettings />,
+                    },
+                    {
+                        path: '/app/organization/:domain/job/:id',
+                        element: (
+                            <OrgLayout>
+                                <OrgDetailLayout>
+                                    <Outlet />
+                                </OrgDetailLayout>
+                            </OrgLayout>
+                        ),
+                        children: [
+                            {
+                                path: '/app/organization/:domain/job/:id',
+                                element: <JobDetail />,
+                            },
+                            {
+                                path: '/app/organization/:domain/job/:id/questions',
+                                element: <Questions />,
+                            },
+                            {
+                                path: '/app/organization/:domain/job/:id/custom-feedback',
+                                element: <CustomFeedback />,
+                            },
+                            {
+                                path: '/app/organization/:domain/job/:id/finalize',
+                                element: <Finalize />,
+                            },
+                            {
+                                path: '/app/organization/:domain/job/:id/applicant/:candidateId',
+                                element: <ApplicantDetail />,
+                            },
+                        ],
                     },
                 ],
             },

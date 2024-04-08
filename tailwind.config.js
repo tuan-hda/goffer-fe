@@ -22,6 +22,8 @@ module.exports = {
         extend: {
             fontFamily: {
                 serif: ['EB Garamond', 'serif'],
+                'serif-2': ['Bitter', 'serif'],
+                mono: ['Geist Mono Variable', 'monospace'],
             },
             colors: {
                 'm-yellow': {
@@ -29,6 +31,12 @@ module.exports = {
                 },
                 pale: {
                     DEFAULT: '#fefcf5',
+                    400: '#f1efe8',
+                    500: '#e4e2dc',
+                    600: '#d7d6d0',
+                    700: '#cbc9c4',
+                    800: '#bebdb7',
+                    900: '#b1b0ab',
                 },
                 beige: {
                     DEFAULT: '#F0DCC8',

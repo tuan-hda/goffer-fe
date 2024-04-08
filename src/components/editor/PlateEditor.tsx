@@ -391,7 +391,9 @@ const initialValue = [
     },
 ];
 
-type PlateEditorProps = Omit<PlateProps, 'children'>;
+type PlateEditorProps = Omit<PlateProps, 'children'> & {
+    className?: string;
+};
 
 export function PlateEditor(props: PlateEditorProps) {
     return (
@@ -405,11 +407,16 @@ export function PlateEditor(props: PlateEditorProps) {
                             'rounded-xl border [&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4',
                         )}
                     >
-                        <FixedToolbar>
+                        <FixedToolbar className="!top-10">
                             <FixedToolbarButtons />
                         </FixedToolbar>
 
-                        <Editor className="px-6 py-4" autoFocus focusRing={false} variant="ghost" size="sm" />
+                        <Editor
+                            className={classNames('rounded-b-xl px-6 py-4', props.className)}
+                            focusRing={false}
+                            variant="ghost"
+                            size="sm"
+                        />
 
                         <FloatingToolbar>
                             <FloatingToolbarButtons />

@@ -7,24 +7,30 @@ type State = {
 };
 
 type Action = {
-    setData: (_: Partial<State['data']>) => void;
+    setData: (_: State['data'] | ((__: State['data']) => State['data'])) => void;
 };
 
 const initialData: NewJob = {
     title: '',
-    type: 'employee',
     description: '',
-    field: '',
     slots: 1,
     workingHours: 40,
+    salaryFrom: '',
+    skills: [],
+    experience: '<1 year',
+    tools: [],
+    location: 'Work from anywhere',
+    time: 'Any working time',
+    salaryTo: '',
+    orgId: '',
 };
 
 const useNewJobStore = create<State & Action>()(
     immer((set) => ({
         data: initialData,
         setData: (data) =>
-            set((prev) => {
-                prev.data = { ...prev.data, ...data };
+            set((state) => {
+                state.data = typeof data === 'function' ? data(state.data) : data;
             }),
     })),
 );

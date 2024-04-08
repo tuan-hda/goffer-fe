@@ -15,7 +15,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     const org = data?.results.find((org) => org.domain === domain);
 
     return (
-        <div className="relative bg-pale">
+        <div className="relative flex bg-pale">
             <SideBar org={org} />
             <div
                 className={classNames(

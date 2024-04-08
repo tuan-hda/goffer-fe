@@ -26,7 +26,7 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="mb-5 mt-7 w-full outline-none ring-0">
+            <DropdownMenuTrigger asChild className="mb-5 mt-7 w-full outline-none ring-0">
                 <button className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg p-2 transition hover:bg-gray-100">
                     <Avatar className="h-7 w-7 flex-shrink-0 bg-white" src={org ? org.logo : user?.avatar} />
                     <p
