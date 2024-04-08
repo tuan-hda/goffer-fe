@@ -48,12 +48,12 @@ const Filter = () => {
     return (
         <div
             className={classNames(
-                'sticky top-16 z-30 hidden w-full max-w-screen-2xl self-center rounded-b-2xl bg-pale py-6 shadow-md transition md:flex',
+                'sticky top-16 z-30 hidden w-full max-w-screen-2xl self-center rounded-b-2xl bg-pale/50 py-6 shadow-md backdrop-blur-lg transition md:flex',
                 scrollDirection === 'down' ? '-translate-y-[164px]' : 'translate-y-0',
             )}
         >
             <div className="flex w-full flex-col gap-y-6">
-                <div className="mx-auto flex h-12 w-fit gap-x-2 rounded-full bg-beige">
+                <div className="mx-auto flex h-12 w-fit gap-x-2 rounded-full bg-beige/70 ">
                     <Input
                         classNames={{
                             base: 'w-full min-w-96 md:max-w-xl hidden sm:flex h-full bg-beige/60 focus-within:bg-beige p-0.5 rounded-full',
