@@ -20,6 +20,7 @@ import {
     Questions,
     CustomFeedback,
     Finalize,
+    ApplicantDetail,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -132,8 +133,8 @@ const routesConfig: RouteObject[] = [
                                 element: <Finalize />,
                             },
                             {
-                                path: '/app/organization/:domain/job/:id/candidate/:candidateId',
-                                element: <Application />,
+                                path: '/app/organization/:domain/job/:id/applicant/:candidateId',
+                                element: <ApplicantDetail />,
                             },
                         ],
                     },

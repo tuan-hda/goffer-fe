@@ -16,6 +16,8 @@ const candidateSampleData = {
     description:
         'Passionate frontend developer with a knack for creating engaging user experiences. Skilled in a wide range of modern web technologies and tools, with a strong foundation in design principles and best practices. Committed to lifelong learning and staying at the cutting edge of technology.',
     match: 90,
+    phone: '0-123124145',
+    email: 'hdatdragon@gmail.com',
 };
 const Sourcing = () => {
     return (

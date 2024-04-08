@@ -1,6 +1,15 @@
 import { Avatar } from '@nextui-org/react';
 import { Card, CardContent } from '../ui/card';
-import { TbBookmark, TbHeartHandshake, TbLocation, TbSchool, TbSparkles, TbTools } from 'react-icons/tb';
+import {
+    TbBookmark,
+    TbHeartHandshake,
+    TbLocation,
+    TbMail,
+    TbPhone,
+    TbSchool,
+    TbSparkles,
+    TbTools,
+} from 'react-icons/tb';
 import { Badge } from '../ui/badge';
 import classNames from 'classnames';
 import { Button } from '../ui/button';
@@ -15,6 +24,8 @@ type CandidateProps = {
     description: string;
     match: number;
     isPro?: boolean;
+    email: string;
+    phone: string;
 };
 
 const Candidate = ({
@@ -27,6 +38,8 @@ const Candidate = ({
     description,
     match,
     isPro,
+    email,
+    phone,
 }: CandidateProps) => {
     return (
         <Card className="relative w-full cursor-pointer border bg-white/50 pt-5 text-text shadow-none transition hover:shadow-small">
@@ -51,6 +64,16 @@ const Candidate = ({
                     <div className="flex flex-1 flex-col">
                         <p>{name}</p>
                         <p className="text-xl text-black ">{jobTitle}</p>
+                        <div className="mt-1 flex items-center gap-6">
+                            <div className="flex items-start gap-2 text-blue-500 hover:underline">
+                                <TbMail className="h-5 flex-shrink-0" />
+                                <p className="min-w-0">{email}</p>
+                            </div>
+                            <div className="flex items-start gap-2 text-blue-500 hover:underline">
+                                <TbPhone className="h-5 flex-shrink-0" />
+                                <p className="min-w-0">{phone}</p>
+                            </div>
+                        </div>
                         <div className="mt-1 flex items-start gap-2">
                             <TbLocation className="h-5 flex-shrink-0" />
                             <p className="min-w-0">{location}</p>
