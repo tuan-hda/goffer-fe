@@ -107,12 +107,7 @@ const Overview = () => {
                             className="max-w-xs flex-1"
                             placeholder="https://awefjkawfawwefawefaewflekfjawelkfjaw-awefjwaeklfj.com"
                         />
-                        <Button
-                            className="rounded-lg bg-black text-white hover:bg-black/80 hover:text-white"
-                            variant="outline"
-                        >
-                            Copy
-                        </Button>
+                        <Button variant="black">Copy</Button>
                         <Button variant="outline" size="icon" className="h-9 min-w-9">
                             <TbBrandLinkedin className="text-lg" />
                         </Button>

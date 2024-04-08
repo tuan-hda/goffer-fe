@@ -66,10 +66,7 @@ const Candidate = ({
                         <p className="mt-2 text-text/70">{description}</p>
 
                         <div className="mt-4 flex gap-4">
-                            <Button
-                                className="w-64 gap-2 rounded-lg bg-black text-white hover:bg-text hover:text-white"
-                                variant="outline"
-                            >
+                            <Button className="w-64 gap-2 rounded-lg" variant="black">
                                 Get in touch <TbHeartHandshake className="text-lg" />
                             </Button>
                             <Button size="icon" className="rounded-lg" variant="outline">
