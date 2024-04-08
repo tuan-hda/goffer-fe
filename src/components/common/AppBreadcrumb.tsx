@@ -61,6 +61,23 @@ const routes: Record<string, RouteFunc> = {
             el: 'Custom feedback',
         },
     ],
+    '/app/organization/:domain/job/:id/finalize': (...args: any[]) => [
+        {
+            el: (
+                <>
+                    <TbBaguette className="text-lg" /> Jobs
+                </>
+            ),
+            to: `/app/organization/${args.at(0)}`,
+        },
+        {
+            el: args.at(2),
+            to: `/app/organization/${args.at(0)}/job/${args.at(1)}`,
+        },
+        {
+            el: 'Finalize',
+        },
+    ],
 };
 
 const AppBreadcrumb = () => {

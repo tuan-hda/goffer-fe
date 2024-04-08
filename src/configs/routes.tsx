@@ -19,6 +19,7 @@ import {
     JobDetail,
     Questions,
     CustomFeedback,
+    Finalize,
 } from '../pages';
 import Feature from '../pages/Feature';
 import WhoAreWe from '../pages/WhoAreWe';
@@ -125,6 +126,10 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/organization/:domain/job/:id/custom-feedback',
                                 element: <CustomFeedback />,
+                            },
+                            {
+                                path: '/app/organization/:domain/job/:id/finalize',
+                                element: <Finalize />,
                             },
                         ],
                     },

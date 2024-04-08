@@ -18,3 +18,4 @@ export { default as NewJob } from './NewJob';
 export { default as JobDetail } from './JobDetail';
 export { default as Questions } from './Questions';
 export { default as CustomFeedback } from './CustomFeedback';
+export { default as Finalize } from './Finalize';
