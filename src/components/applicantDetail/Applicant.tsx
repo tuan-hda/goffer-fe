@@ -1,8 +1,25 @@
 import { Avatar } from '@nextui-org/react';
-import { TbBrandLinkedin, TbFile, TbLocation, TbMail, TbPhone, TbSchool, TbTools } from 'react-icons/tb';
+import {
+    TbBrandLinkedin,
+    TbChevronDown,
+    TbDots,
+    TbFile,
+    TbLocation,
+    TbMail,
+    TbPhone,
+    TbSchool,
+    TbTools,
+} from 'react-icons/tb';
 import { Badge } from '../ui/badge';
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
 
 type ApplicantProps = {
     name: string;
@@ -37,24 +54,38 @@ const Applicant = ({
                 <Avatar src={avatarUrl} className="h-16 w-16 flex-shrink-0 rounded-lg" />
                 <div className="flex flex-1 flex-col">
                     <div className="flex items-center gap-2">
-                        <p className="text-2xl">{name}</p>
+                        <p className="font-serif text-2xl font-semibold">{name}</p>
                         {isPro && (
                             <Badge className="rounded-lg bg-gradient-to-r from-[#FAE4A7] to-[#E5D4FF] text-black shadow-none">
                                 PRO
                             </Badge>
                         )}
                         <div className="flex-1" />
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button size="icon" aria-haspopup="true" variant="outline">
+                                    <TbDots className="text-base" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>More options</DropdownMenuLabel>
+                                <DropdownMenuItem>Activity</DropdownMenuItem>
+                                <DropdownMenuItem>Notes</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                         <Button variant="outline" size="icon">
                             <TbMail className="text-lg" />
                         </Button>
-                        <Button variant="default">Move to</Button>
+                        <Button variant="default" className="gap-2">
+                            Applied <TbChevronDown />
+                        </Button>
                     </div>
                     <div className="mt-1 flex items-center gap-6">
-                        <div className="flex items-start gap-2 text-blue-500 hover:underline">
+                        <div className="flex items-start gap-2 underline hover:underline">
                             <TbMail className="h-5 flex-shrink-0" />
                             <p className="min-w-0">{email}</p>
                         </div>
-                        <div className="flex items-start gap-2 text-blue-500 hover:underline">
+                        <div className="flex items-start gap-2 underline hover:underline">
                             <TbPhone className="h-5 flex-shrink-0" />
                             <p className="min-w-0">{phone}</p>
                         </div>
@@ -75,14 +106,14 @@ const Applicant = ({
                     <div className="mt-3 flex gap-6 pb-3">
                         <div className="flex items-center gap-2">
                             <TbFile className="text-lg" />
-                            <Link to="#" className="font-medium hover:underline">
+                            <Link to="#" className="font-medium underline">
                                 Resume
                             </Link>
-                            <Badge className="bg-primary/10 text-primary shadow-none">{match}% match</Badge>
+                            <Badge>{match}% match</Badge>
                         </div>
                         <div className="flex items-center gap-2">
                             <TbBrandLinkedin className="text-lg" />
-                            <Link to="#" className="font-medium hover:underline">
+                            <Link to="#" className="font-medium underline">
                                 LinkedIn
                             </Link>
                         </div>

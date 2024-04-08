@@ -6,10 +6,13 @@ import { Button } from '../ui/button';
 
 const ApplicantResponse = () => {
     return (
-        <div className="group relative mt-2  gap-4">
+        <div className="group relative mt-2 gap-4">
             <Card className="flex-1 border-dashed border-gray-500 bg-white shadow-none">
                 <CardHeader className="pb-3">
-                    <CardTitle>Tell us about yourself</CardTitle>
+                    <div className="-mt-1 flex items-center gap-2">
+                        <Badge className="bg-gray-100 font-normal text-text/60 shadow-none">Behavioral</Badge>{' '}
+                    </div>
+                    <CardTitle className="mt-1 font-serif text-xl font-semibold">Tell us about yourself</CardTitle>
                     <CardDescription>
                         This is where you wanna want to dive into something that's special about yourself
                     </CardDescription>
@@ -46,22 +49,17 @@ const ApplicantResponse = () => {
                     </div>
                 </CardContent>
             </Card>
-            <div className="mx-auto mt-2 flex space-x-1">
-                <Button className="font-mono" size="icon" variant="outline">
-                    1
-                </Button>
-                <Button className="font-mono" size="icon" variant="outline">
-                    2
-                </Button>
-                <Button className="font-mono" size="icon" variant="outline">
-                    3
-                </Button>
-                <Button className="font-mono" size="icon" variant="outline">
-                    4
-                </Button>
-                <Button className="font-mono" size="icon" variant="outline">
-                    5
-                </Button>
+            <div className="mx-auto mt-2 flex gap-2">
+                {['😡', '😔', '😐', '😊', '🥰'].map((emoji, index) => (
+                    <Button className="font-mono" size="icon" key={index} variant="outline">
+                        <div className="pointer-events-none absolute text-lg opacity-0 transition group-hover:pointer-events-auto group-hover:static group-hover:opacity-100">
+                            {emoji}
+                        </div>
+                        <div className="pointer-events-auto opacity-100 transition group-hover:pointer-events-none group-hover:absolute group-hover:opacity-0">
+                            {index + 1}
+                        </div>
+                    </Button>
+                ))}
             </div>
         </div>
     );

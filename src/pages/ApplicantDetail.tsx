@@ -1,6 +1,5 @@
-import { Applicant, ApplicantResponse } from '@/components/applicantDetail';
+import { Applicant, ApplicantResponse, ConnectedWorkspace } from '@/components/applicantDetail';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const candidateSampleData = {
     name: 'Jane Doe',
@@ -40,15 +39,7 @@ const ApplicantDetail = () => {
                     </div>
                 </div>
             </div>
-            <div className="h-full max-w-[480px] flex-1">
-                <Card className="bg-white/50 shadow-none">
-                    <CardHeader>
-                        <CardTitle className="text-base">Workspace</CardTitle>
-                        <CardDescription>This is where you can collaborate with other interviews</CardDescription>
-                    </CardHeader>
-                    <CardContent>afweawfe</CardContent>
-                </Card>
-            </div>
+            <ConnectedWorkspace />
         </div>
     );
 };
