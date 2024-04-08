@@ -131,6 +131,10 @@ const routesConfig: RouteObject[] = [
                                 path: '/app/organization/:domain/job/:id/finalize',
                                 element: <Finalize />,
                             },
+                            {
+                                path: '/app/organization/:domain/job/:id/candidate/:candidateId',
+                                element: <Application />,
+                            },
                         ],
                     },
                 ],

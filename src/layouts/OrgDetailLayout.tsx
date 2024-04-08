@@ -10,7 +10,7 @@ type OrgDetailLayoutProps = {
 };
 
 const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
-    const [finished, setFinished] = useState(false);
+    const [finished, setFinished] = useState(true);
     const { domain, id } = useParams();
     const [step, setStep] = useState(2);
     const location = useLocation();

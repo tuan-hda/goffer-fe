@@ -15,6 +15,7 @@ import { Image } from '@nextui-org/react';
 import { Progress } from '../ui/progress';
 import { Input } from '../ui/input';
 import { TbMatchstick, TbProgress, TbStar } from 'react-icons/tb';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // type Candidate = {
 //     imageUrl: string;
@@ -28,6 +29,7 @@ import { TbMatchstick, TbProgress, TbStar } from 'react-icons/tb';
 
 const mockCandidates = [
     {
+        id: '660d5ce5d5b60d0295d8eb6c',
         imageUrl:
             'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/434854114_717890963889367_1448504705424139842_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHC0zi9wXR7C8eYNEcnlvHxtEcDeuQU32O0RwN65BTfY52pMiJj1eUrUjNdxk32Neeo2YutK3KNdlD5MIzCG0vX&_nc_ohc=i39x4Gp91jsAb4Ou5J5&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAJKg59QS5EhKfDwQDeM6VEppyYlxQhhb4qQwPR2lOSYA&oe=661817D4',
         name: 'Hoang Dinh Anh Tuan',
@@ -38,6 +40,7 @@ const mockCandidates = [
         match: 99,
     },
     {
+        id: '660d5ce5d5b60d0295d8eb6c',
         imageUrl:
             'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/434854114_717890963889367_1448504705424139842_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHC0zi9wXR7C8eYNEcnlvHxtEcDeuQU32O0RwN65BTfY52pMiJj1eUrUjNdxk32Neeo2YutK3KNdlD5MIzCG0vX&_nc_ohc=i39x4Gp91jsAb4Ou5J5&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAJKg59QS5EhKfDwQDeM6VEppyYlxQhhb4qQwPR2lOSYA&oe=661817D4',
         name: 'Hoang Dinh Anh Tuan',
@@ -48,6 +51,7 @@ const mockCandidates = [
         match: 99,
     },
     {
+        id: '660d5ce5d5b60d0295d8eb6c',
         imageUrl:
             'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/434854114_717890963889367_1448504705424139842_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHC0zi9wXR7C8eYNEcnlvHxtEcDeuQU32O0RwN65BTfY52pMiJj1eUrUjNdxk32Neeo2YutK3KNdlD5MIzCG0vX&_nc_ohc=i39x4Gp91jsAb4Ou5J5&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAJKg59QS5EhKfDwQDeM6VEppyYlxQhhb4qQwPR2lOSYA&oe=661817D4',
         name: 'Hoang Dinh Anh Tuan',
@@ -58,6 +62,7 @@ const mockCandidates = [
         match: 99,
     },
     {
+        id: '660d5ce5d5b60d0295d8eb6c',
         imageUrl:
             'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/434854114_717890963889367_1448504705424139842_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHC0zi9wXR7C8eYNEcnlvHxtEcDeuQU32O0RwN65BTfY52pMiJj1eUrUjNdxk32Neeo2YutK3KNdlD5MIzCG0vX&_nc_ohc=i39x4Gp91jsAb4Ou5J5&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAJKg59QS5EhKfDwQDeM6VEppyYlxQhhb4qQwPR2lOSYA&oe=661817D4',
         name: 'Hoang Dinh Anh Tuan',
@@ -68,6 +73,7 @@ const mockCandidates = [
         match: 99,
     },
     {
+        id: '660d5ce5d5b60d0295d8eb6c',
         imageUrl:
             'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/434854114_717890963889367_1448504705424139842_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHC0zi9wXR7C8eYNEcnlvHxtEcDeuQU32O0RwN65BTfY52pMiJj1eUrUjNdxk32Neeo2YutK3KNdlD5MIzCG0vX&_nc_ohc=i39x4Gp91jsAb4Ou5J5&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAJKg59QS5EhKfDwQDeM6VEppyYlxQhhb4qQwPR2lOSYA&oe=661817D4',
         name: 'Hoang Dinh Anh Tuan',
@@ -78,36 +84,7 @@ const mockCandidates = [
         match: 99,
     },
     {
-        imageUrl:
-            'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/434854114_717890963889367_1448504705424139842_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHC0zi9wXR7C8eYNEcnlvHxtEcDeuQU32O0RwN65BTfY52pMiJj1eUrUjNdxk32Neeo2YutK3KNdlD5MIzCG0vX&_nc_ohc=i39x4Gp91jsAb4Ou5J5&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAJKg59QS5EhKfDwQDeM6VEppyYlxQhhb4qQwPR2lOSYA&oe=661817D4',
-        name: 'Hoang Dinh Anh Tuan',
-        appliedOn: '2023-04-05',
-        email: 'jane.doe@example.com',
-        progress: 'Interview',
-        rating: 4,
-        match: 99,
-    },
-    {
-        imageUrl:
-            'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/434854114_717890963889367_1448504705424139842_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHC0zi9wXR7C8eYNEcnlvHxtEcDeuQU32O0RwN65BTfY52pMiJj1eUrUjNdxk32Neeo2YutK3KNdlD5MIzCG0vX&_nc_ohc=i39x4Gp91jsAb4Ou5J5&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAJKg59QS5EhKfDwQDeM6VEppyYlxQhhb4qQwPR2lOSYA&oe=661817D4',
-        name: 'Hoang Dinh Anh Tuan',
-        appliedOn: '2023-04-05',
-        email: 'jane.doe@example.com',
-        progress: 'Interview',
-        rating: 4,
-        match: 99,
-    },
-    {
-        imageUrl:
-            'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/434854114_717890963889367_1448504705424139842_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHC0zi9wXR7C8eYNEcnlvHxtEcDeuQU32O0RwN65BTfY52pMiJj1eUrUjNdxk32Neeo2YutK3KNdlD5MIzCG0vX&_nc_ohc=i39x4Gp91jsAb4Ou5J5&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAJKg59QS5EhKfDwQDeM6VEppyYlxQhhb4qQwPR2lOSYA&oe=661817D4',
-        name: 'Hoang Dinh Anh Tuan',
-        appliedOn: '2023-04-05',
-        email: 'jane.doe@example.com',
-        progress: 'Interview',
-        rating: 4,
-        match: 99,
-    },
-    {
+        id: '660d5ce5d5b60d0295d8eb6c',
         imageUrl:
             'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/434854114_717890963889367_1448504705424139842_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHC0zi9wXR7C8eYNEcnlvHxtEcDeuQU32O0RwN65BTfY52pMiJj1eUrUjNdxk32Neeo2YutK3KNdlD5MIzCG0vX&_nc_ohc=i39x4Gp91jsAb4Ou5J5&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAJKg59QS5EhKfDwQDeM6VEppyYlxQhhb4qQwPR2lOSYA&oe=661817D4',
         name: 'Hoang Dinh Anh Tuan',
@@ -121,6 +98,13 @@ const mockCandidates = [
 
 const Insights = () => {
     const candidates = mockCandidates;
+    const navigate = useNavigate();
+    const { domain, id: jobId } = useParams();
+
+    const handleViewDetail = (id: string) => () => {
+        navigate(`/app/organization/${domain}/job/${jobId}/candidate/${id}`);
+    };
+
     return (
         <div className="w-full text-sm">
             <InsightsBar />
@@ -202,7 +186,10 @@ const Insights = () => {
                             <TableBody>
                                 {candidates.map((candidate, index) => (
                                     <TableRow key={index}>
-                                        <TableCell className="hidden sm:table-cell">
+                                        <TableCell
+                                            onClick={handleViewDetail(candidate.id)}
+                                            className="hidden cursor-pointer sm:table-cell"
+                                        >
                                             <Image
                                                 alt={`${candidate.name}'s photo`}
                                                 className="aspect-square rounded-md object-cover"
@@ -211,7 +198,12 @@ const Insights = () => {
                                                 width="64"
                                             />
                                         </TableCell>
-                                        <TableCell className="font-medium">{candidate.name}</TableCell>
+                                        <TableCell
+                                            onClick={handleViewDetail(candidate.id)}
+                                            className="cursor-pointer font-medium"
+                                        >
+                                            {candidate.name}
+                                        </TableCell>
                                         <TableCell>{candidate.appliedOn}</TableCell>
                                         <TableCell>{candidate.email}</TableCell>
 
@@ -235,8 +227,8 @@ const Insights = () => {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                                                    <DropdownMenuItem>View detail</DropdownMenuItem>
+                                                    <DropdownMenuItem>Move to</DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
                                         </TableCell>
