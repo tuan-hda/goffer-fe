@@ -78,6 +78,23 @@ const routes: Record<string, RouteFunc> = {
             el: 'Finalize',
         },
     ],
+    '/app/organization/:domain/job/:id/applicant/:applicantId': (...args: any[]) => [
+        {
+            el: (
+                <>
+                    <TbBaguette className="text-lg" /> Jobs
+                </>
+            ),
+            to: `/app/organization/${args.at(0)}`,
+        },
+        {
+            el: args.at(2),
+            to: `/app/organization/${args.at(0)}/job/${args.at(1)}`,
+        },
+        {
+            el: `(Applicant) ${args.at(3)}`,
+        },
+    ],
 };
 
 const AppBreadcrumb = () => {
@@ -96,6 +113,7 @@ const AppBreadcrumb = () => {
                     'spotify',
                     '1234fadfe2fa4f23f2f33',
                     'Senior Software Engineer',
+                    'Hoang Dinh Anh Tuan',
                 ).map((el, index) => (
                     <BreadcrumbItem key={index}>
                         <Link to={el.to || '#'} className="flex gap-1">

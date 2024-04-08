@@ -102,7 +102,7 @@ const Insights = () => {
     const { domain, id: jobId } = useParams();
 
     const handleViewDetail = (id: string) => () => {
-        navigate(`/app/organization/${domain}/job/${jobId}/candidate/${id}`);
+        navigate(`/app/organization/${domain}/job/${jobId}/applicant/${id}`);
     };
 
     return (
