@@ -3,8 +3,12 @@ import { Badge } from '../ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import Comment from './Comment';
+import { useState } from 'react';
+import ReplyPanel from './ReplyPanel';
 
 const ConnectedWorkspace = () => {
+    const [isReplying, setReplying] = useState(false);
+
     return (
         <div className="max-w-[480px] flex-1">
             <Card className="bg-white/50 shadow-none">
@@ -72,11 +76,12 @@ const ConnectedWorkspace = () => {
                             </div>
                         </TabsContent>
                         <TabsContent value="comment">
-                            <Comment />
+                            <Comment setReplying={setReplying} />
                             <div className="my-4 w-full border-t border-[#E8E8E8]" />
-                            <Comment />
+                            <Comment setReplying={setReplying} />
                             <div className="my-4 w-full border-t border-[#E8E8E8]" />
-                            <Comment />
+                            <Comment setReplying={setReplying} />
+                            {isReplying && <ReplyPanel setReplying={setReplying} />}
                         </TabsContent>
                     </Tabs>
                 </CardContent>
