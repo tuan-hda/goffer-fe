@@ -32,7 +32,7 @@ const PlainPlate = ({ data }: PlainPlateProps) => {
     return (
         <>
             <div
-                className="rounded-xl border bg-white/50 px-5 py-4"
+                className="rounded-xl border bg-white/100 px-5 py-4"
                 dangerouslySetInnerHTML={{
                     __html: description,
                 }}

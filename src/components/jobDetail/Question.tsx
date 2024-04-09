@@ -15,7 +15,7 @@ type QuestionProps = {
 
 export default function Question({ editable = true }: QuestionProps) {
     return (
-        <Card className="relative bg-white/50 shadow-none">
+        <Card className="relative bg-white/100 shadow-none">
             {editable && <Checkbox className="absolute right-6 top-6" />}
 
             <CardHeader className="pb-3">

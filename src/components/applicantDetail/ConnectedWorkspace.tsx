@@ -3,13 +3,18 @@ import { Badge } from '../ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import Comment from './Comment';
+import { useState } from 'react';
+import ReplyPanel from './ReplyPanel';
+import Activities from './Activities';
 
 const ConnectedWorkspace = () => {
+    const [isReplying, setReplying] = useState(false);
+
     return (
         <div className="max-w-[480px] flex-1">
-            <Card className="bg-white/50 shadow-none">
+            <Card className="bg-white/100 shadow-none">
                 <CardHeader>
-                    <CardTitle className="text-base">Connected Workspace</CardTitle>
+                    <CardTitle className="text-base">Workspace</CardTitle>
                     <CardDescription>This is where you can collaborate with other interviewers.</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -20,6 +25,9 @@ const ConnectedWorkspace = () => {
                             </TabsTrigger>
                             <TabsTrigger value="comment" className="flex-1">
                                 Comment (6)
+                            </TabsTrigger>
+                            <TabsTrigger value="activity" className="flex-1">
+                                Activity (12)
                             </TabsTrigger>
                         </TabsList>
                         <TabsContent value="evaluation" className="flex flex-col space-y-2">
@@ -72,11 +80,16 @@ const ConnectedWorkspace = () => {
                             </div>
                         </TabsContent>
                         <TabsContent value="comment">
-                            <Comment />
+                            <Comment setReplying={setReplying} />
                             <div className="my-4 w-full border-t border-[#E8E8E8]" />
-                            <Comment />
+                            <Comment setReplying={setReplying} />
                             <div className="my-4 w-full border-t border-[#E8E8E8]" />
-                            <Comment />
+                            <Comment setReplying={setReplying} />
+                            {isReplying && <ReplyPanel setReplying={setReplying} />}
+                        </TabsContent>
+                        <TabsContent value="activity">
+                            <p className="text-text/80">This is applicant's activities</p>
+                            <Activities />
                         </TabsContent>
                     </Tabs>
                 </CardContent>

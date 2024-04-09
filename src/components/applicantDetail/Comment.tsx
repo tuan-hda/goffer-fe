@@ -2,7 +2,11 @@ import { Avatar } from '@nextui-org/react';
 import { MdOutlineEmojiEmotions } from 'react-icons/md';
 import { Badge } from '../ui/badge';
 
-const Comment = () => {
+type CommentProps = {
+    setReplying: (value: boolean) => void;
+};
+
+const Comment = ({ setReplying }: CommentProps) => {
     return (
         <div className="flex gap-3">
             <Avatar
@@ -26,7 +30,9 @@ const Comment = () => {
                         😈 <span className="ml-1">4</span>
                     </Badge>
                     <div className="mx-3 h-3 border-l" />
-                    <button className="text-xs font-medium">Reply</button>
+                    <button className="text-xs font-medium" onClick={() => setReplying(true)}>
+                        Reply
+                    </button>
                 </div>
             </div>
         </div>

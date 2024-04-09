@@ -21,7 +21,7 @@ const FeedbackQuestion = ({
     const [isEdit, setEdit] = useState(false);
 
     return (
-        <Card className={'group relative bg-white/50 pt-1 shadow-none'}>
+        <Card className={'group relative bg-white/100 pt-1 shadow-none'}>
             <CardContent className="mt-4">
                 {isEdit ? <Input value={'Your new custom feedback question'} /> : <p>{question}</p>}
                 <div

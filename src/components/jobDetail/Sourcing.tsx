@@ -38,7 +38,7 @@ const Sourcing = () => {
                 <div>
                     <p className="mb-3 text-xl">Filtering</p>
 
-                    <Card className="bg-white/50 shadow-none">
+                    <Card className="bg-white/100 shadow-none">
                         <CardHeader>
                             <CardDescription>Use filters to narrow down the list of candidates</CardDescription>
                         </CardHeader>

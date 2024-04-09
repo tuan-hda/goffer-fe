@@ -33,7 +33,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
         <div className="mt-5 flex gap-8">
             {!finished && (
                 <div className="h-fit max-w-[240px] flex-shrink-0">
-                    <Card className="border bg-white/70 text-sm shadow-none">
+                    <Card className="border bg-white/100 text-sm shadow-none">
                         <CardHeader>
                             <CardTitle>Finish Job Setup</CardTitle>
                             <CardDescription>

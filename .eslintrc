@@ -12,6 +12,9 @@
     "react": {
       "version": "detect"
     },
+    "import/core-modules": [
+      "styled-jsx/css"
+    ],
     "import/parsers": {
       "@typescript-eslint/parser": [
         ".ts",
