@@ -12,7 +12,7 @@ const ConnectedWorkspace = () => {
 
     return (
         <div className="max-w-[480px] flex-1">
-            <Card className="bg-white/50 shadow-none">
+            <Card className="bg-white/100 shadow-none">
                 <CardHeader>
                     <CardTitle className="text-base">Workspace</CardTitle>
                     <CardDescription>This is where you can collaborate with other interviewers.</CardDescription>

@@ -70,8 +70,7 @@ const Applicant = ({
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>More options</DropdownMenuLabel>
-                                <DropdownMenuItem>Activity</DropdownMenuItem>
-                                <DropdownMenuItem>Notes</DropdownMenuItem>
+                                <DropdownMenuItem>Reject candidate</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                         <Button variant="outline" size="icon">

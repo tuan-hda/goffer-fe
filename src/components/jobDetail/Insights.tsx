@@ -109,7 +109,7 @@ const Insights = () => {
         <div className="w-full text-sm">
             <InsightsBar />
             <div className="mt-10 text-sm">
-                <Card className="bg-white/50 shadow-none">
+                <Card className="bg-white/100 shadow-none">
                     <CardHeader className="flex flex-row gap-4">
                         <div>
                             <CardTitle className="text-base">Candidate</CardTitle>

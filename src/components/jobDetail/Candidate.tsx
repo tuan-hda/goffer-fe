@@ -42,7 +42,7 @@ const Candidate = ({
     phone,
 }: CandidateProps) => {
     return (
-        <Card className="relative w-full cursor-pointer border bg-white/50 pt-5 text-text shadow-none transition hover:shadow-small">
+        <Card className="relative w-full cursor-pointer border bg-white/100 pt-5 text-text shadow-none transition hover:shadow-small">
             <div className="absolute right-5 top-5 flex items-center gap-2">
                 {isPro && (
                     <Badge className="rounded-lg bg-gradient-to-r from-[#FAE4A7] to-[#E5D4FF] text-black shadow-none">

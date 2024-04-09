@@ -24,6 +24,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import Analytics from '@/components/jobDetail/Analytics';
 
 const JobDetail = () => {
     return (
@@ -122,7 +123,9 @@ const JobDetail = () => {
                     <Tab key="insights" title="Insights">
                         <Insights />
                     </Tab>
-                    <Tab key="analytics" title="Analytics"></Tab>
+                    <Tab key="analytics" title="Analytics">
+                        <Analytics />
+                    </Tab>
                 </Tabs>
             </div>
         </div>

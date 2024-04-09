@@ -36,7 +36,7 @@ const Overview = () => {
         <div className="flex w-full items-start gap-6 text-sm">
             <div className="max-w-[320px] flex-shrink-0">
                 <p className="text-xl">Basic</p>
-                <div className="mt-2 w-full rounded-xl border bg-white/50 p-5">
+                <div className="mt-2 w-full rounded-xl border bg-white/100 p-5">
                     <p className="text-sm">Slots</p>
                     <div className="mt-1 flex items-center gap-2">
                         <TbUser className="text-base" />
@@ -99,7 +99,7 @@ const Overview = () => {
 
             <div className="min-w-0 text-sm">
                 <p className="mb-2 text-xl">Share your opportunity</p>
-                <Card className="mb-6 flex flex-col items-center bg-white/50 p-6 shadow-none">
+                <Card className="mb-6 flex flex-col items-center bg-white/100 p-6 shadow-none">
                     <Image className="h-64" src="/map.png" />
                     <p className="mt-2 text-text/70">Share your opportunity to outside world</p>
                     <div className="mt-2 flex w-full justify-center gap-2">
