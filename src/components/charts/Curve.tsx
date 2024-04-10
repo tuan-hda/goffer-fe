@@ -10,7 +10,7 @@ import generateDateValue, { DateValue } from '@visx/mock-data/lib/generators/gen
 type CurveType = keyof typeof allCurves;
 
 const curveTypes = Object.keys(allCurves);
-const lineCount = 5;
+const lineCount = 1;
 const series = new Array(lineCount).fill(null).map((_, i) =>
     // vary each series value deterministically
     generateDateValue(25, /* seed= */ i / 72).sort((a: DateValue, b: DateValue) => a.date.getTime() - b.date.getTime()),
@@ -41,11 +41,9 @@ export default function Curve({ width, height, showControls = true }: CurveProps
     const svgHeight = showControls ? height - 40 : height;
     const lineHeight = svgHeight / lineCount;
 
-    console.log('series', series);
-
     // update scale output ranges
     xScale.range([0, width - 50]);
-    yScale.range([lineHeight - 2, 0]);
+    yScale.range([lineHeight - 50, 0]);
 
     return (
         <div className="visx-curves-demo">
@@ -71,7 +69,7 @@ export default function Curve({ width, height, showControls = true }: CurveProps
                         if (i === 1) markerStart = 'url(#marker-line)';
                         const markerEnd = even ? 'url(#marker-arrow)' : 'url(#marker-arrow-odd)';
                         return (
-                            <Group key={`lines-${i}`} top={i * lineHeight} left={13}>
+                            <Group key={`lines-${i}`} top={20} left={13}>
                                 {showPoints &&
                                     lineData.map((d, j) => (
                                         <circle

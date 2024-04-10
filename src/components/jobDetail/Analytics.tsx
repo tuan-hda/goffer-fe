@@ -1,9 +1,15 @@
+import { useRef, useState } from 'react';
 import { Curve } from '../charts';
 
 const Analytics = () => {
+    const [width, setWidth] = useState(0);
     return (
-        <div>
-            <Curve width={800} height={500} />
+        <div
+            ref={(node) => {
+                setWidth(node?.getBoundingClientRect().width || 0);
+            }}
+        >
+            <Curve width={width} height={400} />
         </div>
     );
 };
