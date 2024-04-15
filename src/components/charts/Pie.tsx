@@ -1,6 +1,7 @@
 import { Group } from '@visx/group';
 import Pie from '@visx/shape/lib/shapes/Pie';
 import Text from '@visx/text/lib/Text';
+import classNames from 'classnames';
 import { useState } from 'react';
 
 export type PieProps = {
@@ -32,10 +33,7 @@ const PieChart = ({ width, height }: PieProps) => {
                     data={data}
                     pieValue={(datum) => datum.value}
                     outerRadius={half}
-                    innerRadius={({ data }) => {
-                        const size = active && active.symbol === data.symbol ? 40 : 28;
-                        return half - size;
-                    }}
+                    innerRadius={half - 28}
                     padAngle={0.01}
                 >
                     {(pie) => {
@@ -46,7 +44,15 @@ const PieChart = ({ width, height }: PieProps) => {
                                     onMouseEnter={() => setActive(arc.data)}
                                     onMouseLeave={() => setActive(null)}
                                 >
-                                    <path d={pie.path(arc) || undefined} fill={arc.data.color}></path>
+                                    <path
+                                        d={pie.path(arc) || undefined}
+                                        className="transition-all"
+                                        fill={
+                                            active && active.symbol !== arc.data.symbol
+                                                ? `${arc.data.color}66`
+                                                : `${arc.data.color}ff`
+                                        }
+                                    ></path>
                                 </g>
                             );
                         });
