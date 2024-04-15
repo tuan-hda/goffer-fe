@@ -6,19 +6,11 @@ import JobDetail from '../job/JobDetail';
 import JobFilter, { SearchBar } from '../filter/JobFilter';
 import JobAppliedCard from '../job/JobAppliedCard';
 import AppliedDetail from '../job/AppliedDetail';
-import useIndividualJobs from '@/hooks/useIndividualJobs';
-import { useEffect, useState } from 'react';
+const jobs = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 const jobsApplied = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const JobDiscover = () => {
     const { jobDetailOpening, updateJobDetailOpening, tabKey } = useJobStore();
-    const { data } = useIndividualJobs();
-
-    const [jobs, setJobs] = useState(data);
-    useEffect(() => {
-        setJobs(data);
-        console.log('🚀 ~ useEffect ~ data:', data);
-    }, [data]);
 
     return (
         <div className="mx-auto flex max-w-screen-xl">
@@ -27,7 +19,11 @@ const JobDiscover = () => {
                     <div className="my-4 flex-1 space-y-4 px-8">
                         <SearchBar />
                         {tabKey === 'all' ? (
-                            <>{jobs?.results?.map((job, index) => <JobCard key={index} />)}</>
+                            <>
+                                {jobs.map((job, index) => (
+                                    <JobCard key={index} />
+                                ))}
+                            </>
                         ) : (
                             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                                 {jobsApplied.map((job, index) => (
