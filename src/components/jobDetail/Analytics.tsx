@@ -1,49 +1,125 @@
-import { useRef, useState } from 'react';
-import { Curve } from '../charts';
-import { Card, CardContent } from '../ui/card';
+import { useEffect, useRef, useState } from 'react';
+import { Curve, PieChart } from '../charts';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { DatePickerWithRange } from '../common';
+import { TbCheck, TbEye, TbForms } from 'react-icons/tb';
+import { Progress } from '../ui/progress';
 
 const Analytics = () => {
-    const [width, setWidth] = useState(0);
+    const [width, setWidth] = useState({
+        curve: 0,
+        pie: 0,
+    });
+    const ref = useRef<HTMLDivElement>(null);
+    const ref2 = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (ref.current && ref2.current) {
+                setWidth(() => ({
+                    pie: ref2.current!.offsetWidth - 32,
+                    curve: ref.current!.offsetWidth - 32,
+                }));
+            }
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <div>
-            <div className="mb-3 flex items-center gap-4">
-                <h2 className="text-xl">Conversion rate</h2>
-                <Select>
-                    <SelectTrigger className="ml-auto w-[180px]">
-                        <SelectValue placeholder="Time range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="this-month">This month</SelectItem>
-                        <SelectItem value="this-year">This year</SelectItem>
-                        <SelectItem value="last-month">Last month</SelectItem>
-                        <SelectItem value="last-year">Last year</SelectItem>
-                    </SelectContent>
-                </Select>
-                <Select>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Interval" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="day">Day</SelectItem>
-                        <SelectItem value="month">Month</SelectItem>
-                        <SelectItem value="quarter">Quarter</SelectItem>
-                        <SelectItem value="year">Year</SelectItem>
-                    </SelectContent>
-                </Select>
+            <h2 className="mb-4 text-xl text-black">Conversion rate</h2>
+            <div className="mb-4 flex items-center gap-4">
+                <div>
+                    <p className="mb-1 text-sm">Time range</p>
+                    <DatePickerWithRange />
+                </div>
+
+                <div>
+                    <p className="mb-1 text-sm">Granularity</p>
+                    <Select>
+                        <SelectTrigger className="w-[180px] bg-white">
+                            <SelectValue placeholder="Select interval" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="day">Day</SelectItem>
+                            <SelectItem value="month">Month</SelectItem>
+                            <SelectItem value="quarter">Quarter</SelectItem>
+                            <SelectItem value="year">Year</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
             </div>
-            <Card className="pt-6 shadow-none">
+            <Card ref={ref} className="px-2 py-6 shadow-none">
                 <CardContent>
-                    <div
-                        className="w-full"
-                        ref={(node) => {
-                            setWidth(node?.getBoundingClientRect().width || 0);
-                        }}
-                    >
-                        <Curve width={width} height={400} />
+                    <div className="w-full">
+                        <Curve width={width.curve} height={500}>
+                            <div className="mb-1 font-medium">
+                                <p className="text-base">Average rate</p>
+                                <p className="text-3xl font-normal">87%</p>
+                            </div>
+                        </Curve>
                     </div>
                 </CardContent>
             </Card>
+            <div className="mt-6 grid grid-cols-3 gap-6">
+                <Card className="shadow-none">
+                    <CardHeader className="pb-4">
+                        <CardTitle className="flex items-center gap-2">
+                            Views <TbEye className="text-lg" />
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-3xl">12</CardContent>
+                </Card>
+                <Card className="shadow-none">
+                    <CardHeader className="pb-4">
+                        <CardTitle className="flex items-center gap-2">
+                            Applied <TbForms className="text-lg" />
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-3xl">12</CardContent>
+                </Card>
+                <Card className="shadow-none">
+                    <CardHeader className="pb-4">
+                        <CardTitle className="flex items-center gap-2">
+                            Hired <TbCheck className="text-lg" />
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-3xl">12</CardContent>
+                </Card>
+            </div>
+            <div className="mt-6 grid grid-cols-2 gap-6">
+                <Card ref={ref2} className="shadow-none">
+                    <CardHeader className="pb-4">
+                        <CardTitle className="flex items-center gap-2">Sources breakdown</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex items-center justify-center text-3xl">
+                        <PieChart width={Math.min(width.pie, 300)} height={300} />
+                    </CardContent>
+                </Card>
+                <Card ref={ref2} className="shadow-none">
+                    <CardHeader className="pb-4">
+                        <CardTitle className="flex items-center gap-2">Conversion rate by source</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex items-center justify-center text-sm">
+                        <div className="w-full">
+                            <div className="flex justify-between">
+                                <p>Direct</p>
+                                <p>60%</p>
+                            </div>
+                            <Progress className="mt-1" value={60} />
+
+                            <div className="mt-4  flex justify-between">
+                                <p>LinkedIn</p>
+                                <p>20%</p>
+                            </div>
+                            <Progress className="mt-1" value={20} />
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 };

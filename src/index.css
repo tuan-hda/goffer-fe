@@ -95,6 +95,7 @@
 ::selection {
     color: #333;
     background: #c0d6ef;
+    --background: 0 0% 100%;
 }
 
 * {
