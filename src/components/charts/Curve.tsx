@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { extent, max } from '@visx/vendor/d3-array';
 import * as allCurves from '@visx/curve';
 import { Group } from '@visx/group';
@@ -35,7 +35,7 @@ export type CurveProps = {
     showControls?: boolean;
 };
 
-export default function Curve({ width, height, showControls = true }: CurveProps) {
+function Curve({ width, height, showControls = true }: CurveProps) {
     const [curveType, setCurveType] = useState<CurveType>('curveNatural');
     const [showPoints, setShowPoints] = useState<boolean>(true);
     const svgHeight = showControls ? height - 40 : height;
@@ -106,3 +106,10 @@ export default function Curve({ width, height, showControls = true }: CurveProps
         </div>
     );
 }
+
+const MemoizedCurve = memo(
+    Curve,
+    (props, nextProps) => props.width === nextProps.width && props.height === nextProps.height,
+);
+
+export default MemoizedCurve;
