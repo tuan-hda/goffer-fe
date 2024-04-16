@@ -90,6 +90,7 @@ const Analytics = () => {
                     <CardContent className="text-3xl">12</CardContent>
                 </Card>
             </div>
+
             <div className="mt-6 grid grid-cols-2 gap-6">
                 <Card ref={ref2} className="shadow-none">
                     <CardHeader className="pb-4">
@@ -116,6 +117,36 @@ const Analytics = () => {
                                 <p>20%</p>
                             </div>
                             <Progress className="mt-1" value={20} />
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-6">
+                <Card ref={ref2} className="shadow-none">
+                    <CardHeader className="pb-4">
+                        <CardTitle className="flex items-center gap-2">Average time to submit</CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-3xl">
+                        <p>48 seconds</p>
+                        <p className="mt-2 text-sm text-text">
+                            The average time for candidate to successfully submit is 48 seconds.
+                        </p>
+                    </CardContent>
+                </Card>
+                <Card ref={ref2} className="shadow-none">
+                    <CardHeader className="pb-4">
+                        <CardTitle className="flex items-center gap-2">Submit time by question</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex items-center justify-center text-sm">
+                        <div className="w-full">
+                            <p>Lorem ipsum time by question time by question time by question</p>
+                            <p className="font-semibold">58s</p>
+
+                            <p className="mt-3">
+                                Lorem ipsum time by question time by question by question by question time by question
+                            </p>
+                            <p className="font-semibold">58s</p>
                         </div>
                     </CardContent>
                 </Card>

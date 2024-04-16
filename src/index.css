@@ -98,10 +98,8 @@
     --background: 0 0% 100%;
 }
 
-* {
-    font-family: 'Geist Variable', sans-serif;
-    line-height: 1.5;
-    color: '#333';
+body {
+    color: #333;
 }
 
 .float-animation {

@@ -1,6 +1,5 @@
-import { Insights, Overview, Sourcing } from '@/components/jobDetail';
+import { Feedbacks, Insights, Overview, Sourcing } from '@/components/jobDetail';
 import { Button } from '@/components/ui/button';
-import { OrgDetailLayout, OrgLayout } from '@/layouts';
 import { Tab, Tabs } from '@nextui-org/react';
 import {
     TbArchive,
@@ -113,7 +112,7 @@ const JobDetail = () => {
                 </DropdownMenu>
             </div>
             <div className="-mx-[6px] w-[calc(100%+12px)]">
-                <Tabs aria-label="Options" className="-ml-2" variant="underlined">
+                <Tabs aria-label="Options" className="-ml-2 mt-2" variant="underlined">
                     <Tab key="overview" title="Overview">
                         <Overview />
                     </Tab>
@@ -125,6 +124,9 @@ const JobDetail = () => {
                     </Tab>
                     <Tab key="analytics" title="Analytics">
                         <Analytics />
+                    </Tab>
+                    <Tab key="feedbacks" title="Feedbacks">
+                        <Feedbacks />
                     </Tab>
                 </Tabs>
             </div>
