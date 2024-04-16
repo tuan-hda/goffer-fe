@@ -2,12 +2,16 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { MdEmojiFoodBeverage } from 'react-icons/md';
 import { Progress } from '../ui/progress';
+import { Feedback } from './Feedback';
+import { Button } from '../ui/button';
+import { TbSparkles } from 'react-icons/tb';
 
 const Feedbacks = () => {
     const [feedbacks, setFeedbacks] = useState<any[]>([]);
     // ['😡', '😔', '😐', '😊', '🥰']
     return (
         <div className="text-sm text-text">
+            <p className="text-xl">Overview</p>
             {(!feedbacks || feedbacks.length === 0) && 'You have no feedback.'}
             <div className="mt-6 grid grid-cols-3 gap-6">
                 <Card className="shadow-none">
@@ -16,7 +20,7 @@ const Feedbacks = () => {
                     </CardHeader>
                     <CardContent>
                         <p className="text-3xl">50</p>
-                        <p className="my-2 text-text/70">You're doing good, based on 100% respondents</p>
+                        <p className="my-2 text-text/90">You're doing good, based on 100% respondents</p>
                         <table className="-mx-2 border-separate border-spacing-x-2 border-spacing-y-1 text-base">
                             {[
                                 <div className="flex items-center gap-2 text-sm">
@@ -54,7 +58,7 @@ const Feedbacks = () => {
                         <p className="text-3xl">
                             🥰 <span className="text-3xl"> - 4.8/5</span>
                         </p>
-                        <p className="my-2 text-text/70">Based on 12 feedbacks</p>
+                        <p className="my-2 text-text/90">Based on 12 feedbacks</p>
                         <table className="-mx-2 border-separate border-spacing-x-2 border-spacing-y-1 text-base">
                             {['😡', '😔', '😐', '😊', '🥰'].reverse().map((emoji) => (
                                 <tr key={emoji}>
@@ -75,9 +79,26 @@ const Feedbacks = () => {
                     </CardHeader>
                     <CardContent>
                         <p className="text-3xl">100%</p>
-                        <p className="my-2 text-text/70">12 out of 12 of applied candidates</p>
+                        <p className="my-2 text-text/90">12 out of 12 of applied candidates</p>
                     </CardContent>
                 </Card>
+            </div>
+
+            <div className="mt-8 grid grid-cols-3 ">
+                <div className="col-span-2 flex items-center justify-between">
+                    <p className="text-xl">Applicant's feedbacks (6)</p>
+                    <Button variant="black" className="gap-2">
+                        <TbSparkles className="text-base" />
+                        Summary feedbacks
+                    </Button>
+                </div>
+                <div className="col-span-2 mt-4 space-y-5">
+                    <Feedback />
+                    <Feedback />
+                    <Feedback />
+                    <Feedback />
+                    <Feedback />
+                </div>
             </div>
         </div>
     );
