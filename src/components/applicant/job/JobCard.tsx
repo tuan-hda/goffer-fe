@@ -5,14 +5,21 @@ import { MdOutlinePayments } from 'react-icons/md';
 import { GiDuration } from 'react-icons/gi';
 import useJobStore from '@/stores/jobStore';
 import { Badge } from '@/components/ui/badge';
+import { IndividualJob } from '@/types/job.type';
 
-const JobCard = () => {
+interface Props {
+    data: IndividualJob;
+}
+
+const JobCard = ({ data }: Props) => {
+    const { org } = data;
+
     const [liked, setLiked] = useState(false);
     const toggleLike = () => setLiked(!liked);
-    const tags = ['TypeScript', 'Material UI', 'Redux', 'React', 'Axios', 'RESTfull API'];
-    const { updateJobDetailOpening, jobDetailOpening } = useJobStore();
+    const { updateJobDetailOpening, jobDetailOpening, setDetail } = useJobStore();
 
     const openDetail = () => {
+        setDetail(data);
         updateJobDetailOpening(!jobDetailOpening);
     };
 
@@ -25,9 +32,9 @@ const JobCard = () => {
             shadow="md"
         >
             <CardHeader className="gap-4 p-4">
-                <Avatar alt="Album cover" radius="md" size="lg" src="/lovers.png" />
+                <Avatar alt="Album cover" radius="md" size="lg" src={org.logo} />
                 <div className="flex flex-1 flex-col items-start">
-                    <p className="text-xl font-semibold text-default-700">Goffer</p>
+                    <p className="text-xl font-semibold text-default-700">{org.name}</p>
                     <p className="text-sm font-normal text-default-500">Posted 18h ago</p>
                 </div>
                 <Button
@@ -43,19 +50,19 @@ const JobCard = () => {
             <Divider />
             <CardBody className="gap-4 p-4 font-light">
                 <div>
-                    <p className="text-xl font-semibold text-default-700">React Front-End Development</p>
-                    <p>Ho Chi Minh City, Vietnam</p>
+                    <p className="text-xl font-semibold text-default-700">{data.title}</p>
+                    <p>{data.location}</p>
                 </div>
                 <div className="flex gap-x-8">
                     <Chip startContent={<TbBriefcase />} variant="light" className=" font-medium text-default-500">
-                        Hybrid
+                        {data.time}
                     </Chip>
                     <Chip
                         startContent={<MdOutlinePayments />}
                         variant="light"
                         className=" font-medium text-default-500"
                     >
-                        $30 - $40/hr
+                        `$${data.salaryFrom} - $${data.salaryTo}`
                     </Chip>
                     <Chip startContent={<GiDuration />} variant="light" className=" font-medium text-default-500">
                         Ongoing
@@ -63,9 +70,9 @@ const JobCard = () => {
                 </div>
             </CardBody>
             <CardFooter className="flex-wrap gap-2 p-4">
-                {tags.map((tag, index) => (
+                {data.skills?.map((skill, index) => (
                     <Badge key={index} variant="outline">
-                        {tag}
+                        {skill}
                     </Badge>
                 ))}
             </CardFooter>
