@@ -12,7 +12,7 @@ import { NewOrganization as NewOrganizationType } from '@/types/organization.typ
 
 const NewOrganization = () => {
     const [loading, setLoading] = useState(false);
-    const [step, setStep] = useState(4);
+    const [step, setStep] = useState(1);
     const [data, setData] = useState<NewOrganizationType>({
         name: '',
         logo: '',
