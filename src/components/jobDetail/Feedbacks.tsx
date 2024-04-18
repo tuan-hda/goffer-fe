@@ -84,20 +84,32 @@ const Feedbacks = () => {
                 </Card>
             </div>
 
-            <div className="mt-8 grid grid-cols-3 ">
-                <div className="col-span-2 flex items-center justify-between">
+            <div className="mt-10 grid grid-cols-3 gap-6 ">
+                <div className="col-span-2">
                     <p className="text-xl">Applicant's feedbacks (6)</p>
-                    <Button variant="black" className="gap-2">
-                        <TbSparkles className="text-base" />
-                        Summary feedbacks
-                    </Button>
+
+                    <div className="mt-2 space-y-5">
+                        <Feedback />
+                        <Feedback />
+                        <Feedback />
+                        <Feedback />
+                        <Feedback />
+                    </div>
                 </div>
-                <div className="col-span-2 mt-4 space-y-5">
-                    <Feedback />
-                    <Feedback />
-                    <Feedback />
-                    <Feedback />
-                    <Feedback />
+                <div>
+                    <div className="flex items-center gap-2">
+                        <p className="text-xl">Goffer Copilot</p>
+                        <TbSparkles className="text-2xl" />
+                    </div>
+                    <div className="mt-2 rounded-xl bg-black p-6 text-white">
+                        <p className="text-2xl font-light">Meet the Goffer Copilot.</p>
+                        <p className="mt-1 text-2xl font-light">Help you all the way in work.</p>
+
+                        <p className="mt-6">Start simple. Try summary all the feedbacks of this job.</p>
+                        <Button className="mt-4 w-full bg-white text-black hover:bg-gray-200 hover:text-black">
+                            Summary feedbacks
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

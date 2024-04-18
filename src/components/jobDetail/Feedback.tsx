@@ -25,12 +25,7 @@ export const Feedback = () => {
                 Customization is a great lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec
                 urna posuere lacinia. Donec auctor, nunc nec ultricies.
             </CardContent>
-            <CardFooter className="flex items-center gap-4 text-text/80">
-                <div className="flex items-center gap-1">
-                    <TbChartBubble /> Open
-                </div>
-                /<div>😔 Negative</div>
-            </CardFooter>
+            <CardFooter className="flex items-center gap-4 text-text/80">😔 Negative</CardFooter>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="absolute right-3 top-3">
