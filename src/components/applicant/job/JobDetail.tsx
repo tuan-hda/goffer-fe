@@ -8,17 +8,15 @@ import JobContent from './JobContent';
 import toast from 'react-hot-toast';
 import useJobStore from '@/stores/jobStore';
 
-const process = ['sourced', 'applied', 'manager screen', 'on-site', 'hired'];
-
 const JobDetail = () => {
     const { detail } = useJobStore();
 
     const navigate = useNavigate();
     const [saved, setSaved] = useState(false);
-    const jobLink = 'http://localhost:5173/job/029';
+    const jobLink = window.location.origin + '/job/' + detail?.id;
 
     const onApply = () => {
-        navigate('/job/029');
+        navigate('/job/' + detail?.id);
     };
 
     const copyToClipboard = () => {
