@@ -8,20 +8,19 @@ import JobAppliedCard from '../job/JobAppliedCard';
 import AppliedDetail from '../job/AppliedDetail';
 import useIndividualJobs from '@/hooks/useIndividualJobs';
 import { useEffect, useState } from 'react';
-import { Skeleton } from '@nextui-org/react';
 const jobsApplied = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const JobDiscover = () => {
-    const { jobDetailOpening, updateJobDetailOpening, tabKey, setDetail, detail } = useJobStore();
-    const { data, isLoading } = useIndividualJobs();
+    const { jobDetailOpening, updateJobDetailOpening, tabKey, setDetail } = useJobStore();
+    const { data } = useIndividualJobs();
 
     const [jobs, setJobs] = useState(data);
     useEffect(() => {
         setJobs(data);
-        console.log('🚀 ~ useEffect ~ data:', data);
     }, [data]);
 
     const onDetailOpen = (open: boolean) => {
+        console.log('🚀 ~ onDetailOpen ~ open:', open);
         updateJobDetailOpening(open);
         !open && setDetail(undefined);
     };
@@ -33,19 +32,11 @@ const JobDiscover = () => {
                     <div className="my-4 flex-1 space-y-4 px-8">
                         <SearchBar />
                         {tabKey === 'all' ? (
-                            <>
-                                {jobs?.results?.map((job) => (
-                                    <Skeleton isLoaded={!isLoading} className="rounded-md">
-                                        <JobCard key={job.id} data={job} />
-                                    </Skeleton>
-                                ))}
-                            </>
+                            <>{jobs?.results?.map((job) => <JobCard key={job.id} data={job} />)}</>
                         ) : (
                             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                                 {jobsApplied.map((job, index) => (
-                                    <Skeleton isLoaded={!isLoading} className="rounded-md">
-                                        <JobAppliedCard key={index} />
-                                    </Skeleton>
+                                    <JobAppliedCard key={index} />
                                 ))}
                             </div>
                         )}
@@ -56,9 +47,7 @@ const JobDiscover = () => {
                     </div>
                 </div>
                 <SheetContent className="min-w-[768px] rounded-s-2xl p-0 xl:min-w-[1024px]">
-                    <Skeleton isLoaded={!detail} className="rounded-md">
-                        {tabKey === 'all' ? <JobDetail /> : <AppliedDetail />}
-                    </Skeleton>
+                    {tabKey === 'all' ? <JobDetail /> : <AppliedDetail />}
                 </SheetContent>
             </Sheet>
         </div>

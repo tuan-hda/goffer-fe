@@ -1,13 +1,15 @@
 /* eslint-disable react/jsx-no-undef */
 import { Button, Progress } from '@nextui-org/react';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFilled } from 'react-icons/tb';
 import { LiaUndoAltSolid } from 'react-icons/lia';
 
-interface StartProps {
+interface IconButtonProps {
+    ariaLabel: string;
+    color?: 'default' | 'danger' | 'success' | 'warning';
+    onPress?: () => void;
     Icon: ReactNode;
-    color: 'default' | 'danger' | 'success' | 'warning';
-    event: () => void;
+    isDisabled?: boolean;
 }
 
 const formatTime = (time: number) => {
@@ -16,27 +18,38 @@ const formatTime = (time: number) => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 };
 
+const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonProps) => (
+    <Button
+        aria-label={ariaLabel}
+        onPress={onPress}
+        isIconOnly
+        variant="flat"
+        color={color}
+        radius="full"
+        isDisabled={isDisabled}
+    >
+        {Icon}
+    </Button>
+);
+
 const AudioRecorder = () => {
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
     const [stream, setStream] = useState<MediaStream | null>(null);
-    const [animationFrameId, setAnimationFrameId] = useState<number | null>(null);
     const [audioURL, setAudioURL] = useState<string | undefined>();
     const [leftTime, setLeftTime] = useState(0);
     const [rightTime, setRightTime] = useState(0);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
+    const frameRef = useRef<number | null>(null);
 
     useEffect(() => {
-        // Hàm làm sạch khi component unmount
         return () => {
             if (mediaRecorder && mediaRecorder.state === 'recording') {
                 mediaRecorder.stop();
             }
-            if (stream) {
-                stream.getTracks().forEach((track) => track.stop());
-            }
+            stream && stream.getTracks().forEach((track) => track.stop());
         };
     }, [mediaRecorder, stream]);
 
@@ -52,27 +65,27 @@ const AudioRecorder = () => {
             const dataArray = new Uint8Array(bufferLength);
             source.connect(analyzer);
 
-            const newMediaRecorder = new MediaRecorder(stream);
-            setMediaRecorder(newMediaRecorder);
+            const mediaRecorderInstance = new MediaRecorder(stream);
+            setMediaRecorder(mediaRecorderInstance);
             let audioChunks: Blob[] = [];
 
-            newMediaRecorder.ondataavailable = (event) => {
+            mediaRecorderInstance.ondataavailable = (event) => {
                 audioChunks.push(event.data);
             };
 
-            newMediaRecorder.start();
+            mediaRecorderInstance.start();
             setLeftTime(0);
             const intervalId = setInterval(() => {
                 setLeftTime((prevDuration) => prevDuration + 1);
             }, 1000);
             // Set a timer to stop recording after 3 minutes (180000 milliseconds)
             setTimeout(() => {
-                if (newMediaRecorder.state !== 'inactive') {
-                    newMediaRecorder.stop();
+                if (mediaRecorderInstance.state !== 'inactive') {
+                    mediaRecorderInstance.stop();
                 }
             }, 180000);
 
-            newMediaRecorder.onstop = () => {
+            mediaRecorderInstance.onstop = () => {
                 // Dừng mọi tracks của stream để không còn sử dụng microphone nữa.
                 stream.getTracks().forEach((track) => track.stop());
 
@@ -122,7 +135,7 @@ const AudioRecorder = () => {
                     // Thêm 1 pixel để tạo khoảng cách giữa các cột
                     x += barWidth + 2;
                 }
-                setAnimationFrameId(frameId);
+                frameRef.current = frameId;
             };
             draw();
         } catch (err) {
@@ -130,15 +143,14 @@ const AudioRecorder = () => {
         }
     };
 
-    const handleStart = () => {
-        // It's a good idea to ask the user before starting recording
-        setAudioURL(undefined);
-        setIsPlaying(false);
+    const handleStart = useCallback(() => {
+        audioURL && setAudioURL(undefined);
+        isPlaying && setIsPlaying(false);
         setIsRecording(true);
         startRecording();
-    };
+    }, [audioURL, isPlaying]);
 
-    const handleStop = () => {
+    const handleStop = useCallback(() => {
         if (mediaRecorder && mediaRecorder.state !== 'inactive') {
             mediaRecorder.stop();
             setLeftTime((currentLeftTime) => {
@@ -146,74 +158,62 @@ const AudioRecorder = () => {
                 return 0;
             });
             setMediaRecorder(null);
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId); // Hủy requestAnimationFrame sử dụng frame ID
-            }
+            frameRef.current && cancelAnimationFrame(frameRef.current);
             setIsRecording(false);
         }
-    };
+    }, [mediaRecorder]);
 
-    const handlePlay = () => {
+    const handlePlayPause = useCallback(() => {
         const audio = audioRef.current;
         if (audio) {
             if (isPlaying) {
                 audio.pause();
-                setIsPlaying(false);
             } else {
                 audio.play();
                 setIsPlaying(true);
-                console.log('first');
-                audio.ontimeupdate = () => {
-                    setLeftTime(audio.currentTime);
-                    console.log('playing');
-                };
+                audio.ontimeupdate = () => setLeftTime(audio.currentTime);
             }
+            setIsPlaying(!isPlaying);
         }
-    };
+    }, [isPlaying]);
 
-    const handleEnded = () => {
+    const handleReset = () => {
         setLeftTime(0);
-        setIsPlaying(false);
+        setRightTime(0);
+        handleStart();
     };
 
-    const starts: StartProps[] = [
-        {
-            Icon: <TbPlayerPlayFilled />,
-            event: handlePlay,
-            color: 'success',
-        },
-        {
-            Icon: <TbPlayerStopFilled />,
-            event: handleStop,
-            color: 'danger',
-        },
-        {
-            Icon: <TbMicrophone />,
-            event: handleStart,
-            color: 'default',
-        },
-        {
-            Icon: <TbPlayerPauseFilled />,
-            event: handlePlay,
-            color: 'warning',
-        },
-    ];
-
-    const getStart = () => {
-        if (audioURL) return isPlaying ? starts[3] : starts[0];
-        else if (isRecording) return starts[1];
-        else return starts[2];
-    };
+    const startProps: IconButtonProps = (() => {
+        if (isRecording) {
+            return { ariaLabel: 'stop', Icon: <TbPlayerStopFilled />, onPress: handleStop, color: 'danger' };
+        } else if (isPlaying) {
+            return {
+                ariaLabel: 'pause',
+                Icon: <TbPlayerPauseFilled />,
+                onPress: handlePlayPause,
+                color: 'warning',
+            };
+        } else if (audioURL) {
+            return { ariaLabel: 'play', Icon: <TbPlayerPlayFilled />, onPress: handlePlayPause, color: 'success' };
+        } else {
+            return { ariaLabel: 'recording', Icon: <TbMicrophone />, onPress: handleStart, color: 'default' };
+        }
+    })();
 
     return (
         <div className="relative flex items-center justify-around gap-6 rounded-full border bg-white p-4 shadow-none">
-            <Button onPress={getStart().event} isIconOnly variant="flat" color={getStart().color} radius="full">
-                {getStart().Icon}
-            </Button>
+            <IconButton {...startProps} />
+
             <p>{formatTime(leftTime)}</p>
 
             {audioURL ? (
-                <Progress className="h-2" color="success" size="md" value={(leftTime / rightTime) * 100} />
+                <Progress
+                    aria-label="progress"
+                    className="h-2"
+                    color="success"
+                    size="md"
+                    value={(leftTime / rightTime) * 100}
+                />
             ) : (
                 <canvas
                     ref={canvasRef}
@@ -224,14 +224,10 @@ const AudioRecorder = () => {
                 ></canvas>
             )}
 
-            <audio src={audioURL} ref={audioRef} className="hidden" controls onEnded={handleEnded}>
-                <track kind="captions" />
-            </audio>
+            <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
 
             <p>{audioURL ? formatTime(rightTime) : '3:00'}</p>
-            <Button isDisabled={!audioURL} onPress={handleStart} isIconOnly variant="flat" radius="full">
-                <LiaUndoAltSolid />
-            </Button>
+            <IconButton ariaLabel="Reset" onPress={handleReset} Icon={<LiaUndoAltSolid />} isDisabled={!audioURL} />
         </div>
     );
 };
