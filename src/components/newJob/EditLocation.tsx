@@ -32,7 +32,7 @@ const EditLocation = () => {
                     <Button
                         type="button"
                         variant="outline"
-                        className="flex w-full flex-1 items-center justify-between rounded-lg text-left"
+                        className="flex w-full flex-1 items-center justify-between rounded-xl text-left"
                     >
                         <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
                             {data.location}
@@ -40,7 +40,7 @@ const EditLocation = () => {
                         <TbLocation className="flex-shrink-0 text-lg" />
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent className="rounded-lg text-sm">
+                <PopoverContent className="rounded-xl text-sm">
                     <RadioGroup
                         value={isAnywhere ? 'Work from anywhere' : 'Custom'}
                         onValueChange={handleValueChange}

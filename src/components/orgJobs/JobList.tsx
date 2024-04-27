@@ -1,34 +1,38 @@
+import useListOrganizationJobs from '@/hooks/useListOrganizationJobs';
 import JobItem from './JobItem';
 
-const mock = {
-    skills: ['2D Animator'],
-    tools: ['Figma'],
-    title: 'Senior Software Engineer',
-    description: 'abc',
-    location: 'Working from anywhere',
-    salaryFrom: '3000',
-    experience: '1-3 years',
-    slots: 3,
-    time: 'Working any time',
-    workingHours: 40,
-    orgId: '6608212874101000601bb0cb',
-    id: '660d5ce5d5b60d0295d8eb6c',
-    status: 'unpublished',
-};
+// const mock = {
+//     skills: ['2D Animator'],
+//     tools: ['Figma'],
+//     title: 'Senior Software Engineer',
+//     description: 'abc',
+//     location: 'Working from anywhere',
+//     salaryFrom: '3000',
+//     experience: '1-3 years',
+//     slots: 3,
+//     time: 'Working any time',
+//     workingHours: 40,
+//     orgId: '6608212874101000601bb0cb',
+//     id: '660d5ce5d5b60d0295d8eb6c',
+//     status: 'unpublished',
+// };
 
 const JobList = () => {
-    const jobs = [1];
+    const { data: jobs } = useListOrganizationJobs();
 
     return (
         <div className="flex h-full w-full text-text">
-            {jobs && jobs.length > 0 ? (
+            {jobs && jobs.results.length > 0 ? (
                 <div className="grid w-full grid-cols-2 gap-6">
-                    <JobItem data={mock} />
+                    {jobs.results.map((job) => (
+                        <JobItem key={job.id} data={job} />
+                    ))}
+                    {/* <JobItem data={mock} />
                     <JobItem data={{ ...mock, status: 'published' }} />
                     <JobItem data={{ ...mock, status: 'closed' }} />
                     <JobItem data={{ ...mock, status: 'expired' }} />
                     <JobItem data={mock} />
-                    <JobItem data={mock} />
+                    <JobItem data={mock} /> */}
                 </div>
             ) : (
                 <div className="m-auto space-y-6 text-center">

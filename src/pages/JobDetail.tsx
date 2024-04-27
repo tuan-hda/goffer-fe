@@ -69,7 +69,7 @@ const JobDetail = () => {
                     <DropdownMenuTrigger asChild>
                         <Button
                             variant="outline"
-                            className="gap-2 rounded-lg border-primary/50 bg-primary/10 text-orange-600 shadow-none hover:bg-primary/20 hover:text-orange-600"
+                            className="gap-2 border-primary/50 bg-primary/10 text-orange-600 shadow-none hover:bg-primary/20 hover:text-orange-600"
                         >
                             <TbEyeOff />
                             <span>Unpublished</span>

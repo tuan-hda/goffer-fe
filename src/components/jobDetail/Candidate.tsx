@@ -88,10 +88,10 @@ const Candidate = ({
                         </div>
 
                         <div className="mt-4 flex gap-4">
-                            <Button className="w-64 gap-2 rounded-lg" variant="black">
+                            <Button className="w-64 gap-2" variant="black">
                                 Get in touch <TbHeartHandshake className="text-lg" />
                             </Button>
-                            <Button size="icon" className="rounded-lg" variant="outline">
+                            <Button size="icon" variant="outline">
                                 <TbBookmark />
                             </Button>
                         </div>
