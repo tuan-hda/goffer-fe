@@ -3,6 +3,8 @@ import { Button, Progress } from '@nextui-org/react';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFilled } from 'react-icons/tb';
 import { LiaUndoAltSolid } from 'react-icons/lia';
+import { Question } from '@/types/question.type';
+import moment from 'moment';
 
 interface IconButtonProps {
     ariaLabel: string;
@@ -12,10 +14,11 @@ interface IconButtonProps {
     isDisabled?: boolean;
 }
 
-const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+const formatTime = (x: number) => {
+    var d = moment.duration(x, 'milliseconds');
+    var minutes = Math.floor(d.asMinutes());
+    var seconds = Math.floor(d.asSeconds()) % 60;
+    return `${minutes < 10 ? minutes : `0${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 
 const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonProps) => (
@@ -32,7 +35,11 @@ const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonP
     </Button>
 );
 
-const AudioRecorder = () => {
+interface Props {
+    data: Question;
+}
+
+const AudioRecorder = ({ data }: Props) => {
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
@@ -76,14 +83,14 @@ const AudioRecorder = () => {
             mediaRecorderInstance.start();
             setLeftTime(0);
             const intervalId = setInterval(() => {
-                setLeftTime((prevDuration) => prevDuration + 1);
+                setLeftTime((prevDuration) => prevDuration + 1000);
             }, 1000);
             // Set a timer to stop recording after 3 minutes (180000 milliseconds)
             setTimeout(() => {
                 if (mediaRecorderInstance.state !== 'inactive') {
                     mediaRecorderInstance.stop();
                 }
-            }, 180000);
+            }, data.constraint);
 
             mediaRecorderInstance.onstop = () => {
                 // Dừng mọi tracks của stream để không còn sử dụng microphone nữa.
@@ -117,7 +124,7 @@ const AudioRecorder = () => {
                 canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
                 // Định nghĩa chiều rộng của mỗi cột (bin) và khoảng cách giữa các cột
-                const barWidth = (canvas.width / bufferLength) * 6;
+                const barWidth = (canvas.width / bufferLength) * 4;
                 const maxBarHeight = canvas.height * 2;
                 let barHeight;
                 let x = 0;
@@ -133,7 +140,7 @@ const AudioRecorder = () => {
                     canvasContext.fillRect(x, (canvas.height - barHeight) / 2, barWidth, barHeight);
 
                     // Thêm 1 pixel để tạo khoảng cách giữa các cột
-                    x += barWidth + 2;
+                    x += barWidth + 1;
                 }
                 frameRef.current = frameId;
             };
@@ -171,7 +178,7 @@ const AudioRecorder = () => {
             } else {
                 audio.play();
                 setIsPlaying(true);
-                audio.ontimeupdate = () => setLeftTime(audio.currentTime);
+                audio.ontimeupdate = () => setLeftTime(audio.currentTime * 1000);
             }
             setIsPlaying(!isPlaying);
         }
@@ -226,7 +233,7 @@ const AudioRecorder = () => {
 
             <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
 
-            <p>{audioURL ? formatTime(rightTime) : '3:00'}</p>
+            <p>{audioURL ? formatTime(rightTime) : formatTime(data.constraint)}</p>
             <IconButton ariaLabel="Reset" onPress={handleReset} Icon={<LiaUndoAltSolid />} isDisabled={!audioURL} />
         </div>
     );
