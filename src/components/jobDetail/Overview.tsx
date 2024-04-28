@@ -1,30 +1,21 @@
-import { TbClock, TbCoin, TbLoader, TbSchool, TbUser } from 'react-icons/tb';
+import { TbClock, TbCoin, TbSchool, TbUser } from 'react-icons/tb';
 import { Badge } from '../ui/badge';
 import { Avatar, Image } from '@nextui-org/react';
 import { PlainPlate } from '../common';
 import { Card } from '../ui/card';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { formatUTCDate } from '@/utils/time';
 import toast from 'react-hot-toast';
 
 const Overview = () => {
     const { id } = useParams();
-    const { data: job, isLoading } = useGetOrganizationJob(id);
-    const navigate = useNavigate();
-
-    if (isLoading) {
-        return (
-            <div className="flex h-[calc(100vh-240px)] w-full items-center justify-center">
-                <TbLoader className="animate-spin text-xl" />
-            </div>
-        );
-    }
+    const { data: job } = useGetOrganizationJob(id);
 
     if (!job) {
-        return navigate('/not-found');
+        return null;
     }
 
     const copy = () => {
@@ -100,7 +91,7 @@ const Overview = () => {
                     <Image className="h-64" src="/map.png" />
                     <p className="mt-2 text-text/70">Share your opportunity to outside world</p>
                     <div className="mt-2 flex w-full justify-center gap-2">
-                        <Input className="max-w-xs flex-1" value={job.publicLink} />
+                        <Input className="max-w-xs flex-1" onChange={() => {}} value={job.publicLink} />
                         <Button variant="black" onClick={copy}>
                             Copy
                         </Button>

@@ -1,4 +1,4 @@
-import { Feedbacks, Insights, Overview, Sourcing } from '@/components/jobDetail';
+import { Feedbacks, Insights, Overview, SendInviteModal, Sourcing } from '@/components/jobDetail';
 import { Button } from '@/components/ui/button';
 import { Tab, Tabs } from '@nextui-org/react';
 import {
@@ -10,9 +10,9 @@ import {
     TbEye,
     TbEyeOff,
     TbGlobe,
+    TbLoader,
     TbPencil,
     TbScooter,
-    TbSend,
     TbShare,
 } from 'react-icons/tb';
 import {
@@ -24,19 +24,37 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Analytics from '@/components/jobDetail/Analytics';
+import { useNavigate, useParams } from 'react-router-dom';
+import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 
 const JobDetail = () => {
+    const { id } = useParams();
+    const { data: job, isLoading } = useGetOrganizationJob(id);
+    const navigate = useNavigate();
+
+    if (isLoading) {
+        return (
+            <div className="flex h-[calc(100vh-240px)] w-full items-center justify-center">
+                <TbLoader className="animate-spin text-xl" />
+            </div>
+        );
+    }
+
+    if (!job) {
+        return navigate('/not-found');
+    }
+
     return (
         <div className="w-full">
             <div className="flex items-center gap-4 text-3xl">
-                <h1>Senior Software Engineer</h1>
+                <h1>{job?.title}</h1>
                 <DropdownMenu>
                     <DropdownMenuTrigger className="ml-auto">
                         <TbDots className="text-base" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuItem>
-                            <TbSend className="mr-2 text-base" /> Send invite
+                        <DropdownMenuItem asChild>
+                            <SendInviteModal />
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <TbEye className="mr-2 text-base" /> View preview
@@ -71,8 +89,30 @@ const JobDetail = () => {
                             variant="outline"
                             className="gap-2 border-primary/50 bg-primary/10 text-orange-600 shadow-none hover:bg-primary/20 hover:text-orange-600"
                         >
-                            <TbEyeOff />
-                            <span>Unpublished</span>
+                            {job.status === 'published' && (
+                                <>
+                                    <TbGlobe />
+                                    <span>Published</span>
+                                </>
+                            )}
+                            {job.status === 'unpublished' && (
+                                <>
+                                    <TbEyeOff />
+                                    <span>Unpublished</span>
+                                </>
+                            )}
+                            {job.status === 'closed' && (
+                                <>
+                                    <TbArchive />
+                                    <span>Closed</span>
+                                </>
+                            )}
+                            {job.status === 'expired' && (
+                                <>
+                                    <TbClockCancel className="text-xl" />
+                                    <span>Expired</span>
+                                </>
+                            )}
                             <TbChevronDown />
                         </Button>
                     </DropdownMenuTrigger>
@@ -86,7 +126,6 @@ const JobDetail = () => {
                         </DropdownMenuItem>
                         <DropdownMenuItem className="gap-3">
                             <TbEyeOff className="text-xl" />
-
                             <div className="min-w-0">
                                 <p className="font-semibold">Unpublished</p>
                                 <p className="text-text/70">Currently hidden, available after you finish all steps.</p>
