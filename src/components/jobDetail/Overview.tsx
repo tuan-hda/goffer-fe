@@ -25,7 +25,7 @@ const Overview = () => {
 
     return (
         <div className="flex w-full items-start gap-6 text-sm">
-            <div className="max-w-[320px] flex-shrink-0">
+            <div className="w-full max-w-[320px] flex-shrink-0">
                 <p className="text-xl">Basic</p>
                 <div className="mt-2 w-full rounded-xl border bg-white/100 p-5">
                     <p className="text-sm">Slots</p>
@@ -56,6 +56,16 @@ const Overview = () => {
                     <div className="mt-1 flex items-center gap-2">
                         <TbSchool className="text-base" />
                         <span>{job.experience}</span>
+                    </div>
+                    <p className="mt-5 text-sm">Working location</p>
+                    <div className="mt-1 flex items-center gap-2">
+                        <TbSchool className="text-base" />
+                        <span>{job.location}</span>
+                    </div>
+                    <p className="mt-5 text-sm">Working time</p>
+                    <div className="mt-1 flex items-center gap-2">
+                        <TbSchool className="text-base" />
+                        <span>{job.time}</span>
                     </div>
                     <p className="mt-5 text-sm">Skills</p>
                     <div className="mt-1 flex flex-wrap items-center gap-2">
@@ -99,7 +109,9 @@ const Overview = () => {
                 </Card>
 
                 <p className="mb-2 text-xl">Description</p>
-                <PlainPlate data={JSON.parse(job.description)} />
+                <div className="rounded-xl border bg-white/100 px-5 py-4">
+                    <PlainPlate data={JSON.parse(job.description)} />
+                </div>
             </div>
         </div>
     );

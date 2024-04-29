@@ -109,9 +109,7 @@ const AppBreadcrumb = () => {
     const { domain, id } = useParams();
     const { data: job } = useGetOrganizationJob(id);
 
-    if (!matches) return null;
-
-    const renderFn = routes[matches.at(0)?.route.path as keyof typeof routes];
+    const renderFn = matches && matches.length > 0 && routes[matches.at(0)?.route.path as keyof typeof routes];
 
     useEffect(() => {
         const res = [];
@@ -124,6 +122,8 @@ const AppBreadcrumb = () => {
         }
         setArgs(res);
     }, [domain, id, job]);
+
+    if (!matches || !renderFn) return null;
 
     return (
         <Breadcrumbs>

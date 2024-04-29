@@ -5,4 +5,3 @@ export { default as Question } from './Question';
 export { default as FeedbackQuestion } from './FeedbackQuestion';
 export { default as Analytics } from './Analytics';
 export { default as Feedbacks } from './Feedbacks';
-export { default as SendInviteModal } from './SendInviteModal';

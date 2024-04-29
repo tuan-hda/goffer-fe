@@ -1,4 +1,4 @@
-import { Feedbacks, Insights, Overview, SendInviteModal, Sourcing } from '@/components/jobDetail';
+import { Feedbacks, Insights, Overview, Sourcing } from '@/components/jobDetail';
 import { Button } from '@/components/ui/button';
 import { Tab, Tabs } from '@nextui-org/react';
 import {
@@ -13,6 +13,7 @@ import {
     TbLoader,
     TbPencil,
     TbScooter,
+    TbSend,
     TbShare,
 } from 'react-icons/tb';
 import {
@@ -24,8 +25,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Analytics from '@/components/jobDetail/Analytics';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
+
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const JobDetail = () => {
     const { id } = useParams();
@@ -41,36 +46,61 @@ const JobDetail = () => {
     }
 
     if (!job) {
-        return navigate('/not-found');
+        navigate('/not-found');
+        return null;
     }
 
     return (
         <div className="w-full">
             <div className="flex items-center gap-4 text-3xl">
                 <h1>{job?.title}</h1>
-                <DropdownMenu>
-                    <DropdownMenuTrigger className="ml-auto">
-                        <TbDots className="text-base" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem asChild>
-                            <SendInviteModal />
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <TbEye className="mr-2 text-base" /> View preview
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <TbPencil className="mr-2 text-base" /> Edit basic
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <TbScooter className="mr-2 text-base" /> Edit questions
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <TbCloudStorm className="mr-2 text-base" /> Custom feedback
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <Dialog>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="-mr-2 ml-auto p-2">
+                            <TbDots className="text-base" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuItem asChild className="p-0">
+                                <DialogTrigger asChild>
+                                    <button
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="flex w-full items-center rounded px-2 py-[6px] text-sm transition duration-150 hover:bg-[#F5F5F5]"
+                                    >
+                                        <TbSend className="mr-2 text-base" /> Send invite
+                                    </button>
+                                </DialogTrigger>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link to={`preview`} className="flex items-center">
+                                    <TbEye className="mr-2 text-base" /> View preview
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <TbPencil className="mr-2 text-base" /> Edit basic
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <TbScooter className="mr-2 text-base" /> Edit questions
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <TbCloudStorm className="mr-2 text-base" /> Custom feedback
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DialogContent className="!rounded-2xl">
+                        <DialogHeader>
+                            <DialogTitle>Invite this job for someone</DialogTitle>
+                        </DialogHeader>
+                        <div className="flex gap-2">
+                            <Input className="font-normal" placeholder="Enter email" />
+                            <Button variant="black">Send invite</Button>
+                        </div>
+                        <Textarea placeholder="Your message here (optional)" />
+                        <div className="flex min-h-[140px] items-center justify-center text-sm">
+                            <p>You have not invited anyone yet.</p>
+                        </div>
+                    </DialogContent>
+                </Dialog>
 
                 <TooltipProvider>
                     <Tooltip>
