@@ -5,6 +5,7 @@ import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFill
 import { LiaUndoAltSolid } from 'react-icons/lia';
 import { Question } from '@/types/question.type';
 import moment from 'moment';
+import useJobStore from '@/stores/jobStore';
 
 interface IconButtonProps {
     ariaLabel: string;
@@ -15,7 +16,7 @@ interface IconButtonProps {
 }
 
 const formatTime = (x: number) => {
-    var d = moment.duration(x, 'milliseconds');
+    var d = moment.duration(x, 'seconds');
     var minutes = Math.floor(d.asMinutes());
     var seconds = Math.floor(d.asSeconds()) % 60;
     return `${minutes < 10 ? minutes : `0${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
@@ -50,6 +51,41 @@ const AudioRecorder = ({ data }: Props) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
     const frameRef = useRef<number | null>(null);
+    const { answers, updateAnswer, removeAnswer } = useJobStore();
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        const answer = answers.find((a) => a.questionId === data.id);
+
+        const handleError = () => {
+            console.error('Error loading the audio file.');
+            setAudioURL(undefined);
+            removeAnswer(data.id);
+        };
+
+        if (audio && answer) {
+            audio.src = answer.audioUrl;
+            setAudioURL(answer.audioUrl);
+            setRightTime(answer.duration);
+            audio.addEventListener('error', handleError);
+        } else {
+            setAudioURL(undefined);
+            setRightTime(0);
+        }
+
+        return () => {
+            audio && audio.removeEventListener('error', handleError);
+        };
+    }, [answers, data.id]);
+
+    useEffect(() => {
+        audioURL &&
+            updateAnswer({
+                questionId: data.id,
+                audioUrl: audioURL,
+                duration: rightTime,
+            });
+    }, [audioURL]);
 
     useEffect(() => {
         return () => {
@@ -83,20 +119,20 @@ const AudioRecorder = ({ data }: Props) => {
             mediaRecorderInstance.start();
             setLeftTime(0);
             const intervalId = setInterval(() => {
-                setLeftTime((prevDuration) => prevDuration + 1000);
+                setLeftTime((prevDuration) => prevDuration + 1);
             }, 1000);
             // Set a timer to stop recording after 3 minutes (180000 milliseconds)
             setTimeout(() => {
                 if (mediaRecorderInstance.state !== 'inactive') {
                     mediaRecorderInstance.stop();
                 }
-            }, data.constraint);
+            }, data.constraint * 1000);
 
             mediaRecorderInstance.onstop = () => {
                 // Dừng mọi tracks của stream để không còn sử dụng microphone nữa.
                 stream.getTracks().forEach((track) => track.stop());
 
-                // Xử lý các phần tử audio như trước đây.
+                // Xử lý các phần tử audio.
                 const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 setAudioURL(URL.createObjectURL(audioBlob));
                 clearInterval(intervalId);
@@ -151,7 +187,10 @@ const AudioRecorder = ({ data }: Props) => {
     };
 
     const handleStart = useCallback(() => {
-        audioURL && setAudioURL(undefined);
+        if (audioURL) {
+            URL.revokeObjectURL(audioURL);
+            setAudioURL(undefined);
+        }
         isPlaying && setIsPlaying(false);
         setIsRecording(true);
         startRecording();
@@ -177,14 +216,14 @@ const AudioRecorder = ({ data }: Props) => {
                 audio.pause();
             } else {
                 audio.play();
-                setIsPlaying(true);
-                audio.ontimeupdate = () => setLeftTime(audio.currentTime * 1000);
+                audio.ontimeupdate = () => setLeftTime(audio.currentTime);
             }
             setIsPlaying(!isPlaying);
         }
     }, [isPlaying]);
 
     const handleReset = () => {
+        if (isPlaying && audioRef.current) audioRef.current.pause();
         setLeftTime(0);
         setRightTime(0);
         handleStart();
@@ -222,18 +261,12 @@ const AudioRecorder = ({ data }: Props) => {
                     value={(leftTime / rightTime) * 100}
                 />
             ) : (
-                <canvas
-                    ref={canvasRef}
-                    id="visualizer"
-                    className="hidden flex-1 md:block"
-                    width={400}
-                    height={40}
-                ></canvas>
+                <canvas ref={canvasRef} id="visualizer" className="hidden flex-1 md:block" width={400} height={40} />
             )}
 
             <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
 
-            <p>{audioURL ? formatTime(rightTime) : formatTime(data.constraint)}</p>
+            <p>{formatTime(audioURL ? rightTime : data.constraint)}</p>
             <IconButton ariaLabel="Reset" onPress={handleReset} Icon={<LiaUndoAltSolid />} isDisabled={!audioURL} />
         </div>
     );

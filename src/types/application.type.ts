@@ -27,5 +27,6 @@ export type FormProps = z.infer<typeof formSchema>;
 
 export type AnswerProps = {
     questionId: string;
-    answer: Blob;
+    audioUrl: string;
+    duration: number;
 };

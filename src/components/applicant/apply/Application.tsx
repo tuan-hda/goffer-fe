@@ -19,7 +19,7 @@ const Application = () => {
     const { id } = useParams();
 
     const { data } = useJobQuestions(id);
-    const { detail, setInfo: setApplicationInfo } = useJobStore();
+    const { detail, applicationInfo, setInfo, answers } = useJobStore();
 
     const [stepNum, setStepNum] = useState(0);
     const [questionData, setQuestionData] = useState<List<Question>>({
@@ -69,17 +69,21 @@ const Application = () => {
     }, [location.hash, navigate]);
 
     function onSubmit(values: FormProps) {
-        setApplicationInfo(values);
+        setInfo(values);
         if (stepNum < totalSteps) {
             navigate(`#step-${stepNum + 1}`);
         }
     }
 
     const handleNextStep = async () => {
-        // if (stepNum === 0) await form.handleSubmit(onSubmit)();
-        // else if (stepNum < totalSteps) {
-        navigate(`#step-${stepNum + 1}`);
-        // }
+        if (stepNum === 0) await form.handleSubmit(onSubmit)();
+        else if (stepNum < totalSteps) {
+            const questionId = questionData.results[stepNum - 1].id;
+            const answer = answers.find((a) => a.questionId === questionId);
+            if (answer && answer.duration >= 2) navigate(`#step-${stepNum + 1}`);
+        } else {
+            console.log('success', applicationInfo, answers);
+        }
     };
 
     return (

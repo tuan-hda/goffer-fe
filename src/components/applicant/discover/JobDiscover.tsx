@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 const jobsApplied = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const JobDiscover = () => {
-    const { jobDetailOpening, updateJobDetailOpening, tabKey, setDetail } = useJobStore();
+    const { jobDetailOpening, updateJobDetailOpening, tabKey, resetDetail } = useJobStore();
     const { data } = useIndividualJobs();
 
     const [jobs, setJobs] = useState(data);
@@ -20,9 +20,8 @@ const JobDiscover = () => {
     }, [data]);
 
     const onDetailOpen = (open: boolean) => {
-        console.log('🚀 ~ onDetailOpen ~ open:', open);
         updateJobDetailOpening(open);
-        !open && setDetail(undefined);
+        !open && resetDetail();
     };
 
     return (

@@ -18,6 +18,8 @@ type Action = {
     setDetail: (_: State['detail']) => void;
     setInfo: (_: State['applicationInfo']) => void;
     updateAnswer: (_: AnswerProps) => void;
+    removeAnswer: (_: string) => void;
+    resetDetail: () => void;
 };
 
 // Create your store, which includes both state and (optionally) actions
@@ -39,11 +41,24 @@ const useJobStore = create<State & Action>()(
                         const index = state.answers.findIndex((a) => a.questionId === answer.questionId);
                         if (index !== -1) {
                             state.answers[index] = answer;
+                            console.log('🚀 ~ set ~ update answer:', answer);
                         } else {
                             state.answers.push(answer);
+                            console.log('🚀 ~ set ~ add answer:', answer);
                         }
                     }),
+                resetDetail: () =>
+                    set(() => ({
+                        detail: undefined,
+                        applicationInfo: undefined,
+                        answers: [],
+                    })),
+                removeAnswer: (id) =>
+                    set((state) => {
+                        state.answers = state.answers.filter((answer) => answer.questionId !== id);
+                    }),
             }),
+
             {
                 name: 'job-store',
             },
