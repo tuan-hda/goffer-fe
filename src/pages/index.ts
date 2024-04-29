@@ -20,3 +20,4 @@ export { default as Questions } from './Questions';
 export { default as CustomFeedback } from './CustomFeedback';
 export { default as Finalize } from './Finalize';
 export { default as ApplicantDetail } from './ApplicantDetail';
+export { default as PreviewJob } from './PreviewJob';

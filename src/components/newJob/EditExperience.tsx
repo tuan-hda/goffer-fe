@@ -4,8 +4,8 @@ import useNewJobStore from '@/stores/newJob';
 
 const experienceList = [
     {
-        value: '<1 year',
-        label: '<1 year',
+        value: '0-1 year',
+        label: '0-1 year',
     },
     {
         value: '1-2 years',

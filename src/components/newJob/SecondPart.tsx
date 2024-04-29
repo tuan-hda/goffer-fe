@@ -15,7 +15,7 @@ const SecondPart = () => {
     };
 
     return (
-        <div className="mt-8 h-fit w-full rounded-xl bg-white/80 p-8 text-sm shadow-small">
+        <div className="mt-8 h-fit w-full rounded-xl bg-white/70 p-8 text-sm shadow-small">
             <div className="flex justify-between gap-4">
                 <div className="flex-1">
                     <p className="mb-1">Experience</p>
@@ -35,7 +35,7 @@ const SecondPart = () => {
                 emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">no results found.</p>
                 }
-                className="mt-1 rounded-lg"
+                className="mt-1"
             />
 
             <div className="mt-4 flex items-center justify-between">
@@ -51,7 +51,7 @@ const SecondPart = () => {
                 emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">no results found.</p>
                 }
-                className="mt-1 rounded-lg"
+                className="mt-1"
             />
         </div>
     );

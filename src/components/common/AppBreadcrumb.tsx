@@ -1,6 +1,8 @@
+import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
+import { useEffect, useState } from 'react';
 import { TbBaguette } from 'react-icons/tb';
-import { Link, matchRoutes, useLocation } from 'react-router-dom';
+import { Link, matchRoutes, useLocation, useParams } from 'react-router-dom';
 
 type RouteFunc = (...args: any[]) => { el: React.ReactNode; to?: string }[];
 
@@ -24,7 +26,7 @@ const routes: Record<string, RouteFunc> = {
             to: `/app/organization/${args.at(0)}`,
         },
         {
-            el: args.at(1),
+            el: args.at(2),
         },
     ],
     '/app/organization/:domain/job/:id/questions': (...args: any[]) => [
@@ -98,23 +100,35 @@ const routes: Record<string, RouteFunc> = {
 };
 
 const AppBreadcrumb = () => {
+    const [args, setArgs] = useState<string[]>([]);
     const location = useLocation();
     const matches = matchRoutes(
         Object.keys(routes).map((k) => ({ path: k })),
         location.pathname,
     );
+    const { domain, id } = useParams();
+    const { data: job } = useGetOrganizationJob(id);
 
-    if (!matches) return null;
+    const renderFn = matches && matches.length > 0 && routes[matches.at(0)?.route.path as keyof typeof routes];
+
+    useEffect(() => {
+        const res = [];
+        if (domain) res.push(domain);
+        if (id) {
+            res.push(id);
+            if (job) {
+                res.push(job.title);
+            }
+        }
+        setArgs(res);
+    }, [domain, id, job]);
+
+    if (!matches || !renderFn) return null;
 
     return (
         <Breadcrumbs>
-            {routes[matches.at(0)?.route.path as keyof typeof routes] &&
-                routes[matches.at(0)?.route.path as keyof typeof routes](
-                    'spotify',
-                    '1234fadfe2fa4f23f2f33',
-                    'Senior Software Engineer',
-                    'Hoang Dinh Anh Tuan',
-                ).map((el, index) => (
+            {renderFn &&
+                renderFn(...args).map((el, index) => (
                     <BreadcrumbItem key={index}>
                         <Link to={el.to || '#'} className="flex gap-1">
                             {el.el}

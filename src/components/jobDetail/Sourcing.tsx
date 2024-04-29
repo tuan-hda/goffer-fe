@@ -65,12 +65,8 @@ const Sourcing = () => {
                             </div>
                         </CardContent>
                         <CardFooter className="gap-4">
-                            <Button className="rounded-lg" variant="outline">
-                                Apply filter
-                            </Button>
-                            <Button variant="ghost" className="rounded-lg">
-                                Clear filter
-                            </Button>
+                            <Button variant="outline">Apply filter</Button>
+                            <Button variant="ghost">Clear filter</Button>
                         </CardFooter>
                     </Card>
                 </div>

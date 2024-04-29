@@ -10,6 +10,7 @@ import {
     TbEye,
     TbEyeOff,
     TbGlobe,
+    TbLoader,
     TbPencil,
     TbScooter,
     TbSend,
@@ -24,35 +25,82 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Analytics from '@/components/jobDetail/Analytics';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
+
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const JobDetail = () => {
+    const { id } = useParams();
+    const { data: job, isLoading } = useGetOrganizationJob(id);
+    const navigate = useNavigate();
+
+    if (isLoading) {
+        return (
+            <div className="flex h-[calc(100vh-240px)] w-full items-center justify-center">
+                <TbLoader className="animate-spin text-xl" />
+            </div>
+        );
+    }
+
+    if (!job) {
+        navigate('/not-found');
+        return null;
+    }
+
     return (
         <div className="w-full">
             <div className="flex items-center gap-4 text-3xl">
-                <h1>Senior Software Engineer</h1>
-                <DropdownMenu>
-                    <DropdownMenuTrigger className="ml-auto">
-                        <TbDots className="text-base" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem>
-                            <TbSend className="mr-2 text-base" /> Send invite
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <TbEye className="mr-2 text-base" /> View preview
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <TbPencil className="mr-2 text-base" /> Edit basic
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <TbScooter className="mr-2 text-base" /> Edit questions
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <TbCloudStorm className="mr-2 text-base" /> Custom feedback
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <h1>{job?.title}</h1>
+                <Dialog>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="-mr-2 ml-auto p-2">
+                            <TbDots className="text-base" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuItem asChild className="p-0">
+                                <DialogTrigger asChild>
+                                    <button
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="flex w-full items-center rounded px-2 py-[6px] text-sm transition duration-150 hover:bg-[#F5F5F5]"
+                                    >
+                                        <TbSend className="mr-2 text-base" /> Send invite
+                                    </button>
+                                </DialogTrigger>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link to={`preview`} className="flex items-center">
+                                    <TbEye className="mr-2 text-base" /> View preview
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <TbPencil className="mr-2 text-base" /> Edit basic
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <TbScooter className="mr-2 text-base" /> Edit questions
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <TbCloudStorm className="mr-2 text-base" /> Custom feedback
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DialogContent className="!rounded-2xl">
+                        <DialogHeader>
+                            <DialogTitle>Invite this job for someone</DialogTitle>
+                        </DialogHeader>
+                        <div className="flex gap-2">
+                            <Input className="font-normal" placeholder="Enter email" />
+                            <Button variant="black">Send invite</Button>
+                        </div>
+                        <Textarea placeholder="Your message here (optional)" />
+                        <div className="flex min-h-[140px] items-center justify-center text-sm">
+                            <p>You have not invited anyone yet.</p>
+                        </div>
+                    </DialogContent>
+                </Dialog>
 
                 <TooltipProvider>
                     <Tooltip>
@@ -69,10 +117,32 @@ const JobDetail = () => {
                     <DropdownMenuTrigger asChild>
                         <Button
                             variant="outline"
-                            className="gap-2 rounded-lg border-primary/50 bg-primary/10 text-orange-600 shadow-none hover:bg-primary/20 hover:text-orange-600"
+                            className="gap-2 border-primary/50 bg-primary/10 text-orange-600 shadow-none hover:bg-primary/20 hover:text-orange-600"
                         >
-                            <TbEyeOff />
-                            <span>Unpublished</span>
+                            {job.status === 'published' && (
+                                <>
+                                    <TbGlobe />
+                                    <span>Published</span>
+                                </>
+                            )}
+                            {job.status === 'unpublished' && (
+                                <>
+                                    <TbEyeOff />
+                                    <span>Unpublished</span>
+                                </>
+                            )}
+                            {job.status === 'closed' && (
+                                <>
+                                    <TbArchive />
+                                    <span>Closed</span>
+                                </>
+                            )}
+                            {job.status === 'expired' && (
+                                <>
+                                    <TbClockCancel className="text-xl" />
+                                    <span>Expired</span>
+                                </>
+                            )}
                             <TbChevronDown />
                         </Button>
                     </DropdownMenuTrigger>
@@ -86,7 +156,6 @@ const JobDetail = () => {
                         </DropdownMenuItem>
                         <DropdownMenuItem className="gap-3">
                             <TbEyeOff className="text-xl" />
-
                             <div className="min-w-0">
                                 <p className="font-semibold">Unpublished</p>
                                 <p className="text-text/70">Currently hidden, available after you finish all steps.</p>

@@ -8,6 +8,7 @@ type State = {
 
 type Action = {
     setData: (_: State['data'] | ((__: State['data']) => State['data'])) => void;
+    clear: () => void;
 };
 
 const initialData: NewJob = {
@@ -22,7 +23,7 @@ const initialData: NewJob = {
     location: 'Work from anywhere',
     time: 'Any working time',
     salaryTo: '',
-    orgId: '',
+    org: '',
 };
 
 const useNewJobStore = create<State & Action>()(
@@ -31,6 +32,10 @@ const useNewJobStore = create<State & Action>()(
         setData: (data) =>
             set((state) => {
                 state.data = typeof data === 'function' ? data(state.data) : data;
+            }),
+        clear: () =>
+            set((state) => {
+                state.data = initialData;
             }),
     })),
 );

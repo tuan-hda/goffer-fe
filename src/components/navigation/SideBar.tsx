@@ -185,7 +185,7 @@ const SideBar = ({ org }: SideBarProps) => {
                             className="flex items-start gap-[10px]"
                         >
                             <img
-                                src={org ? org.logo : '/logo.svg'}
+                                src={'/logo.svg'}
                                 className="h-7 min-h-7 w-7 min-w-7 flex-shrink-0 rounded-full"
                                 alt="logo"
                             />

@@ -1,3 +1,5 @@
+import { User } from './user.type';
+
 export type NewJob = {
     title: string;
     slots: number;
@@ -10,10 +12,16 @@ export type NewJob = {
     description: string;
     location: string;
     time: string;
-    orgId: string;
+    org: string;
 };
 
 export type Job = NewJob & {
     id: string;
     status: string;
+    owner: User;
+    createdAt: string;
+    updatedAt: string;
+    publicLink: string;
 };
+
+export type JobQuery = Omit<Job, ''>;
