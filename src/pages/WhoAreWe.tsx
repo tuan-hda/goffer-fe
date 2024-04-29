@@ -8,7 +8,7 @@ const WhoAreWe = () => {
                     animType: 'fadeIn',
                     el: (
                         <p className="mb-4 font-serif">
-                            Welcome to <span className="font-bold font-serif">Goffer</span> - Your Gateway to Smarter
+                            Welcome to <span className="font-serif font-bold">Goffer</span> - Your Gateway to Smarter
                             Hiring and Career Advancement.
                         </p>
                     ),
@@ -17,7 +17,7 @@ const WhoAreWe = () => {
                     animType: 'fadeIn',
                     el: (
                         <div className="mb-8">
-                            <h2 className="font-semibold mb-3 font-serif border-b border-gray-700">For Employers</h2>
+                            <h2 className="mb-3 border-b border-gray-700 font-serif font-semibold">For Employers</h2>
                             <p className="mb-2 font-serif">
                                 Our tools are crafted for HR professionals, enhancing the screening process with audio
                                 and video responses and custom assessments to ensure the right fit for your team.
@@ -29,7 +29,7 @@ const WhoAreWe = () => {
                     animType: 'fadeIn',
                     el: (
                         <div className="mb-8">
-                            <h2 className="font-semibold mb-3 font-serif border-b border-gray-700">For Job Seekers</h2>
+                            <h2 className="mb-3 border-b border-gray-700 font-serif font-semibold">For Job Seekers</h2>
                             <p className="mb-2 font-serif">
                                 Goffer goes beyond job listings, offering a community for networking, career growth, and
                                 showcasing your unique skills. Our assessments and AI-driven profile enhancements help

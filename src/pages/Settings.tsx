@@ -1,6 +1,6 @@
 import { TbAlignBoxLeftTop, TbCoinBitcoin, TbMaximize, TbSettings, TbUser } from 'react-icons/tb';
 import { Breadcrumbs, BreadcrumbItem, Tab, Tabs } from '@nextui-org/react';
-import { Account } from '@/components/settings';
+import { Account, Work } from '@/components/settings';
 
 const Settings = () => {
     return (
@@ -32,7 +32,7 @@ const Settings = () => {
                             </span>
                         }
                     >
-                        <div></div>
+                        <Work />
                     </Tab>
                     <Tab
                         key="Subscription"
