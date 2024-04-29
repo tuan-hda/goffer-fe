@@ -1,3 +1,4 @@
+import { Organization } from './organization.type';
 import { User } from './user.type';
 
 export type NewJob = {
@@ -13,6 +14,10 @@ export type NewJob = {
     location: string;
     time: string;
     org: string;
+    orgId: string;
+    authorId: string;
+    benefits?: string[];
+    pipeline: string[];
 };
 
 export type Job = NewJob & {
@@ -22,6 +27,11 @@ export type Job = NewJob & {
     createdAt: string;
     updatedAt: string;
     publicLink: string;
+};
+
+export type IndividualJob = Job & {
+    org: Organization;
+    author: User;
 };
 
 export type JobQuery = Omit<Job, ''>;
