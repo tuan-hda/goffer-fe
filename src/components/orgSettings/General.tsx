@@ -101,12 +101,7 @@ const General = () => {
                         </Tooltip>
                     </TooltipProvider>
                 </label>
-                <Input
-                    onChange={handleChange('domain')}
-                    id="domain"
-                    value={curr?.domain}
-                    className="mt-1 rounded-lg bg-white"
-                />
+                <Input onChange={handleChange('domain')} id="domain" value={curr?.domain} className="mt-1  bg-white" />
             </div>
 
             <button onClick={() => setExpanded((prev) => !prev)} className="mt-5 flex items-center gap-1">
@@ -129,7 +124,7 @@ const General = () => {
                 <div className="mt-5">
                     <label htmlFor="name">Name</label>
                     <Input
-                        className="mt-1 rounded-lg bg-white"
+                        className="mt-1  bg-white"
                         onChange={handleChange('name')}
                         id="name"
                         placeholder="Your name here"
@@ -138,18 +133,13 @@ const General = () => {
                 </div>
                 <div className="mt-5">
                     <label htmlFor="email">Corporate email</label>
-                    <Input
-                        onChange={handleChange('email')}
-                        className="mt-1 rounded-lg bg-white"
-                        id="email"
-                        value={curr?.email}
-                    />
+                    <Input onChange={handleChange('email')} className="mt-1  bg-white" id="email" value={curr?.email} />
                 </div>
                 <div className="mt-5">
                     <label htmlFor="email">Website</label>
                     <Input
                         onChange={handleChange('website')}
-                        className="mt-1 rounded-lg bg-white"
+                        className="mt-1  bg-white"
                         id="website"
                         value={curr?.website}
                     />
@@ -158,19 +148,14 @@ const General = () => {
                     <label htmlFor="email">Description</label>
                     <Textarea
                         onChange={handleChange('description')}
-                        className="mt-1 rounded-lg bg-white"
+                        className="mt-1 bg-white"
                         id="description"
                         value={curr?.description}
                     />
                 </div>
             </motion.div>
 
-            <Button
-                type="submit"
-                disabled={loading || isInvalid}
-                className="mt-6 w-full rounded-lg"
-                variant="secondary"
-            >
+            <Button type="submit" disabled={loading || isInvalid} className="mt-6 w-full" variant="secondary">
                 {loading && <Loading />}
                 Save
             </Button>

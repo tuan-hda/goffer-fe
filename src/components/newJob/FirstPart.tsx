@@ -24,7 +24,7 @@ const FirstStep = () => {
     }, [showSalaryTo]);
 
     return (
-        <div className="mt-4 h-fit w-full rounded-xl bg-white/80 p-8 text-sm shadow-small">
+        <div className="mt-4 h-fit w-full rounded-xl bg-white/70 p-8 text-sm shadow-small">
             <label htmlFor="title" className="block">
                 What kind of job is this?
             </label>
@@ -59,7 +59,7 @@ const FirstStep = () => {
                                 setData((prev) => ({ ...prev, salaryFrom: e.target.value }));
                             }}
                             id="salary-from"
-                            className="mt-1 rounded-lg pl-9"
+                            className="mt-1 pl-9"
                             placeholder="Negotiable"
                         />
                     </div>

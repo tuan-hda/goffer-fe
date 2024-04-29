@@ -30,7 +30,7 @@ module.exports = {
                     DEFAULT: '#FFE0A9',
                 },
                 pale: {
-                    DEFAULT: '#fefcf5',
+                    DEFAULT: '#fff',
                     400: '#f1efe8',
                     500: '#e4e2dc',
                     600: '#d7d6d0',

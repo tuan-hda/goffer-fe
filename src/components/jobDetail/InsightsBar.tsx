@@ -14,7 +14,7 @@ const InsightsBar = () => {
     const [selected, setSelected] = useState('Applied');
 
     return (
-        <div className="grid grid-cols-6 rounded-xl bg-white p-2 shadow-xl">
+        <div className="grid grid-cols-6 rounded-xl bg-white p-2 shadow-2xl">
             {pipeline.map((stage) => (
                 <button
                     onClick={() => setSelected(stage.title)}

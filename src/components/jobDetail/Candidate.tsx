@@ -62,14 +62,14 @@ const Candidate = ({
                 <div className="flex items-start gap-5">
                     <Avatar src={avatarUrl} className="h-16 w-16 flex-shrink-0 rounded-lg" />
                     <div className="flex flex-1 flex-col">
-                        <p>{name}</p>
-                        <p className="text-xl text-black ">{jobTitle}</p>
+                        <p>{jobTitle}</p>
+                        <p className="text-xl text-black ">{name}</p>
                         <div className="mt-1 flex items-center gap-6">
-                            <div className="flex items-start gap-2 text-blue-500 hover:underline">
+                            <div className="flex items-start gap-2 underline">
                                 <TbMail className="h-5 flex-shrink-0" />
                                 <p className="min-w-0">{email}</p>
                             </div>
-                            <div className="flex items-start gap-2 text-blue-500 hover:underline">
+                            <div className="flex items-start gap-2 underline">
                                 <TbPhone className="h-5 flex-shrink-0" />
                                 <p className="min-w-0">{phone}</p>
                             </div>
@@ -86,13 +86,12 @@ const Candidate = ({
                             <TbTools className="h-5 flex-shrink-0" />
                             <p className="min-w-0">Tools: {tools}</p>
                         </div>
-                        <p className="mt-2 text-text/70">{description}</p>
 
                         <div className="mt-4 flex gap-4">
-                            <Button className="w-64 gap-2 rounded-lg" variant="black">
+                            <Button className="w-64 gap-2" variant="black">
                                 Get in touch <TbHeartHandshake className="text-lg" />
                             </Button>
-                            <Button size="icon" className="rounded-lg" variant="outline">
+                            <Button size="icon" variant="outline">
                                 <TbBookmark />
                             </Button>
                         </div>

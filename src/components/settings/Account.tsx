@@ -77,12 +77,12 @@ const Account = () => {
             </div>
             <div className="mt-5">
                 <label htmlFor="email">Email</label>
-                <Input disabled className="mt-1 rounded-lg" id="email" value={curr?.email} />
+                <Input disabled className="mt-1" id="email" value={curr?.email} />
             </div>
             <div className="mt-5">
                 <label htmlFor="name">Name</label>
                 <Input
-                    className="mt-1 rounded-lg bg-white"
+                    className="mt-1 bg-white"
                     onChange={(e) => handleChange('name')(e.target.value)}
                     id="name"
                     placeholder="Your name here"
@@ -97,7 +97,7 @@ const Account = () => {
                             type="button"
                             variant="outline"
                             className={classNames(
-                                'mt-1 flex w-[240px] justify-start rounded-lg text-left font-normal',
+                                'mt-1 flex w-[240px] justify-start text-left font-normal',
                                 !curr?.dob && 'text-muted-foreground',
                             )}
                         >
@@ -113,7 +113,7 @@ const Account = () => {
             <div className="mt-5">
                 <p>Gender</p>
                 <Select value={curr?.gender} onValueChange={(value) => handleChange('gender')(value)}>
-                    <SelectTrigger id="gender" className="mt-1 w-[180px] rounded-lg bg-white">
+                    <SelectTrigger id="gender" className="mt-1 w-[180px] bg-white">
                         <SelectValue placeholder="Select gender" />
                     </SelectTrigger>
                     <SelectContent>
@@ -126,12 +126,7 @@ const Account = () => {
                     </SelectContent>
                 </Select>
             </div>
-            <Button
-                type="submit"
-                disabled={loading || isInvalid}
-                className="mt-6 w-full rounded-lg"
-                variant="secondary"
-            >
+            <Button type="submit" disabled={loading || isInvalid} className="mt-6 w-full" variant="secondary">
                 {loading && <Spinner size="sm" className="scale-50" />} Save
             </Button>
         </form>

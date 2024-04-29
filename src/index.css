@@ -95,12 +95,13 @@
 ::selection {
     color: #333;
     background: #c0d6ef;
+    --background: 0 0% 100%;
 }
 
-* {
-    font-family: 'Geist Variable', sans-serif;
+body {
+    color: #333;
     line-height: 1.5;
-    color: '#333';
+    font-family: 'Geist Variable', sans-serif;
 }
 
 .float-animation {
@@ -222,7 +223,8 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .child-bg > * {
-    --bg-color: #fefcf5;
+    /* --bg-color: #fefcf5; */
+    --bg-color: #fff;
     background-color: var(--bg-color) !important;
 }
 
