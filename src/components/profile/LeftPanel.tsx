@@ -2,7 +2,8 @@ import { Avatar } from '@nextui-org/react';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
-import { TbBrandLinkedin } from 'react-icons/tb';
+import { TbBrandLinkedin, TbLink } from 'react-icons/tb';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
 const LeftPanel = () => {
     const { data: profile } = useSelfProfileQuery();
@@ -30,7 +31,24 @@ const LeftPanel = () => {
                 </Badge>
             </div>
             <p className="mb-3 mt-8 text-xs font-light text-gray-500">LINKS</p>
-            <TbBrandLinkedin className="text-2xl" />
+            <div className="flex items-center gap-2">
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <TbBrandLinkedin className="text-2xl" />
+                        </TooltipTrigger>
+                        <TooltipContent>LinkedIn</TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <TbLink className="text-xl" />
+                        </TooltipTrigger>
+                        <TooltipContent>Portfolio</TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            </div>
         </div>
     );
 };

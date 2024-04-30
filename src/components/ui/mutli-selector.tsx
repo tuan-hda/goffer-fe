@@ -20,7 +20,7 @@ interface GroupOption {
     [key: string]: Option[];
 }
 
-interface MultipleSelectorProps {
+export interface MultipleSelectorProps {
     partialDelete?: boolean;
     value?: Option[];
     defaultOptions?: Option[];

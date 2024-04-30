@@ -11,6 +11,8 @@ export type User = {
     refDoc?: string;
     gender?: string;
     dob?: Date;
+    bio?: string;
+    tools?: string[];
 };
 
 export type UpdateUser = {

@@ -1,9 +1,10 @@
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { Tab, Tabs } from '@nextui-org/react';
-import { TbBaguette, TbCertificate, TbChevronDown, TbPaperclip, TbShare, TbSparkles } from 'react-icons/tb';
+import { TbBaguette, TbCertificate, TbChevronDown, TbPaperclip, TbShare } from 'react-icons/tb';
 import Basic from './Basic';
 import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { Editable } from '../common';
 
 const RightPanel = () => {
     const { data: profile } = useSelfProfileQuery();
@@ -28,9 +29,7 @@ const RightPanel = () => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <div className="mt-4 flex items-center text-base font-semibold">
-                Senior Software Engineer <TbSparkles className="ml-2 text-lg" />
-            </div>
+            <Editable value="Senior Software Engineer" className="mt-2 font-semibold" />
             <div className="-mx-2">
                 <Tabs variant="underlined" className="-mx-2 mt-10">
                     <Tab
