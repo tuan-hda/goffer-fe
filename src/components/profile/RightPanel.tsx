@@ -1,6 +1,6 @@
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { Tab, Tabs } from '@nextui-org/react';
-import { TbBaguette, TbCertificate, TbChevronDown, TbPaperclip, TbSparkles } from 'react-icons/tb';
+import { TbBaguette, TbCertificate, TbChevronDown, TbPaperclip, TbShare, TbSparkles } from 'react-icons/tb';
 import Basic from './Basic';
 import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
@@ -11,11 +11,14 @@ const RightPanel = () => {
 
     return (
         <div className="flex-1 text-sm">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center">
                 <h1 className="font-serif text-4xl font-black text-black">{profile.name}</h1>
+                <Button variant="outline" size="icon" className="ml-auto">
+                    <TbShare className="text-lg" />
+                </Button>
                 <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="outline">
+                    <DropdownMenuTrigger asChild className="ml-2">
+                        <Button variant="outline" className="bg-[#F5F6F9]">
                             Unavailable <TbChevronDown className="ml-2" />
                         </Button>
                     </DropdownMenuTrigger>
