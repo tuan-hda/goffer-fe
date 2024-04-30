@@ -8,3 +8,5 @@ export { default as Counter } from './Counter';
 export { default as AppBreadcrumb } from './AppBreadcrumb';
 export { default as PlainPlate } from './PlainPlate';
 export { default as DatePickerWithRange } from './DatePickerWithRange';
+export { default as Editable } from './Editable';
+export { default as UploadPopover } from './UploadPopover';

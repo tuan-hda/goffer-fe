@@ -10,6 +10,7 @@ import {
     TbPaint,
     TbSettings,
     TbSparkles,
+    TbUser,
     TbWallet,
 } from 'react-icons/tb';
 import { Fragment, useEffect, useState } from 'react';
@@ -52,6 +53,14 @@ const items: Item[] = [
         element: {
             startContent: <TbSparkles className="text-xl" />,
             content: 'Ask Goffer',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/profile',
+            startContent: <TbUser className="text-xl" />,
+            content: 'Profile',
         },
     },
     {

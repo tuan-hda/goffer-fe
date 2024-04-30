@@ -22,9 +22,10 @@ import {
     Finalize,
     ApplicantDetail,
     PreviewJob,
+    WhoAreWe,
+    Feature,
+    Profile,
 } from '../pages';
-import Feature from '../pages/Feature';
-import WhoAreWe from '../pages/WhoAreWe';
 import { Discover, JobDiscover, PeopleDiscover } from '@/components/applicant/discover';
 import {
     AppLayout,
@@ -94,6 +95,10 @@ const routesConfig: RouteObject[] = [
                             },
                             { path: '/app/individual/jobs', element: <JobDiscover /> },
                         ],
+                    },
+                    {
+                        path: '/app/profile',
+                        element: <Profile />,
                     },
                     {
                         path: '/app/settings',

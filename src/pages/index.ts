@@ -21,3 +21,6 @@ export { default as CustomFeedback } from './CustomFeedback';
 export { default as Finalize } from './Finalize';
 export { default as ApplicantDetail } from './ApplicantDetail';
 export { default as PreviewJob } from './PreviewJob';
+export { default as Feature } from './Feature';
+export { default as WhoAreWe } from './WhoAreWe';
+export { default as Profile } from './Profile';
