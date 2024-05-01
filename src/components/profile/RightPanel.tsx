@@ -1,10 +1,11 @@
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { Tab, Tabs } from '@nextui-org/react';
-import { TbBaguette, TbCertificate, TbChevronDown, TbPaperclip, TbShare } from 'react-icons/tb';
+import { TbBaguette, TbChevronDown, TbPaperclip, TbShare } from 'react-icons/tb';
 import Basic from './Basic';
 import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Editable } from '../common';
+import Experiences from './Experiences';
 
 const RightPanel = () => {
     const { data: profile } = useSelfProfileQuery();
@@ -29,7 +30,7 @@ const RightPanel = () => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <Editable value="Senior Software Engineer" className="mt-2 font-semibold" />
+            <Editable value="Senior Software Engineer ✨" className="mt-2 font-semibold" />
             <div className="-mx-2">
                 <Tabs variant="underlined" className="-mx-2 mt-10">
                     <Tab
@@ -49,15 +50,9 @@ const RightPanel = () => {
                                 <TbBaguette className="text-lg" /> Experiences
                             </span>
                         }
-                    ></Tab>
-                    <Tab
-                        key="certification"
-                        title={
-                            <span className="flex items-center gap-2">
-                                <TbCertificate className="text-lg" /> Certifications
-                            </span>
-                        }
-                    ></Tab>
+                    >
+                        <Experiences />
+                    </Tab>
                 </Tabs>
             </div>
         </div>

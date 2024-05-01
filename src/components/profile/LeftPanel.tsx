@@ -2,11 +2,24 @@ import { Avatar } from '@nextui-org/react';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
-import { TbBrandLinkedin, TbLink } from 'react-icons/tb';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { TbExternalLink } from 'react-icons/tb';
+import { Editable } from '../common';
+import SocialLink from './SocialLink';
+import { useState } from 'react';
 
 const LeftPanel = () => {
     const { data: profile } = useSelfProfileQuery();
+    const [links, setLinks] = useState<{ label: string; url: string }[]>([
+        { label: 'LinkedIn', url: 'https://linkedin.com' },
+    ]);
+
+    const setLink = (index: number) => (link: { label: string; url: string }) => {
+        setLinks((prev) => {
+            const newLinks = [...prev];
+            newLinks[index] = link;
+            return newLinks;
+        });
+    };
 
     if (!profile) {
         return null;
@@ -19,7 +32,7 @@ const LeftPanel = () => {
                 Get in touch
             </Button>
             <p className="mb-3 mt-8 text-xs font-light text-gray-500">LOCATION</p>
-            <p>Ho Chi Minh City, Vietnam</p>
+            <Editable value="Ho Chi Minh City, Vietnam" />
 
             <p className="mb-3 mt-8 text-xs font-light text-gray-500">BADGES</p>
             <div className="flex flex-wrap gap-4">
@@ -31,24 +44,23 @@ const LeftPanel = () => {
                 </Badge>
             </div>
             <p className="mb-3 mt-8 text-xs font-light text-gray-500">LINKS</p>
-            <div className="flex items-center gap-2">
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <TbBrandLinkedin className="text-2xl" />
-                        </TooltipTrigger>
-                        <TooltipContent>LinkedIn</TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <TbLink className="text-xl" />
-                        </TooltipTrigger>
-                        <TooltipContent>Portfolio</TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
+            <div>
+                {links.map((link, index) => (
+                    <Editable
+                        key={index}
+                        custom={<SocialLink link={link} setLink={setLink(index)} />}
+                        deletable
+                        className="!py-2"
+                        type="custom"
+                    >
+                        <div className="flex items-center gap-2">
+                            LinkedIn
+                            <TbExternalLink className="text-base" />
+                        </div>
+                    </Editable>
+                ))}
             </div>
+            <Editable mode="new" name="link" />
         </div>
     );
 };
