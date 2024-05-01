@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Button } from '../ui/button';
-import { TbCirclePlus, TbPencil } from 'react-icons/tb';
+import { TbCirclePlus, TbLoader, TbPencil } from 'react-icons/tb';
 import React, { useState } from 'react';
 import { Textarea } from '../ui/textarea';
 import MultipleSelector, { MultipleSelectorProps, Option } from '../ui/mutli-selector';
@@ -15,18 +15,23 @@ import {
     DialogTrigger,
 } from '../ui/dialog';
 
-type EditableProps = JSX.IntrinsicElements['div'] & {
-    mode?: 'view' | 'active' | 'new';
-    type?: 'default' | 'custom' | 'multi-selector';
-    name?: string;
-    value?: string;
-    setValue?: (value: string) => void;
-    values?: string[];
-    setValues?: (values: Option[]) => void;
-    limit?: number;
-    custom?: React.ReactNode;
-    deletable?: boolean;
-} & Partial<Omit<MultipleSelectorProps, 'value' | 'onChange'>>;
+type EditableProps = Omit<JSX.IntrinsicElements['div'], 'onChange'> &
+    Partial<Omit<MultipleSelectorProps, 'value' | 'onChange'>> & {
+        mode?: 'view' | 'active' | 'new';
+        type?: 'default' | 'custom' | 'multi-selector';
+        name?: string;
+        value?: string;
+        setValue?: (value: string) => void;
+        values?: string[];
+        setValues?: (values: Option[]) => void;
+        limit?: number;
+        custom?: React.ReactNode;
+        deletable?: boolean;
+        onSave?: (value?: string) => Promise<void>;
+        onChange?: JSX.IntrinsicElements['input']['onChange'];
+        onCancel?: () => void;
+        saving?: boolean;
+    };
 
 const Editable = ({
     children,
@@ -44,10 +49,24 @@ const Editable = ({
     partialDelete,
     placeholder,
     deletable,
+    onSave,
+    onCancel,
+    saving,
+    // onChange,
     ...props
 }: EditableProps) => {
     const [edit, setEdit] = useState(false);
     const setValue = outerSetValue ?? ((_: string) => {});
+
+    const handleSave = async () => {
+        onSave && (await onSave(value));
+        setEdit(false);
+    };
+
+    const handleCancel = () => {
+        onCancel && onCancel();
+        setEdit(false);
+    };
 
     return (
         <div>
@@ -80,7 +99,7 @@ const Editable = ({
                                 placeholder={placeholder}
                                 setEdit={setEdit}
                                 limit={limit}
-                                value={value}
+                                value={value || ''}
                                 setValue={setValue}
                             />
                         )}
@@ -143,11 +162,11 @@ const Editable = ({
                         </Dialog>
                     )}
 
-                    <Button onClick={() => setEdit(false)} size="sm" className="text-sm" variant="outline">
+                    <Button disabled={saving} onClick={handleCancel} size="sm" className="text-sm" variant="outline">
                         Cancel
                     </Button>
-                    <Button onClick={() => setEdit(false)} size="sm" className="text-sm" variant="black">
-                        Save
+                    <Button disabled={saving} onClick={handleSave} size="sm" className="text-sm" variant="black">
+                        {saving && <TbLoader className="mr-1 animate-spin text-base" />} Save
                     </Button>
                 </div>
             )}

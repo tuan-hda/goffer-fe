@@ -13,6 +13,8 @@ export type User = {
     dob?: Date;
     bio?: string;
     tools?: string[];
+    location?: string;
+    links?: { label: string; url: string }[];
 };
 
 export type UpdateUser = {

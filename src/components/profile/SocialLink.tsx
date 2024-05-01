@@ -32,7 +32,7 @@ const SocialLink = ({ link, setLink }: LinkProps) => {
                             url: e.target.value,
                         })
                     }
-                    value={link.label}
+                    value={link.url}
                 />
             </div>
         </div>
