@@ -6,24 +6,32 @@ import JobDetail from '../job/JobDetail';
 import JobFilter, { SearchBar } from '../filter/JobFilter';
 import JobAppliedCard from '../job/JobAppliedCard';
 import AppliedDetail from '../job/AppliedDetail';
-const jobs = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+import useIndividualJobs from '@/hooks/useIndividualJobs';
+import { useEffect, useState } from 'react';
 const jobsApplied = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const JobDiscover = () => {
-    const { jobDetailOpening, updateJobDetailOpening, tabKey } = useJobStore();
+    const { jobDetailOpening, updateJobDetailOpening, tabKey, resetDetail } = useJobStore();
+    const { data } = useIndividualJobs();
+
+    const [jobs, setJobs] = useState(data);
+    useEffect(() => {
+        setJobs(data);
+    }, [data]);
+
+    const onDetailOpen = (open: boolean) => {
+        updateJobDetailOpening(open);
+        !open && resetDetail();
+    };
 
     return (
         <div className="mx-auto flex max-w-screen-xl">
-            <Sheet onOpenChange={(open) => updateJobDetailOpening(open)} open={jobDetailOpening}>
+            <Sheet onOpenChange={onDetailOpen} open={jobDetailOpening}>
                 <div className="flex w-full justify-between">
                     <div className="my-4 flex-1 space-y-4 px-8">
                         <SearchBar />
                         {tabKey === 'all' ? (
-                            <>
-                                {jobs.map((job, index) => (
-                                    <JobCard key={index} />
-                                ))}
-                            </>
+                            <>{jobs?.results?.map((job) => <JobCard key={job.id} data={job} />)}</>
                         ) : (
                             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                                 {jobsApplied.map((job, index) => (
