@@ -55,7 +55,7 @@ const Analytics = () => {
             <Card ref={ref} className="px-2 py-6 shadow-none">
                 <CardContent>
                     <div className="w-full">
-                        <Curve width={width.curve} height={500}>
+                        <Curve width={width.curve} height={Math.min(window.innerWidth - 625, 500)}>
                             <div className="mb-1 font-medium">
                                 <p className="text-base">Average rate</p>
                                 <p className="text-3xl font-normal">87%</p>

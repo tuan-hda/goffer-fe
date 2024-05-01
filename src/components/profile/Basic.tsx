@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { User } from '@/types/user.type';
 import skills from '@/data/skills';
 import tools from '@/data/tools';
+import EducationForm from './EducationForm';
 
 const Basic = () => {
     const { data } = useSelfProfileQuery();
@@ -27,6 +28,7 @@ const Basic = () => {
                 mode="new"
                 limit={400}
                 name="bio"
+                placeholder="Tell us about yourself..."
                 setValue={(value) => setProfile({ ...profile, bio: value })}
                 value={profile.bio}
             />
@@ -103,10 +105,16 @@ const Basic = () => {
             </div>
 
             <p className="mt-6 font-medium text-black">Education</p>
-            <p className="mt-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel nisl bibendum leo mattis ultrices
-                sed non nulla. Proin justo orci, hendrerit non ex nec, suscipit venenatis urna.
-            </p>
+            <Editable
+                mode="new"
+                deletable
+                type="custom"
+                name="education"
+                placeholder="Enter your education..."
+                setValue={(value) => setProfile({ ...profile, bio: value })}
+                value={profile.bio}
+                custom={<EducationForm />}
+            ></Editable>
         </div>
     );
 };

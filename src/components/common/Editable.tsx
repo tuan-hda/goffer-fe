@@ -4,6 +4,16 @@ import { TbCirclePlus, TbPencil } from 'react-icons/tb';
 import React, { useState } from 'react';
 import { Textarea } from '../ui/textarea';
 import MultipleSelector, { MultipleSelectorProps, Option } from '../ui/mutli-selector';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '../ui/dialog';
 
 type EditableProps = JSX.IntrinsicElements['div'] & {
     mode?: 'view' | 'active' | 'new';
@@ -14,12 +24,15 @@ type EditableProps = JSX.IntrinsicElements['div'] & {
     values?: string[];
     setValues?: (values: Option[]) => void;
     limit?: number;
+    custom?: React.ReactNode;
+    deletable?: boolean;
 } & Partial<Omit<MultipleSelectorProps, 'value' | 'onChange'>>;
 
 const Editable = ({
     children,
     name,
     className,
+    custom,
     mode = 'active',
     type = 'default',
     value,
@@ -30,6 +43,7 @@ const Editable = ({
     setValues,
     partialDelete,
     placeholder,
+    deletable,
     ...props
 }: EditableProps) => {
     const [edit, setEdit] = useState(false);
@@ -49,7 +63,7 @@ const Editable = ({
             >
                 {edit && (
                     <div className="flex-1">
-                        {type === 'multi-selector' && values && setValues ? (
+                        {type === 'multi-selector' && values && setValues && (
                             <EditableMultiSelector
                                 options={options}
                                 partialDelete={partialDelete}
@@ -60,9 +74,17 @@ const Editable = ({
                                     value: value,
                                 }))}
                             />
-                        ) : (
-                            <EditableTextarea setEdit={setEdit} limit={limit} value={value} setValue={setValue} />
                         )}
+                        {type === 'default' && (
+                            <EditableTextarea
+                                placeholder={placeholder}
+                                setEdit={setEdit}
+                                limit={limit}
+                                value={value}
+                                setValue={setValue}
+                            />
+                        )}
+                        {type === 'custom' && custom}
                         {limit && (
                             <p
                                 className={classNames(
@@ -95,6 +117,32 @@ const Editable = ({
             </div>
             {edit && (
                 <div className="flex items-center justify-end gap-2">
+                    {deletable && (
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button size="sm" className="text-sm" variant="destructive">
+                                    Remove
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                    <DialogDescription>This action cannot be undone.</DialogDescription>
+                                </DialogHeader>
+                                <DialogFooter>
+                                    <DialogClose asChild>
+                                        <Button className="text-sm" variant="outline">
+                                            Cancel
+                                        </Button>
+                                    </DialogClose>
+                                    <Button className="text-sm" variant="destructive">
+                                        Remove
+                                    </Button>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    )}
+
                     <Button onClick={() => setEdit(false)} size="sm" className="text-sm" variant="outline">
                         Cancel
                     </Button>
