@@ -1,61 +1,40 @@
 import { Avatar } from '@nextui-org/react';
-import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { TbExternalLink } from 'react-icons/tb';
 import { Editable } from '../common';
 import SocialLink from './SocialLink';
-import { useEffect, useState } from 'react';
-import { updateSelfService } from '@/services/users.service';
 import { User } from '@/types/user.type';
-import toast from 'react-hot-toast';
-import { isAxiosError } from 'axios';
+import useUpdateProfile from '@/hooks/useUpdateProfile';
 
 const LeftPanel = () => {
-    const { data, refetch } = useSelfProfileQuery();
+    const { loading, profile, setProfile, updateProfile, data, cancelUpdate } = useUpdateProfile();
 
-    const [profile, setProfile] = useState<User>();
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        if (data) {
-            setProfile({
-                ...data,
-                links: (data.links || []).concat({ label: '', url: '' }),
-            });
+    const calcUpdatedLinks = (index: number, link: { label: string; url: string }) => {
+        const links = (data?.links || []).map((l) => ({ label: l.label, url: l.url }));
+        if (index >= links.length) {
+            links.push(link);
+        } else {
+            links[index] = {
+                label: link.label,
+                url: link.url,
+            };
         }
-    }, [data]);
 
-    const updateProfile = async (data: Partial<User>) => {
-        try {
-            setLoading(true);
-            await new Promise((resolve) => {
-                setTimeout(resolve, 1000);
-            });
-            await updateSelfService(data);
-            await refetch();
-        } catch (error) {
-            if (isAxiosError(error)) {
-                toast.error(error.response?.data?.message || 'Failed to update profile');
-                return;
-            }
-            toast.error('Failed to update profile');
-            console.log('Update profile error:', error);
-        } finally {
-            setLoading(false);
-        }
+        console.log({
+            links,
+        });
+
+        return {
+            links,
+        };
     };
 
-    const cancelUpdate = (field: keyof User) => () => {
-        setProfile((prev) => {
-            if (!prev) {
-                return prev;
-            }
-            return {
-                ...prev,
-                [field]: data?.[field],
-            };
-        });
+    const calcDeletedLinks = (index: number) => {
+        const links = (data?.links || []).filter((_, i) => i !== index).map((l) => ({ label: l.label, url: l.url }));
+        return {
+            links,
+        };
     };
 
     const cancelUpdateLinks = (index: number) => () => {
@@ -130,27 +109,33 @@ const LeftPanel = () => {
             </div>
             <p className="mb-3 mt-11 text-xs font-light text-gray-500">LINKS</p>
             <div>
-                {profile.links?.slice(0, lastIndex).map((link, index) => (
-                    <Editable
-                        onCancel={cancelUpdateLinks(index)}
-                        key={index}
-                        custom={<SocialLink link={link} setLink={setLink(index)} />}
-                        deletable
-                        className="!py-2"
-                        type="custom"
-                    >
-                        <div className="flex items-center gap-2">
-                            LinkedIn
-                            <TbExternalLink className="text-base" />
-                        </div>
-                    </Editable>
-                ))}
+                {profile.links &&
+                    profile.links.slice(0, lastIndex).map((link, index) => (
+                        <Editable
+                            saving={loading}
+                            onRemove={() => updateProfile(calcDeletedLinks(index))}
+                            onCancel={cancelUpdateLinks(index)}
+                            onSave={() => updateProfile(calcUpdatedLinks(index, profile.links![index]))}
+                            key={index}
+                            custom={<SocialLink link={link} setLink={setLink(index)} />}
+                            deletable
+                            className="!py-2"
+                            type="custom"
+                        >
+                            <div className="flex items-center gap-2">
+                                {link.label}
+                                <TbExternalLink className="text-base" />
+                            </div>
+                        </Editable>
+                    ))}
             </div>
             {profile.links && (
                 <Editable
+                    saving={loading}
                     onCancel={cancelUpdateLinks(lastIndex)}
+                    onSave={() => updateProfile(calcUpdatedLinks(lastIndex, profile.links![lastIndex]))}
                     custom={<SocialLink link={profile.links[lastIndex]} setLink={setLink(lastIndex)} />}
-                    className="!py-2"
+                    className="mt-2 !py-2"
                     type="custom"
                     mode="new"
                 />

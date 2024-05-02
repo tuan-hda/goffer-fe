@@ -30,6 +30,7 @@ type EditableProps = Omit<JSX.IntrinsicElements['div'], 'onChange'> &
         onSave?: (value?: string) => Promise<void>;
         onChange?: JSX.IntrinsicElements['input']['onChange'];
         onCancel?: () => void;
+        onRemove?: () => Promise<void>;
         saving?: boolean;
     };
 
@@ -51,6 +52,7 @@ const Editable = ({
     deletable,
     onSave,
     onCancel,
+    onRemove,
     saving,
     // onChange,
     ...props
@@ -65,6 +67,11 @@ const Editable = ({
 
     const handleCancel = () => {
         onCancel && onCancel();
+        setEdit(false);
+    };
+
+    const handleRemove = async () => {
+        onRemove && (await onRemove());
         setEdit(false);
     };
 
@@ -116,7 +123,9 @@ const Editable = ({
                         )}
                     </div>
                 )}
-                {mode !== 'new' && !edit && <>{type === 'default' ? <p>{value}</p> : children}</>}
+                {mode !== 'new' && !edit && (
+                    <>{type === 'default' ? <p className="whitespace-pre-wrap">{value}</p> : children}</>
+                )}
                 {mode === 'new' && !edit && (
                     <Button variant="outline" className="flex w-full items-center gap-3" size="lg">
                         <TbCirclePlus className="text-lg" /> Add {name}
@@ -150,11 +159,16 @@ const Editable = ({
                                 </DialogHeader>
                                 <DialogFooter>
                                     <DialogClose asChild>
-                                        <Button className="text-sm" variant="outline">
+                                        <Button disabled={saving} className="text-sm" variant="outline">
                                             Cancel
                                         </Button>
                                     </DialogClose>
-                                    <Button className="text-sm" variant="destructive">
+                                    <Button
+                                        disabled={saving}
+                                        onClick={handleRemove}
+                                        className="text-sm"
+                                        variant="destructive"
+                                    >
                                         Remove
                                     </Button>
                                 </DialogFooter>

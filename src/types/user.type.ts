@@ -15,6 +15,7 @@ export type User = {
     tools?: string[];
     location?: string;
     links?: { label: string; url: string }[];
+    oneLiner?: string;
 };
 
 export type UpdateUser = {
