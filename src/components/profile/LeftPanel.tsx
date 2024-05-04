@@ -1,29 +1,75 @@
 import { Avatar } from '@nextui-org/react';
-import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { TbExternalLink } from 'react-icons/tb';
 import { Editable } from '../common';
 import SocialLink from './SocialLink';
-import { useState } from 'react';
+import { User } from '@/types/user.type';
+import useUpdateProfile from '@/hooks/useUpdateProfile';
 
 const LeftPanel = () => {
-    const { data: profile } = useSelfProfileQuery();
-    const [links, setLinks] = useState<{ label: string; url: string }[]>([
-        { label: 'LinkedIn', url: 'https://linkedin.com' },
-    ]);
+    const { loading, profile, setProfile, updateProfile, data, cancelUpdate } = useUpdateProfile();
+
+    const calcUpdatedLinks = (index: number, link: { label: string; url: string }) => {
+        const links = (data?.links || []).map((l) => ({ label: l.label, url: l.url }));
+        if (index >= links.length) {
+            links.push(link);
+        } else {
+            links[index] = {
+                label: link.label,
+                url: link.url,
+            };
+        }
+
+        console.log({
+            links,
+        });
+
+        return {
+            links,
+        };
+    };
+
+    const calcDeletedLinks = (index: number) => {
+        const links = (data?.links || []).filter((_, i) => i !== index).map((l) => ({ label: l.label, url: l.url }));
+        return {
+            links,
+        };
+    };
+
+    const cancelUpdateLinks = (index: number) => () => {
+        setProfile((prev) => {
+            if (!prev) {
+                return prev;
+            }
+            const links = prev.links || [];
+            links[index] = data?.links?.at(index) || { label: '', url: '' };
+            return {
+                ...prev,
+                links,
+            };
+        });
+    };
 
     const setLink = (index: number) => (link: { label: string; url: string }) => {
-        setLinks((prev) => {
-            const newLinks = [...prev];
-            newLinks[index] = link;
-            return newLinks;
+        setProfile((prev) => {
+            if (!prev) {
+                return prev;
+            }
+            const links = prev.links || [];
+            links[index] = link;
+            return {
+                ...prev,
+                links,
+            };
         });
     };
 
     if (!profile) {
         return null;
     }
+
+    const lastIndex = (profile.links?.length || 0) - 1;
 
     return (
         <div className="h-[320px] w-[320px]">
@@ -32,9 +78,27 @@ const LeftPanel = () => {
                 Get in touch
             </Button>
             <p className="mb-3 mt-8 text-xs font-light text-gray-500">LOCATION</p>
-            <Editable value="Ho Chi Minh City, Vietnam" />
-
-            <p className="mb-3 mt-8 text-xs font-light text-gray-500">BADGES</p>
+            <Editable
+                saving={loading}
+                onSave={async (v) =>
+                    updateProfile({
+                        location: v,
+                    })
+                }
+                onCancel={cancelUpdate('location')}
+                mode={profile.location ? 'active' : 'new'}
+                value={profile.location}
+                setValue={(v) => {
+                    setProfile(
+                        (prev) =>
+                            ({
+                                ...prev,
+                                location: v,
+                            }) as User,
+                    );
+                }}
+            />
+            <p className="mb-5 mt-8 text-xs font-light text-gray-500">BADGES</p>
             <div className="flex flex-wrap gap-4">
                 <Badge variant="outline" className="rounded-xl px-3 py-2 text-sm font-normal">
                     💰 Pull Shark
@@ -43,24 +107,39 @@ const LeftPanel = () => {
                     🐰 New Me Super Shy
                 </Badge>
             </div>
-            <p className="mb-3 mt-8 text-xs font-light text-gray-500">LINKS</p>
+            <p className="mb-3 mt-11 text-xs font-light text-gray-500">LINKS</p>
             <div>
-                {links.map((link, index) => (
-                    <Editable
-                        key={index}
-                        custom={<SocialLink link={link} setLink={setLink(index)} />}
-                        deletable
-                        className="!py-2"
-                        type="custom"
-                    >
-                        <div className="flex items-center gap-2">
-                            LinkedIn
-                            <TbExternalLink className="text-base" />
-                        </div>
-                    </Editable>
-                ))}
+                {profile.links &&
+                    profile.links.slice(0, lastIndex).map((link, index) => (
+                        <Editable
+                            saving={loading}
+                            onRemove={() => updateProfile(calcDeletedLinks(index))}
+                            onCancel={cancelUpdateLinks(index)}
+                            onSave={() => updateProfile(calcUpdatedLinks(index, profile.links![index]))}
+                            key={index}
+                            custom={<SocialLink link={link} setLink={setLink(index)} />}
+                            deletable
+                            className="!py-2"
+                            type="custom"
+                        >
+                            <div className="flex items-center gap-2">
+                                {link.label}
+                                <TbExternalLink className="text-base" />
+                            </div>
+                        </Editable>
+                    ))}
             </div>
-            <Editable mode="new" name="link" />
+            {profile.links && (
+                <Editable
+                    saving={loading}
+                    onCancel={cancelUpdateLinks(lastIndex)}
+                    onSave={() => updateProfile(calcUpdatedLinks(lastIndex, profile.links![lastIndex]))}
+                    custom={<SocialLink link={profile.links[lastIndex]} setLink={setLink(lastIndex)} />}
+                    className="mt-2 !py-2"
+                    type="custom"
+                    mode="new"
+                />
+            )}
         </div>
     );
 };

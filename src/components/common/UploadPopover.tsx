@@ -2,7 +2,7 @@ import { TbFile, TbFileUpload, TbLoader, TbX } from 'react-icons/tb';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { PiSparkleFill } from 'react-icons/pi';
 import { Button } from '../ui/button';
-import { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { uploadFileService } from '@/services/file.service';
 import { isAxiosError } from 'axios';
 import { useDropzone } from 'react-dropzone';
@@ -11,13 +11,29 @@ import classNames from 'classnames';
 
 type UploadPopoverProps = {
     trigger: React.ReactNode;
+    fileUrl?: string;
+    onAttach?: (fileUrl: string) => Promise<void>;
 };
 
-const UploadPopover = ({ trigger }: UploadPopoverProps) => {
+const UploadPopover = ({ trigger, fileUrl, onAttach }: UploadPopoverProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const ref = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        (async () => {
+            if (fileUrl) {
+                try {
+                    const response = await fetch(fileUrl);
+                    const blob = await response.blob();
+                    setFile(new File([blob], fileUrl.split('/').pop() || ''));
+                } catch (error) {
+                    console.log('Fetch file error:', error);
+                }
+            }
+        })();
+    }, [fileUrl]);
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         const selectedFile = acceptedFiles[0];
@@ -51,7 +67,11 @@ const UploadPopover = ({ trigger }: UploadPopoverProps) => {
         if (file) {
             try {
                 setLoading(true);
-                await uploadFileService(file);
+                const uploadData = (await uploadFileService(file)).data;
+                if (onAttach) {
+                    await onAttach(uploadData.file.url);
+                }
+
                 setFile(null);
             } catch (error) {
                 if (isAxiosError(error)) {
@@ -61,6 +81,10 @@ const UploadPopover = ({ trigger }: UploadPopoverProps) => {
                 console.log('Upload file error:', error);
             } finally {
                 setLoading(false);
+            }
+        } else {
+            if (onAttach) {
+                await onAttach('');
             }
         }
     };

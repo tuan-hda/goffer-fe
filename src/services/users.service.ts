@@ -11,6 +11,10 @@ export const getSelfService = async () => {
     return (await baseAxios.get<User>('/users/self')).data;
 };
 
+export const updateSelfService = async (data: Partial<User>) => {
+    return baseAxios.put<User>('/users/self', data);
+};
+
 export const googleProfileService = async (accessToken: string) => {
     return (
         await axios.get<GoogleProfile>(config.GOOGLE_ACCOUNT_API_BASE_URL, {

@@ -4,7 +4,7 @@ import { Textarea } from '../ui/textarea';
 
 const EducationForm = () => {
     return (
-        <Card>
+        <Card className="pb-2">
             <CardContent className="grid grid-cols-2 gap-x-8 gap-y-4 p-6">
                 <div>
                     <p className="mb-1 text-gray-500">School</p>

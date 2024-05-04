@@ -1,4 +1,3 @@
-import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { Tab, Tabs } from '@nextui-org/react';
 import { TbBaguette, TbChevronDown, TbPaperclip, TbShare } from 'react-icons/tb';
 import Basic from './Basic';
@@ -6,13 +5,15 @@ import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Editable } from '../common';
 import Experiences from './Experiences';
+import useUpdateProfile from '@/hooks/useUpdateProfile';
+import { User } from '@/types/user.type';
 
 const RightPanel = () => {
-    const { data: profile } = useSelfProfileQuery();
+    const { profile, setProfile, cancelUpdate, updateProfile, loading } = useUpdateProfile();
     if (!profile) return null;
 
     return (
-        <div className="flex-1 text-sm">
+        <div className="min-w-0 flex-1 text-sm">
             <div className="flex items-center">
                 <h1 className="font-serif text-4xl font-black text-black">{profile.name}</h1>
                 <Button variant="outline" size="icon" className="ml-auto">
@@ -30,8 +31,25 @@ const RightPanel = () => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <Editable value="Senior Software Engineer ✨" className="mt-2 font-semibold" />
-            <div className="-mx-2">
+            <Editable
+                saving={loading}
+                value={profile.oneLiner}
+                setValue={(v) =>
+                    setProfile(
+                        (prev) =>
+                            ({
+                                ...prev,
+                                oneLiner: v,
+                            }) as User,
+                    )
+                }
+                onSave={() => updateProfile({ oneLiner: profile.oneLiner })}
+                onCancel={cancelUpdate('oneLiner')}
+                mode={profile.oneLiner ? 'active' : 'new'}
+                name="brief intro"
+                className="mt-2 font-semibold"
+            />
+            <div className="-mx-2 w-full">
                 <Tabs variant="underlined" className="-mx-2 mt-10">
                     <Tab
                         key="profile"

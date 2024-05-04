@@ -12,7 +12,7 @@ const SocialLink = ({ link, setLink }: LinkProps) => {
     return (
         <div className="mb-2 flex items-center gap-2">
             <div>
-                <p className="mb-1">Label</p>
+                <p className="mb-1 text-gray-500">Label</p>
                 <Input
                     onChange={(e) =>
                         setLink({
@@ -24,7 +24,7 @@ const SocialLink = ({ link, setLink }: LinkProps) => {
                 />
             </div>
             <div>
-                <p className="mb-1">Url</p>
+                <p className="mb-1 text-gray-500">Url</p>
                 <Input
                     onChange={(e) =>
                         setLink({
@@ -32,7 +32,7 @@ const SocialLink = ({ link, setLink }: LinkProps) => {
                             url: e.target.value,
                         })
                     }
-                    value={link.label}
+                    value={link.url}
                 />
             </div>
         </div>
