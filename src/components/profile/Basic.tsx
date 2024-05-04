@@ -118,12 +118,14 @@ const Basic = () => {
                 </div>
                 {profile.resume ? (
                     <Link to={profile.resume} target="_blank" className="mt-1 w-full">
-                        <div className="flex items-center gap-3 rounded-xl bg-[#F4F4F4] p-4">
+                        <div className="flex w-full items-center gap-4 rounded-xl bg-[#F4F4F4] p-4">
                             <div className="flex items-center justify-center rounded-xl bg-white p-2">
                                 <BsFileEarmarkPdf className="text-xl text-red-500" />
                             </div>
-                            <div className="text-left">
-                                <p className="font-medium text-black">CV - {profile.name}.pdf</p>
+                            <div className="min-w-0 flex-1 text-left">
+                                <p className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-medium text-black">
+                                    CV - {profile.name}.pdf
+                                </p>
                                 <p className="font-light text-gray-400">{file?.size && fileSizeToString(file.size)}</p>
                             </div>
                             <div className="ml-auto flex items-center gap-1">
