@@ -6,16 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import JobContent from './JobContent';
 import toast from 'react-hot-toast';
-
-const process = ['sourced', 'applied', 'manager screen', 'on-site', 'hired'];
+import useJobStore from '@/stores/jobStore';
 
 const JobDetail = () => {
+    const { detail } = useJobStore();
+
     const navigate = useNavigate();
     const [saved, setSaved] = useState(false);
-    const jobLink = 'http://localhost:5173/job/029';
+    const jobLink = window.location.origin + '/job/' + detail?.id;
 
     const onApply = () => {
-        navigate('/job/029');
+        navigate('/job/' + detail?.id);
     };
 
     const copyToClipboard = () => {
@@ -60,7 +61,7 @@ const JobDetail = () => {
                     {/* Pipeline */}
                     <div className="flex flex-col">
                         <p className="mb-2 mt-10 font-serif text-lg font-semibold text-default-700">Hiring Progress</p>
-                        {process.map((item, index) => (
+                        {detail?.pipeline.map((item, index) => (
                             <div>
                                 {index > 0 && <TbArrowMoveDown className="my-1 ml-[6px] text-success" />}
                                 <Chip variant="dot" color="success" key={item}>

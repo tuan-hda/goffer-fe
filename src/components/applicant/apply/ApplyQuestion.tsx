@@ -1,16 +1,19 @@
 import { TbInfoCircle, TbMessageCircle2 } from 'react-icons/tb';
 import AudioRecorder from '../common/AudioRecorder';
+import { Question } from '@/types/question.type';
+import classNames from 'classnames';
+import useJobStore from '@/stores/jobStore';
 
 interface Props {
     number: number;
     total: number;
-    data: {
-        question: string;
-        desc: string;
-    };
+    data: Question;
 }
 
 const ApplyQuestion = ({ number, total, data }: Props) => {
+    const { answers } = useJobStore();
+    const answer = answers.find((a) => a.questionId === data.id);
+
     return (
         <div className="flex flex-col gap-9 text-text">
             <div>
@@ -20,13 +23,15 @@ const ApplyQuestion = ({ number, total, data }: Props) => {
                     </p>
                     <TbInfoCircle size={24} />
                 </div>
-                <p className="my-2 text-2xl font-medium tracking-wider">{data.question}</p>
-                <p className="text-lg font-light text-default-400">{data.desc}</p>
+                <p className="my-2  text-2xl font-medium text-text">{data.content}</p>
+                <p className="text-lg font-light text-default-400">{data.description}</p>
             </div>
 
             <div>
-                <AudioRecorder />
-                <p className="my-3 text-center text-sm">Recording must be at least 20 seconds long.</p>
+                <AudioRecorder data={data} />
+                <p className={classNames('my-3 text-center text-sm', answer && answer.duration < 20 && 'text-danger')}>
+                    Recording must be at least 20 seconds long.
+                </p>
             </div>
 
             <div className="flex items-center gap-2">

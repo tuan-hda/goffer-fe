@@ -1,165 +1,37 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { UseFormReturn, useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { Form } from '@/components/ui/form';
 import FormFieldItem from './FormFieldItem';
 import ProgressFooter from '../common/ProgressFooter';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ApplyQuestion from './ApplyQuestion';
 import { useEffect, useState } from 'react';
-
-const questions = [
-    {
-        question: 'What is your ideal work enviroment?',
-        desc: 'What is your ideal work enviroment?',
-    },
-    {
-        question: 'Walk me through a project you`re most proud of',
-        desc: 'What did you build, What was your role in it, who did you build it with...and what were the outcomes?',
-    },
-    {
-        question: 'Walk us through your origin story',
-        desc: 'We want to get to know YOU. How did you get to where you are today?',
-    },
-];
-
-function isValidPhoneNumber(phoneNumber: string): boolean {
-    try {
-        const parsedNumber = parsePhoneNumberFromString(phoneNumber);
-        return parsedNumber ? parsedNumber.isValid() : false;
-    } catch {
-        return false;
-    }
-}
-
-const formSchema = z.object({
-    profilePicture: z.instanceof(File).optional(),
-    resume: z
-        .instanceof(File)
-        .optional()
-        .refine((file) => file, {
-            message: 'Please select a valid file',
-        }),
-    fullName: z.string().min(2, { message: 'Please enter your full name' }),
-    location: z.string().optional(),
-    email: z.string().email({ message: 'Please enter a valid email' }),
-    phoneNumber: z.string().refine((value) => isValidPhoneNumber(value), {
-        message: 'Please enter a valid phone number',
-    }),
-    role: z.string().min(1, { message: 'Please enter your job role' }),
-    lastCompany: z.string().optional(),
-    linkedIn: z.string().optional(),
-    personalWebsite: z.string().optional(),
-});
-
-type StringSchemaFields = {
-    [P in keyof z.infer<typeof formSchema>]: z.infer<typeof formSchema>[P] extends string | undefined ? P : never;
-};
-
-export type FileItemProps = {
-    form: UseFormReturn<z.infer<typeof formSchema>>;
-    type: 'image' | 'file';
-    label: string;
-    name: keyof z.infer<typeof formSchema>;
-};
-
-export type TextItemProps = {
-    form: UseFormReturn<z.infer<typeof formSchema>>;
-    type: 'text' | 'phone number';
-    label: string;
-    name: StringSchemaFields[keyof StringSchemaFields];
-    placeholder?: string;
-};
-
-export type FormItemProps = FileItemProps | TextItemProps;
-
-const fields = [
-    {
-        type: 'image',
-        label: 'Profile picture (optional)',
-        name: 'profilePicture',
-    },
-    {
-        type: 'file',
-        label: 'Upload resume',
-        name: 'resume',
-    },
-    {
-        type: 'text',
-        label: 'Full name',
-        name: 'fullName',
-        placeholder: 'Enter your full name',
-    },
-    {
-        type: 'text',
-        label: 'Location (optional)',
-        name: 'location',
-        placeholder: 'San Francisco, CA',
-    },
-    {
-        type: 'text',
-        label: 'Email',
-        name: 'email',
-        placeholder: 'your@email.com',
-    },
-    {
-        type: 'phone number',
-        label: 'Phone number',
-        name: 'phoneNumber',
-        placeholder: 'Your phone number',
-    },
-    {
-        type: 'text',
-        label: 'Role',
-        name: 'role',
-        placeholder: 'Job headline (e.g. Project Manager)',
-    },
-    {
-        type: 'text',
-        label: 'Last Company (optional)',
-        name: 'lastCompany',
-        placeholder: 'Your current (or last) employer',
-    },
-    {
-        type: 'text',
-        label: 'LinkedIn',
-        name: 'linkedIn',
-        placeholder: 'Enter your LinkedIn URL',
-    },
-    {
-        type: 'text',
-        label: 'Personal website',
-        name: 'personalWebsite',
-        placeholder: 'Enter your Website URL',
-    },
-] as FormItemProps[];
+import useJobQuestions from '@/hooks/useJobQuestions';
+import useJobStore from '@/stores/jobStore';
+import { List } from '@/types/list.type';
+import { Question } from '@/types/question.type';
+import { FormProps } from '@/types/application.type';
+import { formFields, formSchema } from '@/utils/application';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const Application = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { id } = useParams();
+
+    const { data } = useJobQuestions(id);
+    const { detail, applicationInfo, setInfo, answers } = useJobStore();
 
     const [stepNum, setStepNum] = useState(0);
-    const totalSteps = questions.length;
+    const [questionData, setQuestionData] = useState<List<Question>>({
+        results: [],
+        page: 0,
+        limit: 0,
+        totalPages: 0,
+        totalResults: 0,
+    });
+    const totalSteps = questionData.totalResults;
 
-    useEffect(() => {
-        const stepHash = location.hash;
-
-        if (!stepHash || stepHash === '') {
-            setStepNum(0);
-        } else {
-            const match = stepHash.match(/#step-(\d+)/);
-            const step = match ? parseInt(match[1], 10) : 0;
-            if (step >= 1 && step <= questions.length) {
-                setStepNum(step);
-            } else {
-                setStepNum(0);
-                navigate('#', { replace: true });
-            }
-        }
-    }, [location.hash, navigate]);
-
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm<FormProps>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             profilePicture: undefined,
@@ -175,13 +47,42 @@ const Application = () => {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+    useEffect(() => {
+        data && setQuestionData(data);
+    }, [data]);
+
+    useEffect(() => {
+        const stepHash = location.hash;
+
+        if (!stepHash || stepHash === '') {
+            setStepNum(0);
+        } else {
+            const match = stepHash.match(/#step-(\d+)/);
+            const step = match ? parseInt(match[1], 10) : 0;
+            if (step >= 1 && step <= totalSteps) {
+                setStepNum(step);
+            } else {
+                setStepNum(0);
+                navigate('#', { replace: true });
+            }
+        }
+    }, [location.hash, navigate]);
+
+    function onSubmit(values: FormProps) {
+        setInfo(values);
+        if (stepNum < totalSteps) {
+            navigate(`#step-${stepNum + 1}`);
+        }
     }
 
-    const handleNextStep = () => {
-        if (stepNum < questions.length) {
-            navigate(`#step-${stepNum + 1}`);
+    const handleNextStep = async () => {
+        if (stepNum === 0) await form.handleSubmit(onSubmit)();
+        else if (stepNum < totalSteps) {
+            const questionId = questionData.results[stepNum - 1].id;
+            const answer = answers.find((a) => a.questionId === questionId);
+            if (answer && answer.duration >= 2) navigate(`#step-${stepNum + 1}`);
+        } else {
+            console.log('success', applicationInfo, answers);
         }
     };
 
@@ -189,31 +90,31 @@ const Application = () => {
         <div className="mx-auto flex max-w-screen-md flex-col gap-9 p-7 pb-36">
             {/* Title */}
             <div>
-                <p className="font-serif text-xl font-medium text-default-500 underline">Goffer</p>
-                <p className="font-serif text-5xl font-black text-text">Senior Frontend Developer (React)</p>
+                <p className="font-serif text-xl font-medium text-default-500 underline">{detail?.org.name}</p>
+                <p className="font-serif text-5xl font-black text-text">{detail?.title}</p>
                 <p>
                     <span className="font-serif text-sm font-medium capitalize text-default-500">
-                        Work from Anywhere
+                        {detail?.location}
                     </span>
                     <span className="mx-2 font-serif text-sm font-medium text-default-500">•</span>
-                    <span className="font-serif text-sm font-medium text-default-500">Full time</span>
+                    <span className="font-serif text-sm font-medium text-default-500">{detail?.time}</span>
                 </p>
             </div>
             {stepNum === 0 ? (
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="flex grid-cols-2 flex-col gap-6 md:grid">
-                        {fields.map((field) => (
+                        {formFields.map((field) => (
                             <FormFieldItem {...field} form={form} key={field.name} />
                         ))}
                     </form>
                 </Form>
             ) : (
-                <ApplyQuestion total={totalSteps} number={stepNum} data={questions[stepNum - 1]} />
+                <ApplyQuestion total={totalSteps} number={stepNum} data={questionData.results[stepNum - 1]} />
             )}
             <ProgressFooter
                 rate={(stepNum * 100) / totalSteps}
                 onStartPress={() => navigate(-1)}
-                endContent={stepNum < questions.length ? 'Next' : 'Submit'}
+                endContent={stepNum < totalSteps ? 'Next' : 'Submit'}
                 endProps={{ type: 'submit' }}
                 onEndPress={handleNextStep}
             />
