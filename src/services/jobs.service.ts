@@ -7,12 +7,13 @@ export const createJobService = async (data: NewJob) => {
 };
 
 export const getIndividualJob = async () => {
-    return (await baseAxios.get<List<IndividualJob>>('/jobs/individual', {
+    return (
+        await baseAxios.get<List<IndividualJob>>('/jobs/individual', {
             params: {
                 populate: 'org,owner',
             },
-        }
-    )).data;
+        })
+    ).data;
 };
 export const listJobsService = async () => {
     return (
