@@ -31,7 +31,7 @@ export type Job = NewJob & {
 
 export type IndividualJob = Job & {
     org: Organization;
-    author: User;
+    owner: User;
 };
 
 export type JobQuery = Omit<Job, ''>;

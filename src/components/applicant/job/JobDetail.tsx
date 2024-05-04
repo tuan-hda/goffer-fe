@@ -62,7 +62,7 @@ const JobDetail = () => {
                     <div className="flex flex-col">
                         <p className="mb-2 mt-10 font-serif text-lg font-semibold text-default-700">Hiring Progress</p>
                         {detail?.pipeline.map((item, index) => (
-                            <div>
+                            <div key={index}>
                                 {index > 0 && <TbArrowMoveDown className="my-1 ml-[6px] text-success" />}
                                 <Chip variant="dot" color="success" key={item}>
                                     {item}
