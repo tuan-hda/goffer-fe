@@ -7,9 +7,28 @@ import skills from '@/data/skills';
 import tools from '@/data/tools';
 import EducationForm from './EducationForm';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
+import { useEffect, useRef, useState } from 'react';
+import { fileSizeToString } from '@/utils/file';
+import { Link } from 'react-router-dom';
 
 const Basic = () => {
+    const ref = useRef<HTMLButtonElement>(null);
     const { profile, setProfile, loading, cancelUpdate, updateProfile } = useUpdateProfile();
+    const [file, setFile] = useState<File | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            if (profile?.resume) {
+                try {
+                    const response = await fetch(profile.resume);
+                    const blob = await response.blob();
+                    setFile(new File([blob], profile.resume.split('/').pop() || ''));
+                } catch (error) {
+                    console.log('Fetch file error:', error);
+                }
+            }
+        })();
+    }, [profile]);
 
     if (!profile) return null;
 
@@ -79,8 +98,15 @@ const Basic = () => {
                 <div className="mt-6 flex items-center justify-between">
                     <p className="font-medium text-black">Resume</p>
                     <UploadPopover
+                        onAttach={(data) =>
+                            updateProfile({
+                                resume: data,
+                            })
+                        }
+                        fileUrl={profile.resume}
                         trigger={
                             <Button
+                                ref={ref}
                                 size="icon"
                                 variant="ghost"
                                 className="opacity-0 transition group-hover:opacity-100"
@@ -90,20 +116,33 @@ const Basic = () => {
                         }
                     />
                 </div>
-                <button className="mt-1 w-full">
-                    <div className="flex items-center gap-3 rounded-xl bg-[#F4F4F4] p-4">
-                        <div className="flex items-center justify-center rounded-xl bg-white p-2">
-                            <BsFileEarmarkPdf className="text-xl text-red-500" />
+                {profile.resume ? (
+                    <Link to={profile.resume} target="_blank" className="mt-1 w-full">
+                        <div className="flex items-center gap-3 rounded-xl bg-[#F4F4F4] p-4">
+                            <div className="flex items-center justify-center rounded-xl bg-white p-2">
+                                <BsFileEarmarkPdf className="text-xl text-red-500" />
+                            </div>
+                            <div className="text-left">
+                                <p className="font-medium text-black">CV - {profile.name}.pdf</p>
+                                <p className="font-light text-gray-400">{file?.size && fileSizeToString(file.size)}</p>
+                            </div>
+                            <div className="ml-auto flex items-center gap-1">
+                                Download <TbArrowDown />
+                            </div>
                         </div>
-                        <div className="text-left">
-                            <p className="font-medium text-black">Hoang Dinh Anh Tuan.pdf</p>
-                            <p className="font-light text-gray-400">280Kb</p>
-                        </div>
-                        <div className="ml-auto flex items-center gap-1">
-                            Download <TbArrowDown />
-                        </div>
+                    </Link>
+                ) : (
+                    <div className="flex w-full flex-1 justify-between">
+                        <span>Your uploaded resume will be shown here.</span>
+                        <Button
+                            variant="outline"
+                            className="cursor-pointer font-semibold"
+                            onClick={() => ref.current?.click()}
+                        >
+                            Upload
+                        </Button>
                     </div>
-                </button>
+                )}
             </div>
 
             <p className="mt-6 font-medium text-black">Education</p>

@@ -16,6 +16,7 @@ export type User = {
     location?: string;
     links?: { label: string; url: string }[];
     oneLiner?: string;
+    resume?: string;
 };
 
 export type UpdateUser = {
