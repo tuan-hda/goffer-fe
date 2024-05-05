@@ -24,8 +24,6 @@ const initialData: NewJob = {
     time: 'Any working time',
     salaryTo: '',
     org: '',
-    orgId: '',
-    authorId: '',
     pipeline: [],
 };
 
