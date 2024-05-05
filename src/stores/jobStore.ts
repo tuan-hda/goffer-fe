@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
-import { IndividualJob } from '@/types/job.type';
+import { Job } from '@/types/job.type';
 import { AnswerProps, FormProps } from '@/types/application.type';
 
 type State = {
     tabKey: string;
     jobDetailOpening: boolean;
-    detail?: IndividualJob;
+    detail?: Job;
     applicationInfo?: FormProps;
     answers: AnswerProps[];
 };

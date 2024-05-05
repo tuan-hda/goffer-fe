@@ -24,14 +24,10 @@ export type Job = NewJob & {
     id: string;
     status: string;
     owner: User;
+    org: Organization;
     createdAt: string;
     updatedAt: string;
     publicLink: string;
-};
-
-export type IndividualJob = Job & {
-    org: Organization;
-    owner: User;
 };
 
 export type JobQuery = Omit<Job, ''>;

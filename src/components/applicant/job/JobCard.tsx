@@ -1,14 +1,15 @@
-import { Card, CardBody, Button, CardFooter, CardHeader, Chip, Divider, Avatar, Skeleton } from '@nextui-org/react';
+import { Card, CardBody, Button, CardFooter, CardHeader, Chip, Divider, Avatar } from '@nextui-org/react';
 import { useState } from 'react';
-import { TbBriefcase, TbCheck, TbHeart, TbHeartFilled } from 'react-icons/tb';
+import { TbBriefcase, TbHeart, TbHeartFilled } from 'react-icons/tb';
 import { MdOutlinePayments } from 'react-icons/md';
 import { GiDuration } from 'react-icons/gi';
 import useJobStore from '@/stores/jobStore';
 import { Badge } from '@/components/ui/badge';
-import { IndividualJob } from '@/types/job.type';
+import { Job } from '@/types/job.type';
+import moment from 'moment';
 
 interface Props {
-    data: IndividualJob;
+    data: Job;
 }
 
 const JobCard = ({ data }: Props) => {
@@ -35,7 +36,7 @@ const JobCard = ({ data }: Props) => {
                 <Avatar alt="Album cover" radius="md" size="lg" src={org.logo} />
                 <div className="flex flex-1 flex-col items-start">
                     <p className="text-xl font-semibold text-default-700">{org.name}</p>
-                    <p className="text-sm font-normal text-default-500">Posted 18h ago</p>
+                    <p className="text-sm font-normal text-default-500">{moment(data.updatedAt).fromNow()}</p>
                 </div>
                 <Button
                     color={liked ? 'primary' : undefined}
