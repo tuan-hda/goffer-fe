@@ -1,5 +1,5 @@
 import { Tab, Tabs } from '@nextui-org/react';
-import { TbBaguette, TbChevronDown, TbPaperclip, TbShare } from 'react-icons/tb';
+import { TbBaguette, TbChevronDown, TbPaperclip, TbShare, TbSparkles } from 'react-icons/tb';
 import Basic from './Basic';
 import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
@@ -7,6 +7,7 @@ import { Editable } from '../common';
 import Experiences from './Experiences';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
 import { User } from '@/types/user.type';
+import Recommendations from './Recommendations';
 
 const RightPanel = () => {
     const { profile, setProfile, cancelUpdate, updateProfile, loading } = useUpdateProfile();
@@ -70,6 +71,16 @@ const RightPanel = () => {
                         }
                     >
                         <Experiences />
+                    </Tab>
+                    <Tab
+                        key="recommendations"
+                        title={
+                            <span className="flex items-center gap-2">
+                                <TbSparkles className="text-lg" /> Recommendations
+                            </span>
+                        }
+                    >
+                        <Recommendations />
                     </Tab>
                 </Tabs>
             </div>

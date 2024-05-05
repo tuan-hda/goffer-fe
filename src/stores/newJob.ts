@@ -18,12 +18,15 @@ const initialData: NewJob = {
     workingHours: 40,
     salaryFrom: '',
     skills: [],
-    experience: '<1 year',
+    experience: '0-1 year',
     tools: [],
     location: 'Work from anywhere',
     time: 'Any working time',
     salaryTo: '',
     org: '',
+    orgId: '',
+    authorId: '',
+    pipeline: [],
 };
 
 const useNewJobStore = create<State & Action>()(
