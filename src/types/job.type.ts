@@ -14,19 +14,18 @@ export type NewJob = {
     location: string;
     time: string;
     org: string;
-    orgId: string;
-    authorId: string;
     benefits?: string[];
     pipeline: string[];
 };
 
-export type Job = NewJob & {
+export type Job = Omit<NewJob, 'org'> & {
     id: string;
     status: string;
     owner: User;
     createdAt: string;
     updatedAt: string;
     publicLink: string;
+    org: Organization;
 };
 
 export type IndividualJob = Job & {

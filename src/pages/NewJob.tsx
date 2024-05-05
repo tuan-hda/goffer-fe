@@ -35,6 +35,7 @@ const NewJob = () => {
                     ...data,
                     description: JSON.stringify(editor.children),
                     org: curr.id,
+                    salaryFrom: data.salaryFrom || 'Negotiable',
                 };
                 if (!finalData.salaryTo) {
                     delete finalData.salaryTo;
