@@ -5,11 +5,11 @@ import { Editable, UploadPopover } from '../common';
 import { Button } from '../ui/button';
 import skills from '@/data/skills';
 import tools from '@/data/tools';
-import EducationForm from './EducationForm';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
 import { useEffect, useRef, useState } from 'react';
 import { fileSizeToString } from '@/utils/file';
 import { Link } from 'react-router-dom';
+import Educations from './Educations';
 
 const Basic = () => {
     const ref = useRef<HTMLButtonElement>(null);
@@ -148,16 +148,7 @@ const Basic = () => {
             </div>
 
             <p className="mt-6 font-medium text-black">Education</p>
-            <Editable
-                mode="new"
-                deletable
-                type="custom"
-                name="education"
-                placeholder="Enter your education..."
-                setValue={(value) => setProfile({ ...profile, bio: value })}
-                value={profile.bio}
-                custom={<EducationForm />}
-            ></Editable>
+            <Educations />
         </div>
     );
 };

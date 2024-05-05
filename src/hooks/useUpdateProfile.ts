@@ -23,9 +23,9 @@ const useUpdateProfile = () => {
     const updateProfile = async (data: Partial<User>) => {
         try {
             setLoading(true);
-            await new Promise((resolve) => {
-                setTimeout(resolve, 1000);
-            });
+            // await new Promise((resolve) => {
+            //     setTimeout(resolve, 1000);
+            // });
             await updateSelfService(data);
             await refetch();
         } catch (error) {

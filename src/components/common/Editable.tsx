@@ -32,6 +32,9 @@ type EditableProps = Omit<JSX.IntrinsicElements['div'], 'onChange'> &
         onCancel?: () => void;
         onRemove?: () => Promise<void>;
         saving?: boolean;
+        closeOnSave?: boolean;
+        edit?: boolean;
+        setEdit?: React.Dispatch<React.SetStateAction<boolean>>;
     };
 
 const Editable = ({
@@ -54,15 +57,21 @@ const Editable = ({
     onCancel,
     onRemove,
     saving,
+    closeOnSave = true,
+    edit: outerEdit,
+    setEdit: outerSetEdit,
     // onChange,
     ...props
 }: EditableProps) => {
-    const [edit, setEdit] = useState(false);
+    const [innerEdit, innerSetEdit] = useState(false);
     const setValue = outerSetValue ?? ((_: string) => {});
+
+    const edit = outerEdit ?? innerEdit;
+    const setEdit = outerSetEdit ?? innerSetEdit;
 
     const handleSave = async () => {
         onSave && (await onSave(value));
-        setEdit(false);
+        closeOnSave && setEdit(false);
     };
 
     const handleCancel = () => {

@@ -17,6 +17,27 @@ export type User = {
     links?: { label: string; url: string }[];
     oneLiner?: string;
     resume?: string;
+    education?: Education[];
+    experiences?: Experience[];
+};
+
+export type Education = {
+    _id?: string;
+    school: string;
+    degree?: string;
+    startDate?: Date;
+    endDate?: Date;
+    major?: string;
+    description?: string;
+};
+
+export type Experience = {
+    _id?: string;
+    title: string;
+    company: string;
+    startDate: Date;
+    endDate?: Date;
+    description?: string;
 };
 
 export type UpdateUser = {
