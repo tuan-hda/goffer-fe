@@ -5,11 +5,6 @@ import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 export default function Header() {
     return (
         <Navbar isBordered maxWidth="full">
-            <NavbarContent justify="start">
-                <NavbarItem className="hidden lg:flex">
-                    <p className="text-3xl font-bold text-default-700">Discover</p>
-                </NavbarItem>
-            </NavbarContent>
             <NavbarBrand className="justify-center gap-4 lg:hidden">
                 <Link color="foreground" href="/individual">
                     <img src="/logo.svg" alt="logo" className="mr-2 h-10 w-10" />
