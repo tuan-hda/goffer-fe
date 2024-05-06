@@ -18,7 +18,9 @@ import JobItem from './JobItem';
 // };
 
 const JobList = () => {
-    const { data: jobs } = useListOrganizationJobs();
+    const { data: jobs } = useListOrganizationJobs({
+        sortBy: 'createdAt:desc',
+    });
 
     return (
         <div className="flex h-full w-full text-text">
@@ -27,12 +29,6 @@ const JobList = () => {
                     {jobs.results.map((job) => (
                         <JobItem key={job.id} data={job} />
                     ))}
-                    {/* <JobItem data={mock} />
-                    <JobItem data={{ ...mock, status: 'published' }} />
-                    <JobItem data={{ ...mock, status: 'closed' }} />
-                    <JobItem data={{ ...mock, status: 'expired' }} />
-                    <JobItem data={mock} />
-                    <JobItem data={mock} /> */}
                 </div>
             ) : (
                 <div className="m-auto space-y-6 text-center">

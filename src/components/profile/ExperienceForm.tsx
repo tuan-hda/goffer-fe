@@ -46,7 +46,7 @@ const ExperienceForm = ({ data, setData, error }: ExperienceForm) => {
                     </p>
                     <Popover>
                         <PopoverTrigger asChild>
-                            <Button className="w-full flex-1 justify-start text-gray-500" variant="outline">
+                            <Button className="w-full flex-1 justify-start" variant="outline">
                                 {data.startDate ? moment(data.startDate).format('MM/YYYY') : 'Start Date'}
                             </Button>
                         </PopoverTrigger>
@@ -59,7 +59,7 @@ const ExperienceForm = ({ data, setData, error }: ExperienceForm) => {
                     </Popover>
                 </div>
                 <div>
-                    <p className="mb-1 text-gray-500">End Date</p>
+                    <p className="mb-1">End Date</p>
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button className="w-full flex-1 justify-start text-gray-500" variant="outline">

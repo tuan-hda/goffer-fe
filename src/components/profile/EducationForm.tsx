@@ -46,7 +46,7 @@ const EducationForm = ({ data, setData, error }: EducationFormProps) => {
                     <div className="flex gap-2">
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button className="flex-1 justify-start text-gray-500" variant="outline">
+                                <Button className="flex-1 justify-start" variant="outline">
                                     {data.startDate ? moment(data.startDate).format('MM/YYYY') : 'Start Date'}
                                 </Button>
                             </PopoverTrigger>
@@ -59,7 +59,7 @@ const EducationForm = ({ data, setData, error }: EducationFormProps) => {
                         </Popover>
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button className="flex-1 justify-start text-gray-500" variant="outline">
+                                <Button className="flex-1 justify-start" variant="outline">
                                     {data.endDate ? moment(data.endDate).format('MM/YYYY') : 'End Date'}
                                 </Button>
                             </PopoverTrigger>
