@@ -12,6 +12,8 @@ import { FormProps } from '@/types/application.type';
 import { formFields, formSchema } from '@/utils/application';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { applyJobService } from '@/services/apply.service';
+import { uploadAudiosService } from '@/services/file.service';
 
 const Application = () => {
     const navigate = useNavigate();
@@ -83,6 +85,8 @@ const Application = () => {
             if (answer && answer.duration >= 2) navigate(`#step-${stepNum + 1}`);
         } else {
             console.log('success', applicationInfo, answers);
+            const answerUrls = await uploadAudiosService(answers.map((item) => item.audioUrl));
+            // await applyJobService({ ...applicationInfo, answers: answerUrls });
         }
     };
 

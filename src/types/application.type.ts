@@ -1,3 +1,4 @@
+import { Application } from '@/components/applicant/apply';
 import { z } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
 import { formSchema } from '@/utils/application';
@@ -29,4 +30,10 @@ export type AnswerProps = {
     questionId: string;
     audioUrl: string;
     duration: number;
+};
+
+export type ApplicationProps = FormProps & {
+    job: string;
+    applicant: string;
+    answers: string[];
 };
