@@ -6,7 +6,8 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import Candidate from './Candidate';
 import { useParams } from 'react-router-dom';
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink } from '../ui/pagination';
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '../ui/pagination';
+import { useState } from 'react';
 
 // const candidateSampleData = {
 //     name: 'Jane Doe',
@@ -25,8 +26,9 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 // };
 
 const Sourcing = () => {
-    const { id, domain } = useParams();
-    const { data } = useSourcing(id);
+    const { id } = useParams();
+    const [page, setPage] = useState(1);
+    const { data } = useSourcing(id, page);
 
     if (!data) return null;
 
@@ -60,7 +62,9 @@ const Sourcing = () => {
                                 .fill(0)
                                 .map((_, index) => (
                                     <PaginationItem key={index}>
-                                        <PaginationLink isActive>{index + 1}</PaginationLink>
+                                        <PaginationLink onClick={() => setPage(index + 1)} isActive>
+                                            {index + 1}
+                                        </PaginationLink>
                                     </PaginationItem>
                                 ))}
                         </PaginationContent>

@@ -50,7 +50,7 @@ const Candidate = ({
                         PRO
                     </Badge>
                 )}
-                <Badge className={classNames('pointer-events-none gap-2 rounded-lg bg-black/5 text-black shadow-none')}>
+                <Badge className={classNames('pointer-events-none gap-2 rounded-lg bg-black text-white shadow-none')}>
                     <TbSparkles /> {match}% match
                 </Badge>
             </div>

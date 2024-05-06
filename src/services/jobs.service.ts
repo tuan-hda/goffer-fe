@@ -27,8 +27,14 @@ export const listJobsService = async (query?: Record<string, string>) => {
     ).data;
 };
 
-export const getSourcingService = async (id: string) => {
-    return (await baseAxios.get<List<User>>(`/jobs/${id}/sourcing`)).data;
+export const getSourcingService = async (id: string, page?: number) => {
+    return (
+        await baseAxios.get<List<User>>(`/jobs/${id}/sourcing`, {
+            params: {
+                page,
+            },
+        })
+    ).data;
 };
 
 export const getJobService = async (id: string) => {
