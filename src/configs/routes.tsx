@@ -88,10 +88,10 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/individual/discover',
                                 element: <Discover />,
-                                children: [
-                                    { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
-                                    { path: '/app/individual/discover/companies', element: <>Companies</> },
-                                ],
+                                // children: [
+                                //     { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
+                                //     { path: '/app/individual/discover/companies', element: <>Companies</> },
+                                // ],
                             },
                             { path: '/app/individual/jobs', element: <JobDiscover /> },
                         ],

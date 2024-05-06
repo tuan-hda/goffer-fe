@@ -18,7 +18,17 @@ const ApplicantResponse = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <AudioRecorder />
+                    <AudioRecorder
+                        data={{
+                            id: '',
+                            author: '',
+                            constraint: 1,
+                            content: '',
+                            description: '',
+                            job: '',
+                            type: 'audio',
+                        }}
+                    />
                     <div className="-mx-6 my-4 border-t border-dashed border-t-gray-500" />
                     <div className="mb-3 mt-4 flex items-center gap-3">
                         <Badge className="gap-2 shadow-none">
