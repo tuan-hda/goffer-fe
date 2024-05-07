@@ -8,6 +8,12 @@ import JobAppliedCard from '../job/JobAppliedCard';
 import AppliedDetail from '../job/AppliedDetail';
 import useIndividualJobs from '@/hooks/useIndividualJobs';
 import { useEffect, useState } from 'react';
+import { Image } from '@nextui-org/react';
+import { Input } from '@/components/ui/input';
+import { TbSearch } from 'react-icons/tb';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import SearchJob from './SearchJob';
 const jobsApplied = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const JobDiscover = () => {
@@ -25,8 +31,9 @@ const JobDiscover = () => {
     };
 
     return (
-        <div className="mx-auto flex max-w-screen-xl">
-            <Sheet onOpenChange={onDetailOpen} open={jobDetailOpening}>
+        <div className="mx-auto flex max-w-screen-xl text-sm">
+            <SearchJob />
+            {/* <Sheet onOpenChange={onDetailOpen} open={jobDetailOpening}>
                 <div className="flex w-full justify-between">
                     <div className="my-4 flex-1 space-y-4 px-8">
                         <SearchBar />
@@ -48,7 +55,7 @@ const JobDiscover = () => {
                 <SheetContent className="min-w-[768px] rounded-s-2xl p-0 xl:min-w-[1024px]">
                     {tabKey === 'all' ? <JobDetail /> : <AppliedDetail />}
                 </SheetContent>
-            </Sheet>
+            </Sheet> */}
         </div>
     );
 };

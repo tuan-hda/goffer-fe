@@ -26,7 +26,7 @@ const Filter = () => {
                 <Input className="h-10 bg-white" />
             </div>
 
-            <div className="mt-8 flex h-[300px] flex-col justify-center rounded-3xl bg-[#151514] p-7 text-xl text-white">
+            <div className="mt-8 flex h-[300px] flex-col justify-center rounded-3xl bg-[#333] p-7 text-xl text-white">
                 Expand your network by connecting with people who share your interests.
                 <TbSparkles className="ml-auto mt-auto text-9xl" />
             </div>

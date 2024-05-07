@@ -16,8 +16,12 @@ const experienceList = [
         label: '2-4 years',
     },
     {
-        value: '4-10 years',
-        label: '4-10 years',
+        value: '4-7 years',
+        label: '4-7 years',
+    },
+    {
+        value: '7-10 years',
+        label: '7-10 years',
     },
     {
         value: '10+ years',
