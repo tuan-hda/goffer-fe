@@ -7,15 +7,15 @@ import CompaniesDiscover from './CompaniesDiscover';
 
 const Discover = () => {
     return (
-        <div className="flex min-h-screen py-10 text-sm">
-            <div className="mx-auto flex max-w-screen-xl flex-1 gap-10">
+        <div className="flex min-h-screen py-8 text-sm">
+            <div className="relative mx-auto flex max-w-screen-xl flex-1 gap-10">
                 <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between">
                         <p className="font-serif text-4xl font-black">Discover</p>
                         <button>Clear result</button>
                     </div>
                     <Tabs defaultValue="people">
-                        <div className="mt-6 flex items-center gap-6">
+                        <div className="mb-8 mt-6 flex items-center gap-6">
                             <div className="relative flex min-w-0 flex-1 items-center">
                                 <TbSearch className="absolute left-4 text-xl text-gray-400" />
                                 <Input placeholder="Search..." className="h-12 flex-1 rounded-2xl bg-white pl-12" />
@@ -38,7 +38,7 @@ const Discover = () => {
                         {/* <Outlet /> */}
                     </Tabs>
                 </div>
-                <div className="h-[calc(100vh-80x)] w-[20px] border-r border-r-[#D1D1D1]" />
+                <div className="sticky top-10 h-[calc(100vh-80x)] w-[20px] border-r border-r-[#D1D1D1]" />
                 <Filter />
             </div>
         </div>

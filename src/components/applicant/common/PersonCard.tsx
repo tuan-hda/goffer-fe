@@ -1,5 +1,5 @@
 /* eslint-disable import/named */
-import { TbHeart, TbPlanet, TbStarFilled } from 'react-icons/tb';
+import { TbBookmarks, TbPlanet, TbStarFilled } from 'react-icons/tb';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Avatar } from '@nextui-org/react';
 import { Button } from '@/components/ui/button';
@@ -47,7 +47,7 @@ const PersonCard = () => {
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant="outline" className="h-8 w-8 rounded-full" size="icon">
+                            <Button variant="black" className="h-8 w-8 rounded-full" size="icon">
                                 <TbPlanet className="text-base" />
                             </Button>
                         </TooltipTrigger>
@@ -61,11 +61,11 @@ const PersonCard = () => {
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="outline" className="h-8 w-8 rounded-full" size="icon">
-                                <TbHeart className="text-base" />
+                                <TbBookmarks className="text-base" />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>Saved</p>
+                            <p>Save</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>

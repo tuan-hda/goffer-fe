@@ -1,22 +1,24 @@
 import { Input } from '@/components/ui/input';
 import MultipleSelector from '@/components/ui/mutli-selector';
+import skills from '@/data/skills';
+import tools from '@/data/tools';
 import { TbSparkles } from 'react-icons/tb';
 
 const Filter = () => {
     return (
-        <div className="mt-2 w-[300px] text-sm">
+        <div className="sticky top-10 mt-2 w-[300px] self-start text-sm">
             <div className="flex justify-between">
                 <p className="text-lg font-medium">Filters</p>
                 <button>Clear filters</button>
             </div>
             <div>
                 <p className="mb-1 mt-10">Skills</p>
-                <MultipleSelector className="h-10 bg-white" options={[]} />
+                <MultipleSelector className="h-10 bg-white" maxSelected={2} options={skills} />
             </div>
 
             <div>
                 <p className="mb-1 mt-4">Tools</p>
-                <MultipleSelector className="h-10 bg-white" options={[]} />
+                <MultipleSelector className="h-10 bg-white" maxSelected={2} options={tools} />
             </div>
 
             <div>
