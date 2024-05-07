@@ -641,3 +641,10 @@ i.justify-align {
 .transparentLeaf {
     background-color: transparent !important;
 }
+
+.lines-ellipsis {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--lines, 2);
+}

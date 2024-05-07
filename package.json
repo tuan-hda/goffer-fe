@@ -96,6 +96,7 @@
         "classnames": "^2.5.1",
         "clsx": "^2.1.0",
         "cmdk": "0.2.1",
+        "color-thief-react": "^2.1.0",
         "date-fns": "^3.6.0",
         "embla-carousel": "^8.0.0",
         "embla-carousel-autoplay": "^8.0.0",
