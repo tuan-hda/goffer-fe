@@ -1,15 +1,28 @@
 import { Image } from '@nextui-org/react';
-import { TbBoxAlignBottomFilled, TbHeart, TbShare } from 'react-icons/tb';
+import { TbBookmarks, TbBoxAlignBottomFilled, TbShare } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import { Job } from '@/types/job.type';
 import { Badge } from '../ui/badge';
 import { formatUTCDate } from '@/utils/time';
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from '@/stores/authStore';
 
 type JobHeaderProps = {
     job: Job;
 };
 
 const JobHeader = ({ job }: JobHeaderProps) => {
+    const navigate = useNavigate();
+    const isLoggedIn = !!useAuthStore((state) => state.access);
+
+    const handleApply = () => {
+        if (isLoggedIn) {
+            navigate(`/job/${job.id}/application`);
+        } else {
+            navigate(`/auth/login?redirect=/job/${job.id}/application`);
+        }
+    };
+
     return (
         <>
             <div className="flex items-center gap-2">
@@ -20,11 +33,11 @@ const JobHeader = ({ job }: JobHeaderProps) => {
                         <p>{job.org.field}</p>
                     </div>
                 </div>
-                <Button variant="black" className="ml-auto gap-2">
+                <Button variant="black" className="ml-auto gap-2" onClick={handleApply}>
                     <TbBoxAlignBottomFilled className="text-lg" /> Apply
                 </Button>
                 <Button size="icon" variant="outline">
-                    <TbHeart className="text-lg" />
+                    <TbBookmarks className="text-lg" />
                 </Button>
                 <Button size="icon" variant="outline">
                     <TbShare className="text-lg" />
@@ -39,46 +52,56 @@ const JobHeader = ({ job }: JobHeaderProps) => {
                 <Image src={job?.owner.avatar} className="h-10 w-10 rounded-2xl" />
                 <p className="font-semibold">{job.owner.name}</p>
                 <div className="mx-2 h-6 border-r" />
-                <p className="font-light text-gray-500">{formatUTCDate(job.createdAt)}</p>
+                <p className="text-[13px] font-light text-gray-500">{formatUTCDate(job.createdAt)}</p>
             </div>
 
             <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
 
             <div className="grid grid-cols-3">
                 <div>
-                    <p className="text-gray-500">Experience</p>
-                    <p className="text-base font-semibold">{job.experience}</p>
+                    <p className="text-[13px] text-gray-500">Experience</p>
+                    <p className=" font-semibold">{job.experience}</p>
                 </div>
                 <div>
-                    <p className="text-gray-500">Working hours</p>
-                    <p className="text-base font-semibold">{job.workingHours}</p>
+                    <p className="text-[13px] text-gray-500">Working hours</p>
+                    <p className=" font-semibold">{job.workingHours}</p>
                 </div>
                 <div>
-                    <p className="text-gray-500">Salary</p>
-                    <p className="text-base font-semibold">
+                    <p className="text-[13px] text-gray-500">Salary</p>
+                    <p className=" font-semibold">
                         ${job.salaryFrom}
                         {job.salaryTo && ` - $${job.salaryTo}`}
                     </p>
                 </div>
             </div>
-            <div className="mt-6">
-                <p className="text-gray-500">Working location</p>
-                <p className="text-base text-text">{job.location}</p>
+            <div className="mt-6 grid grid-cols-3">
+                <div>
+                    <p className="text-[13px] text-gray-500">Open positions</p>
+                    <p className=" text-text">{job.slots} vacancies</p>
+                </div>
+                <div>
+                    <p className="text-[13px] text-gray-500">Date line</p>
+                    <p className=" text-text">30 days left</p>
+                </div>
+                <div>
+                    <p className="text-[13px] text-gray-500">Working time</p>
+                    <p className=" text-text">{job.time}</p>
+                </div>
             </div>
             <div className="mt-6">
-                <p className="text-gray-500">Working time</p>
-                <p className="text-base text-text">{job.time}</p>
+                <p className="text-[13px] text-gray-500">Working location</p>
+                <p className=" text-text">{job.location}</p>
             </div>
             <div className="mt-6">
-                <p className="mb-1 text-gray-500">Skills & Tools</p>
+                <p className="mb-1 text-[13px] text-gray-500">Skills & Tools</p>
                 <div className="space-x-2">
                     {job.skills.map((skill) => (
-                        <Badge className="text-sm" variant="outline">
+                        <Badge className="text-sm font-normal" variant="outline">
                             {skill}
                         </Badge>
                     ))}
                     {job.tools.map((skill) => (
-                        <Badge className="text-sm" variant="outline">
+                        <Badge className="text-sm font-normal" variant="outline">
                             {skill}
                         </Badge>
                     ))}

@@ -33,11 +33,6 @@ export const formSchema = z.object({
 
 export const formFields = [
     {
-        type: 'image',
-        label: 'Profile picture (optional)',
-        name: 'profilePicture',
-    },
-    {
         type: 'file',
         label: 'Upload resume',
         name: 'resume',
@@ -71,12 +66,6 @@ export const formFields = [
         label: 'Role',
         name: 'role',
         placeholder: 'Job headline (e.g. Project Manager)',
-    },
-    {
-        type: 'text',
-        label: 'Last Company (optional)',
-        name: 'lastCompany',
-        placeholder: 'Your current (or last) employer',
     },
     {
         type: 'text',
