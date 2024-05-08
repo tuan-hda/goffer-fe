@@ -14,6 +14,9 @@ import { TbSearch } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import SearchJob from './SearchJob';
+import { JobList } from '@/components/orgJobs';
+import VacancyList from './VacancyList';
+import VacancyDetail from './VacancyDetail';
 const jobsApplied = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const JobDiscover = () => {
@@ -31,8 +34,9 @@ const JobDiscover = () => {
     };
 
     return (
-        <div className="mx-auto flex max-w-screen-xl text-sm">
+        <div className="mx-auto flex max-w-screen-xl flex-col text-sm">
             <SearchJob />
+            <VacancyList />
             {/* <Sheet onOpenChange={onDetailOpen} open={jobDetailOpening}>
                 <div className="flex w-full justify-between">
                     <div className="my-4 flex-1 space-y-4 px-8">

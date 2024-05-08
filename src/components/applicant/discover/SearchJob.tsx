@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import skills from '@/data/skills';
 import tools from '@/data/tools';
 import { Image } from '@nextui-org/react';
+import { useState } from 'react';
 import { TbSearch } from 'react-icons/tb';
 
 const experienceList = [
@@ -36,6 +37,14 @@ const experienceList = [
 ];
 
 const SearchJob = () => {
+    const [range, setRange] = useState('');
+    const [salaryRange, setSalaryRange] = useState({ from: '', to: '' });
+
+    const clearRange = () => {
+        setSalaryRange({ from: '', to: '' });
+        setRange('');
+    };
+
     return (
         <div className="relative mt-10 w-full rounded-[36px] bg-beige/30 p-14">
             <p className="relative z-[11] font-serif text-5xl font-black">Search jobs</p>
@@ -91,18 +100,43 @@ const SearchJob = () => {
                             variant="outline"
                             className="-mt-[10px] h-10 w-full justify-start rounded-2xl bg-white/90"
                         >
-                            a
+                            {range || 'Salary range'}
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="rounded-2xl p-5 text-sm">
                         <p className="font-medium">Specify salary range</p>
                         <div className="mt-4 flex flex-row gap-3">
-                            <Input className="" placeholder="Salary from" />
-                            <Input className="" placeholder="Salary to" />
+                            <Input
+                                className=""
+                                placeholder="Salary from"
+                                value={salaryRange.from}
+                                onChange={(e) =>
+                                    setSalaryRange((prev) => ({
+                                        ...prev,
+                                        from: e.target.value,
+                                    }))
+                                }
+                            />
+                            <Input
+                                className=""
+                                placeholder="Salary to"
+                                value={salaryRange.to}
+                                onChange={(e) =>
+                                    setSalaryRange((prev) => ({
+                                        ...prev,
+                                        to: e.target.value,
+                                    }))
+                                }
+                            />
                         </div>
                         <div className="mt-4 flex justify-end gap-4">
-                            <button>Clear</button>
-                            <Button variant="black" className="text-sm" size="sm">
+                            <button onClick={clearRange}>Clear</button>
+                            <Button
+                                onClick={() => setRange(`${salaryRange.from} - ${salaryRange.to}`)}
+                                variant="black"
+                                className="text-sm"
+                                size="sm"
+                            >
                                 Apply filter
                             </Button>
                         </div>

@@ -5,9 +5,13 @@ import JobHeader from './JobHeader';
 import { TbLoader } from 'react-icons/tb';
 import { PlainPlate } from '../common';
 
-const JobDetail = () => {
+type JobDetailProps = {
+    jobId?: string;
+};
+
+const JobDetail = ({ jobId }: JobDetailProps) => {
     const { id } = useParams();
-    const { data: job, isLoading } = useGetOrganizationJob(id);
+    const { data: job, isLoading } = useGetOrganizationJob(id || jobId);
     const navigate = useNavigate();
 
     if (isLoading)
