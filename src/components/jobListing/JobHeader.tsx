@@ -4,12 +4,25 @@ import { Button } from '../ui/button';
 import { Job } from '@/types/job.type';
 import { Badge } from '../ui/badge';
 import { formatUTCDate } from '@/utils/time';
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from '@/stores/authStore';
 
 type JobHeaderProps = {
     job: Job;
 };
 
 const JobHeader = ({ job }: JobHeaderProps) => {
+    const navigate = useNavigate();
+    const isLoggedIn = !!useAuthStore((state) => state.access);
+
+    const handleApply = () => {
+        if (isLoggedIn) {
+            navigate(`/job/${job.id}/application`);
+        } else {
+            navigate(`/auth/login?redirect=/job/${job.id}/application`);
+        }
+    };
+
     return (
         <>
             <div className="flex items-center gap-2">
@@ -20,7 +33,7 @@ const JobHeader = ({ job }: JobHeaderProps) => {
                         <p>{job.org.field}</p>
                     </div>
                 </div>
-                <Button variant="black" className="ml-auto gap-2">
+                <Button variant="black" className="ml-auto gap-2" onClick={handleApply}>
                     <TbBoxAlignBottomFilled className="text-lg" /> Apply
                 </Button>
                 <Button size="icon" variant="outline">

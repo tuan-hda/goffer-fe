@@ -1,6 +1,6 @@
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import JobHeader from './JobHeader';
 import { TbLoader } from 'react-icons/tb';
 import { PlainPlate } from '../common';
@@ -12,7 +12,6 @@ type JobDetailProps = {
 const JobDetail = ({ jobId }: JobDetailProps) => {
     const { id } = useParams();
     const { data: job, isLoading } = useGetOrganizationJob(id || jobId);
-    const navigate = useNavigate();
 
     if (isLoading)
         return (
@@ -22,7 +21,6 @@ const JobDetail = ({ jobId }: JobDetailProps) => {
         );
 
     if (!job) {
-        navigate('/not-found');
         return null;
     }
 

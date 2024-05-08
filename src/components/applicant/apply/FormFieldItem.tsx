@@ -50,7 +50,7 @@ const ImageField = ({ form, name, label }: FileItemProps) => {
                                 <Input
                                     type="file"
                                     id={'imageField' + name}
-                                    className="h-10 bg-white pt-2 text-gray-500 focus-visible:border-none focus-visible:ring-1 focus-visible:ring-primary"
+                                    className="h-10 bg-white pt-2 text-gray-500 focus-visible:border-none focus-visible:ring-1 focus-visible:ring-black/70"
                                     name={name}
                                     accept="image/*"
                                     ref={(e) => {
@@ -91,7 +91,7 @@ const FileField = ({ form, name, label }: FileItemProps) => {
                             <Input
                                 type="file"
                                 id={'fileField' + name}
-                                className="h-10 bg-white pt-2 text-gray-500 focus-visible:border-none focus-visible:ring-1 focus-visible:ring-primary"
+                                className="h-10 bg-white pt-2 text-gray-500 focus-visible:border-none focus-visible:ring-1 focus-visible:ring-black/70"
                                 name={name}
                                 ref={ref}
                                 onBlur={onBlur}
@@ -123,7 +123,7 @@ const TextField = ({ form, name, label, placeholder }: TextItemProps) => {
                         <FormLabel>{label}</FormLabel>
                         <FormControl>
                             <Input
-                                className="h-10 bg-white text-text focus-visible:border-none focus-visible:ring-1 focus-visible:ring-primary"
+                                className="h-10 bg-white text-text focus-visible:border-none focus-visible:ring-1 focus-visible:ring-black/70"
                                 placeholder={placeholder}
                                 {...field}
                             />
@@ -160,14 +160,14 @@ const PhoneField = ({ form, label, placeholder }: TextItemProps) => {
                 <FormItem>
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                        <div className="flex h-10 rounded-md shadow-sm transition-colors focus-within:ring-1 focus-within:ring-primary">
+                        <div className="flex h-10 rounded-md shadow-sm transition-colors focus-within:ring-1 focus-within:ring-black/70">
                             <Popover open={open} onOpenChange={setOpen}>
                                 <PopoverTrigger asChild>
                                     <Button
                                         variant="outline"
                                         role="combobox"
                                         aria-expanded={open}
-                                        className="h-full w-fit justify-between rounded-r-none shadow-none focus-visible:ring-primary"
+                                        className="h-full w-fit justify-between rounded-r-none shadow-none focus-visible:ring-black/70"
                                     >
                                         <FlagImage iso2={country.iso2} />
                                         <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -205,7 +205,7 @@ const PhoneField = ({ form, label, placeholder }: TextItemProps) => {
                                 </PopoverContent>
                             </Popover>
                             <Input
-                                className="h-10 rounded-l-none bg-white text-text shadow-none focus-visible:border-none focus-visible:ring-1 focus-visible:ring-primary"
+                                className="h-10 rounded-l-none bg-white text-text shadow-none focus-visible:border-none focus-visible:ring-1 focus-visible:ring-black/70"
                                 placeholder={placeholder}
                                 {...field}
                                 onChange={handlePhoneValueChange}

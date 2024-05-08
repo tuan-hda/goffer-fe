@@ -35,9 +35,15 @@ const Login = () => {
             setLoading(true);
             const response = await loginService(email, password);
             setAccess(response.data.tokens.access);
-            navigate('/app/individual');
+
             refetch();
+            const redirect = new URLSearchParams(window.location.search).get('redirect');
+            if (redirect) {
+                navigate(redirect);
+                return;
+            }
             toast.success('Login successful');
+            navigate('/app/individual');
         } catch (error) {
             toast.error('Wrong email or password.');
         } finally {

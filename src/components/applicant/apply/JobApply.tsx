@@ -1,13 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import ProgressFooter from '../common/ProgressFooter';
-import JobContent from '../job/JobContent';
+import { JobDetail } from '@/components/jobListing';
 
 const JobApply = () => {
-    const navigate = useNavigate();
     return (
-        <div className="mx-auto max-w-screen-md pb-36">
-            <JobContent />
-            <ProgressFooter endContent="Apply to this Job" onEndPress={() => navigate('application')} />
+        <div className="mx-auto max-w-screen-md pb-10 pt-10">
+            <JobDetail jobId="662cd4e670d3eb01cc3df5ee" />
         </div>
     );
 };

@@ -26,6 +26,13 @@ const GoogleAuth = ({ type, authType }: GoogleAuthProps) => {
         try {
             setLoading(true);
             const data = await loginGoogleService(res.access_token);
+
+            const redirect = new URLSearchParams(window.location.search).get('redirect');
+            if (redirect) {
+                window.location.href = redirect;
+                return;
+            }
+
             window.location.pathname = `/app/${data.user.initialType}`;
         } catch (error) {
             console.log('Google sign up error:', error);
