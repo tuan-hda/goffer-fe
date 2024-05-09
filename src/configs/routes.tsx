@@ -25,6 +25,7 @@ import {
     WhoAreWe,
     Feature,
     Profile,
+    Team,
 } from '../pages';
 import { Discover, JobDiscover, PeopleDiscover } from '@/components/applicant/discover';
 import {
@@ -111,6 +112,10 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/settings',
                         element: <OrgSettings />,
+                    },
+                    {
+                        path: '/app/organization/:domain/team',
+                        element: <Team />,
                     },
                     {
                         path: '/app/organization/:domain/job/:id',
