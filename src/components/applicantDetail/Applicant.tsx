@@ -52,7 +52,7 @@ const Applicant = ({
     return (
         <div className="flex-1">
             <div className="flex items-start gap-5">
-                <Avatar src={avatarUrl} className="h-24 w-24 flex-shrink-0 rounded-lg" />
+                <Avatar src={avatarUrl} className="h-24 w-24 flex-shrink-0 rounded-3xl" />
                 <div className="flex flex-1 flex-col">
                     <div className="flex items-center gap-2">
                         <p className="font-serif text-2xl font-semibold">{name}</p>

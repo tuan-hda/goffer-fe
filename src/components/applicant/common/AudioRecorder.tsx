@@ -38,9 +38,10 @@ const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonP
 
 interface Props {
     data: Question;
+    mock?: boolean;
 }
 
-const AudioRecorder = ({ data }: Props) => {
+const AudioRecorder = ({ data, mock }: Props) => {
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
@@ -54,6 +55,15 @@ const AudioRecorder = ({ data }: Props) => {
     const { answers, updateAnswer, removeAnswer } = useJobStore();
 
     useEffect(() => {
+        if (mock) {
+            setAudioURL(
+                'https://res.cloudinary.com/doxsstgkc/video/upload/v1715399372/Y2meta.app_-_Tell_Me_About_Yourself_-_Sample_Answer_Food_Service___Hospitality_128_kbps_zrxqkk.mp3',
+            );
+            setRightTime(47);
+        }
+    }, [mock]);
+
+    useEffect(() => {
         const audio = audioRef.current;
         const answer = answers.find((a) => a.questionId === data.id);
 
@@ -63,12 +73,12 @@ const AudioRecorder = ({ data }: Props) => {
             removeAnswer(data.id);
         };
 
-        if (audio && answer) {
+        if (!mock && audio && answer) {
             audio.src = answer.audioUrl;
             setAudioURL(answer.audioUrl);
             setRightTime(answer.duration);
             audio.addEventListener('error', handleError);
-        } else {
+        } else if (!mock) {
             setAudioURL(undefined);
             setRightTime(0);
         }

@@ -1,17 +1,10 @@
 import { Sidebar, Menu } from 'react-pro-sidebar';
 import {
-    TbBaguette,
-    TbCompass,
     TbHelp,
     TbLayoutSidebarLeftCollapseFilled,
     TbLayoutSidebarLeftExpandFilled,
     TbLogout,
-    TbNotification,
-    TbPaint,
-    TbSettings,
-    TbSparkles,
-    TbUser,
-    TbWallet,
+    TbPlus,
 } from 'react-icons/tb';
 import { Fragment, useEffect, useState } from 'react';
 import useDiscoverStore from '@/stores/discoverStore';
@@ -22,125 +15,10 @@ import { shallow } from 'zustand/shallow';
 import SidebarItem from './SidebarItem';
 import UserPopover from './UserPopover';
 import { Organization } from '@/types/organization.type';
+import { Image } from '@nextui-org/react';
+import { items, orgItems } from './items';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
-
-type ButtonItem = {
-    type: 'button';
-    element: {
-        startContent: React.ReactNode;
-        content: React.ReactNode;
-    };
-    divider?: boolean;
-};
-
-type LinkItem = {
-    type: 'link';
-    element: {
-        path: string;
-        pattern?: string;
-        startContent: React.ReactNode;
-        content: React.ReactNode;
-    };
-    divider?: boolean;
-};
-
-export type Item = ButtonItem | LinkItem;
-
-const items: Item[] = [
-    {
-        type: 'button',
-        element: {
-            startContent: <TbSparkles className="text-xl" />,
-            content: 'Ask Goffer',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: '/app/profile',
-            startContent: <TbUser className="text-xl" />,
-            content: 'Profile',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: '/app/individual/notifications',
-            startContent: <TbNotification className="text-xl" />,
-            content: 'Notifications',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: '/app/settings',
-            startContent: <TbSettings className="text-xl" />,
-            content: 'Settings',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: '/app/individual/discover',
-            startContent: <TbCompass className="text-xl" />,
-            content: 'Discover',
-        },
-        divider: true,
-    },
-    {
-        type: 'link',
-        element: {
-            path: '/app/individual/jobs',
-            startContent: <TbBaguette className="text-xl" />,
-            content: 'Jobs',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: '/app/discover/portfolio',
-            startContent: <TbPaint className="text-xl" />,
-            content: 'Portfolio',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: '/app/individual/wallet',
-            startContent: <TbWallet className="text-xl" />,
-            content: 'Wallet',
-        },
-    },
-];
-
-const orgItems: (_: string) => Item[] = (domain: string) => [
-    {
-        type: 'button',
-        element: {
-            startContent: <TbSparkles className="text-xl" />,
-            content: 'Ask Goffer',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: `/app/organization/${domain}`,
-            pattern: '/app/organization/:domain',
-            startContent: <TbBaguette className="text-xl" />,
-            content: 'Jobs',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: `/app/organization/${domain}/settings`,
-            pattern: '/app/organization/:domain/settings',
-            startContent: <TbSettings className="text-xl" />,
-            content: 'Settings',
-        },
-    },
-];
 
 type SideBarProps = {
     org?: Organization;
@@ -231,6 +109,29 @@ const SideBar = ({ org }: SideBarProps) => {
                             ))}
                         </div>
                         <div className="mx-4 mt-auto">
+                            {domain && (
+                                <button className="relative mb-4 w-full overflow-hidden rounded-xl border p-4 text-left">
+                                    <div className="absolute -right-10  z-0">
+                                        <Image
+                                            src="/flower.png"
+                                            classNames={{
+                                                wrapper: 'w-36 h-36',
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="relative z-[1] flex items-center gap-3">
+                                        <div>
+                                            <p className="font-medium">Invite member</p>
+                                            <p className="mt-1 text-xs font-light mix-blend-difference">
+                                                Collaborate with your team on hiring stuffs
+                                            </p>
+                                        </div>
+                                        <div className="flex rounded-full bg-white/70 p-3 shadow-large backdrop-blur-3xl">
+                                            <TbPlus className="text-2xl" />
+                                        </div>
+                                    </div>
+                                </button>
+                            )}
                             <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
                                 <TbHelp className="text-xl" />
                                 <p

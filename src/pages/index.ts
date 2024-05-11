@@ -24,3 +24,4 @@ export { default as PreviewJob } from './PreviewJob';
 export { default as Feature } from './Feature';
 export { default as WhoAreWe } from './WhoAreWe';
 export { default as Profile } from './Profile';
+export { default as Team } from './Team';
