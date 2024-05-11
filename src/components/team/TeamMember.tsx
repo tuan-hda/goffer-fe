@@ -1,6 +1,7 @@
 import { TbUserPlus } from 'react-icons/tb';
 import MemberList from './MemberList';
 import InviteDialog from './InviteDialog';
+import { Image } from '@nextui-org/react';
 
 const TeamMember = () => {
     return (
@@ -13,12 +14,20 @@ const TeamMember = () => {
                 <p className="mt-2">20 members.</p>
             </div>
             <div className="flex-1">
-                <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-[#EBEBEE] px-20 py-10">
+                <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-dashed border-[#EBEBEE] px-20 py-10">
                     <div className="rounded-full bg-gray-200/80 p-2">
                         <TbUserPlus />
                     </div>
                     <p className="text-gray-600">You can add your team member here.</p>
                     <InviteDialog />
+                    <div className="absolute -right-14 top-10 z-0">
+                        <Image
+                            src="/flower.png"
+                            classNames={{
+                                wrapper: 'w-80 h-80',
+                            }}
+                        />
+                    </div>
                 </div>
 
                 <div className="mt-6 rounded-xl border">

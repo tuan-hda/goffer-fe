@@ -17,6 +17,7 @@ import UserPopover from './UserPopover';
 import { Organization } from '@/types/organization.type';
 import { Image } from '@nextui-org/react';
 import { items, orgItems } from './items';
+import AskAI from '../askAI/AskAI';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -31,16 +32,24 @@ const SideBar = ({ org }: SideBarProps) => {
     const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
     const [collapsed, setCollapsed] = useState(false);
     const { sideBarPinned, updateSideBarPinned } = useDiscoverStore();
+
+    // Either open ask AI modal
+    const [open, setOpen] = useState(false);
+
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
     const onMouseLeave = () => setCollapsed(!sideBarPinned && true);
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
 
     const location = useLocation();
-    const match = (domain ? orgItems(domain) : items).find((item) => {
+    const match = (domain ? orgItems(domain) : items({ onClickMap: {} })).find((item) => {
         if (item.type === 'link') {
             return matchPath(item.element.pattern || item.element.path, location.pathname);
         }
     });
+
+    const openAskAI = () => {
+        setOpen(true);
+    };
 
     useEffect(() => {
         setCollapsed(!sideBarPinned);
@@ -48,6 +57,7 @@ const SideBar = ({ org }: SideBarProps) => {
 
     return (
         <div className="fixed z-50 bg-white text-sm text-text" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+            <AskAI isOpen={open} onClose={() => setOpen(false)} />
             <Sidebar width={'280px'} className="child-bg border-r !border-r-gray-200/70" collapsed={collapsed}>
                 <Menu
                     className="h-full bg-pale"
@@ -101,16 +111,31 @@ const SideBar = ({ org }: SideBarProps) => {
                     <div className="flex h-full w-full flex-col">
                         <div className="mx-[14px]">
                             <UserPopover collapsed={collapsed} />
-                            {(org ? orgItems(domain!) : items).map((item, index) => (
+                            {(org
+                                ? orgItems(domain!)
+                                : items({
+                                      onClickMap: {
+                                          0: openAskAI,
+                                      },
+                                  })
+                            ).map((item, index) => (
                                 <Fragment key={index}>
                                     {item.divider && <div className="mx-2 my-4 border-t border-t-gray-200/70" />}
-                                    <SidebarItem match={match} collapsed={collapsed} item={item} />
+                                    <SidebarItem
+                                        onClick={'onClick' in item ? item.onClick : undefined}
+                                        match={match}
+                                        collapsed={collapsed}
+                                        item={item}
+                                    />
                                 </Fragment>
                             ))}
                         </div>
                         <div className="mx-4 mt-auto">
-                            {domain && (
-                                <button className="relative mb-4 w-full overflow-hidden rounded-xl border p-4 text-left">
+                            {domain && !collapsed && (
+                                <Link
+                                    to={`/app/organization/${domain}/team`}
+                                    className="absolute bottom-24 mb-4 block w-[248px] overflow-hidden rounded-xl border p-4 text-left"
+                                >
                                     <div className="absolute -right-10  z-0">
                                         <Image
                                             src="/flower.png"
@@ -130,7 +155,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                             <TbPlus className="text-2xl" />
                                         </div>
                                     </div>
-                                </button>
+                                </Link>
                             )}
                             <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
                                 <TbHelp className="text-xl" />

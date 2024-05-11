@@ -1,16 +1,20 @@
 import classNames from 'classnames';
-import { Item } from './SideBar';
 import { Link } from 'react-router-dom';
+import { Item } from './items';
 
 type SidebarItemProps = {
     item: Item;
     collapsed: boolean;
     match?: Item;
+    onClick?: () => void;
 };
 
-const SidebarItem = ({ item, collapsed, match }: SidebarItemProps) => {
+const SidebarItem = ({ item, collapsed, match, onClick }: SidebarItemProps) => {
     return item.type === 'button' ? (
-        <button className="flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 text-primary transition hover:bg-beige/70">
+        <button
+            onClick={onClick}
+            className="flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 text-primary transition hover:bg-beige/70"
+        >
             {item.element.startContent}
             <p
                 className={classNames(
