@@ -109,8 +109,11 @@ const SideBar = ({ org }: SideBarProps) => {
                             ))}
                         </div>
                         <div className="mx-4 mt-auto">
-                            {domain && (
-                                <button className="relative mb-4 w-full overflow-hidden rounded-xl border p-4 text-left">
+                            {domain && !collapsed && (
+                                <Link
+                                    to={`/app/organization/${domain}/team`}
+                                    className="absolute bottom-24 mb-4 block w-[248px] overflow-hidden rounded-xl border p-4 text-left"
+                                >
                                     <div className="absolute -right-10  z-0">
                                         <Image
                                             src="/flower.png"
@@ -130,7 +133,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                             <TbPlus className="text-2xl" />
                                         </div>
                                     </div>
-                                </button>
+                                </Link>
                             )}
                             <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
                                 <TbHelp className="text-xl" />
