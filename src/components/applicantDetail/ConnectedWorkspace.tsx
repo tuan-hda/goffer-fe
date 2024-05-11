@@ -11,7 +11,7 @@ const ConnectedWorkspace = () => {
     const [isReplying, setReplying] = useState(false);
 
     return (
-        <div className="min-w-0 max-w-[480px]">
+        <div className="min-w-0 max-w-[480px] flex-1">
             <Card className="bg-white/100 shadow-none">
                 <CardHeader>
                     <CardTitle className="text-base">Workspace</CardTitle>
