@@ -2,6 +2,7 @@ import { IndividualJob, Job, NewJob } from '@/types/job.type';
 import { baseAxios } from './base';
 import { List } from '@/types/list.type';
 import { User } from '@/types/user.type';
+import { AxiosRequestConfig } from 'axios';
 
 export const createJobService = async (data: NewJob) => {
     return (await baseAxios.post<Job>('/jobs', data)).data;

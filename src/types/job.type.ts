@@ -21,7 +21,7 @@ export type NewJob = {
 export type Job = Omit<NewJob, 'org'> & {
     id: string;
     status: string;
-    owner: User;
+    owner?: User;
     createdAt: string;
     updatedAt: string;
     publicLink: string;
@@ -30,7 +30,7 @@ export type Job = Omit<NewJob, 'org'> & {
 
 export type IndividualJob = Job & {
     org: Organization;
-    owner: User;
+    owner?: User;
 };
 
 export type JobQuery = Omit<Job, ''>;

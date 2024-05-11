@@ -49,8 +49,8 @@ const JobHeader = ({ job }: JobHeaderProps) => {
             <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
 
             <div className="flex h-fit w-fit items-center gap-4 overflow-hidden">
-                <Image src={job?.owner.avatar} className="h-10 w-10 rounded-2xl" />
-                <p className="font-semibold">{job.owner.name}</p>
+                <Image src={job?.owner?.avatar} className="h-10 w-10 rounded-2xl" />
+                <p className="font-semibold">{job.owner?.name}</p>
                 <div className="mx-2 h-6 border-r" />
                 <p className="text-[13px] font-light text-gray-500">{formatUTCDate(job.createdAt)}</p>
             </div>

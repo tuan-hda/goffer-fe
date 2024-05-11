@@ -85,8 +85,8 @@ const JobItem = ({ data }: JobItemProps) => {
                 <p className="mt-7 flex items-center">
                     Created by
                     <span className="mx-2 flex text-black">
-                        <Avatar src={data.owner.avatar} className="h-5 w-5" />
-                        <span className="-mr-1 ml-1">{data.owner.name}</span>
+                        <Avatar src={data.owner?.avatar} className="h-5 w-5" />
+                        <span className="-mr-1 ml-1">{data.owner?.name}</span>
                     </span>
                     {formatUTCDate(data.createdAt)}
                 </p>
