@@ -11,7 +11,7 @@ const Comment = ({ setReplying }: CommentProps) => {
         <div className="flex gap-3">
             <Avatar
                 size="sm"
-                src="https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-1/318662248_3420347351543223_543157534243100406_n.jpg?stp=c0.7.100.100a_dst-jpg_p100x100&_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeE1AE393m0M-Qc7uh6nlOGZfma7FFkD0KJ-ZrsUWQPQoslg37NspBbSSaAO0VIqZKZQZa9ButGOiezVOTwYqFUF&_nc_ohc=LfIhXX56-_IAb49E5bt&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfBrBklVmMhuqFonm1GyjFMNxuyPsje-amWp51lzEtUJFA&oe=6617CEF2"
+                src="https://res.cloudinary.com/doxsstgkc/image/upload/v1714493760/goffer/rklmzhk6m6abekce57ha.jpg"
                 radius="md"
             />
             <div className="min-w-0 flex-1">

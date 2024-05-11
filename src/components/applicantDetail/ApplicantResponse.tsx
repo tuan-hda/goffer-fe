@@ -3,8 +3,32 @@ import AudioRecorder from '../applicant/common/AudioRecorder';
 import { Badge } from '../ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
+import { CSSProperties, useState } from 'react';
+import { isAxiosError } from 'axios';
+import toast from 'react-hot-toast';
+import { summarizeAnswerService } from '@/services/answer.service';
 
 const ApplicantResponse = () => {
+    const [loading, setLoading] = useState(false);
+    const [summary, setSummary] = useState('');
+
+    const handleAnalyze = async () => {
+        try {
+            setLoading(true);
+            const response = await summarizeAnswerService(
+                'https://res.cloudinary.com/doxsstgkc/video/upload/v1715399372/Y2meta.app_-_Tell_Me_About_Yourself_-_Sample_Answer_Food_Service___Hospitality_128_kbps_zrxqkk.mp3',
+            );
+            setSummary(response.data.result);
+            setLoading(false);
+        } catch (error) {
+            if (isAxiosError(error)) {
+                toast.error(error.response?.data?.message || 'An error occurred');
+                return;
+            }
+            toast.error('An error occurred');
+        }
+    };
+
     return (
         <div className="group relative mt-2 gap-4">
             <Card className="flex-1 border-dashed border-gray-500 bg-white shadow-none">
@@ -17,8 +41,9 @@ const ApplicantResponse = () => {
                         This is where you wanna want to dive into something that's special about yourself
                     </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pb-2">
                     <AudioRecorder
+                        mock
                         data={{
                             id: '',
                             author: '',
@@ -30,33 +55,61 @@ const ApplicantResponse = () => {
                         }}
                     />
                     <div className="-mx-6 my-4 border-t border-dashed border-t-gray-500" />
-                    <div className="mb-3 mt-4 flex items-center gap-3">
-                        <Badge className="gap-2 shadow-none">
-                            <TbSparkles className="text-base" /> AI-featured
+                    <Button
+                        onClick={handleAnalyze}
+                        variant="black"
+                        size="sm"
+                        className="mb-3 mt-4 flex h-6 items-center gap-3 rounded-lg"
+                    >
+                        <Badge className="gap-2 bg-transparent shadow-none">
+                            <TbSparkles className="text-base" /> {summary ? 'AI-powered' : 'Analyze'}
                         </Badge>
-                    </div>
+                    </Button>
 
-                    <p className="font-medium text-black">Summary</p>
-                    <p className="text-text">
-                        This guy is talking about how he experienced things during his career. In a nutshell, his
-                        background is Software Engineer, graduated at University of Information Technology.
-                    </p>
+                    {loading && (
+                        <div className="flex w-full items-center gap-1 py-4">
+                            <div className="mb-2 h-[6px] w-[40px] animate-bounce rounded bg-gray-700 shadow-large" />
+                            <div
+                                className="animate-bounce-delay mb-2 h-[6px] w-[40px] rounded bg-gray-700 shadow-large"
+                                style={
+                                    {
+                                        '--delay': '0.15s',
+                                    } as CSSProperties
+                                }
+                            />
 
-                    <p className="mt-4 font-medium text-black">Suggested evaluation</p>
-                    <div className="mt-1 text-text">
-                        <div className="flex items-center gap-3">
-                            <TbCircleFilled className="h-2 w-2 text-green-500" />
-                            <p>He's very confident</p>
+                            <div
+                                className="animate-bounce-delay mb-2 h-[6px] w-[40px] rounded bg-gray-700 shadow-large"
+                                style={
+                                    {
+                                        '--delay': '0.3s',
+                                    } as CSSProperties
+                                }
+                            />
                         </div>
-                        <div className="flex items-center gap-3">
-                            <TbCircleFilled className="h-2 w-2 text-green-500" />
-                            <p>His response is brief, go into the right problem</p>
+                    )}
+                    {summary && (
+                        <div>
+                            <p className="font-medium text-black">Summary</p>
+                            <p className="text-text">{summary}</p>
+
+                            <p className="mt-4 font-medium text-black">Suggested evaluation</p>
+                            <div className="mt-1 pb-2 text-text">
+                                <div className="flex items-center gap-3">
+                                    <TbCircleFilled className="h-2 w-2 text-green-500" />
+                                    <p>She's very confident</p>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <TbCircleFilled className="h-2 w-2 text-green-500" />
+                                    <p>Her response is brief, go into the right problem</p>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <TbCircleFilled className="h-2 w-2 text-primary" />
+                                    <p>Her voice is quite small</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <TbCircleFilled className="h-2 w-2 text-primary" />
-                            <p>His voice is quite small</p>
-                        </div>
-                    </div>
+                    )}
                 </CardContent>
             </Card>
             <div className="mx-auto mt-2 flex gap-2">

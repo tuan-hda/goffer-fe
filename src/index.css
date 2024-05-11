@@ -648,3 +648,8 @@ i.justify-align {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: var(--lines, 2);
 }
+
+.animate-bounce-delay {
+    animation: bounce 1s infinite;
+    animation-delay: var(--delay, 0.5s);
+}
