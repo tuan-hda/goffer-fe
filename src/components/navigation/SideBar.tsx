@@ -17,6 +17,7 @@ import UserPopover from './UserPopover';
 import { Organization } from '@/types/organization.type';
 import { Image } from '@nextui-org/react';
 import { items, orgItems } from './items';
+import AskAI from '../askAI/AskAI';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -31,18 +32,24 @@ const SideBar = ({ org }: SideBarProps) => {
     const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
     const [collapsed, setCollapsed] = useState(false);
     const { sideBarPinned, updateSideBarPinned } = useDiscoverStore();
+
+    // Either open ask AI modal
+    const [open, setOpen] = useState(false);
+
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
     const onMouseLeave = () => setCollapsed(!sideBarPinned && true);
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
 
     const location = useLocation();
-    const match = (domain ? orgItems(domain) : items({ onClickMap: { 0: () => console.log('hello') } })).find(
-        (item) => {
-            if (item.type === 'link') {
-                return matchPath(item.element.pattern || item.element.path, location.pathname);
-            }
-        },
-    );
+    const match = (domain ? orgItems(domain) : items({ onClickMap: {} })).find((item) => {
+        if (item.type === 'link') {
+            return matchPath(item.element.pattern || item.element.path, location.pathname);
+        }
+    });
+
+    const openAskAI = () => {
+        setOpen(true);
+    };
 
     useEffect(() => {
         setCollapsed(!sideBarPinned);
@@ -50,6 +57,7 @@ const SideBar = ({ org }: SideBarProps) => {
 
     return (
         <div className="fixed z-50 bg-white text-sm text-text" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+            <AskAI isOpen={open} onClose={() => setOpen(false)} />
             <Sidebar width={'280px'} className="child-bg border-r !border-r-gray-200/70" collapsed={collapsed}>
                 <Menu
                     className="h-full bg-pale"
@@ -107,7 +115,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                 ? orgItems(domain!)
                                 : items({
                                       onClickMap: {
-                                          0: () => console.log('hello'),
+                                          0: openAskAI,
                                       },
                                   })
                             ).map((item, index) => (

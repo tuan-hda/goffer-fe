@@ -75,7 +75,6 @@ const ConfirmEmail = ({ email, accessToken, onSuccess, initialType }: ConfirmEma
 
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
-        console.log('hello');
         if (checkStillRemaining()) {
             setInitialLoading(false);
             interval = setInterval(() => {
