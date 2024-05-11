@@ -1,4 +1,4 @@
-import { MemberList } from '@/components/team';
+import TeamMember from '@/components/team/TeamMember';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { TbUsers } from 'react-icons/tb';
 
@@ -10,7 +10,7 @@ const Team = () => {
                     <TbUsers className="text-base" /> Team
                 </BreadcrumbItem>
             </Breadcrumbs>
-            <MemberList />
+            <TeamMember />
         </div>
     );
 };
