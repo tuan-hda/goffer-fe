@@ -36,11 +36,13 @@ const SideBar = ({ org }: SideBarProps) => {
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
 
     const location = useLocation();
-    const match = (domain ? orgItems(domain) : items).find((item) => {
-        if (item.type === 'link') {
-            return matchPath(item.element.pattern || item.element.path, location.pathname);
-        }
-    });
+    const match = (domain ? orgItems(domain) : items({ onClickMap: { 0: () => console.log('hello') } })).find(
+        (item) => {
+            if (item.type === 'link') {
+                return matchPath(item.element.pattern || item.element.path, location.pathname);
+            }
+        },
+    );
 
     useEffect(() => {
         setCollapsed(!sideBarPinned);
@@ -101,10 +103,22 @@ const SideBar = ({ org }: SideBarProps) => {
                     <div className="flex h-full w-full flex-col">
                         <div className="mx-[14px]">
                             <UserPopover collapsed={collapsed} />
-                            {(org ? orgItems(domain!) : items).map((item, index) => (
+                            {(org
+                                ? orgItems(domain!)
+                                : items({
+                                      onClickMap: {
+                                          0: () => console.log('hello'),
+                                      },
+                                  })
+                            ).map((item, index) => (
                                 <Fragment key={index}>
                                     {item.divider && <div className="mx-2 my-4 border-t border-t-gray-200/70" />}
-                                    <SidebarItem match={match} collapsed={collapsed} item={item} />
+                                    <SidebarItem
+                                        onClick={'onClick' in item ? item.onClick : undefined}
+                                        match={match}
+                                        collapsed={collapsed}
+                                        item={item}
+                                    />
                                 </Fragment>
                             ))}
                         </div>

@@ -17,6 +17,7 @@ type ButtonItem = {
         content: React.ReactNode;
     };
     divider?: boolean;
+    onClick?: () => void;
 };
 
 type LinkItem = {
@@ -32,13 +33,14 @@ type LinkItem = {
 
 export type Item = ButtonItem | LinkItem;
 
-export const items: Item[] = [
+export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> }) => Item[] = ({ onClickMap }) => [
     {
         type: 'button',
         element: {
             startContent: <TbSparkles className="text-xl" />,
             content: 'Ask Goffer',
         },
+        onClick: onClickMap[0],
     },
     {
         type: 'link',
