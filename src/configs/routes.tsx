@@ -28,6 +28,7 @@ import {
     Team,
     Notifications,
     Assessment,
+    AssessmentSession,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -200,6 +201,10 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/assessment/:id',
                         element: <Assessment />,
+                    },
+                    {
+                        path: '/assessment/:id/session',
+                        element: <AssessmentSession />,
                     },
                 ],
             },
