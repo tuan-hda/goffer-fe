@@ -27,3 +27,4 @@ export { default as Profile } from './Profile';
 export { default as Team } from './Team';
 export { default as Notifications } from './Notifications';
 export { default as Assessment } from './Assessment';
+export { default as AssessmentSession } from './AssessmentSession';

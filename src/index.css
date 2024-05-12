@@ -146,6 +146,12 @@ body {
     background-size: 280px;
 }
 
+.bg-image-doodles {
+    background-image: url('/doodles.png');
+    background-repeat: repeat;
+    background-size: 280px;
+}
+
 .bg-image-beige-75 {
     background-image: url('/background1.png');
     background-repeat: repeat;

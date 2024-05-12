@@ -98,9 +98,9 @@ const Application = () => {
         <div className="text-sm">
             <div className="bg-image fixed bottom-0 left-0 right-0 top-0" />
 
-            <div className="relative z-[1] mx-auto flex max-w-screen-md flex-col gap-9 px-7 pb-7 pt-10">
+            <div className="relative z-[1] mx-auto flex min-h-screen max-w-screen-md flex-col gap-9 px-7 pb-7 pt-10">
                 {/* Title */}
-                <div className="h-[calc(100vh-144px)]">
+                <div className="flex-1">
                     <div className="mb-5">
                         <Image src={detail?.org.logo} alt="logo" className="z-[1] h-16 w-16 rounded-full" />
                         <p className="mt-3 text-sm font-medium">{detail?.org.name}</p>
@@ -136,7 +136,7 @@ const Application = () => {
                     )}
                 </div>
 
-                <div className="flex w-full items-center justify-between">
+                <div className="mt-4 flex w-full items-center justify-between">
                     <div>
                         {/* {(onStartPress || startContent) && ( */}
                         <Button
