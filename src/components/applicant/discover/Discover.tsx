@@ -7,7 +7,7 @@ import CompaniesDiscover from './CompaniesDiscover';
 
 const Discover = () => {
     return (
-        <div className="flex min-h-screen py-8 text-sm">
+        <div className="flex min-h-screen px-5 py-8 text-sm">
             <div className="relative mx-auto flex max-w-screen-xl flex-1 gap-10">
                 <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between">

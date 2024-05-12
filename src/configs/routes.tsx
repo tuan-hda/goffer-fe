@@ -27,11 +27,13 @@ import {
     Profile,
     Team,
     Notifications,
+    Assessment,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
     AppLayout,
     ApplicantLayout,
+    AssessmentLayout,
     AuthLayout,
     FocusLayout,
     LandingLayout,
@@ -107,12 +109,20 @@ const routesConfig: RouteObject[] = [
                         element: <Settings />,
                     },
                     {
+                        path: '/app/notifications',
+                        element: <Notifications />,
+                    },
+                    {
                         path: '/app/organization/:domain',
                         element: <OrgJobs />,
                     },
                     {
                         path: '/app/organization/:domain/settings',
                         element: <OrgSettings />,
+                    },
+                    {
+                        path: '/app/organization/:domain/notifications',
+                        element: <Notifications />,
                     },
                     {
                         path: '/app/organization/:domain/team',
@@ -180,6 +190,16 @@ const routesConfig: RouteObject[] = [
                                 element: <Application />,
                             },
                         ],
+                    },
+                ],
+            },
+            {
+                path: '/assessment',
+                element: <AssessmentLayout />,
+                children: [
+                    {
+                        path: '/assessment/:id',
+                        element: <Assessment />,
                     },
                 ],
             },

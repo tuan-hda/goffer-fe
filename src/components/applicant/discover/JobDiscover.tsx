@@ -34,7 +34,7 @@ const JobDiscover = () => {
     };
 
     return (
-        <div className="mx-auto flex max-w-screen-xl flex-col text-sm">
+        <div className="mx-auto flex max-w-screen-xl flex-col px-5 text-sm">
             <SearchJob />
             <VacancyList />
             {/* <Sheet onOpenChange={onDetailOpen} open={jobDetailOpening}>

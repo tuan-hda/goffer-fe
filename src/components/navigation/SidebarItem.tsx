@@ -13,7 +13,10 @@ const SidebarItem = ({ item, collapsed, match, onClick }: SidebarItemProps) => {
     return item.type === 'button' ? (
         <button
             onClick={onClick}
-            className="flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 text-primary transition hover:bg-beige/70"
+            className={classNames(
+                'flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 transition hover:bg-beige/70',
+                item.element.isPrimary && 'text-primary',
+            )}
         >
             {item.element.startContent}
             <p
@@ -24,6 +27,7 @@ const SidebarItem = ({ item, collapsed, match, onClick }: SidebarItemProps) => {
             >
                 {item.element.content}
             </p>
+            {item.element.endContent}
         </button>
     ) : (
         <Link
@@ -42,6 +46,7 @@ const SidebarItem = ({ item, collapsed, match, onClick }: SidebarItemProps) => {
             >
                 {item.element.content}
             </p>
+            {item.element.endContent}
         </Link>
     );
 };
