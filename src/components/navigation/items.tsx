@@ -1,14 +1,4 @@
-import {
-    TbBaguette,
-    TbCompass,
-    TbNotification,
-    TbPaint,
-    TbSettings,
-    TbSparkles,
-    TbUser,
-    TbUsers,
-    TbWallet,
-} from 'react-icons/tb';
+import { TbBaguette, TbCompass, TbPaint, TbSettings, TbSparkles, TbUser, TbUsers, TbWallet } from 'react-icons/tb';
 
 type ButtonItem = {
     type: 'button';
@@ -48,14 +38,6 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
             path: '/app/profile',
             startContent: <TbUser className="text-xl" />,
             content: 'Profile',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: '/app/individual/notifications',
-            startContent: <TbNotification className="text-xl" />,
-            content: 'Notifications',
         },
     },
     {

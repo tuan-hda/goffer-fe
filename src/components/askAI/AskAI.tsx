@@ -33,7 +33,7 @@ const AskAI = ({ isOpen, onClose }: AskAIProps) => {
             )}
         >
             <div className="relative m-auto w-full max-w-[500px] rounded-xl bg-white p-6">
-                <h1 className="-mt-1 flex w-fit items-center gap-1 rounded-md font-serif text-xl font-black">
+                <h1 className="-mt-1 flex w-fit items-center gap-1 rounded-md font-serif text-xl font-black text-primary">
                     Goffer Copilot <TbSparkles />
                 </h1>
                 <div className="absolute right-5 top-5 flex items-center gap-2">
@@ -59,8 +59,8 @@ const AskAI = ({ isOpen, onClose }: AskAIProps) => {
                             <DropdownMenuItem>Feedback</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <div className="cursor-pointer rounded-full bg-gray-100 p-1">
-                        <TbX onClick={onClose} />
+                    <div onClick={onClose} className="cursor-pointer rounded-full bg-gray-100 p-1">
+                        <TbX />
                     </div>
                 </div>
                 <p className="mt-5 text-gray-500">
