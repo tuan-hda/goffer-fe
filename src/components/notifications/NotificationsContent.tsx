@@ -1,33 +1,38 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import { Tab, Tabs } from '@nextui-org/react';
+import { Card } from '../ui/card';
 import Notification from './Notification';
+import { Fragment } from 'react';
 
 const NotificationsContent = () => {
     return (
-        <div className="-mx-5 -mb-4 overflow-y-auto overflow-x-hidden">
-            <Tabs defaultValue="all">
-                <TabsList className="mx-5 mt-4 w-[calc(100%-40px)]">
-                    <TabsTrigger value="all" className="flex-1">
-                        All
-                    </TabsTrigger>
-                    <TabsTrigger value="following" className="flex-1">
-                        Following
-                    </TabsTrigger>
-                    <TabsTrigger value="archive" className="flex-1">
-                        Archive
-                    </TabsTrigger>
-                </TabsList>
-                <TabsContent value="all">
+        <Tabs variant="underlined">
+            <Tab key="Account" title={<span className="flex items-center gap-2">All</span>}>
+                <Card className="overflow-hidden border-none shadow-medium">
                     {Array(4)
                         .fill(0)
                         .map((_, index) => (
-                            <Notification key={index} />
+                            <Fragment key={index}>
+                                <Notification />
+                                {index < 3 && <div className="border-t border-gray-200/70" />}
+                            </Fragment>
                         ))}
-                    <button className="mb-4 w-full text-center">See all notifications</button>
-                </TabsContent>
-                <TabsContent value="following"></TabsContent>
-                <TabsContent value="archive"></TabsContent>
-            </Tabs>
-        </div>
+                </Card>
+            </Tab>
+            <Tab key="Work" title={<span className="flex items-center gap-2">Following</span>}>
+                <Card className="overflow-hidden border-none shadow-medium">
+                    <div className="m-auto flex h-[160px] w-full items-center justify-center">
+                        There's no notification from following.
+                    </div>
+                </Card>
+            </Tab>
+            <Tab key="Subscription" title={<span className="flex items-center gap-2">Archive</span>}>
+                <Card className="overflow-hidden border-none shadow-medium">
+                    <div className="m-auto flex h-[160px] w-full items-center justify-center">
+                        There's no notification from archive.
+                    </div>
+                </Card>
+            </Tab>
+        </Tabs>
     );
 };
 

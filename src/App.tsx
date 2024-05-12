@@ -11,11 +11,12 @@ import CommandPalette from './components/command/CommandPalette';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Notifications from './components/notifications/Notifications';
 
 function App() {
     const [isOpen, setOpen] = useState(false);
     const routes = useRoutes(routesConfig);
+
+    const inApp = window.location.pathname.startsWith('/app');
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -47,19 +48,22 @@ function App() {
                     }}
                 />
             </NextUIProvider>
-            <Notifications />
-            {createPortal(
-                <div
-                    className={classNames(
-                        'pointer-events-none fixed bottom-0 left-0 right-0 top-0 z-[9999] flex flex-col items-center justify-center bg-black/70 opacity-0 backdrop-blur-sm transition',
-                        isOpen && 'pointer-events-auto opacity-100',
+            {inApp && (
+                <>
+                    {createPortal(
+                        <div
+                            className={classNames(
+                                'pointer-events-none fixed bottom-0 left-0 right-0 top-0 z-[9999] flex flex-col items-center justify-center bg-black/70 opacity-0 backdrop-blur-sm transition',
+                                isOpen && 'pointer-events-auto opacity-100',
+                            )}
+                        >
+                            <div className="w-full max-w-[500px]">
+                                <CommandPalette />
+                            </div>
+                        </div>,
+                        document.body,
                     )}
-                >
-                    <div className="w-full max-w-[500px]">
-                        <CommandPalette />
-                    </div>
-                </div>,
-                document.body,
+                </>
             )}
         </PlateController>
     );

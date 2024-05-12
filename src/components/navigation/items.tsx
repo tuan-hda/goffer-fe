@@ -1,10 +1,22 @@
-import { TbBaguette, TbCompass, TbPaint, TbSettings, TbSparkles, TbUser, TbUsers, TbWallet } from 'react-icons/tb';
+import {
+    TbBaguette,
+    TbBell,
+    TbCompass,
+    TbPaint,
+    TbSettings,
+    TbSparkles,
+    TbUser,
+    TbUsers,
+    TbWallet,
+} from 'react-icons/tb';
 
 type ButtonItem = {
     type: 'button';
     element: {
         startContent: React.ReactNode;
         content: React.ReactNode;
+        isPrimary?: boolean;
+        endContent?: React.ReactNode;
     };
     divider?: boolean;
     onClick?: () => void;
@@ -17,6 +29,7 @@ type LinkItem = {
         pattern?: string;
         startContent: React.ReactNode;
         content: React.ReactNode;
+        endContent?: React.ReactNode;
     };
     divider?: boolean;
 };
@@ -29,6 +42,7 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
         element: {
             startContent: <TbSparkles className="text-xl" />,
             content: 'Ask Goffer',
+            isPrimary: true,
         },
         onClick: onClickMap[0],
     },
@@ -38,6 +52,15 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
             path: '/app/profile',
             startContent: <TbUser className="text-xl" />,
             content: 'Profile',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            content: 'Notifications',
+            startContent: <TbBell className="text-xl" />,
+            path: '/app/notifications',
+            endContent: <div className="ml-auto mr-1 h-2 w-2 rounded-full bg-primary" />,
         },
     },
     {
@@ -89,6 +112,7 @@ export const orgItems: (_: string) => Item[] = (domain: string) => [
         element: {
             startContent: <TbSparkles className="text-xl" />,
             content: 'Ask Goffer',
+            isPrimary: true,
         },
     },
     {
@@ -98,6 +122,15 @@ export const orgItems: (_: string) => Item[] = (domain: string) => [
             pattern: '/app/organization/:domain',
             startContent: <TbBaguette className="text-xl" />,
             content: 'Jobs',
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            content: 'Notifications',
+            startContent: <TbBell className="text-xl" />,
+            path: `/app/organization/${domain}/notifications`,
+            endContent: <div className="ml-auto mr-1 h-2 w-2 rounded-full bg-primary" />,
         },
     },
     {
