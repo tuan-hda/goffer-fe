@@ -11,6 +11,7 @@ import CommandPalette from './components/command/CommandPalette';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import Notifications from './components/notifications/Notifications';
 
 function App() {
     const [isOpen, setOpen] = useState(false);
@@ -46,6 +47,7 @@ function App() {
                     }}
                 />
             </NextUIProvider>
+            <Notifications />
             {createPortal(
                 <div
                     className={classNames(

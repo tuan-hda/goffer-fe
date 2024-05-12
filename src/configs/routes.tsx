@@ -26,8 +26,9 @@ import {
     Feature,
     Profile,
     Team,
+    Notifications,
 } from '../pages';
-import { Discover, JobDiscover, PeopleDiscover } from '@/components/applicant/discover';
+import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
     AppLayout,
     ApplicantLayout,

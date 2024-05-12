@@ -2,6 +2,8 @@ import { NewOrganization } from '@/types/organization.type';
 import { Button } from '../ui/button';
 import { TbChevronLeft } from 'react-icons/tb';
 import classNames from 'classnames';
+import { Textarea } from '../ui/textarea';
+import { useState } from 'react';
 
 type ThirdStepProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -41,6 +43,8 @@ const fields = [
 ];
 
 const ThirdStep = ({ setStep, data, setData }: ThirdStepProps) => {
+    const [other, setOther] = useState('');
+
     const _field = data.field;
     const setField = (field: string) => () => {
         setData((prev) => ({ ...prev, field }));
@@ -84,9 +88,15 @@ const ThirdStep = ({ setStep, data, setData }: ThirdStepProps) => {
                 <Button
                     type="button"
                     variant="outline"
-                    className="aspect-square h-36 w-60 items-start justify-start rounded-xl bg-white/20 p-6 text-base shadow-medium"
+                    className="aspect-square h-36 w-60 flex-col items-start justify-start rounded-xl bg-white/20 p-6 text-base shadow-medium"
                 >
                     Other
+                    <Textarea
+                        placeholder="Your organization field"
+                        value={other}
+                        onChange={(e) => setOther(e.target.value)}
+                        className="mt-2 bg-white/50"
+                    />
                 </Button>
             </div>
 
@@ -100,6 +110,16 @@ const ThirdStep = ({ setStep, data, setData }: ThirdStepProps) => {
                 >
                     <TbChevronLeft className="text-lg" />
                     Back
+                </Button>
+                <Button
+                    type="button"
+                    onClick={() => setStep(2)}
+                    size="lg"
+                    disabled={!other}
+                    className="flex-1 gap-1 rounded-xl"
+                >
+                    <TbChevronLeft className="rotate-180 text-lg" />
+                    Next
                 </Button>
             </div>
         </form>
