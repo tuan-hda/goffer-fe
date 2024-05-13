@@ -1,9 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Image } from '@nextui-org/react';
+import { Avatar, Image } from '@nextui-org/react';
 import { TbBaguette, TbBookmarks, TbCalendar, TbClock, TbPaperBag, TbShare, TbTriangleFilled } from 'react-icons/tb';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Assessment = () => {
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const startAssessment = () => {
+        navigate(`/assessment/${id}/session`);
+    };
+
     return (
         <div className="relative flex min-h-screen flex-col text-sm">
             <Image src="/logo.svg" alt="logo" className="fixed left-6 top-6 z-[1] h-16 w-16 rounded-full !opacity-50" />
@@ -22,7 +29,7 @@ const Assessment = () => {
                             <p>Entertainment</p>
                         </div>
                     </div>
-                    <Button variant="black" className="ml-auto gap-2">
+                    <Button variant="black" className="ml-auto gap-2" onClick={startAssessment}>
                         <TbTriangleFilled className="rotate-90 text-base" /> Start
                     </Button>
                     <Button size="icon" variant="outline">
@@ -35,6 +42,18 @@ const Assessment = () => {
 
                 <p className="mt-4 font-serif text-3xl font-bold">Assessment #1 - Computer science foundation</p>
 
+                <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
+                <div className="flex items-center gap-4">
+                    You are logged in as
+                    <Avatar
+                        src="https://res.cloudinary.com/doxsstgkc/image/upload/v1714493760/goffer/rklmzhk6m6abekce57ha.jpg"
+                        size="lg"
+                    />
+                    <div>
+                        <p className="font-medium">Tuan Hoang Dinh Anh</p>
+                        <p className="text-text/70">hdatdragon2@gmail.com</p>
+                    </div>
+                </div>
                 <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
 
                 <div className="flex h-fit w-full items-center gap-4 overflow-hidden">
