@@ -28,3 +28,4 @@ export { default as Team } from './Team';
 export { default as Notifications } from './Notifications';
 export { default as Assessment } from './Assessment';
 export { default as AssessmentSession } from './AssessmentSession';
+export { default as AssessmentSuccess } from './AssessmentSuccess';
