@@ -1,10 +1,10 @@
-import { SessionTracker } from '@/components/assessment';
+import { QuestionList, SessionTracker } from '@/components/assessment';
 import { Image } from '@nextui-org/react';
 
 const AssessmentSession = () => {
     return (
-        <div className="flex min-h-screen w-full">
-            <div className="mx-auto flex w-full max-w-screen-2xl gap-20 p-10">
+        <div className="flex min-h-screen w-full text-sm">
+            <div className="mx-auto flex w-full max-w-screen-xl gap-20 p-10">
                 <div className="flex-1">
                     <p className="mt-4 font-serif text-3xl font-bold">Assessment #1 - Computer science foundation</p>
                     <div className="mt-5 flex items-center gap-2">
@@ -23,6 +23,7 @@ const AssessmentSession = () => {
                         </div>
                     </div>
                     <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
+                    <QuestionList />
                 </div>
 
                 <SessionTracker />

@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 
 const SessionTracker = () => {
     return (
-        <Card className="h-fit max-w-[400px] flex-1 rounded-3xl !border-none bg-white p-8 shadow-medium">
+        <Card className="sticky top-10 h-fit max-w-[360px] flex-1 rounded-3xl !border-none bg-white p-8 text-sm shadow-medium">
             <p className="mb-5 text-lg font-semibold">Session Tracker</p>
             <div className="rounded-2xl bg-black p-7">
                 <p className="font-mono text-5xl text-white">00:32:10</p>
@@ -15,7 +15,15 @@ const SessionTracker = () => {
                 {Array(20)
                     .fill(0)
                     .map((_, i) => (
-                        <button key={i} className="flex items-center justify-center rounded-xl border p-3">
+                        <button
+                            onClick={() =>
+                                document.getElementById(`q-${i}`)?.scrollIntoView({
+                                    behavior: 'smooth',
+                                })
+                            }
+                            key={i}
+                            className="flex items-center justify-center rounded-xl border p-3"
+                        >
                             {i + 1}
                         </button>
                     ))}
@@ -33,7 +41,7 @@ const SessionTracker = () => {
             </div>
             <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
             <div className="flex w-full flex-col">
-                <Button size="lg" className="ml-auto text-base font-medium" variant="black">
+                <Button size="lg" className="ml-auto text-base" variant="black">
                     Submit
                 </Button>
             </div>
