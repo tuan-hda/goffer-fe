@@ -7,7 +7,7 @@ const Progress = React.forwardRef<
     React.ElementRef<typeof ProgressPrimitive.Root>,
     React.ComponentPropsWithoutRef<
         typeof ProgressPrimitive.Root & {
-            color?: 'primary' | 'default';
+            color?: 'primary' | 'default' | 'white';
         }
     >
 >(({ className, value, color = 'default', ...props }, ref) => (
@@ -15,16 +15,21 @@ const Progress = React.forwardRef<
         ref={ref}
         className={cn(
             'relative h-2 w-full overflow-hidden rounded-full',
-            color === 'primary' ? 'bg-primary/20' : 'bg-black/20',
+            {
+                'bg-primary/20': color === 'primary',
+                'bg-black/20': color === 'default',
+                'bg-gray-500': color === 'white',
+            },
             className,
         )}
         {...props}
     >
         <ProgressPrimitive.Indicator
-            className={cn(
-                'h-full w-full flex-1 bg-primary transition-all',
-                color === 'primary' ? 'bg-primary' : 'bg-black',
-            )}
+            className={cn('h-full w-full flex-1 bg-primary transition-all', {
+                'bg-primary': color === 'primary',
+                'bg-black': color === 'default',
+                'bg-white': color === 'white',
+            })}
             style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
         />
     </ProgressPrimitive.Root>
