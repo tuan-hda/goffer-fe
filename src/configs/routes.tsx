@@ -29,6 +29,7 @@ import {
     Notifications,
     Assessment,
     AssessmentSession,
+    AssessmentSuccess,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -203,9 +204,11 @@ const routesConfig: RouteObject[] = [
                         element: <Assessment />,
                     },
                     {
-                        path: '/assessment/:id/session',
+                        path: '/assessment/:id/:type',
                         element: <AssessmentSession />,
                     },
+
+                    { path: '/assessment/:id/success', element: <AssessmentSuccess /> },
                 ],
             },
         ],
