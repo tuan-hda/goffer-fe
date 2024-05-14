@@ -8,6 +8,7 @@ import createTheme from '@uiw/codemirror-themes';
 import { tags as t } from '@lezer/highlight';
 import { java } from '@codemirror/lang-java';
 import { useEffect, useRef, useState } from 'react';
+import { EditorView } from '@codemirror/view';
 
 const goLang = `package main
 import "fmt"
@@ -70,7 +71,14 @@ export default function MirrorEditor({ height }: Props) {
             theme={myTheme}
             value={goLang}
             height={height}
-            extensions={[StreamLanguage.define(go), javascript({ jsx: true }), cpp(), java(), python()]}
+            extensions={[
+                StreamLanguage.define(go),
+                javascript({ jsx: true }),
+                cpp(),
+                java(),
+                python(),
+                EditorView.lineWrapping,
+            ]}
         />
     );
 }
