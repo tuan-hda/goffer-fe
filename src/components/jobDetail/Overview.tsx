@@ -86,9 +86,9 @@ const Overview = () => {
 
                     <p className="mt-5 text-sm">Owner</p>
                     <div className="mt-1 flex items-center gap-4">
-                        <Avatar size="lg" src={job.owner.avatar} />
+                        <Avatar size="lg" src={job.owner?.avatar} />
                         <div>
-                            <p className="font-semibold">{job.owner.name}</p>
+                            <p className="font-semibold">{job.owner?.name}</p>
                             <p>Created {formatUTCDate(job.createdAt)}</p>
                         </div>
                     </div>

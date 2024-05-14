@@ -13,6 +13,7 @@ import {
     DialogTrigger,
 } from '../ui/dialog';
 import { useNavigate, useParams } from 'react-router-dom';
+import { TbHourglassHigh } from 'react-icons/tb';
 
 const SessionTracker = () => {
     const navigate = useNavigate();
@@ -23,11 +24,14 @@ const SessionTracker = () => {
     };
 
     return (
-        <Card className="sticky top-10 h-fit max-w-[360px] flex-1 rounded-3xl !border-none bg-white p-8 text-sm shadow-medium">
+        <Card className="sticky top-10 h-fit max-w-[340px] flex-1 rounded-3xl !border-none bg-white p-8 text-sm shadow-medium">
             <p className="mb-5 text-lg font-semibold">Session Tracker</p>
             <div className="rounded-2xl bg-black p-7">
-                <p className="font-mono text-5xl text-white">00:32:10</p>
-                <Progress value={50} className="mt-5 h-[6px]" color="white" />
+                <div className="flex items-center justify-center gap-3">
+                    <TbHourglassHigh className="text-4xl text-white" />
+                    <p className="font-mono text-4xl text-white">00:32:10</p>
+                </div>
+                <Progress value={50} className="mt-4 h-[4px]" color="white" />
             </div>
             <div className="mt-8 grid grid-cols-5 gap-3">
                 {Array(20)
@@ -53,8 +57,12 @@ const SessionTracker = () => {
                     size="lg"
                 />
                 <div>
-                    <p className="font-medium">Tuan Hoang Dinh Anh</p>
-                    <p className="text-text/70">hdatdragon2@gmail.com</p>
+                    <p className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-medium">
+                        Tuan Hoang Dinh Anh
+                    </p>
+                    <p className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-medium text-text/70">
+                        hdatdragon2@gmail.com
+                    </p>
                 </div>
             </div>
             <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />

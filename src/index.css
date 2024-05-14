@@ -659,3 +659,13 @@ i.justify-align {
     animation: bounce 1s infinite;
     animation-delay: var(--delay, 0.5s);
 }
+
+.cm-content ::selection {
+    background: #264f78 !important; /* Subtle dark blue background */
+    color: inherit !important; /* Retain text color */
+}
+
+.cm-content ::-moz-selection {
+    background: #264f78 !important; /* Subtle dark blue background for Firefox */
+    color: inherit !important; /* Retain text color */
+}

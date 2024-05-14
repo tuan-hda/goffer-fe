@@ -10,6 +10,11 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@codemirror/lang-cpp": "^6.0.2",
+        "@codemirror/lang-java": "^6.0.1",
+        "@codemirror/lang-javascript": "^6.2.2",
+        "@codemirror/lang-python": "^6.1.6",
+        "@codemirror/legacy-modes": "^6.4.0",
         "@hookform/resolvers": "^3.3.4",
         "@lexical/react": "^0.14.2",
         "@lexical/utils": "^0.14.2",
@@ -81,6 +86,8 @@
         "@udecode/plate-table": "^31.3.2",
         "@udecode/plate-toggle": "^31.1.0",
         "@udecode/plate-trailing-block": "^31.0.0",
+        "@uiw/codemirror-themes": "^4.22.0",
+        "@uiw/react-codemirror": "^4.22.0",
         "@visx/axis": "^3.10.1",
         "@visx/curve": "^3.3.0",
         "@visx/event": "^3.3.0",

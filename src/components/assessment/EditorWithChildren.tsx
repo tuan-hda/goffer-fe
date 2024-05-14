@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import Editor from '@monaco-editor/react';
-import { Selection } from '@nextui-org/react';
 
 import { Value } from 'classnames';
 
@@ -12,8 +11,7 @@ type Props = {
     setProcessing: Dispatch<SetStateAction<boolean>>;
     input: string;
     setInput: Dispatch<SetStateAction<string>>;
-    currLan: Set<string>;
-    setCurrLan: Dispatch<SetStateAction<Set<string>>>;
+    currLan: string;
     tab: string;
     setTab: Dispatch<SetStateAction<string>>;
     languageOptions: {
@@ -32,22 +30,7 @@ type Props = {
     outerOnChangeLang?: (_: Set<string>) => void;
 };
 
-const EditorWithChildren = ({
-    children,
-    code,
-    setCurrLan,
-    currLan,
-    languageOptions,
-    format,
-    handleCodeChange,
-    handleEditorDidMount,
-    outerOnChangeLang,
-}: Props) => {
-    const onChangeLang = (keys: Selection) => {
-        setCurrLan(keys as Set<string>);
-        outerOnChangeLang && outerOnChangeLang(keys as Set<string>);
-    };
-
+const EditorWithChildren = ({ children, code, currLan, format, handleCodeChange, handleEditorDidMount }: Props) => {
     function setEditorTheme(monaco: any) {
         monaco.editor.defineTheme('onedark', {
             base: 'vs-dark',
@@ -67,32 +50,8 @@ const EditorWithChildren = ({
 
     return (
         <>
-            <div className="bg-dark-7 flex h-[calc(100%-40px)] grid-cols-2 gap-2 overflow-hidden px-2 pb-2 text-[13px]">
-                <div className="dev bg-dark-6 rounded-xl p-2">
-                    <div className="mx-2 mb-2 mt-1 flex justify-between">
-                        {/* <Select
-                            variant="underlined"
-                            labelPlacement="outside"
-                            size="sm"
-                            onSelectionChange={onChangeLang}
-                            defaultSelectedKeys={currLan}
-                            selectedKeys={currLan}
-                            className="max-w-[320px]"
-                        >
-                            {Object.values(languageOptions)
-                                .sort((a, b) => a.name.localeCompare(b.name))
-                                .map((lan) => (
-                                    <SelectItem key={lan.id} value={lan.id}>
-                                        {lan.name}
-                                    </SelectItem>
-                                ))}
-                        </Select>
-                        <Tooltip content="Format Code">
-                            <Button onClick={format} size="sm" radius="full" variant="light" isIconOnly>
-                                <SiPrettier />
-                            </Button>
-                        </Tooltip> */}
-                    </div>
+            <div className="flex flex-1 grid-cols-2 gap-2 overflow-hidden px-2 pb-2 text-[13px]">
+                <div className="flex-1 rounded-xl py-2">
                     <Editor
                         value={code}
                         beforeMount={setEditorTheme}
@@ -100,8 +59,7 @@ const EditorWithChildren = ({
                         options={{ wordWrap: 'on' }}
                         onMount={handleEditorDidMount}
                         className="h-full"
-                        language={languageOptions[currLan.values().next().value]?.value || 'javascript'}
-                        defaultLanguage="javascript"
+                        language={currLan}
                         theme="onedark"
                     />
                 </div>
