@@ -37,9 +37,11 @@ const PlainPlate = ({ data }: PlainPlateProps) => {
                     __html: description,
                 }}
             />
-            <div ref={ref} className="pointer-events-none fixed opacity-0">
-                <PlateEditor className="!bg-transparent p-0" readOnly value={data} />
-            </div>
+            {!description && (
+                <div ref={ref} className="pointer-events-none fixed opacity-0">
+                    <PlateEditor className="!bg-transparent p-0" readOnly value={data} />
+                </div>
+            )}
         </>
     );
 };
