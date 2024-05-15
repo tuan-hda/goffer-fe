@@ -47,7 +47,7 @@ const Sidebar = () => {
                             src={user?.avatar}
                         />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent>
+                    <DropdownMenuContent className="text-sm">
                         <DropdownMenuItem className="cursor-pointer gap-2">
                             <TbUser /> My account
                         </DropdownMenuItem>

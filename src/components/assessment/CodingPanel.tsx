@@ -1,20 +1,19 @@
 import { Card, CardContent, CardHeader } from '../ui/card';
-import { TbBrandPython, TbCode, TbRestore } from 'react-icons/tb';
+import { TbCode } from 'react-icons/tb';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-import { SiCodefactor } from 'react-icons/si';
+
 import { useEffect, useRef, useState } from 'react';
 import { languageOptions } from '@/configs/languageOptions';
 import MirrorEditor from './MirrorEditor';
 
 const CodingPanel = () => {
     const ref = useRef<HTMLDivElement>(null);
-    const [height, setHeight] = useState('200px');
+    const [height, setHeight] = useState(200);
 
     useEffect(() => {
         const handleResize = () => {
             if (ref.current) {
-                setHeight(`${ref.current.getBoundingClientRect().height}px`);
+                setHeight(ref.current.getBoundingClientRect().height);
             }
         };
         handleResize();
@@ -52,34 +51,7 @@ const CodingPanel = () => {
                         </SelectContent>
                     </Select>
                 </CardHeader>
-                <CardContent className="flex flex-1 flex-col px-0">
-                    <div className="flex h-8 w-full items-center gap-2 border-b border-white/10 px-4">
-                        <TbBrandPython /> <span>main.py</span>
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <button className="ml-auto rounded-md p-[6px] hover:bg-white/10">
-                                        <TbRestore />
-                                    </button>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <div>Reset code to initial state</div>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <button className="-ml-1 rounded-md p-[6px] hover:bg-white/10">
-                                        <SiCodefactor className="text-xs" />
-                                    </button>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <div>Format code</div>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                    </div>
+                <CardContent className="flex flex-1 flex-col p-0 px-0">
                     <div ref={ref} className="flex-1">
                         <MirrorEditor height={height} />
                     </div>
