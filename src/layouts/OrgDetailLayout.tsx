@@ -31,8 +31,8 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
 
     return (
         <div className="mt-5 flex gap-8">
-            {!finished && (
-                <div className="h-fit max-w-[240px] flex-shrink-0">
+            {finished && (
+                <div className="sticky top-8 h-fit max-w-[240px] flex-shrink-0">
                     <Card className="border bg-white/100 text-sm shadow-none">
                         <CardHeader>
                             <CardTitle>Finish Job Setup</CardTitle>
@@ -42,7 +42,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
                         </CardHeader>
                         <CardContent className="space-y-1">
                             <Link to="#" className="flex items-center gap-4">
-                                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
+                                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs text-white">
                                     <TbCheck />
                                 </div>
                                 <p>Basic information</p>
@@ -56,7 +56,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
                                     className={classNames(
                                         'flex h-5 w-5 items-center justify-center rounded-full text-xs text-white',
                                         {
-                                            'bg-primary': step >= 2,
+                                            'bg-black': step >= 2,
                                             'border border-primary bg-white text-primary': step < 2,
                                         },
                                     )}
@@ -74,7 +74,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
                                     className={classNames(
                                         'flex h-5 w-5 items-center justify-center rounded-full text-xs',
                                         {
-                                            'bg-primary text-white': step >= 3,
+                                            'bg-black text-white': step >= 3,
                                             'border bg-white': step < 3,
                                         },
                                     )}
@@ -92,7 +92,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
                                     className={classNames(
                                         'flex h-5 w-5 items-center justify-center rounded-full text-xs',
                                         {
-                                            'bg-primary text-white': step >= 4,
+                                            'bg-black text-white': step >= 4,
                                             'border bg-white': step < 4,
                                         },
                                     )}
@@ -103,7 +103,9 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
                             </Link>
                         </CardContent>
                     </Card>
-                    <Button className="mt-4 w-full rounded-lg">{step === 4 ? 'Finish job setup' : 'Continue'}</Button>
+                    <Button variant="black" className="mt-4 w-full">
+                        {step === 4 ? 'Finish job setup' : 'Continue'}
+                    </Button>
                 </div>
             )}
             {children}
