@@ -1,29 +1,33 @@
 import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror';
-import { StreamLanguage } from '@codemirror/language';
-import { go } from '@codemirror/legacy-modes/mode/go';
-import { javascript } from '@codemirror/lang-javascript';
-import { cpp } from '@codemirror/lang-cpp';
-import { python } from '@codemirror/lang-python';
 import createTheme from '@uiw/codemirror-themes';
 import { tags as t } from '@lezer/highlight';
-import { java } from '@codemirror/lang-java';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { EditorView } from '@codemirror/view';
-import { TbBrandPython, TbCircleFilled, TbRestore } from 'react-icons/tb';
+import { TbCircleFilled, TbRestore } from 'react-icons/tb';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { SiCodefactor } from 'react-icons/si';
 import prettier from 'prettier/standalone';
-import { parsers as goTemplate } from 'prettier-plugin-go-template';
+import * as babel from 'prettier/plugins/babel';
+import * as estree from 'prettier/plugins/estree';
+import { languageOptions } from '@/configs/languageOptions';
 
-const goLang = `package main
-import "fmt"
+const goLang = `function makeid(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
+    }
+    return result;
+}
 
-func main() {
-    fmt.Println("Hello, 世界")
-}`;
+console.log(makeid(5));`;
 
 type Props = {
     height: number;
+    lang: (typeof languageOptions)[0];
 };
 
 const myTheme = createTheme({
@@ -59,7 +63,7 @@ const myTheme = createTheme({
     ],
 });
 
-export default function MirrorEditor({ height }: Props) {
+export default function MirrorEditor({ height, lang }: Props) {
     const [pos, setPos] = useState({ line: 0, col: 0 });
     const [tabSize, setTabSize] = useState(4);
     const ref = useRef<ReactCodeMirrorRef>(null);
@@ -79,14 +83,7 @@ export default function MirrorEditor({ height }: Props) {
                     tabSize,
                 }}
                 height={`${editorHeight}px`}
-                extensions={[
-                    StreamLanguage.define(go),
-                    javascript({ jsx: true }),
-                    cpp(),
-                    java(),
-                    python(),
-                    EditorView.lineWrapping,
-                ]}
+                extensions={[lang.extension, EditorView.lineWrapping]}
                 onStatistics={(data) => {
                     setPos({
                         line: data.line.number,
@@ -97,15 +94,27 @@ export default function MirrorEditor({ height }: Props) {
         );
     }, [editorHeight, tabSize, value]);
 
+    useEffect(() => {
+        format();
+    }, [tabSize]);
+
     const format = async () => {
-        const newValue = await prettier.format(value, { parser: 'go-template', plugins: [goTemplate] });
-        console.log('newValue', newValue);
+        try {
+            const newValue = await prettier.format(value, {
+                parser: 'babel',
+                plugins: [estree, babel],
+                tabWidth: tabSize,
+            });
+            setValue(newValue);
+        } catch (error) {
+            // Do nothing
+        }
     };
 
     return (
         <div className="relative" style={{ height: `${height}px` }}>
             <div className="flex h-8 w-full items-center gap-2 border-b border-white/10 px-4">
-                <TbBrandPython /> <span>main.py</span>
+                {lang.icon} <span>main.{lang.suffix}</span>
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>

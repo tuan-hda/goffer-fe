@@ -8,6 +8,7 @@ import MirrorEditor from './MirrorEditor';
 
 const CodingPanel = () => {
     const ref = useRef<HTMLDivElement>(null);
+    const [lang, setLang] = useState<(typeof languageOptions)[0]>(languageOptions[0]);
     const [height, setHeight] = useState(200);
 
     useEffect(() => {
@@ -22,10 +23,9 @@ const CodingPanel = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-    const [language, setLanguage] = useState('python3');
 
     const handleLanguageChange = (lan: string) => {
-        setLanguage(lan);
+        setLang(languageOptions.find((lang) => lang.value === lan) || languageOptions[0]);
     };
 
     return (
@@ -35,7 +35,7 @@ const CodingPanel = () => {
                     <div className="flex items-center gap-2">
                         <TbCode /> Code
                     </div>
-                    <Select value={language} onValueChange={handleLanguageChange}>
+                    <Select value={lang.value} onValueChange={handleLanguageChange}>
                         <SelectTrigger className="!mt-0 -mr-2 h-6 w-[200px] rounded-lg border-white/40 text-xs">
                             <SelectValue placeholder="Select a language" />
                         </SelectTrigger>
@@ -53,7 +53,7 @@ const CodingPanel = () => {
                 </CardHeader>
                 <CardContent className="flex flex-1 flex-col p-0 px-0">
                     <div ref={ref} className="flex-1">
-                        <MirrorEditor height={height} />
+                        <MirrorEditor lang={lang} height={height} />
                     </div>
                 </CardContent>
             </Card>
