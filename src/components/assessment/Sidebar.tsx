@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { TbHourglassHigh, TbLogout, TbUser } from 'react-icons/tb';
-import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
     const [current, setCurrent] = useState(0);
@@ -13,14 +12,14 @@ const Sidebar = () => {
     return (
         <div className="fixed left-0 top-10 flex h-[calc(100vh-48px)] w-12 flex-col justify-between gap-0">
             <div className="z-[10] m-2 flex w-full flex-col items-center overflow-hidden rounded-xl bg-[#000] pt-2">
-                <Link to="/app/individual/home">
+                <div>
                     <Image
                         classNames={{
                             wrapper: 'aspect-square h-8 w-8 mb-2',
                         }}
                         src="/logo.svg"
                     />
-                </Link>
+                </div>
                 <div className="w-full">
                     {Array(4)
                         .fill(0)
@@ -38,7 +37,7 @@ const Sidebar = () => {
                         ))}
                 </div>
                 <DropdownMenu>
-                    <DropdownMenuTrigger className="mt-2 aspect-square h-12 w-full">
+                    <DropdownMenuTrigger className="h-13 aspect-square w-full">
                         <Avatar
                             classNames={{
                                 img: 'rounded-none w-full h-full p-0 m-0',

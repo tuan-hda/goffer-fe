@@ -10,7 +10,7 @@ const mock =
 
 const CodingSession = () => {
     return (
-        <div className="flex h-screen flex-col bg-[#20221E] text-sm text-[#eee]">
+        <div className="flex h-screen flex-col overflow-hidden bg-[#20221E] text-sm text-[#eee]">
             <Header />
             <Sidebar />
             <div className="ml-16 flex flex-1 gap-2">

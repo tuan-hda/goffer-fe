@@ -1,4 +1,4 @@
-import { TbTriangleFilled, TbUpload } from 'react-icons/tb';
+import { TbTestPipe, TbTriangleFilled, TbUpload } from 'react-icons/tb';
 import { Button } from '../ui/button';
 
 const Header = () => {
@@ -10,12 +10,16 @@ const Header = () => {
                     <TbTriangleFilled className="rotate-90" />
                     Run
                 </Button>
+                <Button className="gap-2" variant="black">
+                    <TbTestPipe className="rotate-90" />
+                    Run all test cases
+                </Button>
                 <Button className="gap-2 text-black" variant="outline">
                     <TbUpload className="text-[15px]" />
                     Submit
                 </Button>
             </div>
-            <div className="ml-auto flex max-w-[400px] flex-1 justify-end"></div>
+            {/* <div className="ml-auto flex max-w-[400px] flex-1 justify-end"></div> */}
         </div>
     );
 };
