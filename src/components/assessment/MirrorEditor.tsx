@@ -11,23 +11,11 @@ import * as babel from 'prettier/plugins/babel';
 import * as estree from 'prettier/plugins/estree';
 import { languageOptions } from '@/configs/languageOptions';
 
-const goLang = `function makeid(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    let counter = 0;
-    while (counter < length) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        counter += 1;
-    }
-    return result;
-}
-
-console.log(makeid(5));`;
+const goLang = ``;
 
 type Props = {
     height: number;
-    lang: (typeof languageOptions)[0];
+    lang: (typeof languageOptions)[0] | string;
 };
 
 const myTheme = createTheme({
@@ -83,7 +71,7 @@ export default function MirrorEditor({ height, lang }: Props) {
                     tabSize,
                 }}
                 height={`${editorHeight}px`}
-                extensions={[lang.extension, EditorView.lineWrapping]}
+                extensions={[...(typeof lang !== 'string' ? [lang.extension] : []), EditorView.lineWrapping]}
                 onStatistics={(data) => {
                     setPos({
                         line: data.line.number,
@@ -113,50 +101,54 @@ export default function MirrorEditor({ height, lang }: Props) {
 
     return (
         <div className="relative" style={{ height: `${height}px` }}>
-            <div className="flex h-8 w-full items-center gap-2 border-b border-white/10 px-4">
-                {lang.icon} <span>main.{lang.suffix}</span>
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <button
-                                onClick={() => setValue(goLang)}
-                                className="ml-auto rounded-md p-[6px] hover:bg-white/10"
-                            >
-                                <TbRestore />
-                            </button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <div>Reset code to initial state</div>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <button onClick={format} className="-ml-1 rounded-md p-[6px] hover:bg-white/10">
-                                <SiCodefactor className="text-xs" />
-                            </button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <div>Format code</div>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-            </div>
+            {typeof lang !== 'string' && (
+                <div className="flex h-8 w-full items-center gap-2 border-b border-white/10 px-4">
+                    {lang.icon} <span>main.{lang.suffix}</span>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <button
+                                    onClick={() => setValue(goLang)}
+                                    className="ml-auto rounded-md p-[6px] hover:bg-white/10"
+                                >
+                                    <TbRestore />
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <div>Reset code to initial state</div>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <button onClick={format} className="-ml-1 rounded-md p-[6px] hover:bg-white/10">
+                                    <SiCodefactor className="text-xs" />
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <div>Format code</div>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </div>
+            )}
             {mirror}
-            <div className="absolute bottom-0 right-0 flex h-[25px] w-full items-center rounded-b-xl border-t border-t-white/10 text-xs text-gray-300">
-                <p className="ml-auto px-1">
-                    Ln {pos.line}, Col {pos.col}
-                </p>
+            {typeof lang !== 'string' && (
+                <div className="absolute bottom-0 right-0 flex h-[25px] w-full items-center rounded-b-xl border-t border-t-white/10 text-xs text-gray-300">
+                    <p className="ml-auto px-1">
+                        Ln {pos.line}, Col {pos.col}
+                    </p>
 
-                <button
-                    onClick={() => setTabSize(tabSize === 4 ? 2 : 4)}
-                    className="flex h-full items-center gap-[4px] rounded-br-xl px-2 transition hover:bg-white/10"
-                >
-                    <TbCircleFilled className="text-[8px] text-white" />
-                    Spaces: {tabSize}
-                </button>
-            </div>
+                    <button
+                        onClick={() => setTabSize(tabSize === 4 ? 2 : 4)}
+                        className="flex h-full items-center gap-[4px] rounded-br-xl px-2 transition hover:bg-white/10"
+                    >
+                        <TbCircleFilled className="text-[8px] text-white" />
+                        Spaces: {tabSize}
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
