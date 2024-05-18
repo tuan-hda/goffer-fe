@@ -26,7 +26,7 @@ const RoomList = () => {
                 />
             </div>
 
-            <button className="flex h-[88px] w-full items-center gap-[10px] px-5">
+            <button className="flex h-[88px] w-full items-center gap-[10px] px-5 text-left">
                 <Avatar
                     src="https://cirsova.files.wordpress.com/2023/11/image-3.png"
                     classNames={{
@@ -61,7 +61,7 @@ const RoomList = () => {
                 </div>
                 <div className="absolute right-0 top-0 h-[88px] w-1 bg-black" />
             </div>
-            <button className="flex h-[88px] w-full items-center gap-[10px] px-5 ">
+            <button className="flex h-[88px] w-full items-center gap-[10px] px-5 text-left ">
                 <Avatar
                     src="https://cirsova.files.wordpress.com/2023/11/image-3.png"
                     classNames={{
