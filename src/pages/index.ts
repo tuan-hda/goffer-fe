@@ -29,3 +29,4 @@ export { default as Notifications } from './Notifications';
 export { default as Assessment } from './Assessment';
 export { default as AssessmentSession } from './AssessmentSession';
 export { default as AssessmentSuccess } from './AssessmentSuccess';
+export { default as Messages } from './Messages';

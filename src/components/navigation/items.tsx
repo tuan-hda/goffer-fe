@@ -1,6 +1,7 @@
 import {
     TbBaguette,
     TbBell,
+    TbChartBubble,
     TbCompass,
     TbPaint,
     TbSettings,
@@ -66,6 +67,15 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
     {
         type: 'link',
         element: {
+            content: 'Messages',
+            startContent: <TbChartBubble className="text-xl" />,
+            path: '/app/messages',
+            endContent: <div className="ml-auto mr-1 h-2 w-2 rounded-full bg-primary" />,
+        },
+    },
+    {
+        type: 'link',
+        element: {
             path: '/app/settings',
             startContent: <TbSettings className="text-xl" />,
             content: 'Settings',
@@ -74,7 +84,7 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
     {
         type: 'link',
         element: {
-            path: '/app/individual/discover',
+            path: '/app/discover',
             startContent: <TbCompass className="text-xl" />,
             content: 'Discover',
         },
@@ -83,7 +93,7 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
     {
         type: 'link',
         element: {
-            path: '/app/individual/jobs',
+            path: '/app/jobs',
             startContent: <TbBaguette className="text-xl" />,
             content: 'Jobs',
         },
@@ -99,14 +109,17 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
     {
         type: 'link',
         element: {
-            path: '/app/individual/wallet',
+            path: '/app/wallet',
             startContent: <TbWallet className="text-xl" />,
             content: 'Wallet',
         },
     },
 ];
 
-export const orgItems: (_: string) => Item[] = (domain: string) => [
+export const orgItems: (_: string, { onClickMap }: { onClickMap: Record<number, () => void> }) => Item[] = (
+    domain: string,
+    { onClickMap },
+) => [
     {
         type: 'button',
         element: {
@@ -114,6 +127,7 @@ export const orgItems: (_: string) => Item[] = (domain: string) => [
             content: 'Ask Goffer',
             isPrimary: true,
         },
+        onClick: onClickMap[0],
     },
     {
         type: 'link',

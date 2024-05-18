@@ -114,7 +114,7 @@ const LandingLayout = () => {
                     </Tabs>
                     {user ? (
                         <Link
-                            to="/app/individual"
+                            to="/app"
                             className="-ml-5 flex h-11 w-[120px] cursor-pointer items-center gap-2 rounded-r-xl bg-gray-50 pl-10 text-gray-600 opacity-90 shadow-xl invert transition hover:bg-gray-100 hover:opacity-100"
                         >
                             <Avatar className="h-7 w-7" size="sm" src={user.avatar} alt={user.name || user.email} />

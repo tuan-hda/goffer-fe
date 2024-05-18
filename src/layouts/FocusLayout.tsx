@@ -4,7 +4,7 @@ import { Link, Outlet } from 'react-router-dom';
 const FocusLayout = () => {
     return (
         <div className="min-h-screen">
-            <Link to="/app/individual/jobs">
+            <Link to="/app/jobs">
                 <Image
                     src="/logo.svg"
                     alt="logo"

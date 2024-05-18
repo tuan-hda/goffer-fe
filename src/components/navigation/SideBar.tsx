@@ -41,7 +41,7 @@ const SideBar = ({ org }: SideBarProps) => {
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
 
     const location = useLocation();
-    const match = (domain ? orgItems(domain) : items({ onClickMap: {} })).find((item) => {
+    const match = (domain ? orgItems(domain, { onClickMap: {} }) : items({ onClickMap: {} })).find((item) => {
         if (item.type === 'link') {
             return matchPath(item.element.pattern || item.element.path, location.pathname);
         }
@@ -78,7 +78,7 @@ const SideBar = ({ org }: SideBarProps) => {
                 >
                     <div className={classNames('flex items-center gap-3 px-5')}>
                         <Link
-                            to={org ? `/app/organization/${org.domain}` : `/app/individual`}
+                            to={org ? `/app/organization/${org.domain}` : `/app`}
                             className="flex items-start gap-[10px]"
                         >
                             <img
@@ -112,7 +112,11 @@ const SideBar = ({ org }: SideBarProps) => {
                         <div className="mx-[14px]">
                             <UserPopover collapsed={collapsed} />
                             {(org
-                                ? orgItems(domain!)
+                                ? orgItems(domain!, {
+                                      onClickMap: {
+                                          0: openAskAI,
+                                      },
+                                  })
                                 : items({
                                       onClickMap: {
                                           0: openAskAI,
