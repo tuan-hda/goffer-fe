@@ -11,7 +11,7 @@ const Messages = () => {
                     <MessagePanel />
                 </div>
                 <div className="h-full border-r border-r-[#EEEEF0]" />
-                <div className="h-full w-[360px]">
+                <div className="flex h-full w-[360px] flex-col">
                     <DetailsPanel />
                 </div>
             </div>

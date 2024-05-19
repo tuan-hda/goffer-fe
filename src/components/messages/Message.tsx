@@ -19,7 +19,7 @@ const Message = ({ isOwner = false }: MessageProps) => {
                             src="https://cirsova.files.wordpress.com/2023/11/image-3.png"
                         />
                     )}
-                    <div className={classNames('rounded-[14px] border bg-white p-5', isOwner ? 'bg-[#FFF4E4]' : '')}>
+                    <div className={classNames('rounded-[14px] border p-5', isOwner ? 'bg-[#FFF4E4]' : 'bg-white')}>
                         <p>I am available on Mon day 10am - 12pm.</p>
                         <p>Tuesday 10am - 12pm</p>
                     </div>
