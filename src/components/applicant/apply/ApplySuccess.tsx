@@ -17,7 +17,7 @@ const ApplySuccess = () => {
             <Button
                 size="lg"
                 endContent={<TbArrowRight size={24} />}
-                onPress={() => navigate('/app/individual/jobs')}
+                onPress={() => navigate('/app/jobs')}
                 variant="flat"
                 color="primary"
             >

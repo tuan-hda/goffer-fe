@@ -41,10 +41,10 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[240px] rounded-xl">
                 <DropdownMenuLabel>Individual</DropdownMenuLabel>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="p-0">
                     <Link
-                        to="/app/individual"
-                        className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-1 py-0.5 transition"
+                        to="/app"
+                        className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-3 py-2 transition"
                     >
                         <Avatar className="h-7 w-7" src={user?.avatar} />
                         <p
@@ -60,10 +60,10 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Organizations</DropdownMenuLabel>
                 {organizations?.results.map((organization) => (
-                    <DropdownMenuItem key={organization.id}>
+                    <DropdownMenuItem className="p-0" key={organization.id}>
                         <Link
                             to={`/app/organization/${organization.domain}`}
-                            className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-1 py-0.5 transition"
+                            className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-3 py-2 transition"
                         >
                             <Avatar className="h-7 w-7 bg-white" src={organization.logo} />
                             <p

@@ -43,7 +43,7 @@ const Login = () => {
                 return;
             }
             toast.success('Login successful');
-            navigate('/app/individual');
+            navigate('/app');
         } catch (error) {
             toast.error('Wrong email or password.');
         } finally {

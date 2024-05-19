@@ -21,7 +21,7 @@ const AssessmentSuccess = () => {
                             the result.
                         </p>
                         <Button variant="outline" className="mt-2">
-                            <Link to="/app/individual">Go Home</Link>
+                            <Link to="/app">Go Home</Link>
                         </Button>
                     </div>
                 </div>

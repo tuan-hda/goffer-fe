@@ -12,7 +12,7 @@ const NotFound = () => {
                 <p className="mt-2 font-bold">There is no fish</p>
                 <img src="/not_found.png" alt="not-found" className="h-[280px] w-[280px] rounded-lg" />
 
-                <Button color="primary" className="mt-6" variant="shadow" as={Link} to={user ? '/app/individual' : '/'}>
+                <Button color="primary" className="mt-6" variant="shadow" as={Link} to={user ? '/app' : '/'}>
                     Go Home
                 </Button>
             </div>

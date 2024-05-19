@@ -30,6 +30,7 @@ import {
     Assessment,
     AssessmentSession,
     AssessmentSuccess,
+    Messages,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -86,25 +87,28 @@ const routesConfig: RouteObject[] = [
                 element: <AppLayout />,
                 children: [
                     {
-                        path: '/app/individual',
+                        path: '/app',
                         element: <ApplicantLayout />,
                         children: [
-                            { path: '/app/individual', element: <Editor /> },
-                            { path: '/app/individual/home', element: <Editor /> },
+                            { path: '/app/home', element: <Editor /> },
                             {
-                                path: '/app/individual/discover',
+                                path: '/app/discover',
                                 element: <Discover />,
                                 // children: [
                                 //     { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
                                 //     { path: '/app/individual/discover/companies', element: <>Companies</> },
                                 // ],
                             },
-                            { path: '/app/individual/jobs', element: <JobDiscover /> },
+                            { path: '/app/jobs', element: <JobDiscover /> },
                         ],
                     },
                     {
                         path: '/app/profile',
                         element: <Profile />,
+                    },
+                    {
+                        path: '/app/messages',
+                        element: <Messages />,
                     },
                     {
                         path: '/app/settings',

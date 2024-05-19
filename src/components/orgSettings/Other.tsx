@@ -26,7 +26,7 @@ const Other = () => {
             if (!data) return;
             setLoading(true);
             await deleteOrganizationService(data?.id);
-            window.location.pathname = '/app/individual';
+            window.location.pathname = '/app';
         } catch (error) {
             if (isAxiosError(error)) {
                 return toast.error(error.response?.data.message || 'An error occurred. Please try again later.');

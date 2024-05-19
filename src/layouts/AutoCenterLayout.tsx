@@ -6,18 +6,21 @@ type AutoCenterLayoutProps = {
 };
 const AutoCenterLayout = ({ children }: AutoCenterLayoutProps) => {
     const location = useLocation();
-    const routes = [
+    const fullScreenRoute = [
         {
-            path: '/app/individual/discover',
+            path: '/app/discover',
             children: [
                 {
                     path: 'people',
                 },
             ],
         },
+        {
+            path: '/app/messages',
+        },
     ];
 
-    const match = matchRoutes(routes, location.pathname);
+    const match = matchRoutes(fullScreenRoute, location.pathname);
 
     return (
         <div className="flex w-full">
