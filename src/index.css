@@ -669,3 +669,14 @@ i.justify-align {
     background: #264f78 !important; /* Subtle dark blue background for Firefox */
     color: inherit !important; /* Retain text color */
 }
+
+.circular-border {
+    --progress-color: #fa8252;
+    --deg: 360deg;
+    background: conic-gradient(
+        var(--progress-color) var(--deg),
+        var(--progress-color) 0deg,
+        #00000011 0deg,
+        #00000011 360deg
+    );
+}

@@ -95,8 +95,17 @@ const Basic = () => {
             </Editable>
 
             <div className="group">
-                <div className="mt-6 flex items-center justify-between">
+                <div className="mt-6 flex items-center gap-2">
                     <p className="font-medium text-black">Resume</p>
+                    <Button
+                        asChild
+                        size="sm"
+                        variant="black"
+                        className="ml-auto h-7 opacity-0 transition group-hover:opacity-100"
+                    >
+                        <Link to="/app/enhance">Enhance resume with AI ✨</Link>
+                    </Button>
+
                     <UploadPopover
                         onAttach={(data) =>
                             updateProfile({

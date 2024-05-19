@@ -30,3 +30,4 @@ export { default as Assessment } from './Assessment';
 export { default as AssessmentSession } from './AssessmentSession';
 export { default as AssessmentSuccess } from './AssessmentSuccess';
 export { default as Messages } from './Messages';
+export { default as Enhance } from './Enhance';

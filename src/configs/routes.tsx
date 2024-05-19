@@ -31,6 +31,7 @@ import {
     AssessmentSession,
     AssessmentSuccess,
     Messages,
+    Enhance,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -109,6 +110,10 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/messages',
                         element: <Messages />,
+                    },
+                    {
+                        path: '/app/enhance',
+                        element: <Enhance />,
                     },
                     {
                         path: '/app/settings',
