@@ -18,6 +18,9 @@ const AutoCenterLayout = ({ children }: AutoCenterLayoutProps) => {
         {
             path: '/app/messages',
         },
+        {
+            path: '/app/enhance',
+        },
     ];
 
     const match = matchRoutes(fullScreenRoute, location.pathname);
