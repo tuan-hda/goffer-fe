@@ -6,17 +6,19 @@ type SidebarItemProps = {
     item: Item;
     collapsed: boolean;
     match?: Item;
+    isMatched?: boolean;
     onClick?: () => void;
-    color?: string;
+    isAdmin?: boolean;
 };
 
-const SidebarItem = ({ item, collapsed, match, onClick, color }: SidebarItemProps) => {
+const SidebarItem = ({ item, collapsed, match, onClick, isMatched, isAdmin = false }: SidebarItemProps) => {
     return item.type === 'button' ? (
         <button
             onClick={onClick}
             className={classNames(
-                'flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 transition hover:bg-beige/70',
+                'flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 transition',
                 item.element.isPrimary && 'text-primary',
+                isAdmin ? 'hover:bg-white/20' : 'hover:bg-beige/70',
             )}
         >
             {item.element.startContent}
@@ -34,10 +36,16 @@ const SidebarItem = ({ item, collapsed, match, onClick, color }: SidebarItemProp
         <Link
             to={item.element.path}
             className={classNames(
-                'relative flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 text-text transition hover:bg-beige/70',
-                match?.type === 'link' && match.element.path === item.element.path ? 'bg-beige/70' : '',
+                'relative flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 transition',
+                {
+                    'bg-beige/70':
+                        isMatched || (match?.type === 'link' && match.element.path === item.element.path && !isAdmin),
+                    'bg-white/10':
+                        isMatched || (match?.type === 'link' && match.element.path === item.element.path && !isAdmin),
+                },
+                isAdmin ? 'text-white' : 'text-text',
+                isAdmin ? 'hover:bg-white/20' : 'hover:bg-beige/70',
             )}
-            style={{ color }}
         >
             {item.element.startContent}
             <p

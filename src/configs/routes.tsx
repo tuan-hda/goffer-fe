@@ -32,6 +32,7 @@ import {
     AssessmentSuccess,
     Messages,
     Enhance,
+    Dashboard,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -107,6 +108,12 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/admin',
                         element: <AdminLayout />,
+                        children: [
+                            {
+                                index: true,
+                                element: <Dashboard />,
+                            },
+                        ],
                     },
                     {
                         path: '/app/profile',
