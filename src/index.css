@@ -5,6 +5,7 @@
 
 @layer base {
     :root {
+        --bg-color: #fff;
         --background: 0 0% 100%;
         --foreground: 0 0% 3.9%;
 
@@ -230,7 +231,6 @@ input[type='number']::-webkit-outer-spin-button {
 
 .child-bg > * {
     /* --bg-color: #fefcf5; */
-    --bg-color: #fff;
     background-color: var(--bg-color) !important;
 }
 

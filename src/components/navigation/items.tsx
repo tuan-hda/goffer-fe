@@ -61,7 +61,7 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
             content: 'Notifications',
             startContent: <TbBell className="text-xl" />,
             path: '/app/notifications',
-            endContent: <div className="ml-auto mr-1 h-2 w-2 rounded-full bg-primary" />,
+            endContent: <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
         },
     },
     {
@@ -70,7 +70,7 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
             content: 'Messages',
             startContent: <TbChartBubble className="text-xl" />,
             path: '/app/messages',
-            endContent: <div className="ml-auto mr-1 h-2 w-2 rounded-full bg-primary" />,
+            endContent: <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
         },
     },
     {
@@ -142,9 +142,9 @@ export const orgItems: (_: string, { onClickMap }: { onClickMap: Record<number, 
         type: 'link',
         element: {
             content: 'Notifications',
-            startContent: <TbBell className="text-xl" />,
+            startContent: <TbBell className="flex-shrink-0 text-xl" />,
             path: `/app/organization/${domain}/notifications`,
-            endContent: <div className="ml-auto mr-1 h-2 w-2 rounded-full bg-primary" />,
+            endContent: <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
         },
     },
     {

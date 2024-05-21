@@ -39,7 +39,7 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                     </p>
                 </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[240px] rounded-xl">
+            <DropdownMenuContent className={classNames('w-[240px] rounded-xl')}>
                 <DropdownMenuLabel>Individual</DropdownMenuLabel>
                 <DropdownMenuItem className="p-0">
                     <Link
@@ -50,7 +50,6 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                         <p
                             className={classNames(
                                 'pointer-events-auto overflow-hidden whitespace-nowrap opacity-100 transition',
-                                collapsed ? 'pointer-events-none !opacity-0' : 'pointer-events-auto opacity-100',
                             )}
                         >
                             {user?.name}
@@ -69,7 +68,6 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                             <p
                                 className={classNames(
                                     'pointer-events-auto overflow-hidden whitespace-nowrap opacity-100 transition',
-                                    collapsed ? 'pointer-events-none !opacity-0' : 'pointer-events-auto opacity-100',
                                 )}
                             >
                                 {organization.name}
@@ -80,6 +78,23 @@ const UserPopover = ({ collapsed }: UserPopoverProps) => {
                 {organizations?.results.length === 0 && (
                     <p className="px-2 text-left text-sm text-text/60">You have no organizations.</p>
                 )}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>Admin</DropdownMenuLabel>
+                <DropdownMenuItem className="p-0">
+                    <Link
+                        to={`/app/admin`}
+                        className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-3 py-2 transition"
+                    >
+                        <Avatar className="h-7 w-7 bg-white" src="/chad.webp" />
+                        <p
+                            className={classNames(
+                                'pointer-events-auto overflow-hidden whitespace-nowrap opacity-100 transition',
+                            )}
+                        >
+                            Admin dashboard
+                        </p>
+                    </Link>
+                </DropdownMenuItem>
                 <div className="mb-2 mt-[10px] px-2">
                     <Button
                         asChild

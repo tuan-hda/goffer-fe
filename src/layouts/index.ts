@@ -10,3 +10,4 @@ export { default as AutoCenterLayout } from './AutoCenterLayout';
 export { default as OrgDetailLayout } from './OrgDetailLayout';
 export { default as AssessmentLayout } from './AssessmentLayout';
 export { default as AuthRequiredLayout } from './AuthRequiredLayout';
+export { default as AdminLayout } from './AdminLayout';
