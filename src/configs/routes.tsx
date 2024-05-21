@@ -35,6 +35,7 @@ import {
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
+    AdminLayout,
     AppLayout,
     ApplicantLayout,
     AssessmentLayout,
@@ -102,6 +103,10 @@ const routesConfig: RouteObject[] = [
                             },
                             { path: '/app/jobs', element: <JobDiscover /> },
                         ],
+                    },
+                    {
+                        path: '/app/admin',
+                        element: <AdminLayout />,
                     },
                     {
                         path: '/app/profile',

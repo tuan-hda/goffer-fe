@@ -7,9 +7,10 @@ type SidebarItemProps = {
     collapsed: boolean;
     match?: Item;
     onClick?: () => void;
+    color?: string;
 };
 
-const SidebarItem = ({ item, collapsed, match, onClick }: SidebarItemProps) => {
+const SidebarItem = ({ item, collapsed, match, onClick, color }: SidebarItemProps) => {
     return item.type === 'button' ? (
         <button
             onClick={onClick}
@@ -33,20 +34,21 @@ const SidebarItem = ({ item, collapsed, match, onClick }: SidebarItemProps) => {
         <Link
             to={item.element.path}
             className={classNames(
-                'flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 text-text transition hover:bg-beige/70',
+                'relative flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 text-text transition hover:bg-beige/70',
                 match?.type === 'link' && match.element.path === item.element.path ? 'bg-beige/70' : '',
             )}
+            style={{ color }}
         >
             {item.element.startContent}
             <p
                 className={classNames(
-                    'pointer-events-auto absolute left-[60px] overflow-hidden whitespace-nowrap opacity-100 transition',
+                    'pointer-events-auto absolute left-[46px] overflow-hidden whitespace-nowrap opacity-100 transition',
                     collapsed ? 'pointer-events-none !opacity-0' : 'pointer-events-auto opacity-100',
                 )}
             >
                 {item.element.content}
             </p>
-            {item.element.endContent}
+            <div className={classNames('absolute', collapsed ? 'right-0' : 'right-2')}>{item.element.endContent}</div>
         </Link>
     );
 };
