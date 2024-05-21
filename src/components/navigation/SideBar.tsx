@@ -77,7 +77,7 @@ const SideBar = ({ org }: SideBarProps) => {
                 style={
                     (isAdmin
                         ? {
-                              '--bg-color': '#000',
+                              '--bg-color': '#1E1E1E',
                           }
                         : {}) as CSSProperties
                 }

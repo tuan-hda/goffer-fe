@@ -1,6 +1,6 @@
 import { TbDashboard, TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarLeftExpandFilled } from 'react-icons/tb';
 import { Menu } from 'react-pro-sidebar';
-import { Link } from 'react-router-dom';
+import { Link, matchRoutes, useLocation } from 'react-router-dom';
 import UserPopover from './UserPopover';
 import SidebarItem from './SidebarItem';
 
@@ -13,9 +13,20 @@ type AdminMenuProps = {
 };
 
 const AdminMenu = ({ collapsed, sideBarPinned, togglePinned }: AdminMenuProps) => {
+    const location = useLocation();
+    const match = matchRoutes(
+        [
+            {
+                path: '/app/admin',
+                exact: true,
+            },
+        ],
+        location.pathname,
+    );
+
     return (
         <Menu
-            className="h-full bg-black text-white"
+            className="h-full text-white"
             menuItemStyles={{
                 button: ({ active }) => {
                     return {
@@ -58,9 +69,9 @@ const AdminMenu = ({ collapsed, sideBarPinned, togglePinned }: AdminMenuProps) =
             </div>
             <div className="flex h-full w-full flex-col">
                 <div className="mx-[14px]">
-                    <UserPopover collapsed={collapsed} />
+                    <UserPopover isAdmin collapsed={collapsed} />
                     <SidebarItem
-                        color="#fff"
+                        isAdmin
                         collapsed={collapsed}
                         item={{
                             type: 'link',
@@ -70,6 +81,7 @@ const AdminMenu = ({ collapsed, sideBarPinned, togglePinned }: AdminMenuProps) =
                                 startContent: <TbDashboard className="text-xl" />,
                             },
                         }}
+                        isMatched={!!match?.at(0)}
                     />
                 </div>
             </div>
