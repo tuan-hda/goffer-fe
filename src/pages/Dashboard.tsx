@@ -2,9 +2,7 @@ import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { TbDashboard } from 'react-icons/tb';
 import { DatePickerWithRange } from '@/components/common';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { OverviewStats } from '@/components/dashboard';
-import Traffic from '@/components/dashboard/Traffic';
+import { CopilotInsights, OverviewStats, Traffic } from '@/components/dashboard';
 
 const Dashboard = () => {
     const { data: user } = useSelfProfileQuery();
@@ -26,10 +24,11 @@ const Dashboard = () => {
                     <DatePickerWithRange />
                 </div>
             </div>
-            <div className="mt-8">
+            <div className="mt-10">
                 <OverviewStats />
-                <div className="mt-9 grid grid-cols-12">
+                <div className="mt-12 grid grid-cols-12 gap-10">
                     <Traffic />
+                    <CopilotInsights />
                 </div>
             </div>
         </div>
