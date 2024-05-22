@@ -25,7 +25,7 @@ const GoogleAuth = ({ type, authType }: GoogleAuthProps) => {
     const handleLogin = async (res: TokenResponse) => {
         try {
             setLoading(true);
-            const data = await loginGoogleService(res.access_token);
+            await loginGoogleService(res.access_token);
 
             const redirect = new URLSearchParams(window.location.search).get('redirect');
             if (redirect) {
@@ -33,7 +33,7 @@ const GoogleAuth = ({ type, authType }: GoogleAuthProps) => {
                 return;
             }
 
-            window.location.pathname = `/app/${data.user.initialType}`;
+            window.location.pathname = `/app`;
         } catch (error) {
             console.log('Google sign up error:', error);
             if (isAxiosError(error)) {
@@ -61,7 +61,7 @@ const GoogleAuth = ({ type, authType }: GoogleAuthProps) => {
                 },
                 type,
             );
-            window.location.pathname = `/app/${type}`;
+            window.location.pathname = `/app`;
         } catch (error) {
             console.log('Google sign up error:', error);
             if (isAxiosError(error)) {
