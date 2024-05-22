@@ -34,7 +34,10 @@ const UserPopover = ({ collapsed, isAdmin }: UserPopoverProps) => {
                         isAdmin ? 'hover:bg-white/20' : 'hover:bg-gray-100',
                     )}
                 >
-                    <Avatar className="h-7 w-7 flex-shrink-0 bg-white" src={org ? org.logo : user?.avatar} />
+                    <Avatar
+                        className="h-7 w-7 flex-shrink-0 bg-white"
+                        src={isAdmin ? '/chad.webp' : org ? org.logo : user?.avatar}
+                    />
                     <p
                         className={classNames(
                             'pointer-events-auto absolute left-12 min-w-0 overflow-hidden whitespace-nowrap opacity-100 transition',

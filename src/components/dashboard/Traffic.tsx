@@ -10,7 +10,7 @@ const Traffic = () => {
             ref={(ref) => {
                 setWidth(ref?.getBoundingClientRect().width || 0);
             }}
-            className="col-span-9 overflow-hidden"
+            className="col-span-9 -mx-0.5 overflow-hidden px-0.5"
         >
             <Curve width={width + 50} height={Math.round(width / 2)}>
                 <div className="mb-4 flex items-center justify-between">

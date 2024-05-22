@@ -62,13 +62,12 @@ export default function Curve({ width, height, showControls = true, children }: 
         tooltipLeft: 1000,
     });
 
-    console.log('tooltip top', tooltipTop);
-
     const getDate = (d: DateValue) => new Date(d.date);
 
     const handleTooltip = useCallback(
         (event: React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>) => {
             const x = (localPoint(event) || { x: 0 }).x - margin.left;
+            console.log('x', x);
             const x0 = xScale.invert(x); // get Date from the scale
 
             const index = bisectDate(allData, x0, 1);
