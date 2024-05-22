@@ -41,7 +41,7 @@ const SidebarItem = ({ item, collapsed, match, onClick, isMatched, isAdmin = fal
                     'bg-beige/70':
                         isMatched || (match?.type === 'link' && match.element.path === item.element.path && !isAdmin),
                     'bg-white/10':
-                        isMatched || (match?.type === 'link' && match.element.path === item.element.path && !isAdmin),
+                        isMatched || (match?.type === 'link' && match.element.path === item.element.path && isAdmin),
                 },
                 isAdmin ? 'text-white' : 'text-text',
                 isAdmin ? 'hover:bg-white/20' : 'hover:bg-beige/70',
