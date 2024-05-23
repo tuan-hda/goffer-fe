@@ -8,6 +8,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
 import moment from 'moment';
 import MonthPicker from '../ui/month-picker';
+import { AvatarEdit } from '../common';
+import { useState } from 'react';
 
 type ExperienceForm = {
     data: Experience;
@@ -16,6 +18,8 @@ type ExperienceForm = {
 };
 
 const ExperienceForm = ({ data, setData, error }: ExperienceForm) => {
+    const [loading, setLoading] = useState(false);
+
     const handleChange =
         (key: keyof Experience) =>
         (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -26,19 +30,34 @@ const ExperienceForm = ({ data, setData, error }: ExperienceForm) => {
         };
 
     return (
-        <Card className="pb-2">
-            <CardContent className="grid grid-cols-2 gap-x-8 gap-y-4 p-6">
+        <Card className="rounded-2xl pb-2">
+            <CardContent className="grid grid-cols-2 gap-x-8 gap-y-4 p-7">
+                <div className="col-span-2 mb-2">
+                    <p className="mb-3 text-gray-500">Company logo</p>
+                    <AvatarEdit
+                        loading={loading}
+                        avatar={data.logo}
+                        setAvatar={(url) => {
+                            setData((prev) => ({
+                                ...prev,
+                                logo: url,
+                            }));
+                        }}
+                        className="!mx-0"
+                        setLoading={setLoading}
+                    />
+                </div>
                 <div>
                     <p className="mb-1 text-gray-500">
                         Job Title <span className="text-red-500">*</span>
                     </p>
-                    <Input onChange={handleChange('title')} value={data.title} />
+                    <Input placeholder="Senior..." onChange={handleChange('title')} value={data.title} />
                 </div>
                 <div>
                     <p className="mb-1 text-gray-500">
                         Company <span className="text-red-500">*</span>
                     </p>
-                    <Input onChange={handleChange('company')} value={data.company} />
+                    <Input placeholder="Company..." onChange={handleChange('company')} value={data.company} />
                 </div>
                 <div>
                     <p className="mb-1 text-gray-500">
@@ -72,7 +91,7 @@ const ExperienceForm = ({ data, setData, error }: ExperienceForm) => {
                                 onMonthChange={(data) => setData((prev) => ({ ...prev, endDate: data }))}
                             />
                         </PopoverContent>
-                    </Popover>{' '}
+                    </Popover>
                 </div>
                 <div className="col-span-2">
                     <p className="mb-1 text-gray-500">Description</p>
@@ -80,6 +99,7 @@ const ExperienceForm = ({ data, setData, error }: ExperienceForm) => {
                         onChange={handleChange('description')}
                         value={data.description}
                         className="min-h-[100px]"
+                        placeholder="Your experience description..."
                     />
                 </div>
                 {error && (

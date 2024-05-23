@@ -1,5 +1,5 @@
 import { Tab, Tabs } from '@nextui-org/react';
-import { TbBaguette, TbChevronDown, TbPaperclip, TbShare, TbSparkles } from 'react-icons/tb';
+import { TbBaguette, TbChevronDown, TbPaperclip, TbPrompt, TbShare, TbSparkles } from 'react-icons/tb';
 import Basic from './Basic';
 import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
@@ -72,6 +72,14 @@ const RightPanel = () => {
                     >
                         <Experiences />
                     </Tab>
+                    <Tab
+                        key="projects"
+                        title={
+                            <span className="flex items-center gap-2">
+                                <TbPrompt className="text-lg" /> Projects
+                            </span>
+                        }
+                    ></Tab>
                     <Tab
                         key="recommendations"
                         title={

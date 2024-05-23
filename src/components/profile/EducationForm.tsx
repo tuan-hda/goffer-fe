@@ -25,21 +25,21 @@ const EducationForm = ({ data, setData, error }: EducationFormProps) => {
         };
 
     return (
-        <Card className="pb-2">
-            <CardContent className="grid grid-cols-2 gap-x-8 gap-y-4 p-6">
+        <Card className="rounded-2xl pb-2">
+            <CardContent className="grid grid-cols-2 gap-x-8 gap-y-4 p-7">
                 <div>
                     <p className="mb-1 text-gray-500">
                         School <span className="text-red-500">*</span>
                     </p>
-                    <Input onChange={handleChange('school')} value={data.school} />
+                    <Input placeholder="Your school..." onChange={handleChange('school')} value={data.school} />
                 </div>
                 <div>
                     <p className="mb-1 text-gray-500">Degree</p>
-                    <Input onChange={handleChange('degree')} value={data.degree || ''} />
+                    <Input placeholder="Your degree..." onChange={handleChange('degree')} value={data.degree || ''} />
                 </div>
                 <div>
                     <p className="mb-1 text-gray-500">Major</p>
-                    <Input onChange={handleChange('major')} value={data.major || ''} />
+                    <Input placeholder="Your major..." onChange={handleChange('major')} value={data.major || ''} />
                 </div>
                 <div>
                     <p className="mb-1 text-gray-500">Start / End Date</p>
@@ -75,6 +75,7 @@ const EducationForm = ({ data, setData, error }: EducationFormProps) => {
                 <div className="col-span-2">
                     <p className="mb-1 text-gray-500">Description</p>
                     <Textarea
+                        placeholder="Description..."
                         onChange={handleChange('description')}
                         value={data.description}
                         className="min-h-[100px]"

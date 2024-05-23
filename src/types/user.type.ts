@@ -38,6 +38,7 @@ export type Experience = {
     startDate: Date;
     endDate?: Date;
     description?: string;
+    logo?: string;
 };
 
 export type UpdateUser = {
