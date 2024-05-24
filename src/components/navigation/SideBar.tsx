@@ -39,7 +39,11 @@ const SideBar = ({ org }: SideBarProps) => {
     const adminRoute = '/app/admin';
 
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
-    const onMouseLeave = () => setCollapsed(!sideBarPinned && true);
+    const onMouseLeave = () => {
+        const popover = document.querySelector('[data-user-popover=true]');
+        if (popover && popover.getAttribute('data-state') === 'open') return;
+        setCollapsed(!sideBarPinned && true);
+    };
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
 
     const location = useLocation();

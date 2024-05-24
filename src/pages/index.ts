@@ -33,3 +33,4 @@ export { default as Messages } from './Messages';
 export { default as Enhance } from './Enhance';
 export { default as Dashboard } from './Dashboard';
 export { default as Portfolio } from './Portfolio';
+export { default as NewProject } from './NewProject';

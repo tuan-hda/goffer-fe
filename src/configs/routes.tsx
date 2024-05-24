@@ -34,6 +34,7 @@ import {
     Enhance,
     Dashboard,
     Portfolio,
+    NewProject,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -202,7 +203,10 @@ const routesConfig: RouteObject[] = [
                 path: '/app/organization/:domain/new',
                 element: <NewJob />,
             },
-
+            {
+                path: '/project/new',
+                element: <NewProject />,
+            },
             {
                 path: '/job',
                 element: <FocusLayout />,
