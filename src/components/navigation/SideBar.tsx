@@ -81,7 +81,7 @@ const SideBar = ({ org }: SideBarProps) => {
                           }
                         : {}) as CSSProperties
                 }
-                collapsed={false}
+                collapsed={collapsed}
             >
                 {isAdmin ? (
                     <AdminMenu collapsed={collapsed} sideBarPinned={sideBarPinned} togglePinned={togglePinned} />

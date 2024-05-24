@@ -56,7 +56,9 @@ const SidebarItem = ({ item, collapsed, match, onClick, isMatched, isAdmin = fal
             >
                 {item.element.content}
             </p>
-            <div className={classNames('absolute', collapsed ? 'right-0' : 'right-2')}>{item.element.endContent}</div>
+            <div className={classNames('absolute', collapsed ? '-right-[3px]' : 'right-2')}>
+                {item.element.endContent}
+            </div>
         </Link>
     );
 };
