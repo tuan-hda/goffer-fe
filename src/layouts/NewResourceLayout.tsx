@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import classNames from 'classnames';
 import { TbChevronLeft, TbLoader } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -6,9 +7,19 @@ type NewResourceLayoutProps = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     loading: boolean;
     children?: React.ReactNode;
+    submitText?: string;
+    showPreview?: boolean;
+    secondaryButton?: React.ReactNode;
 };
 
-const NewResourceLayout = ({ handleSubmit, loading, children }: NewResourceLayoutProps) => {
+const NewResourceLayout = ({
+    showPreview = true,
+    submitText,
+    handleSubmit,
+    loading,
+    children,
+    secondaryButton,
+}: NewResourceLayoutProps) => {
     const navigate = useNavigate();
     const { domain } = useParams();
 
@@ -31,19 +42,30 @@ const NewResourceLayout = ({ handleSubmit, loading, children }: NewResourceLayou
                             <TbChevronLeft className="text-xl" /> Go home
                             <div className="absolute -bottom-1 ml-1 w-full border-t border-t-gray-700 opacity-0 transition group-hover:opacity-100" />
                         </button>
-                        <Button type="button" className="ml-auto min-w-0 rounded-xl" variant="outline">
-                            Preview
-                        </Button>
 
-                        <Button disabled={loading} type="submit" className="ml-2 min-w-0 rounded-xl">
+                        {showPreview && (
+                            <Button type="button" className="ml-auto min-w-0 rounded-xl" variant="outline">
+                                Preview
+                            </Button>
+                        )}
+                        {secondaryButton}
+
+                        <Button
+                            disabled={loading}
+                            type="submit"
+                            className={classNames(
+                                'ml-2 min-w-0 rounded-xl',
+                                !showPreview && !secondaryButton && 'ml-auto',
+                            )}
+                        >
                             {loading && <TbLoader className="mr-2 animate-spin text-base" />}
-                            Create
+                            {submitText ?? 'Create'}
                         </Button>
                     </div>
                 </div>
                 <div className="scroll-hidden relative flex py-6 text-base">{children}</div>
             </div>
-            <div className="fixed bottom-0 left-0 right-0 top-0 h-screen w-full bg-pale/30 backdrop-blur-xl" />
+            <div className="fixed bottom-0 left-0 right-0 top-0 h-screen w-full bg-pale/50 backdrop-blur-xl" />
         </form>
     );
 };

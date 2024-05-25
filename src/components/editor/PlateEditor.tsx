@@ -393,6 +393,7 @@ const initialValue = [
 
 type PlateEditorProps = Omit<PlateProps, 'children'> & {
     className?: string;
+    wrapperClassName?: string;
 };
 
 export function PlateEditor(props: PlateEditorProps) {
@@ -405,6 +406,7 @@ export function PlateEditor(props: PlateEditorProps) {
                             'relative',
                             // Block selection
                             'rounded-xl border [&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4',
+                            props.wrapperClassName,
                         )}
                     >
                         <FixedToolbar className="!top-10">

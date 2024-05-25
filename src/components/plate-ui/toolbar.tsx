@@ -10,7 +10,7 @@ import { Icons } from '@/components/icons';
 import { Separator } from './separator';
 import { withTooltip } from './tooltip';
 
-export const Toolbar = withCn(ToolbarPrimitive.Root, 'relative flex select-none items-center gap-1 bg-background');
+export const Toolbar = withCn(ToolbarPrimitive.Root, 'relative flex select-none items-center gap-1');
 
 export const ToolbarToggleGroup = withCn(ToolbarPrimitive.ToolbarToggleGroup, 'flex items-center');
 
