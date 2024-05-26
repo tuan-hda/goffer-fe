@@ -111,6 +111,7 @@
         "embla-carousel-react": "^8.0.0",
         "formik": "^2.4.5",
         "framer-motion": "^11.0.6",
+        "gsap": "^3.12.5",
         "immer": "^10.0.4",
         "jwt-decode": "^4.0.0",
         "lexical": "^0.14.2",

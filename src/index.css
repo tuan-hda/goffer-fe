@@ -704,3 +704,16 @@ i.justify-align {
         0 0,
         10px 10px;
 }
+
+.project:last-of-type {
+    @apply border-b border-gray-300;
+}
+.project:hover {
+    @apply opacity-50;
+}
+.project:hover h2 {
+    transform: translateX(-10px);
+}
+.project:hover p {
+    transform: translateX(10px);
+}

@@ -1,6 +1,6 @@
-import { Info } from '@/stores/newProject';
+import { Project } from '@/types/project.type';
 
-export const projects: Info[] = [
+export const projects: Project[] = [
     {
         cover: 'https://nextui.org/_next/image?url=%2Fimages%2Fhero-card.webp&w=640&q=75',
         description:
