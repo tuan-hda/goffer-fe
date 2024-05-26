@@ -6,7 +6,7 @@ type HeaderProps = {
 
 const Header = ({ logo }: HeaderProps) => {
     return (
-        <div className="sticky top-10 z-[10] mx-auto mt-10 flex w-[90vw] items-center gap-10">
+        <div className="sticky top-10 z-[10] mx-auto mt-10 flex w-[90vw] items-center gap-10 self-start">
             <p className="font-serif text-5xl font-semibold">{logo}</p>
             <p className="ml-auto uppercase">Projects</p>
             <p className="uppercase">Experiences</p>

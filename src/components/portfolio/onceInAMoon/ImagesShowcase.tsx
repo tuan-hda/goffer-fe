@@ -69,7 +69,7 @@ const ImagesShowcase = () => {
     ];
 
     return (
-        <div className="relative flex h-[80vh]">
+        <div className="relative flex h-[100vh]">
             <motion.div
                 ref={ref}
                 style={{

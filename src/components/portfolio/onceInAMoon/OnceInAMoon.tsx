@@ -1,7 +1,9 @@
 import { Button } from '../../ui/button';
 import Header from '../Header';
+import Experiences from './Experiences';
 import ImagesShowcase from './ImagesShowcase';
 import ProjectList from './ProjectList';
+import Recommendations from './Recommendations';
 
 const OnceInAMoon = () => {
     const words = Array(30)
@@ -9,9 +11,11 @@ const OnceInAMoon = () => {
         .map((_) => 'MARIE CURIE');
 
     return (
-        <div className="bg-dots flex min-h-screen flex-col overflow-hidden text-base tracking-wider text-black">
+        <div className="bg-dots flex min-h-screen flex-col overflow-x-clip tracking-wider text-black md:text-base lg:text-lg xl:text-xl">
             <Header logo="Marie" />
-            <p className="mt-[calc(50vh-200px)] text-center uppercase">Magician, specialize in Website magic ✨</p>
+            <p className="mb-[2vh] mt-[calc(48vh-200px)] text-center uppercase">
+                Magician, specialize in Website magic ✨
+            </p>
             <div className="infinite-words-slide relative h-[200px] w-full overflow-hidden">
                 <div className="words-loop relative z-[1] mt-20 flex items-center gap-24 font-serif text-[20vh] font-black text-black">
                     {words.map((word, index) => (
@@ -34,7 +38,11 @@ const OnceInAMoon = () => {
             {/* Projects */}
             <ProjectList />
 
-            <div className="h-[1000px]"></div>
+            <Experiences />
+
+            <Recommendations />
+
+            <div className="h-[200px]"></div>
         </div>
     );
 };
