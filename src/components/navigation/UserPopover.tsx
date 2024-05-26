@@ -48,7 +48,7 @@ const UserPopover = ({ collapsed, isAdmin }: UserPopoverProps) => {
                     </p>
                 </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className={classNames('w-[240px] rounded-xl')}>
+            <DropdownMenuContent data-user-popover className={classNames('w-[240px] rounded-xl')}>
                 <DropdownMenuLabel>Individual</DropdownMenuLabel>
                 <DropdownMenuItem className="p-0">
                     <Link

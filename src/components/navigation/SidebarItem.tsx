@@ -41,7 +41,7 @@ const SidebarItem = ({ item, collapsed, match, onClick, isMatched, isAdmin = fal
                     'bg-beige/70':
                         isMatched || (match?.type === 'link' && match.element.path === item.element.path && !isAdmin),
                     'bg-white/10':
-                        isMatched || (match?.type === 'link' && match.element.path === item.element.path && !isAdmin),
+                        isMatched || (match?.type === 'link' && match.element.path === item.element.path && isAdmin),
                 },
                 isAdmin ? 'text-white' : 'text-text',
                 isAdmin ? 'hover:bg-white/20' : 'hover:bg-beige/70',
@@ -56,7 +56,9 @@ const SidebarItem = ({ item, collapsed, match, onClick, isMatched, isAdmin = fal
             >
                 {item.element.content}
             </p>
-            <div className={classNames('absolute', collapsed ? 'right-0' : 'right-2')}>{item.element.endContent}</div>
+            <div className={classNames('absolute', collapsed ? '-right-[3px]' : 'right-2')}>
+                {item.element.endContent}
+            </div>
         </Link>
     );
 };

@@ -15,8 +15,9 @@ const InsightsBar = () => {
 
     return (
         <div className="grid grid-cols-6 rounded-xl bg-white p-2 shadow-2xl">
-            {pipeline.map((stage) => (
+            {pipeline.map((stage, index) => (
                 <button
+                    key={index}
                     onClick={() => setSelected(stage.title)}
                     className={classNames(
                         'flex flex-col items-center gap-y-2 rounded-lg p-8 transition',

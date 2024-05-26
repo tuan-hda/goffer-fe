@@ -101,7 +101,7 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
     {
         type: 'link',
         element: {
-            path: '/app/discover/portfolio',
+            path: '/app/portfolio',
             startContent: <TbPaint className="text-xl" />,
             content: 'Portfolio',
         },

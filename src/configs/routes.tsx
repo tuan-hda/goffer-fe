@@ -33,6 +33,8 @@ import {
     Messages,
     Enhance,
     Dashboard,
+    Portfolio,
+    NewProject,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -120,6 +122,10 @@ const routesConfig: RouteObject[] = [
                         element: <Profile />,
                     },
                     {
+                        path: '/app/portfolio',
+                        element: <Portfolio />,
+                    },
+                    {
                         path: '/app/messages',
                         element: <Messages />,
                     },
@@ -196,6 +202,10 @@ const routesConfig: RouteObject[] = [
             {
                 path: '/app/organization/:domain/new',
                 element: <NewJob />,
+            },
+            {
+                path: '/project/new',
+                element: <NewProject />,
             },
             {
                 path: '/job',

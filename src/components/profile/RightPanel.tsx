@@ -1,5 +1,5 @@
 import { Tab, Tabs } from '@nextui-org/react';
-import { TbBaguette, TbChevronDown, TbPaperclip, TbShare, TbSparkles } from 'react-icons/tb';
+import { TbBaguette, TbChevronDown, TbCirclePlus, TbPaperclip, TbPrompt, TbShare, TbSparkles } from 'react-icons/tb';
 import Basic from './Basic';
 import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
@@ -8,6 +8,8 @@ import Experiences from './Experiences';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
 import { User } from '@/types/user.type';
 import Recommendations from './Recommendations';
+import { Link } from 'react-router-dom';
+import ProjectList from './ProjectList';
 
 const RightPanel = () => {
     const { profile, setProfile, cancelUpdate, updateProfile, loading } = useUpdateProfile();
@@ -71,6 +73,24 @@ const RightPanel = () => {
                         }
                     >
                         <Experiences />
+                    </Tab>
+                    <Tab
+                        key="projects"
+                        title={
+                            <span className="flex items-center gap-2">
+                                <TbPrompt className="text-lg" /> Projects
+                            </span>
+                        }
+                    >
+                        <div className="h-2"></div>
+                        <ProjectList />
+                        <div className="h-7"></div>
+                        <Button className="h-10 w-full gap-3" variant="outline" asChild>
+                            <Link to="/project/new">
+                                <TbCirclePlus className="text-base" />
+                                Add project
+                            </Link>
+                        </Button>
                     </Tab>
                     <Tab
                         key="recommendations"
