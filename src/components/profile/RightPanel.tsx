@@ -9,6 +9,7 @@ import useUpdateProfile from '@/hooks/useUpdateProfile';
 import { User } from '@/types/user.type';
 import Recommendations from './Recommendations';
 import { Link } from 'react-router-dom';
+import ProjectList from './ProjectList';
 
 const RightPanel = () => {
     const { profile, setProfile, cancelUpdate, updateProfile, loading } = useUpdateProfile();
@@ -81,6 +82,9 @@ const RightPanel = () => {
                             </span>
                         }
                     >
+                        <div className="h-2"></div>
+                        <ProjectList />
+                        <div className="h-7"></div>
                         <Button className="h-10 w-full gap-3" variant="outline" asChild>
                             <Link to="/project/new">
                                 <TbCirclePlus className="text-base" />

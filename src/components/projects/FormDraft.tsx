@@ -76,7 +76,6 @@ const FormDraft = ({ hidden }: FormDraftProps) => {
             />
             <div className="h-16"></div>
             <PlateEditor
-                value={info.content}
                 onChange={(value) =>
                     setInfo((prev) => ({
                         ...prev,
