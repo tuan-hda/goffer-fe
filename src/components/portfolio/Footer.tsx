@@ -21,7 +21,7 @@ const links = [
 
 const Footer = () => {
     return (
-        <div className="mt-[20vh] flex flex-col bg-white py-[calc(35vh-200px)] text-center">
+        <div className="portfolio-bg-dots mt-[20vh] flex flex-col py-[calc(35vh-200px)] text-center">
             <p className="text-center text-[6.5vh] font-medium leading-[150%]">Work with me</p>
             <GetInTouch className="mx-auto mt-[8vh] w-fit" />
             <div className="mx-auto mt-[26vh] flex max-w-[64vw] flex-wrap items-center">

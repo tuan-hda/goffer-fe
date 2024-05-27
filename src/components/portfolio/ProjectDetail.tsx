@@ -17,7 +17,7 @@ const ProjectDetail = () => {
         <>
             <div className="mx-auto mt-[10vh] w-[90vw]">
                 <Link to="/p" className="group flex items-center gap-4 text-[2vh] font-light uppercase">
-                    <TbArrowLeft className="text-[3vh] text-gray-600 transition group-hover:text-black" />
+                    <TbArrowLeft className="portfolio-secondary text-[3vh] transition group-hover:opacity-80" />
                     Go back to portfolio
                 </Link>
             </div>
@@ -30,12 +30,12 @@ const ProjectDetail = () => {
                 </Reveal>
                 <Reveal threshold={0.1} delay={0.2}>
                     <p className="mt-[5vh] text-[2vh] font-light">
-                        TOOLS: <span className="text-gray-700">ADOBE AFTER EFFECTS • FIGMA • WEBFLOW</span>
+                        TOOLS: <span className="portfolio-secondary">ADOBE AFTER EFFECTS • FIGMA • WEBFLOW</span>
                     </p>
                 </Reveal>
                 <Reveal threshold={0.1} delay={0.3}>
                     <p className="mt-[1vh] text-[2vh] font-light">
-                        SKILLS: <span className="text-gray-700">ADOBE AFTER EFFECTS • FIGMA • WEBFLOW</span>
+                        SKILLS: <span className="portfolio-secondary">ADOBE AFTER EFFECTS • FIGMA • WEBFLOW</span>
                     </p>
                 </Reveal>
                 <Reveal threshold={0.1} delay={0.4}>
@@ -47,7 +47,7 @@ const ProjectDetail = () => {
                 </Reveal>
 
                 <Reveal threshold={0.2}>
-                    <div className="space-y-[6vh] text-black">
+                    <div className="portfolio-text space-y-[6vh]">
                         <p className="text-[2vh] font-light leading-[150%]">
                             Explore the world of art and mesmerize your audience with its beauty with Galleria, the Art
                             Exhibition Website UI Design!

@@ -695,16 +695,6 @@ i.justify-align {
     animation: loop-anim 100s linear infinite;
 }
 
-.bg-dots {
-    background-color: #fff;
-    opacity: 0.8;
-    background-image: radial-gradient(#bbbef9 0.5px, transparent 0.5px), radial-gradient(#bbbef9 0.5px, #fff 0.5px);
-    background-size: 20px 20px;
-    background-position:
-        0 0,
-        10px 10px;
-}
-
 .project:last-of-type {
     @apply border-b border-gray-300;
 }
@@ -716,4 +706,35 @@ i.justify-align {
 }
 .project:hover p {
     transform: translateX(10px);
+}
+
+.portfolio-text {
+    color: var(--text-color);
+}
+
+.portfolio-secondary {
+    color: var(--secondary-color);
+}
+
+.portfolio-special {
+    background-color: var(--special-color);
+}
+
+.portfolio-bg-dots {
+    background-color: #fff;
+    background-image: radial-gradient(var(--dots-color) 0.5px, transparent 0.5px),
+        radial-gradient(var(--dots-color) 0.5px, var(--p-bg-color) 0.5px);
+    background-size: 20px 20px;
+    background-position:
+        0 0,
+        10px 10px;
+}
+
+.portfolio-button-bg {
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+}
+.portfolio-button-bg:hover {
+    color: var(--button-color);
+    background-color: var(--button-bg-color-hover) !important;
 }
