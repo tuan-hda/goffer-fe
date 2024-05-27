@@ -7,8 +7,10 @@ const Experiences = () => {
     const { profile } = useUpdateProfile();
     const experiences = profile?.experiences || [];
 
+    if (experiences.length === 0) return null;
+
     return (
-        <div className="mx-auto w-full max-w-[64vw]">
+        <div id="experiences" className="mx-auto w-full max-w-[64vw]">
             <p className="mb-[10vh] mt-[calc(55vh-200px)] text-center uppercase">EXPERIENCES</p>
             <div className="space-y-[7vh]">
                 {experiences.map((experience, index) => (

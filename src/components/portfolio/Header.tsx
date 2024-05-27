@@ -1,22 +1,33 @@
-import { Button } from '../ui/button';
+import GetInTouch from './GetInTouch';
 
 type HeaderProps = {
     logo?: React.ReactNode;
+    hideProjects?: boolean;
+    hideExperiences?: boolean;
+    hideRecommendations?: boolean;
 };
 
-const Header = ({ logo }: HeaderProps) => {
+const Header = ({ logo, hideProjects, hideExperiences, hideRecommendations }: HeaderProps) => {
     return (
-        <div className="sticky top-10 z-[10] mx-auto mt-10 flex w-[90vw] items-center gap-10 self-start">
+        <div className="sticky top-10 z-[11] mx-auto mt-10 flex w-[90vw] items-center gap-10 self-start">
             <p className="font-serif text-5xl font-semibold">{logo}</p>
-            <p className="ml-auto uppercase">Projects</p>
-            <p className="uppercase">Experiences</p>
-            <p className="uppercase">Recommendations</p>
-            <Button
-                variant="black"
-                className="h-16 rounded-full bg-black px-10 py-6 text-base uppercase tracking-widest text-white"
-            >
-                Get in touch
-            </Button>
+            <div className="flex-1"></div>
+            {!hideProjects && (
+                <a href="#projects" className="uppercase">
+                    Projects
+                </a>
+            )}
+            {!hideExperiences && (
+                <a href="#experiences" className="uppercase">
+                    Experiences
+                </a>
+            )}
+            {!hideRecommendations && (
+                <a href="#recommendations" className="uppercase">
+                    Recommendations
+                </a>
+            )}
+            <GetInTouch />
         </div>
     );
 };

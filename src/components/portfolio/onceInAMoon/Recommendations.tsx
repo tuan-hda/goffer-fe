@@ -7,7 +7,7 @@ const Recommendations = () => {
     const [curr, setCurr] = useState(0);
 
     return (
-        <div className="mx-auto w-full max-w-[64vw]">
+        <div id="recommendations" className="mx-auto w-full max-w-[64vw]">
             <p className="mb-[10vh] mt-[calc(55vh-200px)] text-center uppercase">RECOMMENDATIONS</p>
             <div className="flex items-start justify-between gap-[5vh]">
                 <button
@@ -17,7 +17,7 @@ const Recommendations = () => {
                     <TbArrowLeft className="text-[5vh] text-gray-600 transition group-hover:text-black" />
                 </button>
                 <div className="font-mono">
-                    <p className="text-center text-[7vh] leading-[150%]">"{recommendations[curr].content}"</p>
+                    <p className="text-center text-[6.5vh] leading-[140%]">"{recommendations[curr].content}"</p>
                     <div className="mt-[4vh] flex items-center justify-center gap-[3vh]">
                         <Avatar src={recommendations[curr].avatar} className="h-[8vh] w-[8vh]" />
                         <p className="text-[3vh]">

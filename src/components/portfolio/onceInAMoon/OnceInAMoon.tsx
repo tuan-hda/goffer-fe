@@ -1,18 +1,23 @@
-import { Button } from '../../ui/button';
+import useUpdateProfile from '@/hooks/useUpdateProfile';
 import Header from '../Header';
 import Experiences from './Experiences';
 import ImagesShowcase from './ImagesShowcase';
 import ProjectList from './ProjectList';
 import Recommendations from './Recommendations';
+import About from './About';
+import Footer from '../Footer';
+import GetInTouch from '../GetInTouch';
 
 const OnceInAMoon = () => {
     const words = Array(30)
         .fill(0)
         .map((_) => 'MARIE CURIE');
+    const { profile } = useUpdateProfile();
+    const experiences = profile?.experiences || [];
 
     return (
         <div className="bg-dots flex min-h-screen flex-col overflow-x-clip tracking-wider text-black md:text-base lg:text-lg xl:text-xl">
-            <Header logo="Marie" />
+            <Header logo="Marie" hideExperiences={experiences.length === 0} />
             <p className="mb-[2vh] mt-[calc(48vh-200px)] text-center uppercase">
                 Magician, specialize in Website magic ✨
             </p>
@@ -28,12 +33,7 @@ const OnceInAMoon = () => {
             {/* Showcase images part */}
             <ImagesShowcase />
 
-            <Button
-                variant="black"
-                className="mx-auto mt-[24vh] h-16 w-fit rounded-full bg-black px-10 py-6 text-base uppercase tracking-widest text-white"
-            >
-                Get in touch
-            </Button>
+            <GetInTouch className="mx-auto mt-[24vh] w-fit" />
 
             {/* Projects */}
             <ProjectList />
@@ -42,7 +42,9 @@ const OnceInAMoon = () => {
 
             <Recommendations />
 
-            <div className="h-[200px]"></div>
+            <About />
+
+            <Footer />
         </div>
     );
 };
