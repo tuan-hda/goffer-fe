@@ -23,10 +23,9 @@ const GetInTouch = ({ className, type = 'internal' }: GetInTouchProps) => {
         <AlertDialog>
             <AlertDialogTrigger asChild>
                 <Button
-                    variant="black"
                     className={classNames(
                         className,
-                        'h-16 rounded-full bg-black px-10 py-6 text-base uppercase tracking-widest text-white',
+                        'portfolio-button-bg h-16 rounded-full px-10 py-6 text-base uppercase tracking-widest text-white',
                     )}
                 >
                     Get in touch
