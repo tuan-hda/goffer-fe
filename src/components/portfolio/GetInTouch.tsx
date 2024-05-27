@@ -25,7 +25,7 @@ const GetInTouch = ({ className, type = 'internal' }: GetInTouchProps) => {
                 <Button
                     className={classNames(
                         className,
-                        'portfolio-button-bg h-16 rounded-full px-10 py-6 text-base uppercase tracking-widest text-white',
+                        'portfolio-button-bg h-[7.5vh] rounded-full px-[4vh] py-[3vh] !text-[2vh] text-base uppercase tracking-widest text-white',
                     )}
                 >
                     Get in touch
