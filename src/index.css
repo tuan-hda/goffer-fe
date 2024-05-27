@@ -680,3 +680,40 @@ i.justify-align {
         #00000011 360deg
     );
 }
+
+@keyframes loop-anim {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -500%; /* This works because of the div between "outer" and "loop" */
+    }
+}
+
+.words-loop {
+    white-space: nowrap;
+    animation: loop-anim 100s linear infinite;
+}
+
+.bg-dots {
+    background-color: #fff;
+    opacity: 0.8;
+    background-image: radial-gradient(#bbbef9 0.5px, transparent 0.5px), radial-gradient(#bbbef9 0.5px, #fff 0.5px);
+    background-size: 20px 20px;
+    background-position:
+        0 0,
+        10px 10px;
+}
+
+.project:last-of-type {
+    @apply border-b border-gray-300;
+}
+.project:hover {
+    @apply opacity-50;
+}
+.project:hover h2 {
+    transform: translateX(-10px);
+}
+.project:hover p {
+    transform: translateX(10px);
+}
