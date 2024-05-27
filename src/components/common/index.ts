@@ -10,3 +10,5 @@ export { default as PlainPlate } from './PlainPlate';
 export { default as DatePickerWithRange } from './DatePickerWithRange';
 export { default as Editable } from './Editable';
 export { default as UploadPopover } from './UploadPopover';
+export { default as Reveal } from './Reveal';
+export { default as Fade } from './Fade';

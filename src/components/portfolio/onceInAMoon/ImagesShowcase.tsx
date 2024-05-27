@@ -1,5 +1,5 @@
-import { useAnimation, useMotionValue, useScroll, useTransform } from 'framer-motion';
-import { MouseEventHandler, useEffect, useRef, useState } from 'react';
+import { useAnimation, useScroll, useTransform } from 'framer-motion';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const ImagesShowcase = () => {
@@ -7,12 +7,16 @@ const ImagesShowcase = () => {
     const [mount, setMount] = useState(false);
     const animate = useAnimation();
 
-    useEffect(() => {
+    const handleHover = useCallback(async () => {
         if (hovering) {
             animate.start('hover');
         } else {
             animate.start('initial');
         }
+    }, [hovering]);
+
+    useEffect(() => {
+        handleHover();
     }, [hovering]);
 
     useEffect(() => {
@@ -27,26 +31,6 @@ const ImagesShowcase = () => {
         offset: ['start end', '60% start'],
     });
 
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-    const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-
-        const width = rect.width;
-        const height = rect.height;
-
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-
-        x.set(xPct);
-        y.set(yPct);
-    };
-    const rotateX = useTransform(y, [-0.5, 0.5], ['15deg', '-15deg']);
-    const rotateY = useTransform(x, [-0.5, 0.5], ['-15deg', '15deg']);
-
     // For the rotation of the images
     const rotate = useTransform(scrollYProgress, [0, 1], ['30deg', '-20deg']);
     const rotate2 = useTransform(scrollYProgress, [0, 1], ['-15deg', '20deg']);
@@ -60,7 +44,7 @@ const ImagesShowcase = () => {
     const startPos = [
         [1000, 1000],
         [-1000, 1000],
-        [0, 1000],
+        [-1200, 1000],
     ];
     const imgs = [
         'https://media.contra.com/image/upload/v1689528859/x2a5yyzhauyg8ttduvtp.gif',
@@ -74,8 +58,6 @@ const ImagesShowcase = () => {
                 ref={ref}
                 style={{
                     transformStyle: 'preserve-3d',
-                    rotateX,
-                    rotateY,
                 }}
                 animate={animate}
                 variants={{
@@ -84,7 +66,6 @@ const ImagesShowcase = () => {
                         rotateY: 0,
                     },
                 }}
-                onMouseMove={handleMouseMove}
                 onMouseEnter={() => setHovering(true)}
                 onMouseLeave={() => setHovering(false)}
                 className="mx-auto mt-16 flex aspect-[4/3] h-full items-center justify-center"
@@ -117,8 +98,9 @@ const ImagesShowcase = () => {
                                     translateX: 0,
                                     translateY: 0,
                                     transition: {
-                                        duration: mount ? 0.5 : 2,
+                                        duration: mount ? 0.5 : 1,
                                         ease: 'easeInOut',
+                                        delay: mount ? 0 : index * 0.5,
                                     },
                                 },
                                 start: {
