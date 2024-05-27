@@ -2,7 +2,7 @@ import { Image } from '@nextui-org/react';
 
 const About = () => {
     return (
-        <div className="mx-auto mt-[calc(55vh-200px)] flex w-full items-center gap-[10vh] px-[10vh]">
+        <div className="mx-auto flex w-full items-center gap-[10vh] px-[10vh] pt-[calc(55vh-200px)]">
             <Image
                 src="http://res.cloudinary.com/doxsstgkc/image/upload/v1716520511/goffer/tikvideo_app_7289049866494364974_11_jpeg_1716520507717.jpg"
                 className="aspect-square h-[52vh] rounded-none"
