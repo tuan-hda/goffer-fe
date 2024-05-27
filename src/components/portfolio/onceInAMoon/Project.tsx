@@ -1,4 +1,5 @@
 import { Project as ProjectType } from '@/types/project.type';
+import { useNavigate } from 'react-router-dom';
 
 type ProjectProps = {
     data: ProjectType;
@@ -7,8 +8,10 @@ type ProjectProps = {
 };
 
 const Project = ({ data, setModal, index }: ProjectProps) => {
+    const navigate = useNavigate();
     return (
         <div
+            onClick={() => navigate('/p/agma22ka9065bndal')}
             onMouseEnter={() => {
                 setModal({ active: true, index });
             }}

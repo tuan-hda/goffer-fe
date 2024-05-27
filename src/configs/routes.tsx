@@ -52,7 +52,8 @@ import {
 import Test from '@/pages/Test';
 import Editor from '@/components/common/editor/Editor';
 import { Application, JobApply } from '@/components/applicant/apply';
-import { OnceInAMoon } from '@/components/portfolio';
+import { OnceInAMoon, PortfolioLayout } from '@/components/portfolio';
+import ProjectDetail from '@/components/portfolio/ProjectDetail';
 
 const routesConfig: RouteObject[] = [
     {
@@ -249,7 +250,20 @@ const routesConfig: RouteObject[] = [
         path: '/get-started',
         element: <GetStarted />,
     },
-    { path: '/portfolio', element: <OnceInAMoon /> },
+    {
+        path: '/p',
+        element: <PortfolioLayout />,
+        children: [
+            {
+                index: true,
+                element: <OnceInAMoon />,
+            },
+            {
+                path: '/p/:id',
+                element: <ProjectDetail />,
+            },
+        ],
+    },
     { path: '*', element: <NotFound /> },
 ];
 
