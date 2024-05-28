@@ -12,3 +12,4 @@ export { default as Editable } from './Editable';
 export { default as UploadPopover } from './UploadPopover';
 export { default as Reveal } from './Reveal';
 export { default as Fade } from './Fade';
+export { default as SlideIn } from './SlideIn';

@@ -52,7 +52,7 @@ import {
 import Test from '@/pages/Test';
 import Editor from '@/components/common/editor/Editor';
 import { Application, JobApply } from '@/components/applicant/apply';
-import { OnceInAMoon, PortfolioLayout } from '@/components/portfolio';
+import { Ditto, OnceInAMoon, PortfolioLayout } from '@/components/portfolio';
 import ProjectDetail from '@/components/portfolio/ProjectDetail';
 
 const routesConfig: RouteObject[] = [
@@ -257,6 +257,10 @@ const routesConfig: RouteObject[] = [
             {
                 index: true,
                 element: <OnceInAMoon />,
+            },
+            {
+                path: '1',
+                element: <Ditto />,
             },
             {
                 path: '/p/:id',
