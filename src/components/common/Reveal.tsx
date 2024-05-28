@@ -33,10 +33,12 @@ const Reveal = ({ children, threshold = 0.5, log, delay = 0 }: RevealProps) => {
                 hidden: {
                     opacity: 0,
                     y: 75,
+                    x: -20,
                 },
                 visible: {
                     opacity: 1,
                     y: 0,
+                    x: 0,
                     transition: {
                         duration: 0.5,
                         delay: delay,
