@@ -32,19 +32,23 @@ const OnceInAMoon = () => {
 
             <GetInTouch className="mx-auto mt-[24vh] w-fit" />
 
+            <div className="h-[calc(55vh-200px)]"></div>
             {/* Projects */}
             <Reveal threshold={0.3}>
                 <ProjectList />
             </Reveal>
 
+            <div className="h-[calc(55vh-200px)]"></div>
             <Reveal threshold={0.49}>
                 <Experiences />
             </Reveal>
 
+            <div className="h-[calc(55vh-200px)]"></div>
             <Reveal threshold={0.6}>
                 <Recommendations />
             </Reveal>
 
+            <div className="h-[calc(55vh-200px)]"></div>
             <Reveal threshold={0.7}>
                 <About />
             </Reveal>

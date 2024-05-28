@@ -738,3 +738,7 @@ i.justify-align {
     color: var(--button-color);
     background-color: var(--button-bg-color-hover) !important;
 }
+
+.portfolio-border {
+    border-color: var(--text-color);
+}

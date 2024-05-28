@@ -2,16 +2,16 @@ import { Project } from '@/types/project.type';
 
 export const projects: Project[] = [
     {
-        cover: 'https://nextui.org/_next/image?url=%2Fimages%2Fhero-card.webp&w=640&q=75',
+        cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/xknz4s1wkvafg8kfxqqv',
         description:
-            'NextUI is a React component library that provides a set of high-quality components out of the box.',
-        title: 'NextUI',
+            'EduLearn is an online learning platform that offers a variety of courses across different subjects.',
+        title: 'EduLearn',
         content: [
             {
                 type: 'paragraph',
                 children: [
                     {
-                        text: 'NextUI is a React component library that provides a set of high-quality components out of the box.',
+                        text: 'EduLearn is an online learning platform that offers a variety of courses across different subjects.',
                     },
                 ],
             },
@@ -19,7 +19,7 @@ export const projects: Project[] = [
                 type: 'paragraph',
                 children: [
                     {
-                        text: 'It is built with TypeScript and React hooks, and it is designed to be accessible and customizable.',
+                        text: 'Built with a focus on user engagement, EduLearn provides interactive lessons, quizzes, and progress tracking.',
                     },
                 ],
             },
@@ -27,93 +27,25 @@ export const projects: Project[] = [
                 type: 'paragraph',
                 children: [
                     {
-                        text: 'NextUI is a React component library that provides a set of high-quality components out of the box.',
+                        text: 'The platform is designed to be accessible and user-friendly, making it easy for learners of all ages to navigate and learn.',
                     },
                 ],
             },
         ],
-        tools: ['React', 'TypeScript', 'Next.js', 'Zustand', 'ESLint', 'Prettier'],
-        skills: ['React', 'TypeScript', 'Next.js', 'Zustand', 'ESLint', 'Prettier'],
-    },
-    {
-        cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/whf78v2r0aiis0ezn12q',
-        description:
-            'DevHub is a community-driven platform for developers to share projects, collaborate, and learn from each other.',
-        title: 'DevHub',
-        content: [
-            {
-                type: 'paragraph',
-                children: [
-                    {
-                        text: 'DevHub is a community-driven platform for developers to share projects, collaborate, and learn from each other.',
-                    },
-                ],
-            },
-            {
-                type: 'paragraph',
-                children: [
-                    {
-                        text: 'Built with a focus on social interaction, DevHub allows developers to follow each other, share updates, and contribute to open-source projects.',
-                    },
-                ],
-            },
-            {
-                type: 'paragraph',
-                children: [
-                    {
-                        text: 'DevHub provides tools for code review, project management, and continuous integration, making it a comprehensive platform for software development.',
-                    },
-                ],
-            },
-        ],
-        tools: ['Node.js', 'Express', 'MongoDB', 'React', 'Redux', 'Jest'],
-        skills: ['Node.js', 'Express', 'MongoDB', 'React', 'Redux', 'Jest'],
-    },
-    {
-        cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/ba15ek3ag3o4g5maepqo',
-        description:
-            'ShopEase is an e-commerce platform designed to provide a seamless shopping experience with advanced features.',
-        title: 'ShopEase',
-        content: [
-            {
-                type: 'paragraph',
-                children: [
-                    {
-                        text: 'ShopEase is an e-commerce platform designed to provide a seamless shopping experience with advanced features.',
-                    },
-                ],
-            },
-            {
-                type: 'paragraph',
-                children: [
-                    {
-                        text: 'With an intuitive user interface, ShopEase offers features like real-time inventory tracking, personalized recommendations, and a secure checkout process.',
-                    },
-                ],
-            },
-            {
-                type: 'paragraph',
-                children: [
-                    {
-                        text: 'Built with scalability in mind, ShopEase can handle a large number of transactions and users, making it suitable for businesses of all sizes.',
-                    },
-                ],
-            },
-        ],
-        tools: ['Angular', 'TypeScript', 'Node.js', 'Express', 'MySQL', 'Docker'],
-        skills: ['Angular', 'TypeScript', 'Node.js', 'Express', 'MySQL', 'Docker'],
+        tools: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Jest'],
+        skills: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Jest'],
     },
     {
         cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/xknz4s1wkvafg8kfxqqv',
         description:
-            'HealthTrack is a health and fitness application that helps users monitor their daily activities and achieve their fitness goals.',
-        title: 'HealthTrack',
+            'TravelMate is a travel planning application that helps users organize and book their trips effortlessly.',
+        title: 'TravelMate',
         content: [
             {
                 type: 'paragraph',
                 children: [
                     {
-                        text: 'HealthTrack is a health and fitness application that helps users monitor their daily activities and achieve their fitness goals.',
+                        text: 'TravelMate is a travel planning application that helps users organize and book their trips effortlessly.',
                     },
                 ],
             },
@@ -121,7 +53,7 @@ export const projects: Project[] = [
                 type: 'paragraph',
                 children: [
                     {
-                        text: 'The app features activity tracking, workout plans, diet logging, and progress reports to keep users motivated and on track.',
+                        text: 'It offers features like itinerary creation, accommodation booking, and local activity recommendations.',
                     },
                 ],
             },
@@ -129,12 +61,214 @@ export const projects: Project[] = [
                 type: 'paragraph',
                 children: [
                     {
-                        text: 'HealthTrack integrates with wearable devices and provides real-time data analysis to offer personalized recommendations.',
+                        text: 'TravelMate also provides real-time updates on flight status, weather, and travel advisories to ensure a smooth travel experience.',
                     },
                 ],
             },
         ],
-        tools: ['Flutter', 'Dart', 'Firebase', 'GraphQL', 'Redux', 'Jenkins'],
-        skills: ['Flutter', 'Dart', 'Firebase', 'GraphQL', 'Redux', 'Jenkins'],
+        tools: ['Vue.js', 'TypeScript', 'Firebase', 'Tailwind CSS', 'Jest'],
+        skills: ['Vue.js', 'TypeScript', 'Firebase', 'Tailwind CSS', 'Jest'],
+    },
+    {
+        cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/xknz4s1wkvafg8kfxqqv',
+        description:
+            'Foodie is a social platform for food enthusiasts to share recipes, restaurant reviews, and culinary tips.',
+        title: 'Foodie',
+        content: [
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'Foodie is a social platform for food enthusiasts to share recipes, restaurant reviews, and culinary tips.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'Users can follow their favorite chefs, post their own recipes, and participate in cooking challenges.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: "The platform also offers a personalized feed based on users' culinary preferences and interests.",
+                    },
+                ],
+            },
+        ],
+        tools: ['React', 'Node.js', 'Express', 'MongoDB', 'GraphQL'],
+        skills: ['React', 'Node.js', 'Express', 'MongoDB', 'GraphQL'],
+    },
+    {
+        cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/xknz4s1wkvafg8kfxqqv',
+        description:
+            'FitTrack is a mobile application that helps users track their fitness goals and monitor their progress.',
+        title: 'FitTrack',
+        content: [
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'FitTrack is a mobile application that helps users track their fitness goals and monitor their progress.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'The app provides workout plans, diet tracking, and progress charts to keep users motivated.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: "FitTrack integrates with wearable devices to provide real-time data on users' activities and health metrics.",
+                    },
+                ],
+            },
+        ],
+        tools: ['Flutter', 'Dart', 'Firebase', 'Redux', 'Jenkins'],
+        skills: ['Flutter', 'Dart', 'Firebase', 'Redux', 'Jenkins'],
+    },
+    {
+        cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/xknz4s1wkvafg8kfxqqv',
+        description:
+            'CodeCollab is a collaborative coding platform that allows developers to work together in real-time.',
+        title: 'CodeCollab',
+        content: [
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'CodeCollab is a collaborative coding platform that allows developers to work together in real-time.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'It features an integrated development environment (IDE), version control, and code review tools.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'Developers can create private or public repositories, share their work, and contribute to open-source projects.',
+                    },
+                ],
+            },
+        ],
+        tools: ['React', 'Node.js', 'Express', 'GraphQL', 'Docker'],
+        skills: ['React', 'Node.js', 'Express', 'GraphQL', 'Docker'],
+    },
+    {
+        cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/xknz4s1wkvafg8kfxqqv',
+        description: 'EcoShop is an e-commerce platform focused on promoting sustainable and eco-friendly products.',
+        title: 'EcoShop',
+        content: [
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'EcoShop is an e-commerce platform focused on promoting sustainable and eco-friendly products.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'The platform offers a wide range of products, from clothing to home goods, all sourced from environmentally conscious brands.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'EcoShop also provides educational resources on sustainable living and tips for reducing your carbon footprint.',
+                    },
+                ],
+            },
+        ],
+        tools: ['Angular', 'TypeScript', 'Node.js', 'Express', 'MongoDB'],
+        skills: ['Angular', 'TypeScript', 'Node.js', 'Express', 'MongoDB'],
+    },
+    {
+        cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/xknz4s1wkvafg8kfxqqv',
+        description: 'MindSpace is a mental health app that provides resources and tools to support mental well-being.',
+        title: 'MindSpace',
+        content: [
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'MindSpace is a mental health app that provides resources and tools to support mental well-being.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'The app offers guided meditations, mood tracking, and access to licensed therapists for online consultations.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'MindSpace also features community support groups where users can connect with others facing similar challenges.',
+                    },
+                ],
+            },
+        ],
+        tools: ['React Native', 'TypeScript', 'Firebase', 'GraphQL', 'Redux'],
+        skills: ['React Native', 'TypeScript', 'Firebase', 'GraphQL', 'Redux'],
+    },
+    {
+        cover: 'https://media.contra.com/image/upload/ar_1.333,c_fill,f_auto,h_366,q_auto,w_488/xknz4s1wkvafg8kfxqqv',
+        description:
+            'TaskMaster is a project management tool designed to help teams collaborate and manage their work efficiently.',
+        title: 'TaskMaster',
+        content: [
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'TaskMaster is a project management tool designed to help teams collaborate and manage their work efficiently.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'It offers features like task assignment, progress tracking, and team communication to streamline workflows.',
+                    },
+                ],
+            },
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: 'TaskMaster integrates with popular tools like Slack, GitHub, and Trello, making it easy to synchronize work across different platforms.',
+                    },
+                ],
+            },
+        ],
+        tools: ['Vue.js', 'Node.js', 'Express', 'MongoDB', 'Socket.io'],
+        skills: ['Vue.js', 'Node.js', 'Express', 'MongoDB', 'Socket.io'],
     },
 ];

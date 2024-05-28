@@ -74,14 +74,14 @@ export default function Modal({ modal, projects }: ModalProps) {
             </motion.div>
             <motion.div
                 ref={cursor}
-                className="cursor pointer-events-none absolute z-[2] flex h-[80px] w-[80px] items-center justify-center rounded-full bg-white/30 text-sm font-light text-white"
+                className="cursor pointer-events-none absolute z-[2] flex h-[9vh] w-[9vh] items-center justify-center rounded-full bg-white/30 text-sm font-light text-white"
                 variants={scaleAnimation}
                 initial="initial"
                 animate={active ? 'enter' : 'closed'}
             ></motion.div>
             <motion.div
                 ref={cursorLabel}
-                className="pointer-events-none absolute z-[2] flex h-[80px] w-[80px] items-center justify-center rounded-full bg-white/60 text-sm font-light text-black backdrop-blur-sm"
+                className="pointer-events-none absolute z-[2] flex h-[9vh] w-[9vh] items-center justify-center rounded-full bg-white/60 text-sm font-light text-black backdrop-blur-sm"
                 variants={scaleAnimation}
                 initial="initial"
                 animate={active ? 'enter' : 'closed'}

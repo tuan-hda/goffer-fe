@@ -33,14 +33,14 @@ const Recommendations = () => {
     };
 
     return (
-        <div id="recommendations" className="mx-auto w-full max-w-[64vw]">
+        <div id="recommendations" className="mx-auto w-full max-w-[72vw]">
             <p className="mb-[10vh] text-center uppercase">RECOMMENDATIONS</p>
-            <div className="flex items-start justify-between gap-[5vh]">
+            <div className="flex items-start justify-between gap-[16vh]">
                 <button className="group mt-[3vh]" onClick={moveLeft}>
                     <TbArrowLeft className="portfolio-secondary text-[5vh] transition group-hover:opacity-80" />
                 </button>
-                <motion.div animate={ctrls} className="font-mono">
-                    <p className="text-center text-[6.5vh] leading-[140%]">"{recommendations[curr].content}"</p>
+                <motion.div animate={ctrls}>
+                    <p className="text-center text-[4vh] leading-[140%]">"{recommendations[curr].content}"</p>
                     <div className="mt-[4vh] flex items-center justify-center gap-[3vh]">
                         <Avatar src={recommendations[curr].avatar} className="h-[8vh] w-[8vh]" />
                         <p className="text-[3vh]">

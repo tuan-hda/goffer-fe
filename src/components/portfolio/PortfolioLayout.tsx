@@ -12,7 +12,6 @@ const colors = {
     // '--button-bg-color': '#111',
     // '--button-bg-color-hover': '#333',
     // '--button-color': '#fff',
-
     // Invert - black theme
     // '--text-color': '#fff',
     // '--secondary-color': '#8D857B',
@@ -22,7 +21,6 @@ const colors = {
     // '--button-bg-color': '#fff',
     // '--button-bg-color-hover': '#ccc',
     // '--button-color': '#000',
-
     // Retro cuphead theme
     '--text-color': '#DC4C2D',
     '--secondary-color': '#EBA696',

@@ -1,4 +1,4 @@
-import { motion, useAnimation, useScroll } from 'framer-motion';
+import { motion, useAnimation, useInView } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
 type RevealProps = {
@@ -8,27 +8,20 @@ type RevealProps = {
     delay?: number;
 };
 
-const Reveal = ({ children, threshold = 0.5, log, delay = 0 }: RevealProps) => {
+const Reveal = ({ children, delay = 0 }: RevealProps) => {
     const ref = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ['start end', 'end start'],
-    });
+    const isInView = useInView(ref);
     const ctrls = useAnimation();
 
     useEffect(() => {
-        scrollYProgress.on('change', () => {
-            if (log) {
-                console.log(scrollYProgress.get());
-            }
-            if (scrollYProgress.get() > threshold) {
-                ctrls.start('visible');
-            }
-        });
-    }, []);
+        if (isInView) {
+            ctrls.start('visible');
+        }
+    }, [isInView]);
 
     return (
         <motion.div
+            ref={ref}
             variants={{
                 hidden: {
                     opacity: 0,

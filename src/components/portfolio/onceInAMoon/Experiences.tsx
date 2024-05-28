@@ -11,7 +11,7 @@ const Experiences = () => {
 
     return (
         <div id="experiences" className="mx-auto w-full max-w-[64vw]">
-            <p className="mb-[10vh] mt-[calc(55vh-200px)] text-center uppercase">EXPERIENCES</p>
+            <p className="mb-[10vh] text-center uppercase">EXPERIENCES</p>
             <div className="space-y-[7vh]">
                 {experiences.map((experience, index) => (
                     <Fragment key={index}>
@@ -22,11 +22,11 @@ const Experiences = () => {
                                 <img src="/gradient.jpg" className="h-[16vh] w-[16vh] flex-shrink-0 rounded-full" />
                             )}
                             <div className="min-w-0 text-center">
-                                <p className="leading-[calc(6vh) text-[5vh] font-medium">
+                                <p className="text-[5vh] font-medium leading-[6vh]">
                                     {experience.title} @ {experience.company}
                                 </p>
                                 <div className="flex justify-center gap-2">
-                                    <p className="mt-[3vh] text-[2vh]">
+                                    <p className="mt-[1vh] text-[2vh]">
                                         {moment(experience.startDate).format('MM/YYYY')} {' - '}
                                         {experience.endDate ? moment(experience.endDate).format('MM/YYYY') : 'Now'}
                                     </p>
