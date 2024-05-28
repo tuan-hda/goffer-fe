@@ -26,7 +26,7 @@ const Footer = () => {
             <Reveal>
                 <p className="text-center text-[6.5vh] font-medium leading-[150%]">Work with me</p>
                 <GetInTouch className="mx-auto mt-[8vh] w-fit" />
-                <div className="mx-auto mt-[26vh] flex max-w-[64vw] flex-wrap items-center">
+                <div className="mx-auto mt-[26vh] flex w-fit max-w-[64vw] flex-wrap items-center">
                     {links.map((link, index) => (
                         <a
                             key={index}

@@ -2,35 +2,49 @@ import { useEffect, useState } from 'react';
 import GetInTouch from '../GetInTouch';
 import { motion, useAnimation } from 'framer-motion';
 
+const DURATION = 1.1;
+const DELAY = 0.76 * DURATION;
+const INTERVAL = 2800;
+
+const wordConfig = {
+    left: '12vh',
+    top: 0,
+    rotate: 0,
+};
+const assetsConfig = {
+    scale: 1,
+    top: '1vh',
+    rotate: 0,
+    left: '2vh',
+};
+
 const transitions = {
-    outro: { duration: 0.9, ease: [0.999, 0.1, 1, 1] },
-    intro: { duration: 0.9, delay: 0.65, ease: [0, 0, 0.001, 1] },
+    outro: { duration: DURATION, ease: [0.999, 0.1, 1, 1] },
+    intro: { duration: DURATION, delay: DELAY, ease: [0, 0, 0.001, 1] },
 };
 
 const variants = {
     words: {
         outro: {
-            initial: { top: 0, rotate: 0, left: '12vh' },
+            initial: wordConfig,
             animate: {
                 top: '-17vh',
                 left: '20vh',
                 rotate: -10,
-                transition: { duration: 0.9, ease: [0.999, 0.1, 1, 1] },
+                transition: transitions.outro,
             },
         },
         intro: {
             animate: {
-                top: 0,
-                left: '12vh',
-                rotate: 0,
-                transition: { duration: 0.9, delay: 0.65, ease: [0, 0, 0.001, 1] },
+                ...wordConfig,
+                transition: transitions.intro,
             },
             initial: { top: '16vh', left: '8vh', rotate: 10 },
         },
     },
     asset: {
         outro: {
-            initial: { scale: 1, top: '1vh', rotate: 0, left: '2vh' },
+            initial: assetsConfig,
             animate: {
                 scale: 0,
                 rotate: 180,
@@ -46,7 +60,7 @@ const variants = {
                 top: '1vh',
                 left: '0vh',
             },
-            animate: { scale: 1, rotate: 0, top: '1vh', left: '2vh', transition: transitions.intro },
+            animate: { ...assetsConfig, transition: transitions.intro },
         },
     },
 };
@@ -68,7 +82,7 @@ const Opening = () => {
             setIndexes((prev) => {
                 return [prev[1], (prev[1] + 1) % baseWords.length];
             });
-        }, 2800);
+        }, INTERVAL);
         return () => {
             clearInterval(interval);
         };
@@ -81,7 +95,8 @@ const Opening = () => {
                 <span className="inline-block h-[11.5vh] flex-shrink-0 overflow-hidden whitespace-nowrap">
                     Studio is
                 </span>
-                <div className="relative inline-block h-[11.5vh] w-full min-w-0 overflow-hidden underline">
+                <div className="relative inline-block h-[11.5vh] w-full min-w-0 overflow-hidden">
+                    {/* Assets loop */}
                     <motion.span variants={variants.asset.outro} className="absolute" initial="initial" animate={ctrls}>
                         {baseAssets[indexes[0]]}
                     </motion.span>
@@ -89,21 +104,34 @@ const Opening = () => {
                         {baseAssets[indexes[1]]}
                     </motion.span>
 
+                    {/* Words loop */}
                     <motion.span
                         variants={variants.words.outro}
-                        className="absolute whitespace-nowrap underline"
+                        className="absolute whitespace-nowrap"
                         initial="initial"
                         animate={ctrls}
                     >
                         {baseWords[indexes[0]]}
+                        <div
+                            className="border-t-2"
+                            style={{
+                                borderTopColor: 'var(--text-color)',
+                            }}
+                        ></div>
                     </motion.span>
                     <motion.span
                         variants={variants.words.intro}
-                        className="absolute whitespace-nowrap underline"
+                        className="absolute whitespace-nowrap"
                         initial="initial"
                         animate={ctrls}
                     >
                         {baseWords[indexes[1]]}
+                        <div
+                            className="border-t-2"
+                            style={{
+                                borderTopColor: 'var(--text-color)',
+                            }}
+                        ></div>
                     </motion.span>
                 </div>
             </h1>
