@@ -1,14 +1,14 @@
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
-type SlideIn = {
+type SlideInProps = {
     children?: React.ReactNode;
     threshold?: number;
     log?: boolean;
     delay?: number;
 };
 
-const SlideIn = ({ children, delay = 0 }: SlideIn) => {
+const SlideIn = ({ children, delay = 0 }: SlideInProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref);
     const ctrls = useAnimation();

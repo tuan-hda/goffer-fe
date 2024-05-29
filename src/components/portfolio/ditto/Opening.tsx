@@ -92,9 +92,7 @@ const Opening = () => {
         <div className="mx-auto mt-[16vh] w-[72vw]">
             <p className="text-[2.2vh]">WE DESIGN BRANDS THAT BRING JOY TO THE WORLD.</p>
             <h1 className="mt-[2vh] flex font-serif text-[10vh] font-medium leading-[100%] tracking-tight">
-                <span className="inline-block h-[11.5vh] flex-shrink-0 overflow-hidden whitespace-nowrap">
-                    Studio is
-                </span>
+                <span className="inline-block h-[11.5vh] flex-shrink-0 overflow-hidden whitespace-nowrap">Tuan is</span>
                 <div className="relative inline-block h-[11.5vh] w-full min-w-0 overflow-hidden">
                     {/* Assets loop */}
                     <motion.span variants={variants.asset.outro} className="absolute" initial="initial" animate={ctrls}>
@@ -136,7 +134,7 @@ const Opening = () => {
                 </div>
             </h1>
             <p className="ml-[12vh] font-serif text-[10vh] font-medium leading-[100%] tracking-tight">
-                ➺ based in Barcelona, Spain.
+                ➺ based in Vietnam
             </p>
             <GetInTouch className="ml-[28vh] mt-[4vh]" />
         </div>
