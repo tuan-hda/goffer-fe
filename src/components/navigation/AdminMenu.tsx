@@ -1,8 +1,9 @@
-import { TbDashboard, TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarLeftExpandFilled } from 'react-icons/tb';
+import { TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarLeftExpandFilled } from 'react-icons/tb';
 import { Menu } from 'react-pro-sidebar';
 import { Link, matchRoutes, useLocation } from 'react-router-dom';
 import UserPopover from './UserPopover';
 import SidebarItem from './SidebarItem';
+import { adminItems } from './adminItems';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -14,15 +15,10 @@ type AdminMenuProps = {
 
 const AdminMenu = ({ collapsed, sideBarPinned, togglePinned }: AdminMenuProps) => {
     const location = useLocation();
-    const match = matchRoutes(
-        [
-            {
-                path: '/app/admin',
-                exact: true,
-            },
-        ],
-        location.pathname,
-    );
+
+    const isMatch = (path: string) => {
+        return !!matchRoutes([{ path, exact: true }], location.pathname);
+    };
 
     return (
         <Menu
@@ -70,19 +66,22 @@ const AdminMenu = ({ collapsed, sideBarPinned, togglePinned }: AdminMenuProps) =
             <div className="flex h-full w-full flex-col">
                 <div className="mx-[14px]">
                     <UserPopover isAdmin collapsed={collapsed} />
-                    <SidebarItem
-                        isAdmin
-                        collapsed={collapsed}
-                        item={{
-                            type: 'link',
-                            element: {
-                                content: 'Dashboard',
-                                path: '/app/admin',
-                                startContent: <TbDashboard className="text-xl" />,
-                            },
-                        }}
-                        isMatched={!!match?.at(0)}
-                    />
+                    {adminItems.map((item, index) => (
+                        <SidebarItem
+                            key={index}
+                            isAdmin
+                            collapsed={collapsed}
+                            item={{
+                                type: 'link',
+                                element: {
+                                    content: item.title,
+                                    path: item.path,
+                                    startContent: item.startIcon,
+                                },
+                            }}
+                            isMatched={isMatch(item.path)}
+                        />
+                    ))}
                 </div>
             </div>
         </Menu>
