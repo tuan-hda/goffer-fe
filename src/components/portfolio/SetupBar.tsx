@@ -48,11 +48,6 @@ const SetupBar = () => {
                     <ColorPaletteList />
                 </Label>
             </CardContent>
-            <CardFooter>
-                <Button variant="black" className="w-full">
-                    Save
-                </Button>
-            </CardFooter>
         </Card>
     );
 };
