@@ -35,6 +35,7 @@ import {
     Dashboard,
     Portfolio,
     NewProject,
+    Reports,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -116,6 +117,10 @@ const routesConfig: RouteObject[] = [
                             {
                                 index: true,
                                 element: <Dashboard />,
+                            },
+                            {
+                                path: 'reports',
+                                element: <Reports />,
                             },
                         ],
                     },

@@ -19,6 +19,7 @@ import { Image } from '@nextui-org/react';
 import { items, orgItems } from './items';
 import AskAI from '../askAI/AskAI';
 import AdminMenu from './AdminMenu';
+import { adminItems } from './adminItems';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -55,11 +56,7 @@ const SideBar = ({ org }: SideBarProps) => {
 
     const isAdmin =
         matchRoutes(
-            [
-                {
-                    path: adminRoute,
-                },
-            ],
+            adminItems.map((item) => ({ path: item.path, exact: true })),
             location.pathname,
         ) !== null;
 
