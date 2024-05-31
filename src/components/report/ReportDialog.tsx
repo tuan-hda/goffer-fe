@@ -21,7 +21,7 @@ const ReportDialog = ({ children, img, loading }: ReportSubmitProps) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-            <AlertDialogContent className="max-h-[90vh] w-full max-w-[1000px] overflow-y-auto p-7">
+            <AlertDialogContent className="max-h-[90vh] w-full max-w-[80vw] overflow-y-auto p-7">
                 <AlertDialogHeader>
                     <AlertDialogTitle>Report issue</AlertDialogTitle>
                     <AlertDialogDescription>

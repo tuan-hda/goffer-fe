@@ -6,11 +6,11 @@ import ReportButton from '@/components/report/ReportButton';
 const RootLayout = () => {
     const ref = useRef<HTMLDivElement>(null);
 
-    useSelfProfileQuery();
+    const { data } = useSelfProfileQuery();
     return (
         <div className="h-full w-full" ref={ref}>
             <Outlet />
-            <ReportButton containerRef={ref} />
+            {data && <ReportButton containerRef={ref} />}
         </div>
     );
 };
