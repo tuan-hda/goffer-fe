@@ -2,7 +2,7 @@ import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { TbDashboard } from 'react-icons/tb';
 import { DatePickerWithRange } from '@/components/common';
-import { CopilotInsights, OverviewStats, Traffic } from '@/components/dashboard';
+import { CopilotInsights, OverviewStats, Traffic } from '@/components/admin';
 
 const Dashboard = () => {
     const { data: user } = useSelfProfileQuery();
