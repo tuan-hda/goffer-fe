@@ -1,8 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
+import { Button } from '../ui/button';
+import classNames from 'classnames';
 
-const DrawRectangle = () => {
+type DrawRectangleProps = {
+    height?: number;
+    width?: number;
+    container?: HTMLElement | null;
+    className?: string;
+    onContinue?: () => void;
+};
+
+const DrawRectangle = ({ height = 1000, width = 1000, container, className, onContinue }: DrawRectangleProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+    const actionContainerRef = useRef<HTMLDivElement | null>(null);
 
     const [isDrawing, setIsDrawing] = useState(false);
 
@@ -14,8 +25,8 @@ const DrawRectangle = () => {
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
-        canvas.height = 1300;
-        canvas.width = 1300;
+        canvas.width = width;
+        canvas.height = height;
 
         const context = canvas.getContext('2d');
         if (!context) return;
@@ -23,49 +34,93 @@ const DrawRectangle = () => {
         context.lineCap = 'round';
         context.strokeStyle = 'black';
         context.lineWidth = 2;
+        context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        context.fillRect(0, 0, canvas.width, canvas.height);
 
         const canvasOffset = canvas.getBoundingClientRect();
-        canvasOffsetX.current = canvasOffset.left;
-        canvasOffsetY.current = canvasOffset.top;
-    }, []);
+        const containerOffset = container?.getBoundingClientRect();
+        canvasOffsetX.current = canvasOffset.left - (containerOffset?.left || 0);
+        canvasOffsetY.current = canvasOffset.top - (containerOffset?.top || 0);
+    }, [width, height]);
 
     const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
         e.preventDefault();
         e.stopPropagation();
         startX.current = e.clientX - canvasOffsetX.current;
-        startY.current = e.clientY - canvasOffsetY.current;
+        startY.current = (container?.scrollTop || 0) + e.clientY - canvasOffsetY.current;
         setIsDrawing(true);
+        actionContainerRef.current?.classList.add('pointer-events-none');
     };
+
     const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
         if (!isDrawing) return;
         e.preventDefault();
         e.stopPropagation();
 
         const newMouseX = e.clientX - canvasOffsetX.current;
-        const newMouseY = e.clientY - canvasOffsetY.current;
+        const newMouseY = (container?.scrollTop || 0) + e.clientY - canvasOffsetY.current;
 
         const rectWidth = newMouseX - startX.current;
         const rectHeight = newMouseY - startY.current;
 
-        contextRef.current?.clearRect(0, 0, canvasRef.current?.width || 0, canvasRef.current?.height || 0);
-        contextRef.current?.strokeRect(startX.current, startY.current, rectWidth, rectHeight);
+        if (contextRef.current) {
+            contextRef.current?.clearRect(0, 0, canvasRef.current?.width || 0, canvasRef.current?.height || 0);
+            contextRef.current.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            contextRef.current?.fillRect(0, 0, canvasRef.current?.width || 0, canvasRef.current?.height || 0);
+            contextRef.current.clearRect(startX.current, startY.current, rectWidth, rectHeight);
+        }
+
+        if (actionContainerRef.current) {
+            const actionContainerLeft =
+                (newMouseX < startX.current ? startX.current : newMouseX) -
+                actionContainerRef.current.getBoundingClientRect().width;
+            const actionContainerTop = (newMouseY < startY.current ? startY.current : newMouseY) + 10;
+
+            actionContainerRef.current.style.left = `${actionContainerLeft}px`;
+            actionContainerRef.current.style.top = `${actionContainerTop}px`;
+            actionContainerRef.current.classList.remove('hidden');
+        }
     };
 
     const stopDrawing = () => {
         setIsDrawing(false);
+        actionContainerRef.current?.classList.remove('pointer-events-none');
+    };
+
+    const cancel = () => {
+        if (contextRef.current) {
+            contextRef.current.clearRect(0, 0, canvasRef.current?.width || 0, canvasRef.current?.height || 0);
+            contextRef.current.fillStyle = 'rgba(0, 0, 0, 0.4)';
+            contextRef.current?.fillRect(0, 0, canvasRef.current?.width || 0, canvasRef.current?.height || 0);
+        }
+
+        if (actionContainerRef.current) {
+            actionContainerRef.current.classList.add('hidden', 'pointer-events-none');
+        }
     };
 
     return (
-        <div className="h-full w-full">
+        <>
             <canvas
-                className="bg-gray-100"
+                className={className}
                 ref={canvasRef}
                 onMouseDown={startDrawing}
                 onMouseMove={draw}
                 onMouseUp={stopDrawing}
                 onMouseLeave={stopDrawing}
-            ></canvas>
-        </div>
+            />
+            <div
+                ref={actionContainerRef}
+                className={classNames('pointer-events-none absolute left-0 top-0 z-[10] hidden w-fit space-x-2')}
+            >
+                <Button onClick={cancel} variant="outline">
+                    Cancel
+                </Button>
+                <Button onClick={onContinue} variant="black">
+                    Continue
+                </Button>
+            </div>
+        </>
     );
 };
 
