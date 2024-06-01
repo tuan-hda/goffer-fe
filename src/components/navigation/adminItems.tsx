@@ -1,4 +1,4 @@
-import { TbDashboard, TbReport } from 'react-icons/tb';
+import { TbDashboard, TbReport, TbUsers } from 'react-icons/tb';
 
 export const adminItems = [
     {
@@ -10,5 +10,10 @@ export const adminItems = [
         title: 'Reports',
         startIcon: <TbReport className="text-xl" />,
         path: '/app/admin/reports',
+    },
+    {
+        title: 'Users',
+        startIcon: <TbUsers className="text-xl" />,
+        path: '/app/admin/users',
     },
 ];

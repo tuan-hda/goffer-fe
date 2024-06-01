@@ -36,6 +36,7 @@ import {
     Portfolio,
     NewProject,
     Reports,
+    UsersManagement,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -121,6 +122,10 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: 'reports',
                                 element: <Reports />,
+                            },
+                            {
+                                path: 'users',
+                                element: <UsersManagement />,
                             },
                         ],
                     },

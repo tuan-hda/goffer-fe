@@ -17,7 +17,6 @@ const ReportButton = ({ container }: ReportButtonProps) => {
         try {
             setLoading(true);
             const dataUrl = await toPng(container as HTMLElement);
-            console.log('dataUrl', dataUrl);
             setDataUrl(dataUrl);
         } catch (error) {
             console.error('error', error);

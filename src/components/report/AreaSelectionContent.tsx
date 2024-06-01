@@ -22,7 +22,7 @@ const AreaSelectionContent = ({ img, setFinalImage }: AreaSelectionContentProps)
 
     return (
         <AlertDialogContent
-            overlayClassName="bg-transparent"
+            overlayClassName="bg-white"
             className="max-w-screen flex h-screen rounded-none bg-transparent p-0"
         >
             <div ref={containerRef} className="relative h-full w-full overflow-y-auto">
