@@ -50,7 +50,6 @@ import {
     OrgLayout,
     RootLayout,
 } from '../layouts';
-import Test from '@/pages/Test';
 import Editor from '@/components/common/editor/Editor';
 import { Application, JobApply } from '@/components/applicant/apply';
 import { Ditto, OnceInAMoon, PortfolioLayout } from '@/components/portfolio';

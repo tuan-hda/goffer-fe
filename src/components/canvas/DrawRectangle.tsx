@@ -99,6 +99,11 @@ const DrawRectangle = ({ height = 1000, width = 1000, container, className, onCo
         }
     };
 
+    const handleContinue = () => {
+        actionContainerRef.current?.classList.add('hidden', 'pointer-events-none');
+        if (onContinue) onContinue();
+    };
+
     return (
         <>
             <canvas
@@ -116,7 +121,7 @@ const DrawRectangle = ({ height = 1000, width = 1000, container, className, onCo
                 <Button onClick={cancel} variant="outline">
                     Cancel
                 </Button>
-                <Button onClick={onContinue} variant="black">
+                <Button onClick={handleContinue} variant="black">
                     Continue
                 </Button>
             </div>

@@ -1,13 +1,16 @@
 import { Outlet } from 'react-router-dom';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import ReportButton from '@/components/report/ReportButton';
+import { useRef } from 'react';
 
 const RootLayout = () => {
     const { data } = useSelfProfileQuery();
+    const ref = useRef<HTMLDivElement>(null);
+
     return (
-        <div className="h-full w-full">
+        <div ref={ref} className="h-full w-full">
             <Outlet />
-            {data && <ReportButton />}
+            {data && <ReportButton container={ref.current} />}
         </div>
     );
 };
