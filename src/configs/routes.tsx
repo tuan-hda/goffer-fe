@@ -54,6 +54,7 @@ import Editor from '@/components/common/editor/Editor';
 import { Application, JobApply } from '@/components/applicant/apply';
 import { Ditto, OnceInAMoon, PortfolioLayout } from '@/components/portfolio';
 import ProjectDetail from '@/components/portfolio/ProjectDetail';
+import { OrgDetail } from '@/components/orgDetail';
 import DrawRectangle from '@/components/canvas/DrawRectangle';
 
 const routesConfig: RouteObject[] = [
@@ -102,10 +103,10 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/discover',
                                 element: <Discover />,
-                                // children: [
-                                //     { path: '/app/individual/discover/people', element: <PeopleDiscover /> },
-                                //     { path: '/app/individual/discover/companies', element: <>Companies</> },
-                                // ],
+                            },
+                            {
+                                path: '/app/org/:id',
+                                element: <OrgDetail />,
                             },
                             { path: '/app/jobs', element: <JobDiscover /> },
                         ],

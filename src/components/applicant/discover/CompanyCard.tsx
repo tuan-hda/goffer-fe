@@ -3,10 +3,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Avatar } from '@nextui-org/react';
 import Color from 'color-thief-react';
+import { useNavigate } from 'react-router-dom';
 
 const CompanyCard = () => {
+    const navigate = useNavigate();
+    const onClick = () => {
+        navigate('/app/org/_orgid');
+    };
     return (
-        <Card className="rounded-3xl text-sm shadow-none">
+        <Card onClick={onClick} className="rounded-3xl text-sm shadow-none">
             <CardContent className="-mx-[20px] pb-0 pt-1">
                 <Color
                     format="hex"
@@ -45,7 +50,7 @@ const CompanyCard = () => {
             <CardFooter className="flex-col gap-2 px-4 py-4">
                 <div className="flex w-full items-center justify-between gap-2">
                     <p className="text-gray-500">95k followers</p>
-                    <Button size="sm" variant="outline" className="ml-auto text-sm">
+                    <Button onClick={onClick} size="sm" variant="outline" className="ml-auto text-sm">
                         Details
                     </Button>
                 </div>

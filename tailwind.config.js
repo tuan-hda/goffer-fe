@@ -43,6 +43,7 @@ module.exports = {
                 },
                 text: {
                     DEFAULT: '#333',
+                    100: '#F0F0F1',
                 },
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
