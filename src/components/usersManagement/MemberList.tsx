@@ -53,7 +53,7 @@ const MemberList = () => {
                                         <SelectValue defaultValue="member" placeholder="Role" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="admin">Admin</SelectItem>
+                                        <SelectItem value="admin">Owner</SelectItem>
                                         <SelectItem value="interviewer">Interviewer</SelectItem>
                                         <SelectItem value="member">Member</SelectItem>
                                     </SelectContent>

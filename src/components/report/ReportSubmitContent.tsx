@@ -25,7 +25,6 @@ const ReportSubmitContent = ({ img, setImg }: ReportSubmitProps) => {
         toast.success('Issue reported successfully! Thank you for your help.', {
             duration: 3000,
         });
-        setImg('');
     };
 
     return (
@@ -48,9 +47,7 @@ const ReportSubmitContent = ({ img, setImg }: ReportSubmitProps) => {
             </Label>
 
             <AlertDialogFooter>
-                <AlertDialogCancel onClick={() => setImg('')} ref={ref}>
-                    Cancel
-                </AlertDialogCancel>
+                <AlertDialogCancel ref={ref}>Cancel</AlertDialogCancel>
                 <Button onClick={handleSubmit} variant="black">
                     Submit
                 </Button>

@@ -1,4 +1,4 @@
-import TeamMember from '@/components/team/TeamMember';
+import TeamMember from '@/components/usersManagement/TeamMember';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { TbUsers } from 'react-icons/tb';
 

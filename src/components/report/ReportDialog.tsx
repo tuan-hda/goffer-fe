@@ -13,8 +13,14 @@ type ReportSubmitProps = {
 const ReportDialog = ({ children, img, loading }: ReportSubmitProps) => {
     const [finalImage, setFinalImage] = useState<string>('');
 
+    const handleOpenChange = (open: boolean) => {
+        if (!open) {
+            setFinalImage('');
+        }
+    };
+
     return (
-        <AlertDialog>
+        <AlertDialog onOpenChange={handleOpenChange}>
             <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
             {loading ? (
                 <AlertDialogContent className="flex h-[50vh] w-full max-w-[50vw] items-center justify-center gap-2">

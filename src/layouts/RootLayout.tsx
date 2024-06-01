@@ -8,7 +8,7 @@ const RootLayout = () => {
     const ref = useRef<HTMLDivElement>(null);
 
     return (
-        <div ref={ref} className="h-full w-full">
+        <div ref={ref} className="min-h-screen w-full">
             <Outlet />
             {data && <ReportButton container={ref.current} />}
         </div>
