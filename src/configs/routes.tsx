@@ -50,11 +50,11 @@ import {
     OrgLayout,
     RootLayout,
 } from '../layouts';
-import Test from '@/pages/Test';
 import Editor from '@/components/common/editor/Editor';
 import { Application, JobApply } from '@/components/applicant/apply';
 import { Ditto, OnceInAMoon, PortfolioLayout } from '@/components/portfolio';
 import ProjectDetail from '@/components/portfolio/ProjectDetail';
+import DrawRectangle from '@/components/canvas/DrawRectangle';
 
 const routesConfig: RouteObject[] = [
     {
@@ -256,6 +256,10 @@ const routesConfig: RouteObject[] = [
         element: <GetStarted />,
     },
     {
+        path: '/test',
+        element: <DrawRectangle />,
+    },
+    {
         path: '/p',
         element: <PortfolioLayout />,
         children: [
@@ -275,12 +279,5 @@ const routesConfig: RouteObject[] = [
     },
     { path: '*', element: <NotFound /> },
 ];
-
-if (process.env.NODE_ENV === 'development') {
-    routesConfig[0].children?.push({
-        path: 'test',
-        element: <Test />,
-    });
-}
 
 export default routesConfig;
