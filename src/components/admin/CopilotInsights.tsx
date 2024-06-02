@@ -2,7 +2,7 @@ import { TbBulb } from 'react-icons/tb';
 
 const CopilotInsights = () => {
     return (
-        <div className="col-span-3 flex flex-col rounded-3xl bg-black p-6 text-white">
+        <div className="sticky top-6 col-span-3 flex h-full max-h-[500px] flex-col self-start rounded-3xl bg-black p-6 text-white">
             <div className="flex items-center gap-2 font-semibold">
                 <TbBulb className="text-base" /> Copilot Insights
             </div>

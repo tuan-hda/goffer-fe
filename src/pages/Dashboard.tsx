@@ -1,8 +1,10 @@
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { TbDashboard } from 'react-icons/tb';
-import { DatePickerWithRange } from '@/components/common';
-import { CopilotInsights, OverviewStats, Traffic } from '@/components/dashboard';
+import { CopilotInsights, OverviewStats, Traffic } from '@/components/admin';
+import { DeeperStats } from '@/components/admin/DeeperStats';
+import UserHistory from '@/components/admin/UserHistory';
+import RevenueHistory from '@/components/admin/RevenueHistory';
 
 const Dashboard = () => {
     const { data: user } = useSelfProfileQuery();
@@ -19,15 +21,16 @@ const Dashboard = () => {
                     <p className="text-xl text-black">Hello {user?.name},</p>
                     <p className="mt-[6px] font-light text-text">Here's your statistics for Goffer</p>
                 </div>
-                <div className="ml-auto">
-                    <p className="mb-1">Time range</p>
-                    <DatePickerWithRange />
-                </div>
             </div>
-            <div className="mt-10">
+            <div className="mt-6">
                 <OverviewStats />
+                <DeeperStats />
                 <div className="mt-12 grid grid-cols-12 gap-10">
-                    <Traffic />
+                    <div className="col-span-9 space-y-10">
+                        <Traffic />
+                        <RevenueHistory />
+                        <UserHistory />
+                    </div>
                     <CopilotInsights />
                 </div>
             </div>
