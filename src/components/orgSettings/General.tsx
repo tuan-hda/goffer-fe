@@ -89,7 +89,7 @@ const General = () => {
                     Domain
                     <TooltipProvider>
                         <Tooltip>
-                            <TooltipTrigger>
+                            <TooltipTrigger type="button">
                                 <TbInfoCircle />
                             </TooltipTrigger>
                             <TooltipContent className="bg-pale text-black shadow-medium">
