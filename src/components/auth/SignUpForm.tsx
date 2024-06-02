@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { checkExistEmailService } from '@/services/users.service';
 import { validateEmail } from '@/utils/regex';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import SignUpFirstStep from './SignUpFirstStep';
 import SetPasswordStep from './SetPasswordStep';
 import { signUpService } from '@/services/auth.service';

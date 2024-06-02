@@ -20,6 +20,8 @@ import { items, orgItems } from './items';
 import AskAI from '../askAI/AskAI';
 import AdminMenu from './AdminMenu';
 import { adminItems } from './adminItems';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { toast } from 'sonner';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -29,6 +31,7 @@ type SideBarProps = {
 
 const SideBar = ({ org }: SideBarProps) => {
     const { domain } = useParams();
+    const { data: self } = useSelfProfileQuery();
 
     // TODO: Remove logout from this file
     const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
@@ -37,7 +40,6 @@ const SideBar = ({ org }: SideBarProps) => {
 
     // Either open ask AI modal
     const [open, setOpen] = useState(false);
-    const adminRoute = '/app/admin';
 
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
     const onMouseLeave = () => {
@@ -62,6 +64,15 @@ const SideBar = ({ org }: SideBarProps) => {
 
     const openAskAI = () => {
         setOpen(true);
+    };
+
+    const openBillingCustomerPortal = () => {
+        const email = self?.email || '';
+        toast.error('You need to purchase a plan to access this feature.');
+        // window.open(
+        //     `https://billing.stripe.com/p/login/test_eVa6ss93Jd772Sk144?prefilled_email=${encodeURI(email)}`,
+        //     '_blank',
+        // );
     };
 
     useEffect(() => {
@@ -148,6 +159,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                     : items({
                                           onClickMap: {
                                               0: openAskAI,
+                                              1: openBillingCustomerPortal,
                                           },
                                       })
                                 ).map((item, index) => (

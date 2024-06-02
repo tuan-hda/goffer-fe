@@ -8,7 +8,7 @@ import { Button } from '../ui/button';
 import { useParams } from 'react-router-dom';
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { formatUTCDate } from '@/utils/time';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 const Overview = () => {
     const { id } = useParams();

@@ -2,7 +2,7 @@ import { Button } from '@nextui-org/react';
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
 import { isAxiosError } from 'axios';
 import { FcGoogle } from 'react-icons/fc';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { googleProfileService } from '@/services/users.service';
 import { loginGoogleService, signUpGoogleService } from '@/services/auth.service';
 import { useState } from 'react';

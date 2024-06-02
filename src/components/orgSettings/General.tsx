@@ -10,7 +10,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/
 import { TbChevronDown, TbInfoCircle } from 'react-icons/tb';
 import classNames from 'classnames';
 import { useAnimation, motion } from 'framer-motion';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { isAxiosError } from 'axios';
 import { updateOrganizationService } from '@/services/organizations.service';
 import useListOrganizations from '@/hooks/useListOrganizations';

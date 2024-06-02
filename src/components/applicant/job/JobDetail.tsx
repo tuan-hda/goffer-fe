@@ -5,7 +5,8 @@ import { TbArrowMoveDown, TbHeart, TbHeartFilled } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import JobContent from './JobContent';
-import toast from 'react-hot-toast';
+import { toast } from "sonner"
+;
 import useJobStore from '@/stores/jobStore';
 
 const JobDetail = () => {

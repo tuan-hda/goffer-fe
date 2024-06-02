@@ -5,7 +5,7 @@ import { Education, User } from '@/types/user.type';
 import { newEducationSchema } from '@/validation/education.validation';
 import * as Yup from 'yup';
 import { isAxiosError } from 'axios';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 type EditEducation = {
     isCreating?: false;

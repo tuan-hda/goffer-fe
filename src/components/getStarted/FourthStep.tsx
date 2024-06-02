@@ -1,7 +1,7 @@
 import { Button, Input } from '@nextui-org/react';
 import { isAxiosError } from 'axios';
 import { useRef, useState } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { TbChevronLeft, TbFileUpload, TbUpload, TbX } from 'react-icons/tb';
 import { uploadFileService } from '@/services/file.service';
 import { StartedInfo } from '@/types/start.type';

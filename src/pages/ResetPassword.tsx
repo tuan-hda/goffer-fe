@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import SetPasswordStep from '@/components/auth/SetPasswordStep';
 import AuthTwoSection from '@/layouts/AuthTwoSection';

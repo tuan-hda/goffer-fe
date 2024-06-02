@@ -3,6 +3,7 @@ import {
     TbBell,
     TbChartBubble,
     TbCompass,
+    TbExternalLink,
     TbPaint,
     TbSettings,
     TbSparkles,
@@ -107,12 +108,13 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
         },
     },
     {
-        type: 'link',
+        type: 'button',
         element: {
-            path: '/app/wallet',
             startContent: <TbWallet className="text-xl" />,
             content: 'Wallet',
+            endContent: <TbExternalLink className="ml-auto text-xl" />,
         },
+        onClick: onClickMap[1],
     },
 ];
 

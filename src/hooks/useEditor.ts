@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { languageOptions as langData } from '@/configs/languageOptions';
 import { isAxiosError } from 'axios';
 import { Value } from 'classnames';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { SubmissionResponse } from '@/types/coding.type';
 
 const useEditor = (persist = true, outerEditorDidMount?: (editor: any, monaco: any) => void) => {

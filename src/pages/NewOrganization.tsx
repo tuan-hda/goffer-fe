@@ -1,7 +1,7 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { isAxiosError } from 'axios';
 import { useState } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { TbChevronLeft } from 'react-icons/tb';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FifthStep, FirstStep, FourthStep, SecondStep, Success, Cancel, ThirdStep } from '@/components/newOrg';
