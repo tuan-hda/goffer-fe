@@ -2,7 +2,7 @@ import { Avatar, Button } from '@nextui-org/react';
 import { isAxiosError } from 'axios';
 import classNames from 'classnames';
 import { useRef } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { TbCamera } from 'react-icons/tb';
 import { uploadFileService } from '@/services/file.service';
 

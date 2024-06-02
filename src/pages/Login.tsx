@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthTwoSection from '@/layouts/AuthTwoSection';
 import { loginService } from '@/services/auth.service';
 import { validateEmail } from '@/utils/regex';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import useAuthStore from '@/stores/authStore';
 import { LoginForm } from '@/components/auth';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';

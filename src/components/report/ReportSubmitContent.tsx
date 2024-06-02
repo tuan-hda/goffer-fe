@@ -10,7 +10,7 @@ import {
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 type ReportSubmitProps = {
     img: string;

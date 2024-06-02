@@ -3,7 +3,7 @@ import useSelfProfileQuery from './useSelfProfileQuery';
 import { User } from '@/types/user.type';
 import { updateSelfService } from '@/services/users.service';
 import { isAxiosError } from 'axios';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 const useUpdateProfile = () => {
     const { data, refetch } = useSelfProfileQuery();

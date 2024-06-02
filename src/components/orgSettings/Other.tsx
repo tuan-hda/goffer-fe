@@ -13,7 +13,7 @@ import {
 import { useState } from 'react';
 import { Spinner } from '@nextui-org/react';
 import { isAxiosError } from 'axios';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import useCurrOrganization from '@/hooks/useCurrOrganization';
 import { deleteOrganizationService } from '@/services/organizations.service';
 

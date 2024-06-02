@@ -1,10 +1,10 @@
 import { NextUIProvider } from '@nextui-org/react';
 import { useRoutes } from 'react-router-dom';
 import routesConfig from './configs/routes';
-import { Toaster } from 'react-hot-toast';
 import { PlateController } from '@udecode/plate-common';
-import 'non.geist';
+import { Toaster } from '@/components/ui/sonner';
 
+import 'non.geist';
 // For Geist Mono
 import 'non.geist/mono';
 import CommandPalette from './components/command/CommandPalette';
@@ -40,13 +40,7 @@ function App() {
         <PlateController>
             <NextUIProvider>
                 {routes}
-                <Toaster
-                    toastOptions={{
-                        style: {
-                            maxWidth: 500,
-                        },
-                    }}
-                />
+                <Toaster position="top-right" />
             </NextUIProvider>
             {inApp && (
                 <>

@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { Button } from '../ui/button';
 import { CSSProperties, useState } from 'react';
 import { isAxiosError } from 'axios';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { summarizeAnswerService } from '@/services/answer.service';
 
 const ApplicantResponse = () => {

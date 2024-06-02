@@ -12,7 +12,7 @@ import { User } from '@/types/user.type';
 import moment from 'moment';
 import _ from 'lodash';
 import { isAxiosError } from 'axios';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { updateUserService } from '@/services/users.service';
 import { ImageEdit } from '../common';
 

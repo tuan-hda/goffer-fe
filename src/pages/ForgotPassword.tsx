@@ -2,7 +2,7 @@ import { Button, Input } from '@nextui-org/react';
 import { isAxiosError } from 'axios';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { TbChevronLeft } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import AuthTwoSection from '@/layouts/AuthTwoSection';

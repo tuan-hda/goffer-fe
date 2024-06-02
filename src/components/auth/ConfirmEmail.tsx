@@ -2,7 +2,7 @@ import { Spinner } from '@nextui-org/react';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { sendOtpVerificationEmail, verifyOtpEmail } from '@/services/auth.service';
 import { Token } from '@/types/token.type';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import moment from 'moment';
 import classNames from 'classnames';
 import { isAxiosError } from 'axios';
