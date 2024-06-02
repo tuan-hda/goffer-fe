@@ -3,7 +3,7 @@ import { Curve } from '../charts';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { TbInfoCircle } from 'react-icons/tb';
 
-const Traffic = () => {
+const UserHistory = () => {
     const [width, setWidth] = useState(0);
 
     return (
@@ -16,8 +16,8 @@ const Traffic = () => {
             <Curve width={width + 50} height={Math.round(width / 2)}>
                 <div className="mb-4 flex items-center justify-between">
                     <div className="font-medium">
-                        <p className="text-base">Traffic</p>
-                        <p className="text-3xl font-normal">124.5k</p>
+                        <p className="text-base">User</p>
+                        <p className="text-3xl font-normal">25</p>
                     </div>
                     <div className="flex gap-2">
                         <p className="mb-1">Granularity: by month</p>
@@ -38,4 +38,4 @@ const Traffic = () => {
     );
 };
 
-export default Traffic;
+export default UserHistory;
