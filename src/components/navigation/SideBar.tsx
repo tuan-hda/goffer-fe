@@ -21,7 +21,6 @@ import AskAI from '../askAI/AskAI';
 import AdminMenu from './AdminMenu';
 import { adminItems } from './adminItems';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
-import { toast } from 'sonner';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -68,11 +67,10 @@ const SideBar = ({ org }: SideBarProps) => {
 
     const openBillingCustomerPortal = () => {
         const email = self?.email || '';
-        toast.error('You need to purchase a plan to access this feature.');
-        // window.open(
-        //     `https://billing.stripe.com/p/login/test_eVa6ss93Jd772Sk144?prefilled_email=${encodeURI(email)}`,
-        //     '_blank',
-        // );
+        window.open(
+            `https://billing.stripe.com/p/login/test_eVa6ss93Jd772Sk144?prefilled_email=${encodeURI(email)}`,
+            '_blank',
+        );
     };
 
     useEffect(() => {
