@@ -37,6 +37,8 @@ import {
     NewProject,
     Reports,
     UsersManagement,
+    QuestionBank,
+    QuestionBuilder,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -169,6 +171,18 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/team',
                         element: <Team />,
+                    },
+                    {
+                        path: '/app/organization/:domain/bank',
+                        element: <QuestionBank />,
+                    },
+                    {
+                        path: '/app/organization/:domain/bank/build',
+                        element: <QuestionBuilder />,
+                    },
+                    {
+                        path: '/app/organization/:domain/messages',
+                        element: <Messages />,
                     },
                     {
                         path: '/app/organization/:domain/job/:id',
