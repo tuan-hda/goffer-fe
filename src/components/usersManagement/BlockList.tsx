@@ -1,11 +1,12 @@
 import { Checkbox } from '../ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { Avatar } from '@nextui-org/react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import BlockButton from './BlockButton';
-import RemoveButton from './RemoveButton';
+import { TbArrowBackUpDouble } from 'react-icons/tb';
+import { Button } from '../ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
-const MemberList = () => {
+const BlockList = () => {
     return (
         <Table>
             <TableHeader className="overflow-hidden">
@@ -14,8 +15,9 @@ const MemberList = () => {
                         <Checkbox />
                     </TableHead>
                     <TableHead className="w-[350px] bg-[#F9FAFC] font-medium text-black">Name</TableHead>
-                    <TableHead className="w-[180px] bg-[#F9FAFC] font-medium text-black">Role</TableHead>
+                    <TableHead className="w-[160px] bg-[#F9FAFC] font-medium text-black">Block reason</TableHead>
                     <TableHead className="w-[160px] bg-[#F9FAFC] font-medium text-black">Date added</TableHead>
+                    <TableHead className="w-[160px] bg-[#F9FAFC] font-medium text-black">Date blocked</TableHead>
                     <TableHead className="w-[160px] bg-[#F9FAFC] font-medium text-black">Last active</TableHead>
                     <TableHead className="rounded-tr-xl bg-[#F9FAFC] pr-5 text-right font-medium text-black"></TableHead>
                 </TableRow>
@@ -37,24 +39,31 @@ const MemberList = () => {
                                     </div>
                                 </div>
                             </TableCell>
-                            <TableCell className="font-medium">
-                                <Select>
-                                    <SelectTrigger className="w-[120px]">
-                                        <SelectValue defaultValue="member" placeholder="Role" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="admin">Owner</SelectItem>
-                                        <SelectItem value="interviewer">Interviewer</SelectItem>
-                                        <SelectItem value="member">Member</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                            <TableCell>
+                                <Popover>
+                                    <PopoverTrigger className="underline">View</PopoverTrigger>
+                                    <PopoverContent className="text-sm">
+                                        <p>This user is posting inappropriate content.</p>
+                                    </PopoverContent>
+                                </Popover>
                             </TableCell>
+                            <TableCell>Feb 22, 2024</TableCell>
                             <TableCell>Feb 22, 2024</TableCell>
                             <TableCell>Mar 14, 2024</TableCell>
                             <TableCell className="pr-5 text-right">
                                 <div className="flex h-full items-center gap-0">
-                                    <BlockButton />
-                                    <RemoveButton />
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button size="icon" variant="ghost">
+                                                    <TbArrowBackUpDouble className="text-xl" />
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>Unblock user</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
                                 </div>
                             </TableCell>
                         </TableRow>
@@ -64,4 +73,4 @@ const MemberList = () => {
     );
 };
 
-export default MemberList;
+export default BlockList;
