@@ -1,11 +1,19 @@
 import { Image } from '@nextui-org/react';
-import { TbBookmarks, TbBoxAlignBottomFilled, TbShare } from 'react-icons/tb';
+import { TbBookmarks, TbBoxAlignBottomFilled, TbDots, TbShare } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import { Job } from '@/types/job.type';
 import { Badge } from '../ui/badge';
 import { formatUTCDate } from '@/utils/time';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '@/stores/authStore';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
 
 type JobHeaderProps = {
     job: Job;
@@ -39,9 +47,20 @@ const JobHeader = ({ job }: JobHeaderProps) => {
                 <Button size="icon" variant="outline">
                     <TbBookmarks className="text-lg" />
                 </Button>
-                <Button size="icon" variant="outline">
-                    <TbShare className="text-lg" />
-                </Button>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button size="icon" variant="outline">
+                            <TbDots className="text-lg" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuLabel>Options</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <TbShare className="mr-2" /> Share
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
 
             <p className="mt-4 text-3xl">{job.title}</p>

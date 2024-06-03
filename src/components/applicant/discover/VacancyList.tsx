@@ -51,7 +51,7 @@ const VacancyList = () => {
                             </Card>
                         </SheetTrigger>
                         <SheetContent className="!max-w-[900px] overflow-y-auto p-8">
-                            <JobDetail jobId="662cd4e670d3eb01cc3df5ee" />
+                            <JobDetail jobId="66417d5a704f2b002fdb489e" />
                         </SheetContent>
                     </Sheet>
                 ))}
