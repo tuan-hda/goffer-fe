@@ -2,7 +2,7 @@ import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { MdOutlineBuildCircle } from 'react-icons/md';
 import { PiBank } from 'react-icons/pi';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Coding, MCQ } from './builder';
+import { Coding, MCQ } from '../components/assessment/builder';
 
 const typeMap = {
     mcq: {
