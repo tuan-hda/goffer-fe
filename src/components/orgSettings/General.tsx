@@ -101,7 +101,12 @@ const General = () => {
                         </Tooltip>
                     </TooltipProvider>
                 </label>
-                <Input onChange={handleChange('domain')} id="domain" value={curr?.domain} className="mt-1  bg-white" />
+                <Input
+                    onChange={handleChange('domain')}
+                    id="domain"
+                    value={curr?.domain || ''}
+                    className="mt-1  bg-white"
+                />
             </div>
 
             <button onClick={() => setExpanded((prev) => !prev)} className="mt-5 flex items-center gap-1">
@@ -128,12 +133,17 @@ const General = () => {
                         onChange={handleChange('name')}
                         id="name"
                         placeholder="Your name here"
-                        value={curr?.name}
+                        value={curr?.name || ''}
                     />
                 </div>
                 <div className="mt-5">
                     <label htmlFor="email">Corporate email</label>
-                    <Input onChange={handleChange('email')} className="mt-1  bg-white" id="email" value={curr?.email} />
+                    <Input
+                        onChange={handleChange('email')}
+                        className="mt-1  bg-white"
+                        id="email"
+                        value={curr?.email || ''}
+                    />
                 </div>
                 <div className="mt-5">
                     <label htmlFor="email">Website</label>
@@ -141,7 +151,7 @@ const General = () => {
                         onChange={handleChange('website')}
                         className="mt-1  bg-white"
                         id="website"
-                        value={curr?.website}
+                        value={curr?.website || ''}
                     />
                 </div>
                 <div className="mt-5">

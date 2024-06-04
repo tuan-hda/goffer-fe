@@ -1,3 +1,4 @@
+import Upload from '@/components/common/Upload';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,12 +8,17 @@ const MCQBasic = () => {
         <div className="col-span-6 mx-auto flex w-full flex-col gap-6">
             <h2 className="text-xl">Basic</h2>
             <Label>
-                Content
-                <Textarea className="mt-2" placeholder="Title of the question..." />
+                Question
+                <Textarea className="mt-2" placeholder="Question here..." />
             </Label>
             <Label>
                 Description
                 <Textarea className="mt-2" placeholder="Clear description for this question..." />
+            </Label>
+            <Label>
+                Image
+                <div className="h-2"></div>
+                <Upload />
             </Label>
             <Label>
                 Difficulty

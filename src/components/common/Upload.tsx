@@ -10,9 +10,10 @@ import { Button } from '../ui/button';
 type UploadProps = {
     fileUrl?: string;
     onAttach?: (fileUrl: string) => Promise<void>;
+    className?: string;
 };
 
-const Upload = ({ fileUrl, onAttach }: UploadProps) => {
+const Upload = ({ fileUrl, onAttach, className }: UploadProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
@@ -87,7 +88,7 @@ const Upload = ({ fileUrl, onAttach }: UploadProps) => {
     };
 
     return (
-        <div>
+        <div className={className}>
             <input onChange={handleFileChange} type="file" ref={ref} className="hidden" />
 
             <div
@@ -132,9 +133,11 @@ const Upload = ({ fileUrl, onAttach }: UploadProps) => {
                 </div>
             )}
 
-            <Button disabled={loading} onClick={handleSubmit} variant="black" className="mt-4 w-full flex-1">
-                {loading && <TbLoader className="mr-2 animate-spin text-base" />} Attach files
-            </Button>
+            {onAttach && (
+                <Button disabled={loading} onClick={handleSubmit} variant="black" className="mt-4 w-full flex-1">
+                    {loading && <TbLoader className="mr-2 animate-spin text-base" />} Attach files
+                </Button>
+            )}
         </div>
     );
 };

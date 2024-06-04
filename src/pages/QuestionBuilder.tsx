@@ -1,8 +1,16 @@
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
-import { MdOutlineBuildCircle } from 'react-icons/md';
 import { PiBank } from 'react-icons/pi';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Coding, MCQ } from '../components/assessment/builder';
+import { TbFlower } from 'react-icons/tb';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const typeMap = {
     mcq: {
@@ -29,7 +37,23 @@ const QuestionBuilder = () => {
                     <PiBank className="text-lg" /> Question bank
                 </BreadcrumbItem>
                 <BreadcrumbItem>
-                    <MdOutlineBuildCircle className="text-lg" /> Builder
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                            <div className="flex items-center gap-1">
+                                <TbFlower className="text-lg" /> Builder
+                            </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>Choose question type</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem asChild>
+                                <Link to={`/app/organization/${domain}/bank/builder/mcq`}>MCQ</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Link to={`/app/organization/${domain}/bank/builder/coding`}>Coding</Link>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </BreadcrumbItem>
                 <BreadcrumbItem>{builder?.title}</BreadcrumbItem>
             </Breadcrumbs>
