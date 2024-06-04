@@ -1,18 +1,6 @@
 import { DetailsPanel, MessagePanel, RoomList } from '@/components/messages';
-
-import { useEffect } from 'react';
-import type { ChannelFilters, ChannelSort, ChannelOptions, User } from 'stream-chat';
-import {
-    useCreateChatClient,
-    Chat,
-    Channel,
-    ChannelHeader,
-    ChannelList,
-    MessageInput,
-    MessageList,
-    Thread,
-    Window,
-} from 'stream-chat-react';
+import type { User } from 'stream-chat';
+import { useCreateChatClient, Chat, Channel, Thread, Window } from 'stream-chat-react';
 import { EmojiPicker } from 'stream-chat-react/emojis';
 
 import { init, SearchIndex } from 'emoji-mart';
@@ -42,19 +30,6 @@ const Messages = () => {
 
     if (!client) return <div>Setting up client & connection...</div>;
 
-    // return (
-    //     <Chat client={client}>
-    //         <ChannelList filters={filters} sort={sort} options={options} />
-    //         <Channel EmojiPicker={EmojiPicker} emojiSearchIndex={SearchIndex}>
-    //             <Window>
-    //                 <ChannelHeader />
-    //                 <MessageList />
-    //                 <MessageInput />
-    //             </Window>
-    //             <Thread />
-    //         </Channel>
-    //     </Chat>
-    // );
     return (
         <Chat client={client}>
             <div className="h-screen text-sm">
@@ -64,14 +39,11 @@ const Messages = () => {
                     </div>
                     <div className="h-full border-r border-r-[#EEEEF0]" />
                     <div className="h-full flex-1">
-                        <Channel
-                            // Message={CustomMessage}
-                            EmojiPicker={EmojiPicker}
-                            emojiSearchIndex={SearchIndex}
-                        >
+                        <Channel EmojiPicker={EmojiPicker} emojiSearchIndex={SearchIndex}>
                             <Window>
                                 <MessagePanel />
                             </Window>
+                            <Thread />
                         </Channel>
                     </div>
                     <div className="h-full border-r border-r-[#EEEEF0]" />
