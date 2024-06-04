@@ -1,7 +1,21 @@
-import { Avatar, BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
+import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { TbChartBubble, TbSearch } from 'react-icons/tb';
 import { Input } from '../ui/input';
 import { useRef } from 'react';
+import RoomReview from './RoomReview';
+import type { ChannelFilters, ChannelSort, ChannelOptions } from 'stream-chat';
+import { ChannelList } from 'stream-chat-react';
+
+const userId = 'little-wood-9';
+
+const sort: ChannelSort = { last_message_at: -1 };
+const filters: ChannelFilters = {
+    type: 'messaging',
+    members: { $in: [userId] },
+};
+const options: ChannelOptions = {
+    limit: 10,
+};
 
 const RoomList = () => {
     const ref = useRef<HTMLInputElement>(null);
@@ -26,58 +40,7 @@ const RoomList = () => {
                 />
             </div>
 
-            <button className="flex h-[88px] w-full items-center gap-[10px] px-5 text-left">
-                <Avatar
-                    src="https://cirsova.files.wordpress.com/2023/11/image-3.png"
-                    classNames={{
-                        base: 'rounded-xl',
-                    }}
-                />
-                <div className="min-w-0 flex-1">
-                    <div className="flex w-full items-center justify-between">
-                        <p className="text-[13px] font-semibold">Robert Fox</p>
-                        <p className="text-xs text-text/50">10:30 AM</p>
-                    </div>
-                    <p className="overflow-hidden text-ellipsis whitespace-nowrap text-text/80">
-                        Hi I want to talk about the lorem ipsum
-                    </p>
-                </div>
-            </button>
-            <div className="relative flex h-[88px] items-center gap-[10px] bg-[#FAFAFA] px-5">
-                <Avatar
-                    src="https://cirsova.files.wordpress.com/2023/11/image-3.png"
-                    classNames={{
-                        base: 'rounded-xl',
-                    }}
-                />
-                <div className="min-w-0 flex-1">
-                    <div className="flex w-full items-center justify-between">
-                        <p className="text-[13px] font-semibold">Robert Fox</p>
-                        <p className="text-xs text-text/50">10:30 AM</p>
-                    </div>
-                    <p className="overflow-hidden text-ellipsis whitespace-nowrap text-text/80">
-                        Hi I want to talk about the lorem ipsum
-                    </p>
-                </div>
-                <div className="absolute right-0 top-0 h-[88px] w-1 bg-black" />
-            </div>
-            <button className="flex h-[88px] w-full items-center gap-[10px] px-5 text-left ">
-                <Avatar
-                    src="https://cirsova.files.wordpress.com/2023/11/image-3.png"
-                    classNames={{
-                        base: 'rounded-xl',
-                    }}
-                />
-                <div className="min-w-0 flex-1">
-                    <div className="flex w-full items-center justify-between">
-                        <p className="text-[13px] font-semibold">Robert Fox</p>
-                        <p className="text-xs text-text/50">10:30 AM</p>
-                    </div>
-                    <p className="overflow-hidden text-ellipsis whitespace-nowrap text-text/80">
-                        Hi I want to talk about the lorem ipsum
-                    </p>
-                </div>
-            </button>
+            <ChannelList Preview={RoomReview} filters={filters} sort={sort} options={options} />
         </div>
     );
 };
