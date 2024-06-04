@@ -1,8 +1,16 @@
-import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { TbSearch, TbX } from 'react-icons/tb';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
+import { Link } from 'react-router-dom';
 
 const QuestionBankHeader = () => {
     return (
@@ -12,9 +20,21 @@ const QuestionBankHeader = () => {
                     <h1 className="text-2xl">120 questions</h1>
                     <p>20 easy, 60 medium, 40 hard</p>
                 </div>
-                <Button asChild>
-                    <Link to="build">Add question</Link>
-                </Button>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button>Add question</Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuLabel>Choose question type</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild>
+                            <Link to="builder/mcq">MCQ</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                            <Link to="builder/coding">Coding</Link>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
 
             <div className="mt-6 flex gap-4">
