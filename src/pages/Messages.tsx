@@ -2,9 +2,10 @@ import { DetailsPanel, MessagePanel, RoomList } from '@/components/messages';
 import type { User } from 'stream-chat';
 import { useCreateChatClient, Chat, Channel, Thread, Window } from 'stream-chat-react';
 import { EmojiPicker } from 'stream-chat-react/emojis';
-
 import { init, SearchIndex } from 'emoji-mart';
 import data from '@emoji-mart/data';
+import 'stream-chat-react/dist/css/v2/index.css';
+import { Spinner } from '@nextui-org/react';
 
 // your Stream app information
 const apiKey = 't442dfkucxcj';
@@ -28,7 +29,12 @@ const Messages = () => {
         userData: user,
     });
 
-    if (!client) return <div>Setting up client & connection...</div>;
+    if (!client)
+        return (
+            <div className="flex h-screen w-full">
+                <Spinner className="m-auto" />
+            </div>
+        );
 
     return (
         <Chat client={client}>
