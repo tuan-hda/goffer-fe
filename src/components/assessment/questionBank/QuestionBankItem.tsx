@@ -12,9 +12,12 @@ import QuestionBankItemMCQ from './QuestionBankItemMCQ';
 import { QUESTION_TYPE } from '@/types/question.type';
 import QuestionBankItemCoding from './QuestionBankItemCoding';
 import { Fragment } from 'react/jsx-runtime';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useState } from 'react';
 
 type QuestionBankItemProps = {
     type?: QUESTION_TYPE;
+    mode?: 'pick' | 'normal';
 };
 
 const typeMap = {
@@ -24,11 +27,23 @@ const typeMap = {
     video: Fragment,
 };
 
-const QuestionBankItem = ({ type }: QuestionBankItemProps) => {
+const QuestionBankItem = ({ type, mode = 'normal' }: QuestionBankItemProps) => {
     const Component = typeMap[type || 'mcq'];
+    const [selected, setSelected] = useState(false);
+
+    const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (mode === 'pick') {
+            e.stopPropagation();
+            setSelected(!selected);
+        }
+    };
 
     return (
-        <div className="flex cursor-pointer flex-col rounded-2xl border p-5 text-text transition hover:shadow-medium">
+        <div
+            onClick={handleClick}
+            className="relative flex cursor-pointer flex-col rounded-2xl border p-5 text-text transition hover:shadow-medium"
+        >
+            <Checkbox checked={selected} className="absolute right-2 top-2 h-5 w-5 rounded-lg" />
             <Component />
             <div className="-mx-5 my-4 border-t"></div>
             <div className="-my-1 flex">

@@ -15,7 +15,7 @@ const AssessmentBuilderConfigure = () => {
         <>
             <p className="mt-8 pt-2 text-xl">Configure assessment</p>
             <Label className="mt-4  w-[280px]">
-                Duration
+                Duration *
                 <Select>
                     <SelectTrigger className="mt-2 w-[280px]">
                         <SelectValue placeholder="Time constraint" />
@@ -47,7 +47,7 @@ const AssessmentBuilderConfigure = () => {
                         <Button
                             variant={'outline'}
                             className={classNames(
-                                'w-[240px] justify-start text-left font-normal',
+                                'w-[280px] justify-start text-left font-normal',
                                 !date && 'text-muted-foreground',
                             )}
                         >

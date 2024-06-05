@@ -11,9 +11,10 @@ type UploadProps = {
     fileUrl?: string;
     onAttach?: (fileUrl: string) => Promise<void>;
     className?: string;
+    showingImage?: boolean;
 };
 
-const Upload = ({ fileUrl, onAttach, className }: UploadProps) => {
+const Upload = ({ fileUrl, showingImage, onAttach, className }: UploadProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
@@ -117,21 +118,41 @@ const Upload = ({ fileUrl, onAttach, className }: UploadProps) => {
 
             {error && <p className="mt-2 text-red-500">{error}</p>}
 
-            {file && (
-                <div className="relative mt-4 flex items-start gap-4 rounded-xl border p-4">
-                    <div className="rounded-lg border p-1">
-                        <TbFile className="text-xl" />
+            {file &&
+                (showingImage ? (
+                    <div className="relative w-full">
+                        <img
+                            className="mt-4 aspect-video w-full rounded-xl object-cover"
+                            src={URL.createObjectURL(file)}
+                        />
+                        <Button
+                            onClick={() => setFile(null)}
+                            variant="outline"
+                            className="absolute right-2 top-2 opacity-80"
+                            size="icon"
+                        >
+                            <TbX className="text-lg" />
+                        </Button>
                     </div>
-                    <div className="min-w-0 flex-1">
-                        <p className="break-words font-medium leading-[16px]">{file.name}</p>
-                        <p className="mt-1 text-xs font-light">{fileSizeToString(file.size)}</p>
+                ) : (
+                    <div className="relative mt-4 flex items-start gap-4 rounded-xl border p-4">
+                        <div className="rounded-lg border p-1">
+                            <TbFile className="text-xl" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                            <p className="break-words font-medium leading-[16px]">{file.name}</p>
+                            <p className="mt-1 text-xs font-light">{fileSizeToString(file.size)}</p>
+                        </div>
+                        <div className="min-w-4 flex-shrink-0" />
+                        <Button
+                            onClick={() => setFile(null)}
+                            className="absolute right-1 top-2 text-black"
+                            variant="link"
+                        >
+                            <TbX className="text-base" />
+                        </Button>
                     </div>
-                    <div className="min-w-4 flex-shrink-0" />
-                    <Button onClick={() => setFile(null)} className="absolute right-1 top-2 text-black" variant="link">
-                        <TbX className="text-base" />
-                    </Button>
-                </div>
-            )}
+                ))}
 
             {onAttach && (
                 <Button disabled={loading} onClick={handleSubmit} variant="black" className="mt-4 w-full flex-1">
