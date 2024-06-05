@@ -11,10 +11,14 @@ import {
 } from '@/components/ui/dialog';
 import { TbTrash } from 'react-icons/tb';
 
-const Header = () => {
+type HeaderProps = {
+    title: string;
+};
+
+const Header = ({ title }: HeaderProps) => {
     return (
         <div className="col-span-full flex items-center gap-4">
-            <h1 className="text-2xl">Question Coding Builder</h1>
+            <h1 className="text-2xl">{title}</h1>
             <Dialog>
                 <DialogTrigger asChild>
                     <Button size="icon" variant="ghost" className="ml-auto">

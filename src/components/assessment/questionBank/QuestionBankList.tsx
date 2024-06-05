@@ -11,6 +11,9 @@ const QuestionBankList = () => {
                 <TabsTrigger value="coding">
                     <span>Coding question (30)</span>
                 </TabsTrigger>
+                <TabsTrigger value="behavioral">
+                    <span>Behavioral question (10)</span>
+                </TabsTrigger>
             </TabsList>
             <TabsContent value="MCQ">
                 <div className="grid grid-cols-3 gap-5">
@@ -29,6 +32,17 @@ const QuestionBankList = () => {
                     <QuestionBankItem type="coding" />
                     <QuestionBankItem type="coding" />
                     <QuestionBankItem type="coding" />
+                </div>
+            </TabsContent>
+            <TabsContent value="behavioral">
+                <div className="grid grid-cols-3 gap-5">
+                    <QuestionBankItem type="behavioral" />
+                    <QuestionBankItem type="behavioral" />
+                    <QuestionBankItem type="behavioral" />
+                    <QuestionBankItem type="behavioral" />
+                    <QuestionBankItem type="behavioral" />
+                    <QuestionBankItem type="behavioral" />
+                    <QuestionBankItem type="behavioral" />
                 </div>
             </TabsContent>
         </Tabs>

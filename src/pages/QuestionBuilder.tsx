@@ -1,16 +1,10 @@
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { PiBank } from 'react-icons/pi';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Coding, MCQ } from '../components/assessment/questionBuilder';
 import { TbFlower } from 'react-icons/tb';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import QuestionCreateDropdown from '@/components/assessment/questionBank/QuestionCreateDropdown';
+import Behavioral from '@/components/assessment/questionBuilder/Behavioral';
 
 const typeMap = {
     mcq: {
@@ -20,6 +14,10 @@ const typeMap = {
     coding: {
         title: 'Coding',
         comp: Coding,
+    },
+    behavioral: {
+        title: 'Behavioral',
+        comp: Behavioral,
     },
 };
 
@@ -37,23 +35,11 @@ const QuestionBuilder = () => {
                     <PiBank className="text-lg" /> Question bank
                 </BreadcrumbItem>
                 <BreadcrumbItem>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger>
-                            <div className="flex items-center gap-1">
-                                <TbFlower className="text-lg" /> Builder
-                            </div>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>Choose question type</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem asChild>
-                                <Link to={`/app/organization/${domain}/bank/builder/mcq`}>MCQ</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <Link to={`/app/organization/${domain}/bank/builder/coding`}>Coding</Link>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <QuestionCreateDropdown>
+                        <div className="flex items-center gap-1">
+                            <TbFlower className="text-lg" /> Builder
+                        </div>
+                    </QuestionCreateDropdown>
                 </BreadcrumbItem>
                 <BreadcrumbItem>{builder?.title}</BreadcrumbItem>
             </Breadcrumbs>

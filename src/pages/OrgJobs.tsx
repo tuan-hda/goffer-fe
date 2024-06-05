@@ -8,7 +8,9 @@ import useListOrganizationJobs from '@/hooks/useListOrganizationJobs';
 
 const OrgJobs = () => {
     const { data } = useCurrOrganization();
-    const { data: jobs } = useListOrganizationJobs();
+    const { data: jobs } = useListOrganizationJobs({
+        org: data?.id || '',
+    });
 
     return (
         <OrgLayout>

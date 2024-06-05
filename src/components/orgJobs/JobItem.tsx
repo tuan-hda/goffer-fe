@@ -7,7 +7,6 @@ import {
     TbLocation,
     TbPaperclip,
     TbPencil,
-    TbReport,
     TbShare,
     TbTrash,
     TbUser,
@@ -23,8 +22,20 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar } from '@nextui-org/react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { formatUTCDate } from '@/utils/time';
+import { toast } from 'sonner';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from '../ui/button';
 
 type JobItemProps = {
     data: Job;
@@ -50,13 +61,17 @@ const JobItem = ({ data }: JobItemProps) => {
     const navigate = useNavigate();
     const { domain } = useParams();
 
+    const copyLink = async () => {
+        await navigator.clipboard.writeText(`http://localhost:3000/job/${data.id}`);
+        toast.success('Link copied to clipboard');
+    };
+
     return (
-        <Card
-            onClick={() => navigate(`/app/organization/${domain}/job/${data.id}`)}
-            className="cursor-pointer bg-white/100 text-sm shadow-none transition hover:shadow-small"
-        >
+        <Card className="bg-white/100 text-sm shadow-none transition hover:shadow-small">
             <CardHeader className="pb-0 pt-4">
-                <CardTitle className="text-lg font-medium">{data.title}</CardTitle>
+                <CardTitle className="text-lg font-medium">
+                    <Link to={`/app/organization/${domain}/job/${data.id}`}>{data.title}</Link>
+                </CardTitle>
             </CardHeader>
             <CardContent className="pb-4 pt-2 text-text/80">
                 <div className="flex items-center">
@@ -109,25 +124,52 @@ const JobItem = ({ data }: JobItemProps) => {
 
                 <button className="ml-auto text-gray-400">Applicants (0)</button>
 
-                <DropdownMenu>
-                    <DropdownMenuTrigger className="ml-3 rounded-xl p-2">
-                        <TbDots />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
-                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
-                            <TbPencil className="mr-2 text-base" /> Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
-                            <TbReport className="mr-2 text-base" /> View report
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
-                            <TbShare className="mr-2 text-base" /> Share
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
-                            <TbArchive className="mr-2 text-base" /> Archive
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <Dialog>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className="ml-3 rounded-xl p-2">
+                            <TbDots />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
+                            <DropdownMenuItem
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`job/${data.id}`);
+                                }}
+                            >
+                                <TbPencil className="mr-2 text-base" /> Edit
+                            </DropdownMenuItem>
+                            {data.status === 'published' && (
+                                <DropdownMenuItem
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        copyLink();
+                                    }}
+                                >
+                                    <TbShare className="mr-2 text-base" /> Share
+                                </DropdownMenuItem>
+                            )}
+                            <DropdownMenuItem asChild onClick={(e) => e.stopPropagation()}>
+                                <DialogTrigger className="w-full">
+                                    <TbArchive className="mr-2 text-base" /> Archive
+                                </DialogTrigger>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Are you absolutely sure?</DialogTitle>
+                            <DialogDescription>The candidate cannot apply for this job anymore.</DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                            <DialogClose asChild>
+                                <Button type="button" variant="outline">
+                                    Close
+                                </Button>
+                            </DialogClose>
+                            <Button variant="destructive">Archive</Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </CardFooter>
         </Card>
     );

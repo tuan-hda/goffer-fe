@@ -5,7 +5,7 @@ import Header from './Header';
 const Coding = () => {
     return (
         <div className="relative grid grid-cols-12 flex-col gap-x-16 gap-y-6">
-            <Header />
+            <Header title="Question Coding Builder" />
             <div className="col-span-12 pt-5">
                 <CodingQuestion />
                 <div className="h-20" />
