@@ -14,21 +14,21 @@ const QuestionBankList = () => {
             </TabsList>
             <TabsContent value="MCQ">
                 <div className="grid grid-cols-3 gap-5">
-                    <QuestionBankItem />
-                    <QuestionBankItem />
-                    <QuestionBankItem />
-                    <QuestionBankItem />
+                    <QuestionBankItem type="mcq" />
+                    <QuestionBankItem type="mcq" />
+                    <QuestionBankItem type="mcq" />
+                    <QuestionBankItem type="mcq" />
                 </div>
             </TabsContent>
             <TabsContent value="coding">
                 <div className="grid grid-cols-3 gap-5">
-                    <QuestionBankItem />
-                    <QuestionBankItem />
-                    <QuestionBankItem />
-                    <QuestionBankItem />
-                    <QuestionBankItem />
-                    <QuestionBankItem />
-                    <QuestionBankItem />
+                    <QuestionBankItem type="coding" />
+                    <QuestionBankItem type="coding" />
+                    <QuestionBankItem type="coding" />
+                    <QuestionBankItem type="coding" />
+                    <QuestionBankItem type="coding" />
+                    <QuestionBankItem type="coding" />
+                    <QuestionBankItem type="coding" />
                 </div>
             </TabsContent>
         </Tabs>

@@ -52,6 +52,20 @@ const QuestionBankHeader = () => {
                         <SelectItem value="hard">Hard</SelectItem>
                     </SelectContent>
                 </Select>
+                <Select>
+                    <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="engineering">Engineering</SelectItem>
+                        <SelectItem value="education">Education</SelectItem>
+                        <SelectItem value="designing">Designing</SelectItem>
+                        <SelectItem value="copywriting">Copywriting</SelectItem>
+                        <SelectItem value="socialmedia">Social Media</SelectItem>
+                        <SelectItem value="entertainment">Entertainment</SelectItem>
+                        <SelectItem value="translation">Translation</SelectItem>
+                    </SelectContent>
+                </Select>
                 <Button variant="outline">
                     <TbX className="mr-2" /> Clear filter
                 </Button>

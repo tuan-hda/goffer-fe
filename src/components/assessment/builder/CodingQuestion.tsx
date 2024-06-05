@@ -29,6 +29,20 @@ const CodingQuestion = () => {
                 </Label>
 
                 <Label className="flex max-w-[320px] flex-col">
+                    Difficulty
+                    <Select>
+                        <SelectTrigger className="mt-2 w-[320px]">
+                            <SelectValue placeholder="Difficulty" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="easy">Easy</SelectItem>
+                            <SelectItem value="medium">Medium</SelectItem>
+                            <SelectItem value="hard">Hard</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </Label>
+
+                <Label className="flex max-w-[320px] flex-col">
                     Question
                     <Input placeholder="Pick a title" className="mt-2 max-w-[320px]" />
                     <p className="ml-auto mt-2 text-xs font-light text-gray-400">0/150</p>
