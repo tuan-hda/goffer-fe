@@ -2,13 +2,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TbSearch, TbX } from 'react-icons/tb';
+import { Link } from 'react-router-dom';
 
 const AssessmentOrgHeader = () => {
     return (
         <div>
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl">Assessment (12)</h1>
-                <Button>Create assessment</Button>
+                <Button asChild>
+                    <Link to="builder">Create assessment</Link>
+                </Button>
             </div>
             <div className="mt-3 flex gap-4">
                 <div className="relative w-[360px]">

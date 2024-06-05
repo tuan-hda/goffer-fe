@@ -1,7 +1,7 @@
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { PiBank } from 'react-icons/pi';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Coding, MCQ } from '../components/assessment/builder';
+import { Coding, MCQ } from '../components/assessment/questionBuilder';
 import { TbFlower } from 'react-icons/tb';
 import {
     DropdownMenu,

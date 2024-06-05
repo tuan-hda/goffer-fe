@@ -53,33 +53,33 @@ const AssessmentOrgItem = () => {
                                 <TbCopy className="mr-2" /> Duplicate
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem>
-                                <DialogTrigger>
+                            <DialogTrigger asChild>
+                                <DropdownMenuItem>
                                     <TbTrash className="mr-2" />
                                     Delete
-                                </DialogTrigger>
-                            </DropdownMenuItem>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                    <DialogDescription>
-                                        This action cannot be undone. This will permanently delete the assessment and
-                                        all the results in it.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <DialogFooter className="justify-end">
-                                    <DialogClose asChild>
-                                        <Button type="button" variant="secondary">
-                                            Close
-                                        </Button>
-                                        <Button type="button" variant="destructive">
-                                            Delete
-                                        </Button>
-                                    </DialogClose>
-                                </DialogFooter>
-                            </DialogContent>
+                                </DropdownMenuItem>
+                            </DialogTrigger>
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Are you absolutely sure?</DialogTitle>
+                            <DialogDescription>
+                                This action cannot be undone. This will permanently delete the assessment and all the
+                                results in it.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter className="justify-end">
+                            <DialogClose asChild>
+                                <Button type="button" variant="outline">
+                                    Close
+                                </Button>
+                            </DialogClose>
+                            <Button type="button" variant="destructive">
+                                Delete
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
                 </Dialog>
             </div>
         </div>

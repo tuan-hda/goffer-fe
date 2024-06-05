@@ -1,4 +1,4 @@
-import { Badge } from '../ui/badge';
+import { Badge } from '../../ui/badge';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -6,7 +6,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
+} from '../../ui/dropdown-menu';
 import { TbDots, TbPencil, TbTrash } from 'react-icons/tb';
 import QuestionBankItemMCQ from './QuestionBankItemMCQ';
 import { QUESTION_TYPE } from '@/types/question.type';

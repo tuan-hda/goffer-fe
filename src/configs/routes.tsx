@@ -60,6 +60,7 @@ import ProjectDetail from '@/components/portfolio/ProjectDetail';
 import { OrgDetail } from '@/components/orgDetail';
 import DrawRectangle from '@/components/canvas/DrawRectangle';
 import AssessmentOrg from '@/pages/AssessmentOrg';
+import AssessmentCreate from '@/pages/AssessmentCreate';
 
 const routesConfig: RouteObject[] = [
     {
@@ -176,6 +177,10 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/assessment',
                         element: <AssessmentOrg />,
+                    },
+                    {
+                        path: '/app/organization/:domain/assessment/builder',
+                        element: <AssessmentCreate />,
                     },
                     {
                         path: '/app/organization/:domain/bank',

@@ -20,7 +20,7 @@ const TestCase = ({ num, onRemove }: TestCaseProps) => {
                 </Button>
                 <TooltipProvider>
                     <Tooltip>
-                        <TooltipTrigger>
+                        <TooltipTrigger asChild>
                             <Button variant="ghost" size="icon">
                                 <TbCircle className="text-gray-500/10" />
                             </Button>
