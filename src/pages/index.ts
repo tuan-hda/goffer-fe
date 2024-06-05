@@ -36,3 +36,5 @@ export { default as Portfolio } from './Portfolio';
 export { default as NewProject } from './NewProject';
 export { default as Reports } from './Reports';
 export { default as UsersManagement } from './UsersManagement';
+export { default as QuestionBank } from './QuestionBank';
+export { default as QuestionBuilder } from './QuestionBuilder';

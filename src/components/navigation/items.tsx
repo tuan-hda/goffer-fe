@@ -1,4 +1,6 @@
+import { PiBank } from 'react-icons/pi';
 import {
+    TbAtom,
     TbBaguette,
     TbBell,
     TbChartBubble,
@@ -147,6 +149,32 @@ export const orgItems: (_: string, { onClickMap }: { onClickMap: Record<number, 
             startContent: <TbBell className="flex-shrink-0 text-xl" />,
             path: `/app/organization/${domain}/notifications`,
             endContent: <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            content: 'Messages',
+            startContent: <TbChartBubble className="text-xl" />,
+            path: `/app/organization/${domain}/messages`,
+            endContent: <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            content: 'Assessment',
+            startContent: <TbAtom className="text-xl" />,
+            path: `/app/organization/${domain}/assessment`,
+        },
+        divider: true,
+    },
+    {
+        type: 'link',
+        element: {
+            content: 'Question bank',
+            startContent: <PiBank className="text-xl" />,
+            path: `/app/organization/${domain}/bank`,
         },
     },
     {
