@@ -6,13 +6,16 @@ import App from './App';
 import QueryProvider from '@/providers/QueryProvider';
 import config from './configs/config';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import ChatProvider from './providers/ChatProvider';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <BrowserRouter>
             <QueryProvider>
                 <GoogleOAuthProvider clientId={config.GOOGLE_CLIENT_ID}>
-                    <App />
+                    <ChatProvider>
+                        <App />
+                    </ChatProvider>
                 </GoogleOAuthProvider>
             </QueryProvider>
         </BrowserRouter>
