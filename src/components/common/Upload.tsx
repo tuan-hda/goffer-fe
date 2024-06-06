@@ -90,7 +90,7 @@ const Upload = ({ fileUrl, showingImage, onAttach, className }: UploadProps) => 
 
     return (
         <div className={className}>
-            <input onChange={handleFileChange} type="file" ref={ref} className="hidden" />
+            <input onChange={handleFileChange} type="file" ref={ref} className="pointer-events-none hidden" />
 
             <div
                 {...getRootProps()}
@@ -130,6 +130,7 @@ const Upload = ({ fileUrl, showingImage, onAttach, className }: UploadProps) => 
                             variant="outline"
                             className="absolute right-2 top-2 opacity-80"
                             size="icon"
+                            type="button"
                         >
                             <TbX className="text-lg" />
                         </Button>

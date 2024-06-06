@@ -9,13 +9,17 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { TbTrash } from 'react-icons/tb';
+import useNewQuestionStore from '@/stores/newQuestionStore';
+import { TbLoader, TbTrash } from 'react-icons/tb';
 
 type HeaderProps = {
     title: string;
+    onFinish?: () => void;
 };
 
-const Header = ({ title }: HeaderProps) => {
+const Header = ({ title, onFinish }: HeaderProps) => {
+    const loading = useNewQuestionStore((state) => state.loading);
+
     return (
         <div className="col-span-full flex items-center gap-4">
             <h1 className="text-2xl">{title}</h1>
@@ -42,7 +46,10 @@ const Header = ({ title }: HeaderProps) => {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
-            <Button variant="black">Finish</Button>
+            <Button disabled={loading} variant="black" onClick={onFinish}>
+                {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
+                Finish
+            </Button>
         </div>
     );
 };
