@@ -1,12 +1,12 @@
+import useListPeople from '@/hooks/useListPeople';
 import PersonCard from '../common/PersonCard';
 
 const PeopleDiscover = () => {
-    const peoples = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    const { data } = useListPeople();
+
     return (
         <div className="mx-aut grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-rows-4">
-            {peoples.map((_, index) => (
-                <PersonCard key={index} />
-            ))}
+            {data?.results.map((person, index) => <PersonCard key={index} data={person} />)}
         </div>
     );
 };

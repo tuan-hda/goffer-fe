@@ -2,19 +2,22 @@ import RoomReview from './RoomReview';
 import type { ChannelFilters, ChannelSort, ChannelOptions } from 'stream-chat';
 import { ChannelList } from 'stream-chat-react';
 import SearchBar from './SearchBar';
+import { User } from '@/types/user.type';
 
-const userId = 'little-wood-9';
+interface Props {
+    user: User;
+}
 
-const sort: ChannelSort = { last_message_at: -1 };
-const filters: ChannelFilters = {
-    type: 'messaging',
-    members: { $in: [userId] },
-};
-const options: ChannelOptions = {
-    limit: 10,
-};
+const RoomList = ({ user }: Props) => {
+    const sort: ChannelSort = { last_message_at: -1 };
+    const filters: ChannelFilters = {
+        type: 'messaging',
+        members: { $in: [user.id] },
+    };
+    const options: ChannelOptions = {
+        limit: 10,
+    };
 
-const RoomList = () => {
     return (
         <div className="h-full overflow-y-auto pt-5">
             <ChannelList
