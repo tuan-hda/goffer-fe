@@ -7,17 +7,30 @@ import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/comp
 import { Badge } from '@/components/ui/badge';
 import { User } from '@/types/user.type';
 import { getLatestExperience } from '@/utils/profile';
+import { client } from '@/utils/streamchat';
+import { useNavigate } from 'react-router-dom';
 
 const colors = ['#F8F9FE'];
-
-const tags = ['Hello', 'World', 'React', 'Next.js', 'TypeScript', 'TailwindCSS'];
 
 interface Props {
     data: User;
 }
 
 const PersonCard = ({ data }: Props) => {
+    const navigate = useNavigate();
     const latestExp = getLatestExperience(data.experiences ?? []);
+
+    const getInTouch = async () => {
+        if (client.userID) {
+            await client.upsertUser({ id: data.id, name: data.name, image: data.avatar });
+
+            const channel = client.channel('messaging', {
+                members: [client.userID, data.id],
+            });
+            await channel.create();
+            navigate('/app/messages');
+        }
+    };
 
     return (
         <Card className="rounded-3xl shadow-none">
@@ -29,7 +42,8 @@ const PersonCard = ({ data }: Props) => {
                     }}
                 >
                     <div className="mb-4 flex max-w-full items-center gap-1 px-4 text-[13px] text-gray-600">
-                        <TbStarFilled className="text-[#FDB022]" /> 9.3 (5) |{' '}
+                        <TbStarFilled className="text-[#FDB022]" /> {+(Math.random() * 10).toFixed(1)} (
+                        {Math.floor(Math.random() * 100)}){data.location && '| '}
                         <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-gray-500">
                             {data.location}
                         </span>
@@ -56,7 +70,7 @@ const PersonCard = ({ data }: Props) => {
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant="black" className="h-8 w-8 rounded-full" size="icon">
+                            <Button onClick={getInTouch} variant="black" className="h-8 w-8 rounded-full" size="icon">
                                 <TbPlanet className="text-base" />
                             </Button>
                         </TooltipTrigger>

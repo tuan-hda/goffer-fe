@@ -1,6 +1,6 @@
-import config from "@/configs/config";
-import { User } from "@/types/user.type";
-import { StreamChat } from "stream-chat";
+import config from '@/configs/config';
+import { User } from '@/types/user.type';
+import { Channel, StreamChat } from 'stream-chat';
 
 export const client = new StreamChat(config.STREAM_KEY);
 
@@ -13,4 +13,8 @@ export const connectStreamUser = async (user: User) => {
         },
         client.devToken(user.id),
     );
+};
+
+export const getOtherUser = (channel: Channel) => {
+    return Object.values(channel.state.members).find((member) => member.user_id !== client.userID);
 };

@@ -28,8 +28,8 @@ const Messages = () => {
     const { data: user } = useSelfProfileQuery();
 
     useEffect(() => {
-        if (user) connectStreamUser(user);
-    }, [user]);
+        if (user && client) connectStreamUser(user);
+    }, [user, client]);
 
     if (!client || !user)
         return (
@@ -42,7 +42,7 @@ const Messages = () => {
         <div className="h-screen text-sm">
             <div className="flex h-full">
                 <div className="h-full w-[360px]">
-                    <RoomList user={user} />
+                    <RoomList />
                 </div>
                 <div className="h-full border-r border-r-[#EEEEF0]" />
                 <div className="h-full flex-1">
@@ -63,4 +63,3 @@ const Messages = () => {
 };
 
 export default Messages;
-``
