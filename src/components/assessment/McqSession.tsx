@@ -1,5 +1,5 @@
 import { Image } from '@nextui-org/react';
-import QuestionList from './QuestionList';
+import QuestionList from './questionBank/QuestionList';
 import SessionTracker from './SessionTracker';
 
 const McqSession = () => {

@@ -1,9 +1,12 @@
 import { Question } from '@/components/jobDetail';
+
+export type QUESTION_TYPE = 'audio' | 'video' | 'mcq' | 'coding';
+
 export type NewQuestion = {
     content: string;
     description: string;
     constraint: number;
-    type: 'audio' | 'video';
+    type: QUESTION_TYPE;
     job: string;
 };
 

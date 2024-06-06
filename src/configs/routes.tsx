@@ -37,6 +37,8 @@ import {
     NewProject,
     Reports,
     UsersManagement,
+    QuestionBank,
+    QuestionBuilder,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -57,6 +59,8 @@ import { Ditto, OnceInAMoon, PortfolioLayout } from '@/components/portfolio';
 import ProjectDetail from '@/components/portfolio/ProjectDetail';
 import { OrgDetail } from '@/components/orgDetail';
 import DrawRectangle from '@/components/canvas/DrawRectangle';
+import AssessmentOrg from '@/pages/AssessmentOrg';
+import AssessmentCreate from '@/pages/AssessmentCreate';
 
 const routesConfig: RouteObject[] = [
     {
@@ -169,6 +173,26 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/team',
                         element: <Team />,
+                    },
+                    {
+                        path: '/app/organization/:domain/assessment',
+                        element: <AssessmentOrg />,
+                    },
+                    {
+                        path: '/app/organization/:domain/assessment/builder',
+                        element: <AssessmentCreate />,
+                    },
+                    {
+                        path: '/app/organization/:domain/bank',
+                        element: <QuestionBank />,
+                    },
+                    {
+                        path: '/app/organization/:domain/bank/builder/:type',
+                        element: <QuestionBuilder />,
+                    },
+                    {
+                        path: '/app/organization/:domain/messages',
+                        element: <Messages />,
                     },
                     {
                         path: '/app/organization/:domain/job/:id',
