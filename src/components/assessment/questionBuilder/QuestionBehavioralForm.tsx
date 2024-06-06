@@ -15,7 +15,7 @@ const QuestionBehavioralForm = () => {
                 <div>
                     <Label htmlFor="category">Category</Label>
                     <Select name="category">
-                        <SelectTrigger>
+                        <SelectTrigger className="mt-1">
                             <SelectValue placeholder="Category" />
                         </SelectTrigger>
                         <SelectContent>
@@ -31,10 +31,11 @@ const QuestionBehavioralForm = () => {
                         </SelectContent>
                     </Select>
                 </div>
+
                 <div>
-                    <Label htmlFor="type">Type</Label>
-                    <Select name="type">
-                        <SelectTrigger>
+                    <Label htmlFor="type">Kind</Label>
+                    <Select name="kind">
+                        <SelectTrigger className="mt-1">
                             <SelectValue placeholder="Type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -48,7 +49,6 @@ const QuestionBehavioralForm = () => {
                                     <TbVideo /> Video
                                 </div>
                             </SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -56,7 +56,7 @@ const QuestionBehavioralForm = () => {
                 <div>
                     <Label htmlFor="limit">Limit</Label>
                     <Select name="limit">
-                        <SelectTrigger>
+                        <SelectTrigger className="mt-1">
                             <SelectValue placeholder="Limit" />
                         </SelectTrigger>
                         <SelectContent>
