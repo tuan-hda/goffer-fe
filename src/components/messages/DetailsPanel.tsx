@@ -4,8 +4,14 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { TbDownload, TbPdf } from 'react-icons/tb';
 import { RiFileWordFill } from 'react-icons/ri';
+import { User } from '@/types/user.type';
+import { getExperienceYear, getLatestExperience } from '@/utils/profile';
 
-const DetailsPanel = () => {
+interface Props {
+    user: User;
+}
+
+const DetailsPanel = ({ user }: Props) => {
     const [selected, setSelected] = useState('details');
 
     const handleClick = (value: string) => () => {
@@ -15,9 +21,9 @@ const DetailsPanel = () => {
     return (
         <div className="flex-1 overflow-y-scroll pb-8">
             <div className="mt-8 flex h-[300px] flex-col items-center justify-center">
-                <Avatar src="https://cirsova.files.wordpress.com/2023/11/image-3.png" className="h-36 w-36" />
-                <p className="mt-3 font-serif text-2xl font-bold">Frieren</p>
-                <p className="mt-2">hdatdragon2@gmail.com</p>
+                <Avatar src={user.avatar} className="h-36 w-36" />
+                <p className="mt-3 font-serif text-2xl font-bold">{user.name}</p>
+                <p className="mt-2">{user.email}</p>
             </div>
             <div className="mt-0">
                 <Tabs defaultValue="details">
@@ -59,7 +65,7 @@ const DetailsPanel = () => {
             <div className="relative mx-8 my-6 overflow-hidden rounded-xl bg-[#FFF7D9] p-4">
                 <img src="/diamond.png" className="absolute -bottom-10 -right-5 h-32 w-32" />
                 <p className="w-[80%] font-medium">
-                    Frieren is waiting for an interview <span className="text-[#E05B4E]">🎥</span>
+                    {user.name} is waiting for an interview <span className="text-[#E05B4E]">🎥</span>
                 </p>
                 <p className="mt-1 w-fit cursor-pointer text-[13px] font-medium text-blue-500">
                     Set up an interview now
@@ -68,28 +74,50 @@ const DetailsPanel = () => {
             <div className="px-8">
                 {selected === 'details' ? (
                     <>
-                        <p className="font-medium">Title</p>
-                        <p className="mt-1 text-text/70">Software Engineer</p>
+                        {user.experiences && user.experiences.length > 0 && (
+                            <>
+                                <p className="font-medium">Title</p>
+                                <p className="mt-1 text-text/70">{getLatestExperience(user.experiences).title}</p>
+                            </>
+                        )}
 
-                        <p className="mt-4 font-medium">Phone</p>
-                        <p className="mt-1 text-text/70">0123456789</p>
+                        {user.resume && (
+                            <>
+                                <p className="mt-4 font-medium">Resume</p>
+                                <p className="mt-1 truncate text-text/70">{user.resume}</p>
+                            </>
+                        )}
 
-                        <p className="mt-4 font-medium">Resume</p>
-                        <p className="mt-1 text-text/70">https://abc.com/af.pdf</p>
+                        {user.refDoc && (
+                            <>
+                                <p className="mt-4 font-medium">LinkedIn</p>
+                                <p className="max-w-fu mt-1 truncate text-text/70">{user.refDoc}</p>
+                            </>
+                        )}
 
-                        <p className="mt-4 font-medium">LinkedIn</p>
-                        <p className="mt-1 text-text/70">https://linkedin.com</p>
+                        {user.location && (
+                            <>
+                                <p className="mt-4 font-medium">Location</p>
+                                <p className="mt-1 text-text/70">{user.location}</p>
+                            </>
+                        )}
 
-                        <p className="mt-4 font-medium">Location</p>
-                        <p className="mt-1 text-text/70">LA, San Francisco</p>
+                        {user.experiences && user.experiences.length > 0 && (
+                            <>
+                                <p className="mt-4 font-medium">Experience</p>
+                                <p className="mt-1 text-text/70">
+                                    {getExperienceYear(user.experiences)} yoe:{' '}
+                                    {user.experiences.map((item) => item.company).join(', ')}
+                                </p>
+                            </>
+                        )}
 
-                        <p className="mt-4 font-medium">Experience</p>
-                        <p className="mt-1 text-text/70">7 yoe: Acme Corp, Innovative Solutions, Tech Pioneers</p>
-
-                        <p className="mt-4 font-medium">Skills</p>
-                        <p className="mt-1 text-text/70">
-                            Tools: ReactJS, Redux, TypeScript, NodeJS, Express, MongoDB, Docker, AWS
-                        </p>
+                        {user.skills && user.skills.length > 0 && (
+                            <>
+                                <p className="mt-4 font-medium">Skills</p>
+                                <p className="mt-1 text-text/70">Tools: {user.skills.join(', ')}</p>
+                            </>
+                        )}
                     </>
                 ) : (
                     <>
