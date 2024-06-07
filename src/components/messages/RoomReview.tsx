@@ -1,5 +1,6 @@
 import { getOtherUser } from '@/utils/streamchat';
 import { Avatar } from '@nextui-org/react';
+import classNames from 'classnames';
 import moment from 'moment';
 import { ChannelPreviewProps } from 'stream-chat-react';
 
@@ -24,9 +25,21 @@ const RoomReview = (props: ChannelPreviewProps) => {
             <div className="min-w-0 flex-1">
                 <div className="flex w-full items-center justify-between">
                     <p className="text-[13px] font-semibold">{otherUser?.user?.name}</p>
-                    <p className="text-xs text-text/50">{moment(channel.data?.last_message_at as string).fromNow()}</p>
+                    <p className={classNames('text-xs text-text/50', channel.countUnread() > 0 && 'font-semibold')}>
+                        {moment(channel.data?.last_message_at as string).fromNow()}
+                    </p>
                 </div>
-                <p className="overflow-hidden text-ellipsis whitespace-nowrap text-text/80">{messagePreview}</p>
+                <div className="flex w-full items-center justify-between">
+                    <p
+                        className={classNames(
+                            'overflow-hidden text-ellipsis whitespace-nowrap text-text/80',
+                            channel.countUnread() > 0 && 'font-medium text-black',
+                        )}
+                    >
+                        {messagePreview}
+                    </p>
+                    {channel.countUnread() > 0 && <div className="ml-auto h-2 w-2 rounded-full bg-primary" />}
+                </div>
             </div>
         </button>
     );

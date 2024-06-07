@@ -755,3 +755,7 @@ i.justify-align {
 .str-chat__virtual-list {
     background-color: transparent !important;
 }
+
+.str-chat__list {
+    background-color: transparent !important;
+}
