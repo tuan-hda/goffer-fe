@@ -1,10 +1,12 @@
+import { Question } from '@/types/question.type';
 import { TbMicrophone2, TbVideo } from 'react-icons/tb';
 
 type QuestionBankItemBehavioralProps = {
     kind?: 'audio' | 'video';
+    data: Question;
 };
 
-const QuestionBankItemBehavioral = ({ kind = 'audio' }: QuestionBankItemBehavioralProps) => {
+const QuestionBankItemBehavioral = ({ kind = 'audio', data }: QuestionBankItemBehavioralProps) => {
     return (
         <div>
             <div className="mb-1 flex items-center gap-2">

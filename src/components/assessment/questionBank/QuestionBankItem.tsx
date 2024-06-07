@@ -9,7 +9,7 @@ import {
 } from '../../ui/dropdown-menu';
 import { TbDots, TbPencil, TbTrash } from 'react-icons/tb';
 import QuestionBankItemMCQ from './QuestionBankItemMCQ';
-import { QUESTION_TYPE } from '@/types/question.type';
+import { QUESTION_TYPE, Question } from '@/types/question.type';
 import QuestionBankItemCoding from './QuestionBankItemCoding';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
@@ -18,6 +18,7 @@ import QuestionBankItemBehavioral from './QuestionBankItemBehavioral';
 type QuestionBankItemProps = {
     type?: QUESTION_TYPE;
     mode?: 'pick' | 'normal';
+    data: Question;
 };
 
 const typeMap = {
@@ -26,7 +27,7 @@ const typeMap = {
     behavioral: QuestionBankItemBehavioral,
 };
 
-const QuestionBankItem = ({ type, mode = 'normal' }: QuestionBankItemProps) => {
+const QuestionBankItem = ({ type, mode = 'normal', data }: QuestionBankItemProps) => {
     const Component = typeMap[type || 'mcq'];
     const [selected, setSelected] = useState(false);
 
@@ -43,7 +44,7 @@ const QuestionBankItem = ({ type, mode = 'normal' }: QuestionBankItemProps) => {
             className="relative flex cursor-pointer flex-col rounded-2xl border p-5 text-text transition hover:shadow-medium"
         >
             {mode === 'pick' && <Checkbox checked={selected} className="absolute right-2 top-2 h-5 w-5 rounded-lg" />}
-            <Component />
+            <Component data={data} />
             <div className="-mx-5 my-4 border-t"></div>
             <div className="-my-1 flex">
                 <Badge>Easy</Badge>

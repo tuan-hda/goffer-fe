@@ -4,14 +4,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { TbSearch, TbX } from 'react-icons/tb';
 
 import QuestionCreateDropdown from './QuestionCreateDropdown';
+import useListOrgQuestions from '@/hooks/useListOrgQuestions';
+import useQuestionDifficultyCount from '@/hooks/useQuestionDifficultyCount';
 
 const QuestionBankHeader = () => {
+    const { data } = useListOrgQuestions();
+    const { data: difficultyCount } = useQuestionDifficultyCount();
+
+    if (!data) {
+        return null;
+    }
+
     return (
         <div>
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl">120 questions</h1>
-                    <p>20 easy, 60 medium, 40 hard</p>
+                    <h1 className="text-2xl">{data.totalResults} questions</h1>
+                    <p>
+                        {difficultyCount?.['1'] || 0} easy, {difficultyCount?.['2'] || 0} medium,{' '}
+                        {difficultyCount?.['3'] || 0} hard
+                    </p>
                 </div>
                 <QuestionCreateDropdown>
                     <Button>Add question</Button>

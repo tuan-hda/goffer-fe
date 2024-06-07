@@ -1,4 +1,5 @@
 import { Question } from '@/components/jobDetail';
+import { User } from './user.type';
 
 export type QUESTION_TYPE = 'behavioral' | 'mcq' | 'coding';
 
@@ -25,7 +26,9 @@ export type NewQuestion = {
 
 export type Question = NewQuestion & {
     id: string;
-    author: string;
+    author: User;
+    createdAt: string;
+    updatedAt: string;
 };
 
 export type Answer = {

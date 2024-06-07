@@ -1,6 +1,11 @@
+import { Question } from '@/types/question.type';
 import { Avatar } from '@nextui-org/react';
 
-const QuestionBankItemCoding = () => {
+type QuestionBankItemCodingProps = {
+    data: Question;
+};
+
+const QuestionBankItemCoding = ({ data }: QuestionBankItemCodingProps) => {
     return (
         <div>
             <p className="font-medium">1002. Find Common Characters</p>

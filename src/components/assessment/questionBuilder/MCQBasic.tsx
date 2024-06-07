@@ -62,7 +62,12 @@ const MCQBasic = () => {
             <div>
                 <Label>Image</Label>
                 <div className="h-2"></div>
-                <Upload showingImage fileUrl={question.image} />
+                <Upload
+                    showingImage
+                    directUpload
+                    fileUrl={question.image}
+                    onAttach={(url) => setQuestion((prev) => ({ ...prev, image: url }))}
+                />
             </div>
             <Label>
                 Difficulty
