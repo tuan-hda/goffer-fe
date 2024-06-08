@@ -16,11 +16,12 @@ import SidebarItem from './SidebarItem';
 import UserPopover from './UserPopover';
 import { Organization } from '@/types/organization.type';
 import { Image } from '@nextui-org/react';
-import { items, orgItems } from './items';
+import { Item, items, orgItems } from './items';
 import AskAI from '../askAI/AskAI';
 import AdminMenu from './AdminMenu';
 import { adminItems } from './adminItems';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { useChatContext } from 'stream-chat-react';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -39,6 +40,11 @@ const SideBar = ({ org }: SideBarProps) => {
 
     // Either open ask AI modal
     const [open, setOpen] = useState(false);
+
+    // Message badge
+    const { client } = useChatContext();
+
+    const [unread, setUnread] = useState<number>();
 
     const onMouseEnter = () => setCollapsed(!sideBarPinned && false);
     const onMouseLeave = () => {
@@ -76,6 +82,19 @@ const SideBar = ({ org }: SideBarProps) => {
     useEffect(() => {
         setCollapsed(!sideBarPinned);
     }, [sideBarPinned]);
+
+    useEffect(() => {
+        client.getUnreadCount().then((res) => setUnread(res.total_unread_count));
+    }, [client]);
+
+    const checkShowaEndContent = (item: Item) => {
+        switch (item.element.content) {
+            case 'Messages':
+                return unread ? unread > 0 : false;
+            default:
+                break;
+        }
+    };
 
     return (
         <div className="fixed z-50 bg-white text-sm text-text" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
@@ -168,6 +187,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                             match={match}
                                             collapsed={collapsed}
                                             item={item}
+                                            showEndContent={checkShowaEndContent(item)}
                                         />
                                     </Fragment>
                                 ))}

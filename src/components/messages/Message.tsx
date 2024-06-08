@@ -1,13 +1,13 @@
 import { Avatar } from '@nextui-org/react';
 import classNames from 'classnames';
+import { useMessageContext } from 'stream-chat-react';
 
-type MessageProps = {
-    isOwner?: boolean;
-};
+const Message = () => {
+    const { message, isMyMessage } = useMessageContext();
+    const isOwner = isMyMessage();
 
-const Message = ({ isOwner = false }: MessageProps) => {
     return (
-        <div className={classNames('flex w-full px-8 py-4', isOwner && 'justify-end')}>
+        <div data-message-id={message.id} className={classNames('flex w-full px-8 py-4', isOwner && 'justify-end')}>
             <div className={classNames('flex max-w-[70%] flex-col', isOwner && 'items-end')}>
                 <div className="flex items-start gap-2">
                     {!isOwner && (
@@ -20,11 +20,11 @@ const Message = ({ isOwner = false }: MessageProps) => {
                         />
                     )}
                     <div className={classNames('rounded-[14px] border p-5', isOwner ? 'bg-[#FFF4E4]' : 'bg-white')}>
-                        <p>I am available on Mon day 10am - 12pm.</p>
-                        <p>Tuesday 10am - 12pm</p>
+                        <p>{message.text}</p>
+                        {/* <p>{message.created_at?.toLocaleString()}</p> */}
                     </div>
                 </div>
-                <p className="ml-[60px] mt-2 text-xs text-text/70">10:00 AM • 2 days ago</p>
+                <p className="ml-[60px] mt-2 text-xs text-text/70">{message.created_at?.toLocaleString()}</p>
             </div>
         </div>
     );

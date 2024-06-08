@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Bitter:ital,wght@0,100..900;1,100..900&display=swap');
+@import 'stream-chat-react/dist/css/v2/index.css' layer(base);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -741,4 +742,20 @@ i.justify-align {
 
 .portfolio-border {
     border-color: var(--text-color);
+}
+
+.str-chat.str-chat-channel-list.str-chat__channel-list.str-chat__channel-list-react {
+    border-right: 0;
+}
+
+.str-chat__channel-search.str-chat__channel-search--inline {
+    height: max-content !important;
+}
+
+.str-chat__virtual-list {
+    background-color: transparent !important;
+}
+
+.str-chat__list {
+    background-color: transparent !important;
 }

@@ -2,6 +2,7 @@ import { GoogleProfile, UpdateUser, User } from '@/types/user.type';
 import { baseAxios, noAuthAxios } from './base';
 import axios from 'axios';
 import config from '@/configs/config';
+import { List } from '@/types/list.type';
 
 export const checkExistEmailService = async (email: string) => {
     return noAuthAxios.get(`/users/check-email?email=${email}`);
@@ -30,3 +31,7 @@ export const googleProfileService = async (accessToken: string) => {
 };
 
 export const updateUserService = (user: UpdateUser) => baseAxios.put('/users/self', user);
+
+export const listPeopleService = async () => {
+    return (await baseAxios.get<List<User>>('/users')).data;
+};
