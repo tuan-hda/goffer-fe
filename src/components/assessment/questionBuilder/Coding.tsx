@@ -24,7 +24,7 @@ const Coding = () => {
     );
 
     const { id } = useParams();
-    const { data, refetch } = useGetQuestion(id);
+    const { data } = useGetQuestion(id);
     const { refetch: refetchList } = useListOrgQuestions({ type: 'coding', populate: 'author' });
     const { data: org } = useCurrOrganization();
 
@@ -72,7 +72,7 @@ const Coding = () => {
                 questionBody.description = JSON.stringify(questionBody.description);
 
                 await updateQuestionService(data.id, questionBody);
-                await refetch();
+                await refetchList();
             },
             () => {
                 setLoading(false);

@@ -1,20 +1,43 @@
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import useNewQuestionStore from '@/stores/newQuestionStore';
+import { NewQuestion } from '@/types/question.type';
 import { TbMicrophone2, TbVideo } from 'react-icons/tb';
+import { shallow } from 'zustand/shallow';
 
 const QuestionBehavioralForm = () => {
+    const [question, setQuestion] = useNewQuestionStore(
+        (state) => [state.questions.behavioral, state.setQuestion('behavioral')],
+        shallow,
+    );
+
+    const handleChange =
+        (key: keyof NewQuestion) =>
+        (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+            setQuestion((prev) => ({ ...prev, [key]: e.target.value }));
+        };
+
+    const handleSelectionChange = (key: keyof NewQuestion) => (value: string) => {
+        setQuestion((prev) => ({ ...prev, [key]: value }));
+    };
+
     return (
         <div className="space-y-4">
             <div className="grid gap-2">
-                <Label htmlFor="Title">Title</Label>
-                <Input id="Title" type="Title" placeholder="A brief question title here" required />
+                <Label htmlFor="Title">Question *</Label>
+                <Textarea
+                    value={question.content}
+                    onChange={handleChange('content')}
+                    id="Title"
+                    placeholder="A brief question here"
+                    required
+                />
             </div>
             <div className="grid grid-cols-3 gap-3">
                 <div>
-                    <Label htmlFor="category">Category</Label>
-                    <Select name="category">
+                    <Label htmlFor="category">Category *</Label>
+                    <Select value={question.category} onValueChange={handleSelectionChange('category')} name="category">
                         <SelectTrigger className="mt-1">
                             <SelectValue placeholder="Category" />
                         </SelectTrigger>
@@ -33,8 +56,8 @@ const QuestionBehavioralForm = () => {
                 </div>
 
                 <div>
-                    <Label htmlFor="type">Kind</Label>
-                    <Select name="kind">
+                    <Label htmlFor="type">Kind *</Label>
+                    <Select value={question.kind} onValueChange={handleSelectionChange('kind')} name="kind">
                         <SelectTrigger className="mt-1">
                             <SelectValue placeholder="Type" />
                         </SelectTrigger>
@@ -54,24 +77,34 @@ const QuestionBehavioralForm = () => {
                 </div>
 
                 <div>
-                    <Label htmlFor="limit">Limit</Label>
-                    <Select name="limit">
+                    <Label htmlFor="limit">Constraint *</Label>
+                    <Select
+                        value={String(question.constraint || 0)}
+                        onValueChange={handleSelectionChange('constraint')}
+                        name="limit"
+                    >
                         <SelectTrigger className="mt-1">
                             <SelectValue placeholder="Limit" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="1">1 min</SelectItem>
-                            <SelectItem value="3">3 min</SelectItem>
-                            <SelectItem value="5">5 min</SelectItem>
-                            <SelectItem value="7">7 min</SelectItem>
-                            <SelectItem value="10">10 min</SelectItem>
+                            <SelectItem value="60">1 min</SelectItem>
+                            <SelectItem value="180">3 min</SelectItem>
+                            <SelectItem value="300">5 min</SelectItem>
+                            <SelectItem value="420">7 min</SelectItem>
+                            <SelectItem value="600">10 min</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
             </div>
             <div className="grid gap-2">
-                <Label htmlFor="description">Description (optional)</Label>
-                <Textarea id="description" placeholder="Give a description for this question" required />
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                    value={question.description as string}
+                    onChange={handleChange('description')}
+                    id="description"
+                    placeholder="Give a description for this question"
+                    required
+                />
             </div>
         </div>
     );

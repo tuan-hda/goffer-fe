@@ -2,14 +2,32 @@ import { Button } from '../../ui/button';
 import { Input } from '../../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
 import { TbSearch, TbX } from 'react-icons/tb';
-
 import QuestionCreateDropdown from './QuestionCreateDropdown';
 import useListOrgQuestions from '@/hooks/useListOrgQuestions';
 import useQuestionDifficultyCount from '@/hooks/useQuestionDifficultyCount';
+import { useSearchParams } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import _ from 'lodash';
 
 const QuestionBankHeader = () => {
     const { data } = useListOrgQuestions();
     const { data: difficultyCount } = useQuestionDifficultyCount();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [value, setValue] = useState('');
+
+    const setSearch = useMemo(() => {
+        return _.debounce((value: string) => {
+            searchParams.set('search', value);
+            setSearchParams(searchParams);
+        }, 500);
+    }, [searchParams]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value);
+        setSearch(e.target.value);
+    };
+
+    const difficulty = searchParams.get('difficulty');
 
     if (!data) {
         return null;
@@ -32,34 +50,38 @@ const QuestionBankHeader = () => {
 
             <div className="mt-6 flex gap-4">
                 <div className="relative w-[360px]">
-                    <Input className="w-full pl-8" placeholder="Search question..." />
+                    <Input
+                        value={value}
+                        onChange={handleChange}
+                        className="w-full pl-8"
+                        placeholder="Search question..."
+                    />
                     <TbSearch className="absolute left-3 top-[10px]" />
                 </div>
-                <Select>
+                <Select
+                    value={String(difficulty || '')}
+                    onValueChange={(value) => {
+                        searchParams.set('difficulty', value);
+                        setSearchParams(searchParams);
+                    }}
+                >
                     <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Difficulty" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="easy">Easy</SelectItem>
-                        <SelectItem value="medium">Medium</SelectItem>
-                        <SelectItem value="hard">Hard</SelectItem>
+                        <SelectItem value="1">Easy</SelectItem>
+                        <SelectItem value="2">Medium</SelectItem>
+                        <SelectItem value="3">Hard</SelectItem>
                     </SelectContent>
                 </Select>
-                <Select>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="engineering">Engineering</SelectItem>
-                        <SelectItem value="education">Education</SelectItem>
-                        <SelectItem value="designing">Designing</SelectItem>
-                        <SelectItem value="copywriting">Copywriting</SelectItem>
-                        <SelectItem value="socialmedia">Social Media</SelectItem>
-                        <SelectItem value="entertainment">Entertainment</SelectItem>
-                        <SelectItem value="translation">Translation</SelectItem>
-                    </SelectContent>
-                </Select>
-                <Button variant="outline">
+
+                <Button
+                    variant="outline"
+                    onClick={() => {
+                        setSearchParams({});
+                        setValue('');
+                    }}
+                >
                     <TbX className="mr-2" /> Clear filter
                 </Button>
             </div>

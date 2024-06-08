@@ -11,11 +11,9 @@ const QuestionBankItemBehavioral = ({ kind = 'audio', data }: QuestionBankItemBe
         <div>
             <div className="mb-1 flex items-center gap-2">
                 {kind === 'audio' ? <TbMicrophone2 /> : <TbVideo />}
-                <span className="text-gray-500">3 min</span>
+                <span className="text-gray-500">{Math.round((data.constraint || 0) / 60)} min</span>
             </div>
-            <p className="font-medium">
-                If you meet this condition in a secretary tab, then what will you do to resolve it?
-            </p>
+            <p className="lines-ellipsis font-medium">{data.content}</p>
         </div>
     );
 };
