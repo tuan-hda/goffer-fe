@@ -36,7 +36,7 @@ const MCQBasic = () => {
             <Label>
                 Description *
                 <Textarea
-                    value={question.description}
+                    value={question.description as string}
                     onChange={handleChange('description')}
                     className="mt-2"
                     placeholder="Clear description for this question..."

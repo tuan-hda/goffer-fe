@@ -409,7 +409,7 @@ export function PlateEditor(props: PlateEditorProps) {
                             props.wrapperClassName,
                         )}
                     >
-                        <FixedToolbar className="!top-10">
+                        <FixedToolbar className="!top-0">
                             <FixedToolbarButtons />
                         </FixedToolbar>
 

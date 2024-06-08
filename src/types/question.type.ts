@@ -1,5 +1,6 @@
 import { Question } from '@/components/jobDetail';
 import { User } from './user.type';
+import { Value } from '@udecode/plate-common';
 
 export type QUESTION_TYPE = 'behavioral' | 'mcq' | 'coding';
 
@@ -11,7 +12,7 @@ export type Choice = {
 
 export type NewQuestion = {
     content: string;
-    description: string;
+    description: string | Value;
     constraint?: number;
     type: string;
     sample?: string;
@@ -22,6 +23,11 @@ export type NewQuestion = {
     image?: string;
     org: string;
     category: string;
+    gradingInput?: string;
+    gradingOutput?: string;
+    exampleInput?: string;
+    exampleOutput?: string;
+    numberOfTestCaseLines?: number;
 };
 
 export type Question = NewQuestion & {

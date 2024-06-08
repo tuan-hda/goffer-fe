@@ -8,11 +8,8 @@ type QuestionBankItemCodingProps = {
 const QuestionBankItemCoding = ({ data }: QuestionBankItemCodingProps) => {
     return (
         <div>
-            <p className="font-medium">1002. Find Common Characters</p>
-            <p className="lines-ellipsis mt-2 text-gray-500">
-                Given a string array words, return an array of all characters that show up in all strings within the
-                words (including duplicates). You may return the answer in any order.
-            </p>
+            <p className="lines-ellipsis font-medium">{data.content}</p>
+
             <div className="mt-4 flex items-center gap-2">
                 <span className="text-[13px]">Created by</span>
                 <Avatar
