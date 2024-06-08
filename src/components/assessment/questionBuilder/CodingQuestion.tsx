@@ -4,8 +4,41 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import Tips from './Tips';
 import { PlateEditor } from '@/components/editor/PlateEditor';
 import { TbCircleCheckFilled, TbCircleXFilled } from 'react-icons/tb';
+import useNewQuestionStore from '@/stores/newQuestionStore';
+import { shallow } from 'zustand/shallow';
+import { PlateEditor as PlateEditorType } from '@udecode/plate-common';
+import { useEffect, useRef } from 'react';
 
 const CodingQuestion = () => {
+    const editorRef = useRef<PlateEditorType | null>(null);
+    const [question, setQuestion] = useNewQuestionStore(
+        (state) => [state.questions.coding, state.setQuestion('coding')],
+        shallow,
+    );
+
+    const handleSelectionChange = (key: 'category' | 'difficulty') => (value: string) => {
+        setQuestion((prev) => ({ ...prev, [key]: value }));
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.length <= 150) setQuestion((prev) => ({ ...prev, content: e.target.value }));
+    };
+
+    useEffect(() => {
+        if (editorRef.current && typeof question.description === 'string') {
+            try {
+                editorRef.current.children = JSON.parse(question.description);
+            } catch (error) {
+                // Do nothing
+            }
+        }
+    }, [question.description]);
+
+    useEffect(() => {
+        if (!editorRef.current) return;
+        editorRef.current.reset();
+    }, [editorRef]);
+
     return (
         <div className="-mt-4 grid grid-cols-12 gap-10 text-text">
             <div className="col-span-12">
@@ -14,45 +47,54 @@ const CodingQuestion = () => {
             </div>
             <div className="col-span-7 flex flex-col gap-6">
                 <Label>
-                    Category
-                    <Select>
+                    Category *
+                    <Select value={question.category || 'algorithm'} onValueChange={handleSelectionChange('category')}>
                         <SelectTrigger className="mt-2 max-w-[320px]">
                             <SelectValue placeholder="Category" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="algo">Algorithm</SelectItem>
-                            <SelectItem value="db">Database</SelectItem>
-                            <SelectItem value="fe">Frontend</SelectItem>
-                            <SelectItem value="sh">Shell</SelectItem>
+                            <SelectItem value="algorithm">Algorithm</SelectItem>
                         </SelectContent>
                     </Select>
                 </Label>
 
                 <Label className="flex max-w-[320px] flex-col">
-                    Difficulty
-                    <Select>
+                    Difficulty *
+                    <Select
+                        value={String(question.difficulty || '')}
+                        onValueChange={handleSelectionChange('difficulty')}
+                    >
                         <SelectTrigger className="mt-2 w-[320px]">
                             <SelectValue placeholder="Difficulty" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="easy">Easy</SelectItem>
-                            <SelectItem value="medium">Medium</SelectItem>
-                            <SelectItem value="hard">Hard</SelectItem>
+                            <SelectItem value="1">Easy</SelectItem>
+                            <SelectItem value="2">Medium</SelectItem>
+                            <SelectItem value="3">Hard</SelectItem>
                         </SelectContent>
                     </Select>
                 </Label>
 
                 <Label className="flex max-w-[320px] flex-col">
-                    Question
-                    <Input placeholder="Pick a title" className="mt-2 max-w-[320px]" />
-                    <p className="ml-auto mt-2 text-xs font-light text-gray-400">0/150</p>
+                    Question *
+                    <Input
+                        value={question.content}
+                        onChange={handleChange}
+                        placeholder="Pick a title"
+                        className="mt-2 max-w-[320px]"
+                    />
+                    <p className="ml-auto mt-2 text-xs font-light text-gray-400">{question.content.length}/150</p>
                 </Label>
 
                 <div className="flex flex-col">
                     <Label>Description</Label>
                     <div className="h-2"></div>
-                    <PlateEditor className="min-h-[200px]" />
-                    <p className="ml-auto mt-2 text-xs font-light text-gray-400">0/5000</p>
+                    <PlateEditor
+                        maxLength={5000}
+                        editorRef={editorRef}
+                        onChange={(value) => setQuestion((prev) => ({ ...prev, description: value }))}
+                        className="min-h-[200px]"
+                    />
                 </div>
             </div>
             <div className="col-span-5">

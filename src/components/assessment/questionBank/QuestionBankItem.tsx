@@ -18,6 +18,8 @@ import { sentenceCase } from '@/utils/string';
 import { Link, useNavigate } from 'react-router-dom';
 import { DialogTrigger } from '@/components/ui/dialog';
 import QuestionBankDelete from './QuestionBankDelete';
+import { Avatar } from '@nextui-org/react';
+import moment from 'moment';
 
 type QuestionBankItemProps = {
     type: QUESTION_TYPE;
@@ -57,15 +59,21 @@ const QuestionBankItem = ({ type, mode = 'normal', data }: QuestionBankItemProps
             className="relative flex cursor-pointer flex-col rounded-2xl border p-5 text-text transition hover:shadow-medium"
         >
             {mode === 'pick' && <Checkbox checked={selected} className="absolute right-2 top-2 h-5 w-5 rounded-lg" />}
-            <div className="h-[72px]">
-                <Component data={data} />
+            <div className="flex flex-1 flex-col">
+                <div className="flex-1">
+                    <Component data={data} />
+                </div>
+                <div className="mt-2 flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
+                    <span className="text-[13px]">Created by</span>
+                    <Avatar src={data.author?.avatar} className="h-5 w-5" />
+                    <span>{data.author?.name}</span>
+                    <span>{moment(data.createdAt).fromNow()}</span>
+                </div>
             </div>
             <div className="-mx-5 my-4 border-t"></div>
             <div className="-my-1 flex" onClick={(e) => e.stopPropagation()}>
-                <Badge>{difficultyMap[data.difficulty || 1]}</Badge>
-                <Badge className="ml-2" variant="secondary">
-                    {sentenceCase(data.category)}
-                </Badge>
+                {data.type !== 'behavioral' && <Badge className="mr-2">{difficultyMap[data.difficulty || 1]}</Badge>}
+                <Badge variant="secondary">{sentenceCase(data.category)}</Badge>
                 <QuestionBankDelete id={data.id} type={type}>
                     <DropdownMenu>
                         <DropdownMenuTrigger className="ml-auto p-1">

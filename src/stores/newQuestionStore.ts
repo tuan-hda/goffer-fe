@@ -32,6 +32,7 @@ export const initialData: NewQuestion = {
     kind: 'audio',
     org: '',
     category: '',
+    numberOfTestCaseLines: 1,
 };
 
 type State = {
@@ -84,7 +85,7 @@ const useNewQuestionStore = create<State & Action>()(
             });
         },
         getProcessedQuestion(type) {
-            const question = get().questions[type];
+            const question = { ...get().questions[type] };
             Object.keys(question).forEach((key) => {
                 if (!question[key as keyof NewQuestion]) {
                     delete question[key as keyof NewQuestion];

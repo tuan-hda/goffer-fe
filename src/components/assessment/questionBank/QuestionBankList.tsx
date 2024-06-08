@@ -1,44 +1,63 @@
+import useListOrgQuestions from '@/hooks/useListOrgQuestions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
+import QuestionBankListCoding from './QuestionBankListCoding';
 import QuestionBankListMCQ from './QuestionBankListMCQ';
+import QuestionBankListBehavioral from './QuestionBankListBehavioral';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const QuestionBankList = () => {
+    const { data: mcq, refetch: mcqRefetch } = useListOrgQuestions({
+        type: 'mcq',
+        populate: 'author',
+    });
+    const { data: coding, refetch: codingRefetch } = useListOrgQuestions({
+        type: 'coding',
+        populate: 'author',
+    });
+    const { data: behavioral, refetch: behavioralRefetch } = useListOrgQuestions({
+        type: 'behavioral',
+        populate: 'author',
+    });
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const type = searchParams.get('type') || 'mcq';
+
+    useEffect(() => {
+        mcqRefetch();
+        codingRefetch();
+        behavioralRefetch();
+    }, [searchParams]);
+
     return (
-        <Tabs defaultValue="MCQ" className="mt-5">
+        <Tabs
+            value={type}
+            onValueChange={(value) => {
+                searchParams.set('type', value);
+                setSearchParams(searchParams);
+            }}
+            defaultValue="mcq"
+            className="mt-5"
+        >
             <TabsList className="mb-2">
-                <TabsTrigger value="MCQ">
-                    <span>MCQ (20)</span>
+                <TabsTrigger value="mcq">
+                    <span>MCQ ({mcq?.totalResults || 0})</span>
                 </TabsTrigger>
                 <TabsTrigger value="coding">
-                    <span>Coding question (30)</span>
+                    <span>Coding question ({coding?.totalResults || 0})</span>
                 </TabsTrigger>
                 <TabsTrigger value="behavioral">
-                    <span>Behavioral question (10)</span>
+                    <span>Behavioral question ({behavioral?.totalResults || 0})</span>
                 </TabsTrigger>
             </TabsList>
-            <TabsContent value="MCQ">
+            <TabsContent value="mcq">
                 <QuestionBankListMCQ />
             </TabsContent>
             <TabsContent value="coding">
-                <div className="grid grid-cols-3 gap-5">
-                    {/* <QuestionBankItem type="coding" />
-                    <QuestionBankItem type="coding" />
-                    <QuestionBankItem type="coding" />
-                    <QuestionBankItem type="coding" />
-                    <QuestionBankItem type="coding" />
-                    <QuestionBankItem type="coding" />
-                    <QuestionBankItem type="coding" /> */}
-                </div>
+                <QuestionBankListCoding />
             </TabsContent>
             <TabsContent value="behavioral">
-                <div className="grid grid-cols-3 gap-5">
-                    {/* <QuestionBankItem type="behavioral" />
-                    <QuestionBankItem type="behavioral" />
-                    <QuestionBankItem type="behavioral" />
-                    <QuestionBankItem type="behavioral" />
-                    <QuestionBankItem type="behavioral" />
-                    <QuestionBankItem type="behavioral" />
-                    <QuestionBankItem type="behavioral" /> */}
-                </div>
+                <QuestionBankListBehavioral />
             </TabsContent>
         </Tabs>
     );

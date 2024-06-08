@@ -24,7 +24,7 @@ const MCQ = () => {
     );
 
     const { id } = useParams();
-    const { data, refetch } = useGetQuestion(id);
+    const { data } = useGetQuestion(id);
     const { refetch: refetchList } = useListOrgQuestions({ type: 'mcq', populate: 'author' });
     const { data: org } = useCurrOrganization();
 
@@ -82,7 +82,7 @@ const MCQ = () => {
                     throw new Error('Please provide at least 2 choices and mark one as correct');
                 }
                 await updateQuestionService(data.id, questionBody);
-                await refetch();
+                await refetchList();
             },
             () => {
                 setLoading(false);
