@@ -9,9 +9,18 @@ type SidebarItemProps = {
     isMatched?: boolean;
     onClick?: () => void;
     isAdmin?: boolean;
+    showEndContent?: boolean;
 };
 
-const SidebarItem = ({ item, collapsed, match, onClick, isMatched, isAdmin = false }: SidebarItemProps) => {
+const SidebarItem = ({
+    item,
+    collapsed,
+    match,
+    onClick,
+    isMatched,
+    isAdmin = false,
+    showEndContent = true,
+}: SidebarItemProps) => {
     return item.type === 'button' ? (
         <button
             onClick={onClick}
@@ -30,7 +39,7 @@ const SidebarItem = ({ item, collapsed, match, onClick, isMatched, isAdmin = fal
             >
                 {item.element.content}
             </p>
-            {item.element.endContent}
+            {showEndContent && item.element.endContent}
         </button>
     ) : (
         <Link

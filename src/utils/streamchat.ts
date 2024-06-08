@@ -18,3 +18,8 @@ export const connectStreamUser = async (user: User) => {
 export const getOtherUser = (channel: Channel) => {
     return Object.values(channel.state.members).find((member) => member.user_id !== client.userID);
 };
+
+export const getUnread = async (userId?: string) => {
+    const numUnread = client.getUnreadCount(userId);
+    return (await numUnread).total_unread_count;
+};
