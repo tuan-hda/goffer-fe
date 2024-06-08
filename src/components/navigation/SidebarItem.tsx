@@ -9,7 +9,7 @@ type SidebarItemProps = {
     isMatched?: boolean;
     onClick?: () => void;
     isAdmin?: boolean;
-    showEndContent?: boolean;
+    isEndContent?: boolean;
 };
 
 const SidebarItem = ({
@@ -19,7 +19,7 @@ const SidebarItem = ({
     onClick,
     isMatched,
     isAdmin = false,
-    showEndContent = true,
+    isEndContent = true,
 }: SidebarItemProps) => {
     return item.type === 'button' ? (
         <button
@@ -39,7 +39,7 @@ const SidebarItem = ({
             >
                 {item.element.content}
             </p>
-            {showEndContent && item.element.endContent}
+            {isEndContent && item.element.endContent}
         </button>
     ) : (
         <Link
@@ -66,7 +66,7 @@ const SidebarItem = ({
                 {item.element.content}
             </p>
             <div className={classNames('absolute', collapsed ? '-right-[3px]' : 'right-2')}>
-                {item.element.endContent}
+                {isEndContent && item.element.endContent}
             </div>
         </Link>
     );
