@@ -1,5 +1,6 @@
 import useListOrganizationJobs from '@/hooks/useListOrganizationJobs';
 import JobItem from './JobItem';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
 
 // const mock = {
 //     skills: ['2D Animator'],
@@ -18,8 +19,9 @@ import JobItem from './JobItem';
 // };
 
 const JobList = () => {
+    const { data } = useCurrOrganization();
     const { data: jobs } = useListOrganizationJobs({
-        sortBy: 'createdAt:desc',
+        org: data?.id || '',
     });
 
     return (

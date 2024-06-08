@@ -1,18 +1,34 @@
 import { Question } from '@/components/jobDetail';
+import { User } from './user.type';
 
-export type QUESTION_TYPE = 'audio' | 'video' | 'mcq' | 'coding';
+export type QUESTION_TYPE = 'behavioral' | 'mcq' | 'coding';
+
+export type Choice = {
+    content: string;
+    image?: string;
+    isCorrect?: boolean;
+};
 
 export type NewQuestion = {
     content: string;
     description: string;
-    constraint: number;
-    type: QUESTION_TYPE;
-    job: string;
+    constraint?: number;
+    type: string;
+    sample?: string;
+    answer?: string;
+    choices?: Choice[];
+    difficulty?: 1 | 2 | 3;
+    kind?: 'audio' | 'video';
+    image?: string;
+    org: string;
+    category: string;
 };
 
 export type Question = NewQuestion & {
     id: string;
-    author: string;
+    author: User;
+    createdAt: string;
+    updatedAt: string;
 };
 
 export type Answer = {

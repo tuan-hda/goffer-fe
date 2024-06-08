@@ -1,13 +1,29 @@
 import { Button } from '@/components/ui/button';
 import MCQChoice from './MCQChoice';
-import { useEffect, useState } from 'react';
+import useNewQuestionStore from '@/stores/newQuestionStore';
+import { shallow } from 'zustand/shallow';
+import { Choice } from '@/types/question.type';
 
 const MCQChoices = () => {
-    const [choices, setChoices] = useState([1, 2, 3, 4]);
-    const [answer, setAnswer] = useState<number | null>(null);
+    const [question, setQuestion] = useNewQuestionStore(
+        (state) => [state.questions.mcq, state.setQuestion('mcq')],
+        shallow,
+    );
+
+    const choices = question.choices || [];
+    const setChoices = (choices: Choice[]) => setQuestion({ ...question, choices });
+    const setChoiceData = (index: number) => (key: 'content' | 'image') => (value: string) => {
+        setChoices(choices.map((choice, i) => (i === index ? { ...choice, [key]: value } : choice)));
+    };
 
     const addChoice = () => {
-        setChoices([...choices, choices.length + 1]);
+        setChoices([
+            ...choices,
+            {
+                content: '',
+                isCorrect: false,
+            },
+        ]);
     };
 
     const removeChoice = (index: number) => () => {
@@ -15,14 +31,13 @@ const MCQChoices = () => {
     };
 
     const markAsAnswer = (index: number) => () => {
-        setAnswer(index);
+        setChoices(
+            choices.map((choice, i) => ({
+                ...choice,
+                isCorrect: i === index,
+            })),
+        );
     };
-
-    useEffect(() => {
-        if (answer !== null && answer >= choices.length) {
-            setAnswer(-1);
-        }
-    }, [choices, answer]);
 
     return (
         <div className="col-span-6 flex w-full flex-col">
@@ -30,7 +45,8 @@ const MCQChoices = () => {
             <div className="-mx-4 mt-2">
                 {choices.map((choice, index) => (
                     <MCQChoice
-                        isAnswer={answer === index}
+                        {...choice}
+                        setChoiceData={setChoiceData(index)}
                         onSelect={markAsAnswer(index)}
                         onRemove={removeChoice(index)}
                         num={index + 1}

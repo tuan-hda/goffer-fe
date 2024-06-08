@@ -9,12 +9,13 @@ import { Button } from '../ui/button';
 
 type UploadProps = {
     fileUrl?: string;
-    onAttach?: (fileUrl: string) => Promise<void>;
+    onAttach?: ((fileUrl: string) => Promise<void>) | ((fileUrl: string) => void);
     className?: string;
     showingImage?: boolean;
+    directUpload?: boolean;
 };
 
-const Upload = ({ fileUrl, showingImage, onAttach, className }: UploadProps) => {
+const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className }: UploadProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
@@ -34,44 +35,47 @@ const Upload = ({ fileUrl, showingImage, onAttach, className }: UploadProps) => 
         })();
     }, [fileUrl]);
 
-    const onDrop = useCallback((acceptedFiles: File[]) => {
-        const selectedFile = acceptedFiles[0];
-        if (selectedFile.size > 50 * 1024 * 1024) {
+    const handleFileChange = (file: File) => {
+        if (file.size > 50 * 1024 * 1024) {
             setError('File size should not exceed 50MB');
             setFile(null);
         } else {
             setError('');
-            setFile(selectedFile);
-        }
-    }, []);
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        if (files && files.length > 0) {
-            const selectedFile = files[0];
-            // Check if the file size is greater than 50MB
-            if (selectedFile.size > 50 * 1024 * 1024) {
-                setError('File size should not exceed 50MB');
-                setFile(null);
+            if (directUpload) {
+                handleSubmit(file);
             } else {
-                setError('');
-                setFile(selectedFile);
-                if (ref.current) ref.current.value = '';
+                setFile(file);
             }
+            if (ref.current) ref.current.value = '';
         }
     };
 
-    const handleSubmit = async () => {
+    const onDrop = useCallback((acceptedFiles: File[]) => {
+        const selectedFile = acceptedFiles[0];
+        handleFileChange(selectedFile);
+    }, []);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
         if (file) {
+            handleFileChange(file);
+        }
+    };
+
+    const handleSubmit = async (outerFile?: File) => {
+        const innerFile = outerFile || file;
+        if (innerFile) {
             try {
                 setLoading(true);
-                const uploadData = (await uploadFileService(file)).data;
+                const uploadData = (await uploadFileService(innerFile)).data;
                 if (onAttach) {
                     await onAttach(uploadData.file.url);
                 }
 
-                setFile(null);
+                if (!directUpload) {
+                    setFile(null);
+                }
             } catch (error) {
                 if (isAxiosError(error)) {
                     return setError(error.response?.data.message || 'An error occurred while uploading the file');
@@ -90,30 +94,38 @@ const Upload = ({ fileUrl, showingImage, onAttach, className }: UploadProps) => 
 
     return (
         <div className={className}>
-            <input onChange={handleFileChange} type="file" ref={ref} className="hidden" />
+            <input onChange={handleChange} type="file" ref={ref} className="pointer-events-none hidden" />
 
             <div
                 {...getRootProps()}
                 className={classNames(
-                    'flex flex-col items-center gap-1 rounded-xl border border-dashed p-4',
+                    'flex h-32 flex-col items-center justify-center gap-1 rounded-xl border border-dashed',
                     isDragActive ? 'border-primary' : 'border-black',
                 )}
             >
-                <input {...getInputProps()} />
-                <TbFileUpload className="text-5xl" />
-                <div>
-                    {isDragActive ? (
-                        'Drop the files here'
-                    ) : (
-                        <>
-                            <button className="font-medium underline" onClick={() => ref.current?.click()}>
-                                Click to upload
-                            </button>{' '}
-                            or drag and drop
-                        </>
-                    )}
-                </div>
-                <p className="text-xs">Maximum size 50 MB.</p>
+                {directUpload && loading ? (
+                    <div>
+                        <TbLoader className="animate-spin text-2xl" />
+                    </div>
+                ) : (
+                    <>
+                        <input {...getInputProps()} />
+                        <TbFileUpload className="text-5xl" />
+                        <div>
+                            {isDragActive ? (
+                                'Drop the files here'
+                            ) : (
+                                <>
+                                    <button className="mr-1 font-medium underline" onClick={() => ref.current?.click()}>
+                                        Click to upload
+                                    </button>
+                                    <span>or drag and drop</span>
+                                </>
+                            )}
+                        </div>
+                        <p className="text-xs">Maximum size 50 MB.</p>
+                    </>
+                )}
             </div>
 
             {error && <p className="mt-2 text-red-500">{error}</p>}
@@ -130,6 +142,7 @@ const Upload = ({ fileUrl, showingImage, onAttach, className }: UploadProps) => 
                             variant="outline"
                             className="absolute right-2 top-2 opacity-80"
                             size="icon"
+                            type="button"
                         >
                             <TbX className="text-lg" />
                         </Button>
@@ -154,8 +167,13 @@ const Upload = ({ fileUrl, showingImage, onAttach, className }: UploadProps) => 
                     </div>
                 ))}
 
-            {onAttach && (
-                <Button disabled={loading} onClick={handleSubmit} variant="black" className="mt-4 w-full flex-1">
+            {onAttach && !directUpload && (
+                <Button
+                    disabled={loading}
+                    onClick={() => handleSubmit()}
+                    variant="black"
+                    className="mt-4 w-full flex-1"
+                >
                     {loading && <TbLoader className="mr-2 animate-spin text-base" />} Attach files
                 </Button>
             )}

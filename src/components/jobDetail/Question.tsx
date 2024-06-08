@@ -1,6 +1,6 @@
 import { TbDots, TbVideo } from 'react-icons/tb';
 import { Badge } from '../ui/badge';
-import { Card, CardDescription, CardFooter, CardHeader } from '../ui/card';
+import { Card, CardFooter, CardHeader } from '../ui/card';
 import { Checkbox } from '../ui/checkbox';
 import {
     DropdownMenu,
@@ -19,14 +19,12 @@ export default function Question({ editable = true }: QuestionProps) {
             {editable && <Checkbox className="absolute right-6 top-6" />}
 
             <CardHeader className="pb-3">
-                <CardDescription>
-                    <span className="flex items-center gap-3 text-balance text-sm leading-relaxed">
-                        <Badge className="bg-pale-400 text-text/70 shadow-none">Behavioral</Badge>
-                        {/* <TbMicrophone /> */}
-                        <TbVideo />
-                        <span>3 min</span>
-                    </span>
-                </CardDescription>
+                <span className="flex items-center gap-3 text-balance text-sm leading-relaxed">
+                    <Badge className="bg-pale-400 text-text/70 shadow-none">Behavioral</Badge>
+                    {/* <TbMicrophone /> */}
+                    <TbVideo />
+                    <span>3 min</span>
+                </span>
             </CardHeader>
             <CardFooter>
                 <div className="flex flex-1 flex-col">
