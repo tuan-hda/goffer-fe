@@ -187,6 +187,10 @@ const routesConfig: RouteObject[] = [
                         element: <QuestionBank />,
                     },
                     {
+                        path: '/app/organization/:domain/bank/:id',
+                        element: <QuestionBuilder />,
+                    },
+                    {
                         path: '/app/organization/:domain/bank/builder/:type',
                         element: <QuestionBuilder />,
                     },

@@ -116,10 +116,10 @@ const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className }: Up
                                 'Drop the files here'
                             ) : (
                                 <>
-                                    <button className="font-medium underline" onClick={() => ref.current?.click()}>
+                                    <button className="mr-1 font-medium underline" onClick={() => ref.current?.click()}>
                                         Click to upload
                                     </button>
-                                    or drag and drop
+                                    <span>or drag and drop</span>
                                 </>
                             )}
                         </div>

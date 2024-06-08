@@ -18,3 +18,15 @@ export const getQuestions = async (jobId?: string) => {
 export const getQuestionDifficultyCountService = async () => {
     return (await baseAxios.get('/questions/difficulty-count')).data;
 };
+
+export const getQuestionService = async (id: string) => {
+    return (await baseAxios.get<Question>('/questions/' + id)).data;
+};
+
+export const updateQuestionService = async (id: string, data: Partial<Question>) => {
+    return (await baseAxios.patch<Question>('/questions/' + id, data)).data;
+};
+
+export const deleteQuestionService = async (id: string) => {
+    return (await baseAxios.delete('/questions/' + id)).data;
+};

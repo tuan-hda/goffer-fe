@@ -3,7 +3,7 @@ import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-const initialData: NewQuestion = {
+export const initialData: NewQuestion = {
     content: '',
     description: '',
     constraint: 180,

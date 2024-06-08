@@ -5,6 +5,7 @@ import { Coding, MCQ } from '../components/assessment/questionBuilder';
 import { TbFlower } from 'react-icons/tb';
 import QuestionCreateDropdown from '@/components/assessment/questionBank/QuestionCreateDropdown';
 import Behavioral from '@/components/assessment/questionBuilder/Behavioral';
+import useGetQuestion from '@/hooks/useGetQuestion';
 
 const typeMap = {
     mcq: {
@@ -23,10 +24,18 @@ const typeMap = {
 
 const QuestionBuilder = () => {
     const navigate = useNavigate();
-    const { domain, type } = useParams();
+    const { domain, type, id } = useParams();
+    const { data } = useGetQuestion(id);
 
-    const builder = typeMap[type as keyof typeof typeMap];
+    const builder = data ? typeMap[data.type as keyof typeof typeMap] : typeMap[type as keyof typeof typeMap];
     const Component = builder?.comp || (() => {});
+
+    const getTitle = () => {
+        if (data) {
+            return data.content;
+        }
+        return builder?.title;
+    };
 
     return (
         <div className="px-6 py-5 text-sm">
@@ -41,7 +50,7 @@ const QuestionBuilder = () => {
                         </div>
                     </QuestionCreateDropdown>
                 </BreadcrumbItem>
-                <BreadcrumbItem>{builder?.title}</BreadcrumbItem>
+                <BreadcrumbItem>{getTitle()}</BreadcrumbItem>
             </Breadcrumbs>
             <div className="pt-5">
                 <Component />

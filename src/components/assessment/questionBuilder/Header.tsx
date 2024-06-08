@@ -1,54 +1,38 @@
 import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
+import { DialogTrigger } from '@/components/ui/dialog';
 import useNewQuestionStore from '@/stores/newQuestionStore';
 import { TbLoader, TbTrash } from 'react-icons/tb';
+import QuestionBankDelete from '../questionBank/QuestionBankDelete';
+import { useParams } from 'react-router-dom';
+import useGetQuestion from '@/hooks/useGetQuestion';
+import { QUESTION_TYPE } from '@/types/question.type';
 
 type HeaderProps = {
     title: string;
     onFinish?: () => void;
+    isUpdating?: boolean;
 };
 
-const Header = ({ title, onFinish }: HeaderProps) => {
+const Header = ({ title, onFinish, isUpdating }: HeaderProps) => {
     const loading = useNewQuestionStore((state) => state.loading);
+    const { id } = useParams();
+    const { data } = useGetQuestion(id);
 
     return (
         <div className="col-span-full flex items-center gap-4">
-            <h1 className="text-2xl">{title}</h1>
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button size="icon" variant="ghost" className="ml-auto">
-                        <TbTrash className="text-lg" />
-                    </Button>
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Are you absolutely sure?</DialogTitle>
-                        <DialogDescription>
-                            This action cannot be undone. This will permanently delete this resource and cannot be
-                            recovered.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter>
-                        <DialogClose asChild>
-                            <Button variant="outline">Cancel</Button>
-                        </DialogClose>
-
-                        <Button variant="destructive">Delete</Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+            <h1 className="mr-auto text-2xl">{title}</h1>
+            {isUpdating && data && (
+                <QuestionBankDelete type={data.type as QUESTION_TYPE} id={id}>
+                    <DialogTrigger asChild>
+                        <Button size="icon" variant="ghost" className="ml-auto">
+                            <TbTrash className="text-lg" />
+                        </Button>
+                    </DialogTrigger>
+                </QuestionBankDelete>
+            )}
             <Button disabled={loading} variant="black" onClick={onFinish}>
                 {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
-                Finish
+                {isUpdating ? 'Update' : 'Finish'}
             </Button>
         </div>
     );
