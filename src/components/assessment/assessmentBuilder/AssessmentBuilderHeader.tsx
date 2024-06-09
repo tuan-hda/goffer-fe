@@ -10,79 +10,84 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import useCurrOrganization from '@/hooks/useCurrOrganization';
-import { createAssessmentService } from '@/services/assessment.service';
-import useNewAssessmentStore, { initialData } from '@/stores/newAssessmentStore';
-import { NewAssessment } from '@/types/assessment.type';
+import useGetCurrAssessment from '@/hooks/useGetCurrAssessment';
+import useListOrgAssessment from '@/hooks/useListOrgAssessment';
+import { createAssessmentService, updateAssessmentService } from '@/services/assessment.service';
+import useNewAssessmentStore from '@/stores/newAssessmentStore';
 import catchAsync from '@/utils/catchAsync';
 import _ from 'lodash';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TbLoader, TbTrash } from 'react-icons/tb';
+import { Link } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
+import AssessmentOrgItemDelete from '../org/AssessmentOrgItemDelete';
 
-type AssessmentBuilderHeaderProps = {
-    data?: NewAssessment;
-};
-
-const AssessmentBuilderHeader = ({ data }: AssessmentBuilderHeaderProps) => {
+const AssessmentBuilderHeader = () => {
     const [loading, setLoading] = useState(false);
-    const [assessment, setAssessment] = useNewAssessmentStore(
-        (state) => [state.assessment, state.setAssessment],
-        shallow,
-    );
+    const [assessment] = useNewAssessmentStore((state) => [state.assessment, state.setAssessment], shallow);
     const { data: dataOrg } = useCurrOrganization();
+    const { refetch } = useListOrgAssessment({
+        populate: 'owner',
+    });
+    const { data } = useGetCurrAssessment();
 
-    useEffect(() => {
-        if (data) {
-            setAssessment(data);
-        } else {
-            setAssessment(initialData);
-        }
-    }, [location]);
-
-    const handleSubmit = () =>
+    const create = () =>
         catchAsync(
             async () => {
                 setLoading(true);
                 await createAssessmentService({ ...assessment, org: dataOrg?.id! });
-                setAssessment(initialData);
+                await refetch();
             },
             () => {
                 setLoading(false);
             },
         );
 
+    const update = () =>
+        catchAsync(
+            async () => {
+                if (!data) return;
+                setLoading(true);
+                await updateAssessmentService({
+                    ...data,
+                    ...assessment,
+                });
+                await refetch();
+            },
+            () => {
+                setLoading(false);
+            },
+        );
+
+    const handleSubmit = () => {
+        if (data) {
+            update();
+        } else {
+            create();
+        }
+    };
+
     return (
         <div>
             <div className="col-span-full flex items-center gap-4">
                 <h1 className="mr-auto text-2xl">Assessment Builder</h1>
                 {!!data && (
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button size="icon" variant="ghost" className="ml-auto">
-                                <TbTrash className="text-lg" />
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                <DialogDescription>
-                                    This action cannot be undone. This will permanently delete this resource and cannot
-                                    be recovered.
-                                </DialogDescription>
-                            </DialogHeader>
-                            <DialogFooter>
-                                <DialogClose asChild>
-                                    <Button variant="outline">Cancel</Button>
-                                </DialogClose>
-
-                                <Button variant="destructive">Finish</Button>
-                            </DialogFooter>
-                        </DialogContent>
-                    </Dialog>
+                    <>
+                        <Link to="results" className="hover:underline">
+                            Results
+                        </Link>
+                        <AssessmentOrgItemDelete>
+                            <DialogTrigger asChild>
+                                <Button size="icon" variant="ghost">
+                                    <TbTrash className="text-lg" />
+                                </Button>
+                            </DialogTrigger>
+                        </AssessmentOrgItemDelete>
+                    </>
                 )}
                 <Button variant="black" onClick={handleSubmit}>
                     {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
-                    Finish
+                    {!!data ? 'Update' : 'Create'}
                 </Button>
             </div>
         </div>

@@ -8,7 +8,7 @@ import { TbSearch, TbX } from 'react-icons/tb';
 import { Link, useSearchParams } from 'react-router-dom';
 
 const AssessmentOrgHeader = () => {
-    const { data, refetch } = useListOrgAssessment({ populate: 'owner' });
+    const { data } = useListOrgAssessment({ populate: 'owner' });
     const [searchParams, setSearchParams] = useSearchParams();
     const [value, setValue] = useState('');
 

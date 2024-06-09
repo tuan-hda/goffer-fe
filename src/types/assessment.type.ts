@@ -19,8 +19,11 @@ export type NewAssessmentRequest = Omit<NewAssessment, 'questions'> & {
     questions: string[];
 };
 
-export type Assessment = NewAssessment & {
+export type Assessment = Omit<NewAssessment, 'questions'> & {
     id: string;
     createdAt: Date;
     owner: User;
+    questions: Map<string, Question>;
+    deleted: boolean;
+    updatedAt: Date;
 };
