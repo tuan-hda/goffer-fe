@@ -32,6 +32,8 @@ const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className, onDe
                 } catch (error) {
                     console.log('Fetch file error:', error);
                 }
+            } else {
+                setFile(null);
             }
         })();
     }, [fileUrl]);

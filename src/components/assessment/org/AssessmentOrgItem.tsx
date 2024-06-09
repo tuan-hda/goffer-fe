@@ -9,31 +9,28 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
+import { DialogTrigger } from '@/components/ui/dialog';
 import { Assessment } from '@/types/assessment.type';
+import { Link, useNavigate } from 'react-router-dom';
+import AssessmentOrgItemDelete from './AssessmentOrgItemDelete';
 
 type AssessmentOrgItemProps = {
     assessment: Assessment;
 };
 
 const AssessmentOrgItem = ({ assessment }: AssessmentOrgItemProps) => {
+    const navigate = useNavigate();
+
     return (
-        <div className="group relative">
-            <div className="aspect-video overflow-hidden rounded-2xl">
-                <img
-                    src={assessment.image || 'default-image-url.jpg'}
-                    alt={assessment.title}
-                    className="h-full w-full object-cover"
-                />
+        <div onClick={() => navigate(assessment.id)} className="group relative cursor-pointer">
+            <div className="aspect-video overflow-hidden rounded-2xl shadow-small">
+                {assessment.image ? (
+                    <img src={assessment.image} alt={assessment.title} className="h-full w-full object-cover" />
+                ) : (
+                    <div className="flex h-full w-full items-center justify-center rounded-2xl">
+                        <p className="font-mono text-2xl">Assessment</p>
+                    </div>
+                )}
             </div>
             <div className="mt-3 flex items-center gap-3">
                 <Avatar src={assessment.owner.avatar || 'default-avatar-url.jpg'} />
@@ -44,8 +41,11 @@ const AssessmentOrgItem = ({ assessment }: AssessmentOrgItemProps) => {
                     </p>
                 </div>
             </div>
-            <div className="pointer-events-none absolute -bottom-2 right-0 opacity-0 transition group-hover:pointer-events-auto group-hover:opacity-100">
-                <Dialog>
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className="pointer-events-none absolute -bottom-2 right-0 opacity-0 transition group-hover:pointer-events-auto group-hover:opacity-100"
+            >
+                <AssessmentOrgItemDelete id={assessment.id}>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button size="icon" variant="link" className="text-black">
@@ -55,8 +55,10 @@ const AssessmentOrgItem = ({ assessment }: AssessmentOrgItemProps) => {
                         <DropdownMenuContent>
                             <DropdownMenuLabel>Options</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <TbReport className="mr-2" /> View results
+                            <DropdownMenuItem asChild>
+                                <Link to={assessment.id + '/results'}>
+                                    <TbReport className="mr-2" /> View results
+                                </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <TbCopy className="mr-2" /> Duplicate
@@ -70,26 +72,7 @@ const AssessmentOrgItem = ({ assessment }: AssessmentOrgItemProps) => {
                             </DialogTrigger>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Are you absolutely sure?</DialogTitle>
-                            <DialogDescription>
-                                This action cannot be undone. This will permanently delete the assessment and all the
-                                results in it.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <DialogFooter className="justify-end">
-                            <DialogClose asChild>
-                                <Button type="button" variant="outline">
-                                    Close
-                                </Button>
-                            </DialogClose>
-                            <Button type="button" variant="destructive">
-                                Delete
-                            </Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
+                </AssessmentOrgItemDelete>
             </div>
         </div>
     );

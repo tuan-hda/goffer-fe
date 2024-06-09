@@ -1,5 +1,6 @@
 import AssessmentBuilderContent from '@/components/assessment/assessmentBuilder/AssessmentBuilderContent';
 import AssessmentBuilderHeader from '@/components/assessment/assessmentBuilder/AssessmentBuilderHeader';
+import useGetCurrAssessment from '@/hooks/useGetCurrAssessment';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { TbAtom, TbFlower } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const AssessmentCreate = () => {
     const navigate = useNavigate();
     const { domain } = useParams();
+    const { data } = useGetCurrAssessment();
 
     return (
         <div className="px-6 py-5 text-sm">
@@ -17,6 +19,7 @@ const AssessmentCreate = () => {
                 <BreadcrumbItem>
                     <TbFlower className="text-lg" /> Builder
                 </BreadcrumbItem>
+                {data && <BreadcrumbItem>{data.title}</BreadcrumbItem>}
             </Breadcrumbs>
             <div className="pt-5">
                 <AssessmentBuilderHeader />

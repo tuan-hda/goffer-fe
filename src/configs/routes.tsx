@@ -61,6 +61,8 @@ import { OrgDetail } from '@/components/orgDetail';
 import DrawRectangle from '@/components/canvas/DrawRectangle';
 import AssessmentOrg from '@/pages/AssessmentOrg';
 import AssessmentCreate from '@/pages/AssessmentCreate';
+import AssessmentResult from '@/pages/AssessmentResult';
+import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
 
 const routesConfig: RouteObject[] = [
     {
@@ -176,15 +178,25 @@ const routesConfig: RouteObject[] = [
                     },
                     {
                         path: '/app/organization/:domain/assessment',
-                        element: <AssessmentOrg />,
-                    },
-                    {
-                        path: '/app/organization/:domain/assessment/:id',
-                        element: <AssessmentCreate />,
-                    },
-                    {
-                        path: '/app/organization/:domain/assessment/builder',
-                        element: <AssessmentCreate />,
+                        element: <AssessmentOrgLayout />,
+                        children: [
+                            {
+                                index: true,
+                                element: <AssessmentOrg />,
+                            },
+                            {
+                                path: '/app/organization/:domain/assessment/builder',
+                                element: <AssessmentCreate />,
+                            },
+                            {
+                                path: '/app/organization/:domain/assessment/:id',
+                                element: <AssessmentCreate />,
+                            },
+                            {
+                                path: '/app/organization/:domain/assessment/:id/results',
+                                element: <AssessmentResult />,
+                            },
+                        ],
                     },
                     {
                         path: '/app/organization/:domain/bank',
