@@ -1,6 +1,7 @@
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { behavioralCategory } from '@/data/categories';
 import useNewQuestionStore from '@/stores/newQuestionStore';
 import { NewQuestion } from '@/types/question.type';
 import { TbMicrophone2, TbVideo } from 'react-icons/tb';
@@ -42,15 +43,11 @@ const QuestionBehavioralForm = () => {
                             <SelectValue placeholder="Category" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="behavioral">Behavioral</SelectItem>
-                            <SelectItem value="technical">Technical</SelectItem>
-                            <SelectItem value="design">Design</SelectItem>
-                            <SelectItem value="experience">Experience</SelectItem>
-                            <SelectItem value="motivation">Motivation</SelectItem>
-                            <SelectItem value="communication">Communication</SelectItem>
-                            <SelectItem value="opinion">Opinion</SelectItem>
-                            <SelectItem value="performance-based">Performance-based</SelectItem>
-                            <SelectItem value="brainteaser">Brainteaser</SelectItem>
+                            {behavioralCategory.map((category) => (
+                                <SelectItem value={category.value} key={category.value}>
+                                    {category.label}
+                                </SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
                 </div>
