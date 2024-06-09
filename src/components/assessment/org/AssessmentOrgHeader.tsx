@@ -8,7 +8,7 @@ import { TbSearch, TbX } from 'react-icons/tb';
 import { Link, useSearchParams } from 'react-router-dom';
 
 const AssessmentOrgHeader = () => {
-    const { data } = useListOrgAssessment({ populate: 'owner' });
+    const { data, refetch } = useListOrgAssessment({ populate: 'owner' });
     const [searchParams, setSearchParams] = useSearchParams();
     const [value, setValue] = useState('');
 
@@ -62,7 +62,13 @@ const AssessmentOrgHeader = () => {
                     </SelectContent>
                 </Select>
 
-                <Button variant="outline">
+                <Button
+                    onClick={() => {
+                        setSearchParams({});
+                        setValue('');
+                    }}
+                    variant="outline"
+                >
                     <TbX className="mr-2" /> Clear filter
                 </Button>
             </div>

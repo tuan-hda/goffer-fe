@@ -12,9 +12,7 @@ const AssessmentOrgList = () => {
     });
 
     useEffect(() => {
-        if (searchParams.has('search')) {
-            refetch();
-        }
+        refetch();
     }, [searchParams]);
 
     if (isLoading) {
