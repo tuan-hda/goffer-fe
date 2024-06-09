@@ -32,6 +32,8 @@ const PersonCard = ({ data }: Props) => {
         }
     };
 
+    const onSaved = async () => {};
+
     return (
         <Card className="rounded-3xl shadow-none">
             <CardContent className="-mx-[20px] pb-0 pt-1">
@@ -83,7 +85,12 @@ const PersonCard = ({ data }: Props) => {
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant="outline" className="h-8 w-8 rounded-full" size="icon">
+                            <Button
+                                onClick={onSaved}
+                                variant={data.saved ? 'black' : 'outline'}
+                                className="h-8 w-8 rounded-full"
+                                size="icon"
+                            >
                                 <TbBookmarks className="text-base" />
                             </Button>
                         </TooltipTrigger>

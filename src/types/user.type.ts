@@ -19,6 +19,7 @@ export type User = {
     resume?: string;
     education?: Education[];
     experiences?: Experience[];
+    saved?: boolean;
 };
 
 export type Education = {
