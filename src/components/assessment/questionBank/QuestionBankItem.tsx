@@ -12,7 +12,6 @@ import QuestionBankItemMCQ from './QuestionBankItemMCQ';
 import { QUESTION_TYPE, Question } from '@/types/question.type';
 import QuestionBankItemCoding from './QuestionBankItemCoding';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useState } from 'react';
 import QuestionBankItemBehavioral from './QuestionBankItemBehavioral';
 import { sentenceCase } from '@/utils/string';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,6 +19,8 @@ import { DialogTrigger } from '@/components/ui/dialog';
 import QuestionBankDelete from './QuestionBankDelete';
 import { Avatar } from '@nextui-org/react';
 import moment from 'moment';
+import useNewAssessmentStore from '@/stores/newAssessmentStore';
+import { shallow } from 'zustand/shallow';
 
 type QuestionBankItemProps = {
     type: QUESTION_TYPE;
@@ -41,8 +42,22 @@ const difficultyMap = {
 
 const QuestionBankItem = ({ type, mode = 'normal', data }: QuestionBankItemProps) => {
     const Component = typeMap[type || 'mcq'];
-    const [selected, setSelected] = useState(false);
     const navigate = useNavigate();
+    const [assessment, setAssessment] = useNewAssessmentStore(
+        (state) => [state.assessment, state.setAssessment],
+        shallow,
+    );
+
+    const selected = assessment.questions.has(data.id);
+    const setSelected = (value: boolean) => {
+        const questions = new Map(assessment.questions);
+        if (value) {
+            questions.set(data.id, data);
+        } else {
+            questions.delete(data.id);
+        }
+        setAssessment({ ...assessment, questions });
+    };
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (mode === 'pick') {

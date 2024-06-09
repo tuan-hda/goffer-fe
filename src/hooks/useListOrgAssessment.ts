@@ -1,14 +1,14 @@
-import { listQuestionsService } from '@/services/question.service';
 import { ListQueryOptions } from '@/types/common.type';
-import { Question } from '@/types/question.type';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import useCurrOrganization from './useCurrOrganization';
+import { Assessment } from '@/types/assessment.type';
+import { listAssessmentsService } from '@/services/assessment.service';
 
-const useListOrgQuestions = (query?: Partial<Record<keyof (Question & ListQueryOptions), string>>) => {
+const useListOrgAssessment = (query?: Partial<Record<keyof (Assessment & ListQueryOptions), string>>) => {
     const [searchParams] = useSearchParams();
     const search = searchParams.get('search') || '';
-    const difficulty = searchParams.get('difficulty') || '';
+    const type = searchParams.get('type') || 'mcq';
 
     const queryKey = query || {};
     const { data } = useCurrOrganization();
@@ -17,17 +17,17 @@ const useListOrgQuestions = (query?: Partial<Record<keyof (Question & ListQueryO
         queryKey.org = data?.id;
     }
 
+    queryKey.type = type;
+
     const actualQuery = {
-        ...(difficulty && { difficulty }),
         ...queryKey,
         ...(search && { search }),
     };
 
     return useQuery({
-        queryKey: ['listOrgQuestions', queryKey],
-        queryFn: async () => listQuestionsService(actualQuery),
-        staleTime: 1000,
+        queryKey: ['listOrgAssessments', queryKey],
+        queryFn: async () => listAssessmentsService(actualQuery),
     });
 };
 
-export default useListOrgQuestions;
+export default useListOrgAssessment;

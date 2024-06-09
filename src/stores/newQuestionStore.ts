@@ -87,7 +87,7 @@ const useNewQuestionStore = create<State & Action>()(
         getProcessedQuestion(type) {
             const question = { ...get().questions[type] };
             Object.keys(question).forEach((key) => {
-                if (!question[key as keyof NewQuestion]) {
+                if (!question[key as keyof NewQuestion] && key !== 'image') {
                     delete question[key as keyof NewQuestion];
                 }
             });

@@ -179,6 +179,10 @@ const routesConfig: RouteObject[] = [
                         element: <AssessmentOrg />,
                     },
                     {
+                        path: '/app/organization/:domain/assessment/:id',
+                        element: <AssessmentCreate />,
+                    },
+                    {
                         path: '/app/organization/:domain/assessment/builder',
                         element: <AssessmentCreate />,
                     },
