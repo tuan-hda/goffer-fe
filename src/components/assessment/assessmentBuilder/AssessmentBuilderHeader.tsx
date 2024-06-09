@@ -1,14 +1,5 @@
 import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
+import { DialogTrigger } from '@/components/ui/dialog';
 import useCurrOrganization from '@/hooks/useCurrOrganization';
 import useGetCurrAssessment from '@/hooks/useGetCurrAssessment';
 import useListOrgAssessment from '@/hooks/useListOrgAssessment';
@@ -17,10 +8,11 @@ import useNewAssessmentStore from '@/stores/newAssessmentStore';
 import catchAsync from '@/utils/catchAsync';
 import _ from 'lodash';
 import { useState } from 'react';
-import { TbLoader, TbTrash } from 'react-icons/tb';
+import { TbLoader, TbReport, TbTrash } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
 import AssessmentOrgItemDelete from '../org/AssessmentOrgItemDelete';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const AssessmentBuilderHeader = () => {
     const [loading, setLoading] = useState(false);
@@ -73,9 +65,20 @@ const AssessmentBuilderHeader = () => {
                 <h1 className="mr-auto text-2xl">Assessment Builder</h1>
                 {!!data && (
                     <>
-                        <Link to="results" className="hover:underline">
-                            Results
-                        </Link>
+                        <p className="mr-2 text-gray-500">This assessment not linked to a job yet.</p>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <Link to="results" className="hover:underline">
+                                        <TbReport className="text-lg" />
+                                    </Link>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Add to library</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+
                         <AssessmentOrgItemDelete>
                             <DialogTrigger asChild>
                                 <Button size="icon" variant="ghost">

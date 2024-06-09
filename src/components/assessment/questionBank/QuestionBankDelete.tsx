@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import catchAsync from '@/utils/catchAsync';
 import { deleteQuestionService } from '@/services/question.service';
 import { TbLoader } from 'react-icons/tb';
-import { useNavigate, useParams } from 'react-router-dom';
+import { matchRoutes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { QUESTION_TYPE } from '@/types/question.type';
 import useListOrgQuestions from '@/hooks/useListOrgQuestions';
 
@@ -27,6 +27,7 @@ const QuestionBankDelete = ({ children, id, type }: QuestionBankDeleteProps) => 
     const navigate = useNavigate();
     const { domain } = useParams();
     const { refetch } = useListOrgQuestions({ type, populate: 'author' });
+    const location = useLocation();
 
     const deleteQuestion = () =>
         catchAsync(
@@ -35,7 +36,17 @@ const QuestionBankDelete = ({ children, id, type }: QuestionBankDeleteProps) => 
                     setLoading(true);
                     await deleteQuestionService(id);
                     await refetch();
-                    navigate(`/app/organization/${domain}/bank`);
+                    if (
+                        !matchRoutes(
+                            [
+                                {
+                                    path: '/app/organization/:domain/job/:id/questions',
+                                },
+                            ],
+                            location.pathname,
+                        )?.at(0)
+                    )
+                        navigate(`/app/organization/${domain}/bank`);
                 }
             },
             () => {

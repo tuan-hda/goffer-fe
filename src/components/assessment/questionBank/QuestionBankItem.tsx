@@ -14,7 +14,7 @@ import QuestionBankItemCoding from './QuestionBankItemCoding';
 import { Checkbox } from '@/components/ui/checkbox';
 import QuestionBankItemBehavioral from './QuestionBankItemBehavioral';
 import { sentenceCase } from '@/utils/string';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DialogTrigger } from '@/components/ui/dialog';
 import QuestionBankDelete from './QuestionBankDelete';
 import { Avatar } from '@nextui-org/react';
@@ -47,6 +47,7 @@ const QuestionBankItem = ({ type, mode = 'normal', data }: QuestionBankItemProps
         (state) => [state.assessment, state.setAssessment],
         shallow,
     );
+    const { domain } = useParams();
 
     const selected = assessment.questions.has(data.id);
     const setSelected = (value: boolean) => {
@@ -80,9 +81,9 @@ const QuestionBankItem = ({ type, mode = 'normal', data }: QuestionBankItemProps
                 </div>
                 <div className="mt-2 flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
                     <span className="text-[13px]">Created by</span>
-                    <Avatar src={data.author?.avatar} className="h-5 w-5" />
+                    <Avatar src={data.author?.avatar} className="h-5 w-5 flex-shrink-0" />
                     <span>{data.author?.name}</span>
-                    <span>{moment(data.createdAt).fromNow()}</span>
+                    <span className="truncate">{moment(data.createdAt).fromNow()}</span>
                 </div>
             </div>
             <div className="-mx-5 my-4 border-t"></div>
@@ -98,7 +99,7 @@ const QuestionBankItem = ({ type, mode = 'normal', data }: QuestionBankItemProps
                             <DropdownMenuLabel>Question</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem asChild>
-                                <Link to={data.id}>
+                                <Link to={`/app/organization/${domain}/bank/${data.id}`}>
                                     <TbPencil className="mr-2" /> Edit
                                 </Link>
                             </DropdownMenuItem>
