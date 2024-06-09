@@ -13,9 +13,10 @@ type UploadProps = {
     className?: string;
     showingImage?: boolean;
     directUpload?: boolean;
+    onDelete?: () => void;
 };
 
-const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className }: UploadProps) => {
+const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className, onDelete }: UploadProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
@@ -138,7 +139,10 @@ const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className }: Up
                             src={URL.createObjectURL(file)}
                         />
                         <Button
-                            onClick={() => setFile(null)}
+                            onClick={() => {
+                                setFile(null);
+                                onDelete && onDelete();
+                            }}
                             variant="outline"
                             className="absolute right-2 top-2 opacity-80"
                             size="icon"

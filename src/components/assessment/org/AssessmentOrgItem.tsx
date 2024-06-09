@@ -19,20 +19,29 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import { Assessment } from '@/types/assessment.type';
 
-const AssessmentOrgItem = () => {
+type AssessmentOrgItemProps = {
+    assessment: Assessment;
+};
+
+const AssessmentOrgItem = ({ assessment }: AssessmentOrgItemProps) => {
     return (
         <div className="group relative">
             <div className="aspect-video overflow-hidden rounded-2xl">
-                <div className="h-full w-full bg-black" />
+                <img
+                    src={assessment.image || 'default-image-url.jpg'}
+                    alt={assessment.title}
+                    className="h-full w-full object-cover"
+                />
             </div>
             <div className="mt-3 flex items-center gap-3">
-                <Avatar src="http://res.cloudinary.com/doxsstgkc/image/upload/v1714386131/goffer/ig8lpaodzrhtwzzkdaj3.jpg" />
+                <Avatar src={assessment.owner.avatar || 'default-avatar-url.jpg'} />
                 <div className="min-w-0 flex-1">
-                    <p className="overflow-hidden text-ellipsis whitespace-nowrap">
-                        Mastering ReactJS: An Intermediate Quiz
+                    <p className="overflow-hidden text-ellipsis whitespace-nowrap">{assessment.title}</p>
+                    <p className="text-xs font-light text-gray-400">
+                        {new Date(assessment.createdAt).toLocaleString()}
                     </p>
-                    <p className="text-xs font-light text-gray-400">35 minutes ago</p>
                 </div>
             </div>
             <div className="pointer-events-none absolute -bottom-2 right-0 opacity-0 transition group-hover:pointer-events-auto group-hover:opacity-100">

@@ -65,6 +65,7 @@ const MCQBasic = () => {
                 <Upload
                     showingImage
                     directUpload
+                    onDelete={() => setQuestion((prev) => ({ ...prev, image: '' }))}
                     fileUrl={question.image}
                     onAttach={(url) => setQuestion((prev) => ({ ...prev, image: url }))}
                 />
