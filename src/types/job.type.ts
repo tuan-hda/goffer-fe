@@ -1,4 +1,5 @@
 import { Organization } from './organization.type';
+import { Question } from './question.type';
 import { User } from './user.type';
 
 export type NewJob = {
@@ -26,6 +27,13 @@ export type Job = Omit<NewJob, 'org'> & {
     updatedAt: string;
     publicLink: string;
     org: Organization;
+    questions: Map<string, Question>;
+    hasFeedback?: boolean;
+    saved?: boolean;
+};
+
+export type JobResponse = Omit<Job, 'questions'> & {
+    questions: Question[];
 };
 
 export type IndividualJob = Job & {

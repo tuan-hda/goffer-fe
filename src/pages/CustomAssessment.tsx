@@ -9,7 +9,7 @@ type FeedbackQuestion = {
     editable?: boolean;
 };
 
-const CustomFeedback = () => {
+const CustomAssessment = () => {
     const [data, setData] = useSetupJobStore((state) => [state.data, state.setData], shallow);
 
     const switched = data.hasFeedback;
@@ -19,10 +19,8 @@ const CustomFeedback = () => {
 
     return (
         <div className="w-full text-sm">
-            <h1 className="text-3xl">Custom Feedback</h1>
-            <p className="mb-6 mt-2 text-text/70">
-                Applicants have option to submit a feedback for the hiring process experience.{' '}
-            </p>
+            <h1 className="text-3xl">Custom Assessments (optional)</h1>
+            <p className="mb-6 mt-2 text-text/70">Add assessments to evaluate the candidate's skills and knowledge. </p>
             <Label className="flex items-center gap-2">
                 <Switch checked={switched} onCheckedChange={setSwitched} /> Enable feedbacks
             </Label>
@@ -42,4 +40,4 @@ const CustomFeedback = () => {
     );
 };
 
-export default CustomFeedback;
+export default CustomAssessment;

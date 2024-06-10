@@ -63,6 +63,7 @@ import AssessmentOrg from '@/pages/AssessmentOrg';
 import AssessmentCreate from '@/pages/AssessmentCreate';
 import AssessmentResult from '@/pages/AssessmentResult';
 import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
+import CustomAssessment from '@/pages/CustomAssessment';
 
 const routesConfig: RouteObject[] = [
     {
@@ -239,6 +240,10 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/organization/:domain/job/:id/custom-feedback',
                                 element: <CustomFeedback />,
+                            },
+                            {
+                                path: '/app/organization/:domain/job/:id/custom-assessment',
+                                element: <CustomAssessment />,
                             },
                             {
                                 path: '/app/organization/:domain/job/:id/finalize',

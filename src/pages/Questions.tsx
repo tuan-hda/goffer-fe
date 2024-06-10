@@ -9,15 +9,34 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import useCreateQuestionBehavioral from '@/hooks/useCreateQuestionBehavioral';
+import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import useListOrgQuestions from '@/hooks/useListOrgQuestions';
+import useNewAssessmentStore from '@/stores/newAssessmentStore';
 import { Image } from '@nextui-org/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
+import { useParams } from 'react-router-dom';
+import { shallow } from 'zustand/shallow';
 
 const Questions = () => {
     const { create, loading } = useCreateQuestionBehavioral(true);
     const [open, setOpen] = useState(false);
     const { data: mcq } = useListOrgQuestions({ type: 'behavioral', populate: 'author' });
+    const { id } = useParams();
+    const { data } = useGetOrganizationJob(id!);
+    const [assessment, setAssessment] = useNewAssessmentStore(
+        (state) => [state.assessment, state.setAssessment],
+        shallow,
+    );
+
+    useEffect(() => {
+        if (data) {
+            setAssessment((state) => ({
+                ...state,
+                questions: data.questions,
+            }));
+        }
+    }, [data]);
 
     const handleSubmit = async () => {
         await create(() => {
@@ -29,7 +48,7 @@ const Questions = () => {
         <div className="flex-1 text-sm">
             <div className="flex items-start justify-between">
                 <div>
-                    <h1 className="text-3xl">Questions</h1>
+                    <h1 className="text-3xl">Questions ({assessment.questions.size})</h1>
                     <p className="mt-2 text-sm text-text/70">Add question to evaluate candidates.</p>
                 </div>
 
