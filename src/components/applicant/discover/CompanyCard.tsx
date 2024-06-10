@@ -1,32 +1,34 @@
 /* eslint-disable import/named */
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Organization } from '@/types/organization.type';
 import { Avatar } from '@nextui-org/react';
 import Color from 'color-thief-react';
 import { useNavigate } from 'react-router-dom';
 
-const CompanyCard = () => {
+interface Props {
+    data: Organization;
+}
+
+const CompanyCard = ({ data }: Props) => {
+    console.log('🚀 ~ file: CompanyCard.tsx:14 ~ CompanyCard ~ data:', JSON.stringify(data));
     const navigate = useNavigate();
     const onClick = () => {
-        navigate('/app/org/_orgid');
+        navigate(`/app/org/${data.domain}`);
     };
     return (
         <Card onClick={onClick} className="rounded-3xl text-sm shadow-none">
             <CardContent className="-mx-[20px] pb-0 pt-1">
-                <Color
-                    format="hex"
-                    crossOrigin="anonymous"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/WorldQuant_Text_Logo_2022.jpg/640px-WorldQuant_Text_Logo_2022.jpg"
-                >
-                    {({ data, loading, error }) => {
-                        console.log('data', data);
+                <Color format="hex" crossOrigin="anonymous" src={data.logo}>
+                    {({ data: color, loading, error }) => {
+                        console.log('data', color);
                         console.log('loading', loading);
                         console.log('error', error);
                         return (
                             <div
                                 className="flex flex-col rounded-[22px] px-4 pb-6 pt-3"
                                 style={{
-                                    background: data ? `${data}33` : '#fff',
+                                    background: color ? `${color}33` : '#fff',
                                 }}
                             >
                                 <p className="mb-3 mt-1 text-[13px] text-gray-500">
