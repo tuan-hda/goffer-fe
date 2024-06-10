@@ -9,17 +9,34 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import useCreateQuestionBehavioral from '@/hooks/useCreateQuestionBehavioral';
+import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import useListOrgQuestions from '@/hooks/useListOrgQuestions';
 import useNewAssessmentStore from '@/stores/newAssessmentStore';
 import { Image } from '@nextui-org/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
+import { useParams } from 'react-router-dom';
+import { shallow } from 'zustand/shallow';
 
 const Questions = () => {
     const { create, loading } = useCreateQuestionBehavioral(true);
     const [open, setOpen] = useState(false);
     const { data: mcq } = useListOrgQuestions({ type: 'behavioral', populate: 'author' });
-    const assessment = useNewAssessmentStore((state) => state.assessment);
+    const { id } = useParams();
+    const { data } = useGetOrganizationJob(id!);
+    const [assessment, setAssessment] = useNewAssessmentStore(
+        (state) => [state.assessment, state.setAssessment],
+        shallow,
+    );
+
+    useEffect(() => {
+        if (data) {
+            setAssessment((state) => ({
+                ...state,
+                questions: data.questions,
+            }));
+        }
+    }, [data]);
 
     const handleSubmit = async () => {
         await create(() => {

@@ -53,6 +53,14 @@ export const updateJobService = async (id: string, data: Partial<Job>) => {
         ...data,
         questions: Array.from(data.questions?.values() || []).map((question) => question.id),
     };
+    delete finalData.org;
+    delete finalData.owner;
+    delete finalData.createdAt;
+    delete finalData.updatedAt;
+    delete finalData.id;
+    delete finalData.publicLink;
+    delete finalData.saved;
+
     return (await baseAxios.patch<Job>(`/jobs/${id}`, finalData)).data;
 };
 

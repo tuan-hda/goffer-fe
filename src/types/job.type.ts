@@ -28,6 +28,8 @@ export type Job = Omit<NewJob, 'org'> & {
     publicLink: string;
     org: Organization;
     questions: Map<string, Question>;
+    hasFeedback?: boolean;
+    saved?: boolean;
 };
 
 export type JobResponse = Omit<Job, 'questions'> & {
