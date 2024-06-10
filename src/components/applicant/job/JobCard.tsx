@@ -5,10 +5,10 @@ import { MdOutlinePayments } from 'react-icons/md';
 import { GiDuration } from 'react-icons/gi';
 import useJobStore from '@/stores/jobStore';
 import { Badge } from '@/components/ui/badge';
-import { IndividualJob } from '@/types/job.type';
+import { Job } from '@/types/job.type';
 
 interface Props {
-    data: IndividualJob;
+    data: Job;
 }
 
 const JobCard = ({ data }: Props) => {

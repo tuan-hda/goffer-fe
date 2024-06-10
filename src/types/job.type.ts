@@ -26,11 +26,7 @@ export type Job = Omit<NewJob, 'org'> & {
     updatedAt: string;
     publicLink: string;
     org: Organization;
-};
-
-export type IndividualJob = Job & {
-    org: Organization;
-    owner?: User;
+    saved?: boolean;
 };
 
 export type JobQuery = Omit<Job, ''>;

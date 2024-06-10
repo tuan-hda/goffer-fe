@@ -1,4 +1,4 @@
-import { IndividualJob, Job, NewJob } from '@/types/job.type';
+import { Job, NewJob } from '@/types/job.type';
 import { baseAxios } from './base';
 import { List } from '@/types/list.type';
 import { User } from '@/types/user.type';
@@ -9,7 +9,7 @@ export const createJobService = async (data: NewJob) => {
 
 export const getIndividualJob = async () => {
     return (
-        await baseAxios.get<List<IndividualJob>>('/jobs/individual', {
+        await baseAxios.get<List<Job>>('/jobs', {
             params: {
                 populate: 'org,owner',
             },
