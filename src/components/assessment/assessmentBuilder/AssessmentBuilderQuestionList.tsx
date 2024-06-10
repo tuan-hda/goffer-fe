@@ -7,10 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import useListOrgQuestions from '@/hooks/useListOrgQuestions';
 
 const AssessmentBuilderQuestionList = () => {
-    const [assessment, setAssessment] = useNewAssessmentStore(
-        (state) => [state.assessment, state.setAssessment],
-        shallow,
-    );
+    const [assessment] = useNewAssessmentStore((state) => [state.assessment], shallow);
     const [searchParams] = useSearchParams();
     const { refetch: refetchMcq } = useListOrgQuestions({
         type: 'mcq',
@@ -30,10 +27,6 @@ const AssessmentBuilderQuestionList = () => {
             refetchCoding();
         }
     }, [searchParams]);
-
-    useEffect(() => {
-        setAssessment((state) => ({ ...state, questions: new Map() }));
-    }, [assessment.type]);
 
     if (assessment.type === 'mcq') {
         return <QuestionBankListMCQ mode="pick" />;

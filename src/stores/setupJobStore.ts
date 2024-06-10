@@ -1,9 +1,11 @@
+import { Assessment } from '@/types/assessment.type';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 type State = {
     data: {
         hasFeedback?: boolean;
+        assessments: Map<string, Assessment>;
     };
 };
 
@@ -13,6 +15,7 @@ type Action = {
 
 const initialData = {
     hasFeedback: false,
+    assessments: new Map(),
 };
 
 // Create your store, which includes both state and (optionally) actions

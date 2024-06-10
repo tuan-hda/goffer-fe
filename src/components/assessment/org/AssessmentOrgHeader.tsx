@@ -47,7 +47,7 @@ const AssessmentOrgHeader = () => {
                     <TbSearch className="absolute left-3 top-[10px]" />
                 </div>
                 <Select
-                    value={searchParams.get('type') || 'mcq'}
+                    value={searchParams.get('type') || 'all'}
                     onValueChange={(value) => {
                         searchParams.set('type', value);
                         setSearchParams(searchParams);
@@ -57,6 +57,7 @@ const AssessmentOrgHeader = () => {
                         <SelectValue placeholder="Type" />
                     </SelectTrigger>
                     <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
                         <SelectItem value="mcq">MCQ assessment</SelectItem>
                         <SelectItem value="coding">Coding assessment</SelectItem>
                     </SelectContent>
