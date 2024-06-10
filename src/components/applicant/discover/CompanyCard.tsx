@@ -11,7 +11,6 @@ interface Props {
 }
 
 const CompanyCard = ({ data }: Props) => {
-    console.log('🚀 ~ file: CompanyCard.tsx:14 ~ CompanyCard ~ data:', JSON.stringify(data));
     const navigate = useNavigate();
     const onClick = () => {
         navigate(`/app/org/${data.domain}`);
@@ -31,19 +30,10 @@ const CompanyCard = ({ data }: Props) => {
                                     background: color ? `${color}33` : '#fff',
                                 }}
                             >
-                                <p className="mb-3 mt-1 text-[13px] text-gray-500">
-                                    Tan Binh District, Ho Chi Minh City
-                                </p>
-                                <Avatar
-                                    className="h-16 w-16 bg-white"
-                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/WorldQuant_Text_Logo_2022.jpg/640px-WorldQuant_Text_Logo_2022.jpg"
-                                />
+                                <p className="mb-3 mt-1 text-[13px] text-gray-500">{data.location}</p>
+                                <Avatar className="h-16 w-16 bg-white" src={data.logo} />
                                 <p className="mt-4 text-lg font-medium">WorldQuant</p>
-                                <p className="lines-ellipsis mt-2 text-gray-600">
-                                    WorldQuant is a global quantitative asset management firm with over $7 billion in
-                                    assets under management. Founded in 2007 by Igor Tulchinsky with the belief that
-                                    talent is global, but opportunit
-                                </p>
+                                <p className="lines-ellipsis mt-2 text-gray-600">{data.description}</p>
                             </div>
                         );
                     }}

@@ -2,6 +2,7 @@ export type NewOrganization = {
     name: string;
     logo: string;
     field: string;
+    location: string;
     email: string;
     website: string;
     visibility: 'public' | 'private' | '';

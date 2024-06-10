@@ -49,6 +49,7 @@ const General = () => {
                     domain: curr.domain,
                     email: curr.email,
                     website: curr.website,
+                    location: curr.location,
                     description: curr.description,
                     logo: curr.logo,
                 });
@@ -152,6 +153,15 @@ const General = () => {
                         className="mt-1  bg-white"
                         id="website"
                         value={curr?.website || ''}
+                    />
+                </div>
+                <div className="mt-5">
+                    <label htmlFor="email">Location</label>
+                    <Input
+                        onChange={handleChange('location')}
+                        className="mt-1  bg-white"
+                        id="location"
+                        value={curr?.location || ''}
                     />
                 </div>
                 <div className="mt-5">
