@@ -84,10 +84,32 @@ const SideBar = ({ org }: SideBarProps) => {
     }, [sideBarPinned]);
 
     useEffect(() => {
-        client.getUnreadCount().then((res) => setUnread(res.total_unread_count));
+        const fetchUnreadCount = async () => {
+            const unreadCount = await client.getUnreadCount();
+            setUnread(unreadCount.total_unread_count);
+            console.log('fetch');
+        };
+
+        const handleEvent = (event: any) => {
+            if (
+                ['message.new', 'message.read', 'notification.message_new', 'notification.mark_read'].includes(
+                    event.type,
+                )
+            ) {
+                fetchUnreadCount();
+            }
+        };
+
+        client.on(handleEvent);
+
+        fetchUnreadCount();
+
+        return () => {
+            client.off(handleEvent);
+        };
     }, [client]);
 
-    const checkShowaEndContent = (item: Item) => {
+    const checkEndContent = (item: Item) => {
         switch (item.element.content) {
             case 'Messages':
                 return unread ? unread > 0 : false;
@@ -187,7 +209,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                             match={match}
                                             collapsed={collapsed}
                                             item={item}
-                                            showEndContent={checkShowaEndContent(item)}
+                                            isEndContent={checkEndContent(item)}
                                         />
                                     </Fragment>
                                 ))}
