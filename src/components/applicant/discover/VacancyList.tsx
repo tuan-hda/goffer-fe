@@ -37,7 +37,7 @@ const VacancyList = () => {
                                 <p className="mt-4 font-medium">{item.org.name}</p>
                                 <p className="mt-1 text-gray-500">{item.title}</p>
                                 <p className="mt-2 text-lg font-medium">
-                                    ${item.salaryFrom} - {item.salaryTo}
+                                    ${item.salaryFrom} - ${item.salaryTo}
                                 </p>
                                 <Button
                                     size="icon"
