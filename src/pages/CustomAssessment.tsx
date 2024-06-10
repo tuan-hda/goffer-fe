@@ -1,40 +1,24 @@
-import { FeedbackQuestion } from '@/components/jobDetail';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import useSetupJobStore from '@/stores/setupJobStore';
-import { shallow } from 'zustand/shallow';
-
-type FeedbackQuestion = {
-    content: string;
-    editable?: boolean;
-};
+import AssessmentList from '@/components/jobDetail/AssessmentList';
+import AssessmentListOrder from '@/components/jobDetail/AssessmentListOrder';
 
 const CustomAssessment = () => {
-    const [data, setData] = useSetupJobStore((state) => [state.data, state.setData], shallow);
-
-    const switched = data.hasFeedback;
-    const setSwitched = (hasFeedback: boolean) => {
-        setData((prev) => ({ ...prev, hasFeedback }));
-    };
-
     return (
         <div className="w-full text-sm">
-            <h1 className="text-3xl">Custom Assessments (optional)</h1>
-            <p className="mb-6 mt-2 text-text/70">Add assessments to evaluate the candidate's skills and knowledge. </p>
-            <Label className="flex items-center gap-2">
-                <Switch checked={switched} onCheckedChange={setSwitched} /> Enable feedbacks
-            </Label>
-            <div className="mx-auto mt-6 max-w-xl space-y-6">
-                {switched && (
-                    <>
-                        <FeedbackQuestion
-                            question="Are you satisfied with the overall interview experience?"
-                            size="text-lg"
-                            answers={['😡', '😔', '😐', '😊', '🥰']}
-                        />
-                        <FeedbackQuestion question="Would recommend the company to other job seekers?" />
-                    </>
-                )}
+            <div className="flex items-center">
+                <div>
+                    <h1 className="text-3xl">Custom Assessments (optional)</h1>
+                    <p className="mb-6 mt-2 text-text/70">
+                        Add assessments to evaluate the candidate's skills and knowledge.{' '}
+                    </p>
+                </div>
+            </div>
+
+            <div className="mx-auto">
+                <p className="text-base font-semibold">Selected assessment</p>
+                <AssessmentListOrder />
+                <div className="my-14 border-t"></div>
+                <p className="text-base font-semibold">Your assessments</p>
+                <AssessmentList />
             </div>
         </div>
     );

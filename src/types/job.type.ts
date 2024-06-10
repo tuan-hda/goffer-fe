@@ -1,3 +1,4 @@
+import { Assessment } from './assessment.type';
 import { Organization } from './organization.type';
 import { Question } from './question.type';
 import { User } from './user.type';
@@ -30,10 +31,17 @@ export type Job = Omit<NewJob, 'org'> & {
     questions: Map<string, Question>;
     hasFeedback?: boolean;
     saved?: boolean;
+    assessments?: Map<string, Assessment>;
+};
+
+export type UpdateJobRequest = Omit<Job, 'questions' | 'assessments'> & {
+    questions?: string[];
+    assessments?: string[];
 };
 
 export type JobResponse = Omit<Job, 'questions'> & {
     questions: Question[];
+    assessments: Assessment[];
 };
 
 export type IndividualJob = Job & {

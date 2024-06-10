@@ -33,7 +33,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
         const routes = [
             { path: '/app/organization/:domain/job/:id/questions' },
             { path: '/app/organization/:domain/job/:id/custom-feedback' },
-            { path: '/app/organization/:domain/job/:id/finalize' },
+            { path: '/app/organization/:domain/job/:id/custom-assessment' },
         ];
         const matches = matchRoutes(routes, location);
         routes.forEach((route, index) => {
@@ -72,7 +72,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
         } else {
             setStep(4);
             setMaxStep(4);
-            navigate(`/app/organization/${domain}/job/${id}/finalize`);
+            navigate(`/app/organization/${domain}/job/${id}/custom-assessment`);
         }
     }, [data]);
 
@@ -96,9 +96,11 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
             await updateJob({ questions: assessment.questions });
         } else if (step === 3) {
             await updateJob({
-                ...data,
                 hasFeedback: setupJob.hasFeedback,
             });
+        } else {
+            await updateJob({ assessments: setupJob.assessments });
+            navigate(`/app/organization/${domain}/job/${id}`);
         }
         await refetch();
     };
@@ -107,6 +109,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
         setSetupJob((prev) => ({
             ...prev,
             hasFeedback: data?.hasFeedback,
+            assessments: data?.assessments || new Map(),
         }));
     }, [data]);
 
@@ -181,24 +184,6 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
                                     {step > 4 ? <TbCheck /> : 4}
                                 </div>
                                 <p>Custom assessment</p>
-                            </Link>
-                            <div className="ml-[10px] h-6 border-l" />
-                            <Link
-                                to={`/app/organization/${domain}/job/${id}/finalize`}
-                                className={classNames('flex items-center gap-4', maxStep < 5 && 'pointer-events-none')}
-                            >
-                                <div
-                                    className={classNames(
-                                        'flex h-5 w-5 items-center justify-center rounded-full text-xs',
-                                        {
-                                            'bg-black text-white': step >= 5,
-                                            'border bg-white': step < 5,
-                                        },
-                                    )}
-                                >
-                                    {step > 5 ? <TbCheck /> : 5}
-                                </div>
-                                <p>Finalize</p>
                             </Link>
                         </CardContent>
                     </Card>

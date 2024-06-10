@@ -9,7 +9,7 @@ import catchAsync from '@/utils/catchAsync';
 import _ from 'lodash';
 import { useState } from 'react';
 import { TbLoader, TbReport, TbTrash } from 'react-icons/tb';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
 import AssessmentOrgItemDelete from '../org/AssessmentOrgItemDelete';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -21,7 +21,9 @@ const AssessmentBuilderHeader = () => {
     const { refetch } = useListOrgAssessment({
         populate: 'owner',
     });
-    const { data } = useGetCurrAssessment();
+    const { data, refetch: refetchCurr } = useGetCurrAssessment();
+    const navigate = useNavigate();
+    const { domain } = useParams();
 
     const create = () =>
         catchAsync(
@@ -29,6 +31,7 @@ const AssessmentBuilderHeader = () => {
                 setLoading(true);
                 await createAssessmentService({ ...assessment, org: dataOrg?.id! });
                 await refetch();
+                navigate(`/app/organization/${domain}/assessment`);
             },
             () => {
                 setLoading(false);
@@ -45,6 +48,7 @@ const AssessmentBuilderHeader = () => {
                     ...assessment,
                 });
                 await refetch();
+                await refetchCurr();
             },
             () => {
                 setLoading(false);
