@@ -1,7 +1,8 @@
-import { IndividualJob, Job, NewJob } from '@/types/job.type';
+import { IndividualJob, Job, JobResponse, NewJob } from '@/types/job.type';
 import { baseAxios } from './base';
 import { List } from '@/types/list.type';
 import { User } from '@/types/user.type';
+import { Question } from '@/types/question.type';
 
 export const createJobService = async (data: NewJob) => {
     return (await baseAxios.post<Job>('/jobs', data)).data;
@@ -38,5 +39,23 @@ export const getSourcingService = async (id: string, page?: number) => {
 };
 
 export const getJobService = async (id: string) => {
-    return (await baseAxios.get<Job>(`/jobs/${id}`)).data;
+    const response = (await baseAxios.get<JobResponse>(`/jobs/${id}`)).data;
+    const questionsMap = new Map(response.questions.map((question: Question) => [question.id, question]));
+    const finalResponse: Job = {
+        ...response,
+        questions: questionsMap,
+    };
+    return finalResponse;
+};
+
+export const updateJobService = async (id: string, data: Partial<Job>) => {
+    const finalData = {
+        ...data,
+        questions: Array.from(data.questions?.values() || []).map((question) => question.id),
+    };
+    return (await baseAxios.patch<Job>(`/jobs/${id}`, finalData)).data;
+};
+
+export const deleteJobService = async (id: string) => {
+    return (await baseAxios.delete<Job>(`/jobs/${id}`)).data;
 };

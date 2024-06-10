@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import useCreateQuestionBehavioral from '@/hooks/useCreateQuestionBehavioral';
 import useListOrgQuestions from '@/hooks/useListOrgQuestions';
+import useNewAssessmentStore from '@/stores/newAssessmentStore';
 import { Image } from '@nextui-org/react';
 import { useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
@@ -18,6 +19,7 @@ const Questions = () => {
     const { create, loading } = useCreateQuestionBehavioral(true);
     const [open, setOpen] = useState(false);
     const { data: mcq } = useListOrgQuestions({ type: 'behavioral', populate: 'author' });
+    const assessment = useNewAssessmentStore((state) => state.assessment);
 
     const handleSubmit = async () => {
         await create(() => {
@@ -29,7 +31,7 @@ const Questions = () => {
         <div className="flex-1 text-sm">
             <div className="flex items-start justify-between">
                 <div>
-                    <h1 className="text-3xl">Questions</h1>
+                    <h1 className="text-3xl">Questions ({assessment.questions.size})</h1>
                     <p className="mt-2 text-sm text-text/70">Add question to evaluate candidates.</p>
                 </div>
 

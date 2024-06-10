@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link, matchRoutes, useLocation, useParams } from 'react-router-dom';
-import { TbCheck } from 'react-icons/tb';
+import { TbCheck, TbLoader } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import classNames from 'classnames';
+import useNewAssessmentStore from '@/stores/newAssessmentStore';
+import catchAsync from '@/utils/catchAsync';
+import { updateJobService } from '@/services/jobs.service';
+import { Job } from '@/types/job.type';
 
 type OrgDetailLayoutProps = {
     children: React.ReactNode;
@@ -13,7 +17,10 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
     const [finished, setFinished] = useState(true);
     const { domain, id } = useParams();
     const [step, setStep] = useState(2);
+    const [loading, setLoading] = useState(false);
     const location = useLocation();
+
+    const assessment = useNewAssessmentStore((state) => state.assessment);
 
     useEffect(() => {
         const routes = [
@@ -28,6 +35,38 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
             }
         });
     }, [location]);
+
+    const checkDisabled = () => {
+        if (loading) return true;
+        if (step === 2) {
+            if (assessment.questions.size > 0) return false;
+            return true;
+        }
+        if (step === 3) {
+            return false;
+        }
+        if (step === 4) {
+            return false;
+        }
+        return true;
+    };
+
+    const updateJob = (data: Partial<Job>) =>
+        catchAsync(
+            async () => {
+                setLoading(true);
+                await updateJobService(id!, data);
+            },
+            () => {
+                setLoading(false);
+            },
+        );
+
+    const handleClick = () => {
+        if (step === 2) {
+            updateJob({ questions: assessment.questions });
+        }
+    };
 
     return (
         <div className="mt-5 flex gap-8">
@@ -103,7 +142,8 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
                             </Link>
                         </CardContent>
                     </Card>
-                    <Button variant="black" className="mt-4 w-full">
+                    <Button onClick={handleClick} variant="black" className="mt-4 w-full" disabled={checkDisabled()}>
+                        {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
                         {step === 4 ? 'Finish job setup' : 'Continue'}
                     </Button>
                 </div>
