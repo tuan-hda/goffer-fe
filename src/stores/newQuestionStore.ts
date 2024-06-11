@@ -33,6 +33,7 @@ export const initialData: NewQuestion = {
     org: '',
     category: '',
     numberOfTestCaseLines: 1,
+    numberOfOutputLines: 1,
 };
 
 type State = {

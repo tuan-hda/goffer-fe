@@ -51,12 +51,16 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
     };
 
     const toCurrentStep = useCallback(() => {
-        if (!data || !data.questions || data.questions.size === 0) {
+        if (!data) return;
+        if (!data.questions || data.questions.size === 0) {
             setMaxStep(2);
+            navigate(`/app/organization/${domain}/job/${id}/questions`);
         } else if (data.hasFeedback === undefined) {
             setMaxStep(3);
+            navigate(`/app/organization/${domain}/job/${id}/custom-feedback`);
         } else if (!data.assessments) {
             setMaxStep(4);
+            navigate(`/app/organization/${domain}/job/${id}/custom-assessment`);
         } else {
             setMaxStep(5);
         }
@@ -76,10 +80,12 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
     const handleClick = async () => {
         if (step === 2) {
             await updateJob({ questions: assessment.questions });
+            navigate(`/app/organization/${domain}/job/${id}/custom-feedback`);
         } else if (step === 3) {
             await updateJob({
                 hasFeedback: setupJob.hasFeedback,
             });
+            navigate(`/app/organization/${domain}/job/${id}/custom-assessment`);
         } else {
             await updateJob({ assessments: setupJob.assessments });
             navigate(`/app/organization/${domain}/job/${id}`);
@@ -110,7 +116,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
 
     return (
         <div className="mt-5 flex gap-8">
-            {matches && matches.length > 0 && (
+            {(maxStep < 5 || (matches && matches.length > 0)) && (
                 <div className="sticky top-8 h-fit max-w-[240px] flex-shrink-0">
                     <Card className="border bg-white/100 text-sm shadow-none">
                         <CardHeader>

@@ -9,17 +9,27 @@ import { useParams } from 'react-router-dom';
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { formatUTCDate } from '@/utils/time';
 import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
 
 const Overview = () => {
     const { id } = useParams();
     const { data: job } = useGetOrganizationJob(id);
+    const [publicLink, setPublicLink] = useState<string>('');
+
+    useEffect(() => {
+        if (job) {
+            setPublicLink(`${window.location.origin}/job/${job.id}`);
+        } else {
+            setPublicLink('');
+        }
+    }, [job]);
 
     if (!job) {
         return null;
     }
 
     const copy = () => {
-        window.navigator.clipboard.writeText(job.publicLink);
+        window.navigator.clipboard.writeText(publicLink);
         toast.success('Link copied to clipboard');
     };
 
@@ -101,7 +111,7 @@ const Overview = () => {
                     <Image className="h-64" src="/map.png" />
                     <p className="mt-2 text-text/70">Share your opportunity to outside world</p>
                     <div className="mt-2 flex w-full justify-center gap-2">
-                        <Input className="max-w-xs flex-1" onChange={() => {}} value={job.publicLink} />
+                        <Input className="max-w-xs flex-1" onChange={() => {}} value={publicLink} />
                         <Button variant="black" onClick={copy}>
                             Copy
                         </Button>

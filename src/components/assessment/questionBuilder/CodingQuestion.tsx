@@ -54,6 +54,7 @@ const CodingQuestion = () => {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="algorithm">Algorithm</SelectItem>
+                            <SelectItem value="other">Other</SelectItem>
                         </SelectContent>
                     </Select>
                 </Label>

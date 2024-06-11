@@ -9,22 +9,6 @@ import { useParams } from 'react-router-dom';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '../ui/pagination';
 import { useState } from 'react';
 
-// const candidateSampleData = {
-//     name: 'Jane Doe',
-//     avatarUrl:
-//         'https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-1/318662248_3420347351543223_543157534243100406_n.jpg?stp=c0.7.100.100a_dst-jpg_p100x100&_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeE1AE393m0M-Qc7uh6nlOGZfma7FFkD0KJ-ZrsUWQPQoslg37NspBbSSaAO0VIqZKZQZa9ButGOiezVOTwYqFUF&_nc_ohc=LfIhXX56-_IAb49E5bt&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfBrBklVmMhuqFonm1GyjFMNxuyPsje-amWp51lzEtUJFA&oe=6617CEF2',
-//     jobTitle: 'Senior Frontend Developer',
-//     location: '1234 Maple Street, Anytown, Anystate',
-//     experience: 'Acme Corp, Innovative Solutions, Tech Pioneers',
-//     tools: 'ReactJS, Redux, TypeScript, NodeJS, Express, MongoDB, Docker, AWS',
-//     skills: 'UI/UX Design, Web Development, Responsive Design, Mobile First',
-//     description:
-//         'Passionate frontend developer with a knack for creating engaging user experiences. Skilled in a wide range of modern web technologies and tools, with a strong foundation in design principles and best practices. Committed to lifelong learning and staying at the cutting edge of technology.',
-//     match: 90,
-//     phone: '0-123124145',
-//     email: 'hdatdragon@gmail.com',
-// };
-
 const Sourcing = () => {
     const { id } = useParams();
     const [page, setPage] = useState(1);
@@ -48,13 +32,6 @@ const Sourcing = () => {
                                 experiences={profile.experiences || []}
                             />
                         ))}
-                        {/* <Candidate {...{ ...candidateSampleData, match: 99, isPro: true }} />
-                        <Candidate {...{ ...candidateSampleData, match: 89, isPro: true }} />
-                        <Candidate {...{ ...candidateSampleData, match: 87, isPro: true }} />
-                        <Candidate {...{ ...candidateSampleData, match: 80 }} />
-                        <Candidate {...{ ...candidateSampleData, match: 79, isPro: true }} />
-                        <Candidate {...{ ...candidateSampleData, match: 60 }} />
-                        <Candidate {...{ ...candidateSampleData, match: 54 }} /> */}
                     </div>
                     <Pagination className="mt-6">
                         <PaginationContent>
@@ -82,20 +59,16 @@ const Sourcing = () => {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid w-full max-w-sm items-center gap-1.5">
-                                <Label htmlFor="name">Name</Label>
-                                <Input id="name" placeholder="Enter name..." />
-                            </div>
-                            <div className="grid w-full max-w-sm items-center gap-1.5">
-                                <Label htmlFor="title">Title</Label>
-                                <Input id="title" placeholder="Enter title..." />
-                            </div>
-                            <div className="grid w-full max-w-sm items-center gap-1.5">
-                                <Label htmlFor="location">Location</Label>
-                                <Input id="location" placeholder="Enter location..." />
+                                <Label htmlFor="search">Search</Label>
+                                <Input id="search" placeholder="Enter search..." />
                             </div>
                             <div className="grid w-full max-w-sm items-center gap-1.5">
                                 <p>Experience</p>
                                 <EditExperience />
+                            </div>
+                            <div className="grid w-full max-w-sm items-center gap-1.5">
+                                <Label htmlFor="skills">Skills</Label>
+                                <Input id="skills" placeholder="Enter skills..." />
                             </div>
                             <div className="grid w-full max-w-sm items-center gap-1.5">
                                 <Label htmlFor="tools">Tools</Label>

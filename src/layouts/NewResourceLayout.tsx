@@ -21,7 +21,7 @@ const NewResourceLayout = ({
     secondaryButton,
 }: NewResourceLayoutProps) => {
     const navigate = useNavigate();
-    const { domain } = useParams();
+    const { domain, id } = useParams();
 
     return (
         <form onSubmit={handleSubmit}>
@@ -54,7 +54,7 @@ const NewResourceLayout = ({
                             )}
                         >
                             {loading && <TbLoader className="mr-2 animate-spin text-base" />}
-                            {submitText ?? 'Create'}
+                            {id ? 'Update' : submitText ?? 'Create'}
                         </Button>
                     </div>
                 </div>
