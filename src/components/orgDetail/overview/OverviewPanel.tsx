@@ -1,22 +1,12 @@
+import { User } from '@/types/user.type';
 import FounderCard from './FounderCard';
 import PostCard from './PostCard';
 
-const founders = [
-    {
-        avt: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
-        name: 'Alex Yurkowski',
-        role: 'CTO',
-        time: '6 years',
-    },
-    {
-        avt: 'https://i.pravatar.cc/150?u=a04258114e29026302d',
-        name: 'Zeb Evans',
-        role: 'CEO',
-        time: '6 years',
-    },
-];
+interface Props {
+    data: User[];
+}
 
-const OverviewPanel = () => {
+const OverviewPanel = ({ data }: Props) => {
     return (
         <div className="w-1/3 px-6">
             <div className="mb-6 mt-12 flex w-full items-center justify-between">
@@ -29,8 +19,8 @@ const OverviewPanel = () => {
                     <PostCard key={index} />
                 ))}
             <p className="mb-6 mt-12 text-2xl font-semibold text-text">Founder</p>
-            {founders.map((item, index) => (
-                <FounderCard data={item} key={index} />
+            {data.map((user) => (
+                <FounderCard data={user} key={user.id} role={'CEO'} />
             ))}
         </div>
     );

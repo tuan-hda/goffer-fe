@@ -1,12 +1,27 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OrgPanel from './OrgPanel';
-import { Button, Chip } from '@nextui-org/react';
 import { Overview } from './overview';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
+import { toggleSavedOrg } from '@/services/interaction.service';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const OrgDetail = () => {
+    const { data: org, refetch } = useCurrOrganization();
+    if (!org) return;
+
+    const onShare = () => {
+        window.navigator.clipboard.writeText(window.location.href);
+        toast.success('Link copied to clipboard');
+    };
+    const onFollow = async () => {
+        await toggleSavedOrg(org.id);
+        await refetch();
+    };
+
     return (
         <div className="flex w-full flex-row">
-            <OrgPanel />
+            <OrgPanel data={org} />
             <Tabs defaultValue="overview" className="w-full">
                 <div className="flex h-14 items-center justify-between gap-6 border-b px-8">
                     <TabsList className="h-full gap-2 rounded-none bg-transparent p-0">
@@ -33,22 +48,23 @@ const OrgDetail = () => {
                             value="jobs"
                         >
                             Jobs
-                            <Chip size="sm" variant="faded">
-                                9
-                            </Chip>
                         </TabsTrigger>
                     </TabsList>
                     <div className="mr-2 flex gap-x-6">
-                        <Button size="sm" variant="light" radius="full" className="text-sm font-semibold text-text">
+                        <Button onClick={onShare} variant="ghost" className="rounded-full">
                             Share
                         </Button>
-                        <Button size="sm" variant="flat" radius="full" className="text-sm font-semibold text-text">
-                            Follow
+                        <Button
+                            onClick={onFollow}
+                            variant={org.saved ? 'black' : 'outline'}
+                            className="w-24 rounded-full shadow-none"
+                        >
+                            {org.saved ? 'Following' : 'Follow'}
                         </Button>
                     </div>
                 </div>
                 <TabsContent value="overview">
-                    <Overview />
+                    <Overview org={org} />
                 </TabsContent>
                 <TabsContent value="people">people</TabsContent>
                 <TabsContent value="funding">funding</TabsContent>

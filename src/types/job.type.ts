@@ -27,6 +27,7 @@ export type Job = Omit<NewJob, 'org'> & {
     publicLink: string;
     org: Organization;
     saved?: boolean;
+    follow: number;
 };
 
 export type JobQuery = Omit<Job, ''>;

@@ -1,7 +1,14 @@
+import { Job } from '@/types/job.type';
 import { Button } from '@nextui-org/react';
+import numeral from 'numeral';
 import { TbArrowRight } from 'react-icons/tb';
 
-const JobCard = () => {
+interface Props {
+    job: Job;
+    orgName: string;
+}
+
+const JobCard = ({ job, orgName }: Props) => {
     return (
         <Button
             variant="light"
@@ -10,11 +17,15 @@ const JobCard = () => {
             endContent={<TbArrowRight size={20} />}
         >
             <div>
-                <p className="text-start font-semibold text-text">Enterprise Account Executive @ ClickUp</p>
+                <p className="text-start font-semibold text-text">
+                    {job.title} @ {orgName}
+                </p>
                 <p className="text-start text-sm text-muted-foreground">
-                    <span>San Diego</span>
+                    <span>{job.location}</span>
                     <span className="mx-2 text-lg">•</span>
-                    <span>$60k - $80k</span>
+                    <span>
+                        ${numeral(job.salaryFrom).format('0a')} - ${numeral(job.salaryTo).format('0a')}
+                    </span>
                 </p>
             </div>
         </Button>
