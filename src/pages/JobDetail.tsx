@@ -5,7 +5,6 @@ import {
     TbArchive,
     TbChevronDown,
     TbClockCancel,
-    TbCloudStorm,
     TbDots,
     TbEye,
     TbEyeOff,
@@ -33,7 +32,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const JobDetail = () => {
-    const { id } = useParams();
+    const { id, domain } = useParams();
     const { data: job, isLoading } = useGetOrganizationJob(id);
     const navigate = useNavigate();
 
@@ -77,13 +76,17 @@ const JobDetail = () => {
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>
-                                <TbPencil className="mr-2 text-base" /> Edit basic
+                                <Link className="flex w-full items-center" to={`/app/organization/${domain}/${id}`}>
+                                    <TbPencil className="mr-2 text-base" /> Edit basic
+                                </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
-                                <TbScooter className="mr-2 text-base" /> Edit questions
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <TbCloudStorm className="mr-2 text-base" /> Custom feedback
+                                <Link
+                                    className="flex w-full items-center"
+                                    to={`/app/organization/${domain}/job/${id}/questions`}
+                                >
+                                    <TbScooter className="mr-2 text-base" /> Edit advanced
+                                </Link>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

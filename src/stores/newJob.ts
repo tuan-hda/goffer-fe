@@ -1,4 +1,5 @@
 import { NewJob } from '@/types/job.type';
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -40,5 +41,9 @@ const useNewJobStore = create<State & Action>()(
             }),
     })),
 );
+
+if (process.env.NODE_ENV === 'development') {
+    mountStoreDevtool('NewJobStore', useNewJobStore);
+}
 
 export default useNewJobStore;

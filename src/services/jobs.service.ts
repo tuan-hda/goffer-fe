@@ -63,7 +63,7 @@ export const updateJobService = async (
     const assessments = Array.from(dataAssessments?.values() || []).map((assessment) => assessment.id);
 
     if (questions.length > 0) finalData.questions = questions;
-    if (assessments.length > 0) finalData.assessments = assessments;
+    finalData.assessments = assessments;
 
     delete finalData.org;
     delete finalData.owner;

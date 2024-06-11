@@ -16,6 +16,12 @@ type OrgDetailLayoutProps = {
     children: React.ReactNode;
 };
 
+const routes = [
+    { path: '/app/organization/:domain/job/:id/questions' },
+    { path: '/app/organization/:domain/job/:id/custom-feedback' },
+    { path: '/app/organization/:domain/job/:id/custom-assessment' },
+];
+
 const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
     const { domain, id } = useParams();
     const [step, setStep] = useState(2);
@@ -28,20 +34,6 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
 
     const assessment = useNewAssessmentStore((state) => state.assessment);
     const [setupJob, setSetupJob] = useSetupJobStore((state) => [state.data, state.setData], shallow);
-
-    useEffect(() => {
-        const routes = [
-            { path: '/app/organization/:domain/job/:id/questions' },
-            { path: '/app/organization/:domain/job/:id/custom-feedback' },
-            { path: '/app/organization/:domain/job/:id/custom-assessment' },
-        ];
-        const matches = matchRoutes(routes, location);
-        routes.forEach((route, index) => {
-            if (matches?.at(0)?.route.path === route.path) {
-                setStep(index + 2);
-            }
-        });
-    }, [location]);
 
     const checkDisabled = () => {
         if (loading) return true;
@@ -60,25 +52,15 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
 
     const toCurrentStep = useCallback(() => {
         if (!data || !data.questions || data.questions.size === 0) {
-            setStep(2);
             setMaxStep(2);
-            navigate(`/app/organization/${domain}/job/${id}/questions`);
-            return;
         } else if (data.hasFeedback === undefined) {
-            setStep(3);
             setMaxStep(3);
-            navigate(`/app/organization/${domain}/job/${id}/custom-feedback`);
-            return;
-        } else {
-            setStep(4);
+        } else if (!data.assessments) {
             setMaxStep(4);
-            navigate(`/app/organization/${domain}/job/${id}/custom-assessment`);
+        } else {
+            setMaxStep(5);
         }
     }, [data]);
-
-    useEffect(() => {
-        toCurrentStep();
-    }, [toCurrentStep]);
 
     const updateJob = (data: Partial<Job>) =>
         catchAsync(
@@ -113,9 +95,22 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
         }));
     }, [data]);
 
+    useEffect(() => {
+        toCurrentStep();
+    }, [toCurrentStep]);
+
+    const matches = matchRoutes(routes, location);
+    useEffect(() => {
+        routes.forEach((route, index) => {
+            if (matches?.at(0)?.route.path === route.path) {
+                setStep(index + 2);
+            }
+        });
+    }, [location, matches]);
+
     return (
         <div className="mt-5 flex gap-8">
-            {maxStep < 5 && (
+            {matches && matches.length > 0 && (
                 <div className="sticky top-8 h-fit max-w-[240px] flex-shrink-0">
                     <Card className="border bg-white/100 text-sm shadow-none">
                         <CardHeader>
@@ -189,7 +184,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
                     </Card>
                     <Button onClick={handleClick} variant="black" className="mt-4 w-full" disabled={checkDisabled()}>
                         {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
-                        {step === 4 ? 'Finish job setup' : 'Continue'}
+                        {step === 4 ? 'Finish job setup' : 'Save'}
                     </Button>
                 </div>
             )}
