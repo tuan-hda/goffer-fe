@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import useGetCurrAssessment from '@/hooks/useGetCurrAssessment';
 import useNewAssessmentStore from '@/stores/newAssessmentStore';
 import { NewAssessment } from '@/types/assessment.type';
 import { QUESTION_TYPE } from '@/types/question.type';
@@ -13,6 +14,7 @@ const AssessmentBuilderBasic = () => {
         (state) => [state.assessment, state.setAssessment],
         shallow,
     );
+    const { data } = useGetCurrAssessment();
 
     const handleChange = (key: keyof NewAssessment) => (e: React.ChangeEvent<HTMLInputElement>) => {
         setAssessment((state) => ({ ...state, [key]: e.target.value }));
@@ -70,7 +72,11 @@ const AssessmentBuilderBasic = () => {
                 <Select
                     value={assessment.type}
                     onValueChange={(value) => {
-                        setAssessment((state) => ({ ...state, type: value as QUESTION_TYPE }));
+                        setAssessment((state) => ({
+                            ...state,
+                            type: value as QUESTION_TYPE,
+                            questions: data && data.questions.size > 0 ? data.questions : new Map(),
+                        }));
                     }}
                     defaultValue="mcq"
                 >

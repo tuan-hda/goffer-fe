@@ -13,16 +13,33 @@ import { DialogTrigger } from '@/components/ui/dialog';
 import { Assessment } from '@/types/assessment.type';
 import { Link, useNavigate } from 'react-router-dom';
 import AssessmentOrgItemDelete from './AssessmentOrgItemDelete';
+import { Checkbox } from '@/components/ui/checkbox';
 
 type AssessmentOrgItemProps = {
     assessment: Assessment;
+    mode?: 'pick' | 'normal';
+    picked?: boolean;
+    onPick?: (assessment: Assessment) => void;
 };
 
-const AssessmentOrgItem = ({ assessment }: AssessmentOrgItemProps) => {
+const AssessmentOrgItem = ({ assessment, mode = 'normal', picked = false, onPick }: AssessmentOrgItemProps) => {
     const navigate = useNavigate();
 
+    const handleClick = () => {
+        if (mode === 'pick') {
+            onPick && onPick(assessment);
+            return;
+        }
+        navigate(assessment.id);
+    };
+
     return (
-        <div onClick={() => navigate(assessment.id)} className="group relative cursor-pointer">
+        <div onClick={handleClick} className="group relative cursor-pointer">
+            {mode === 'pick' && (
+                <div className="absolute right-2 top-2 flex items-center justify-center rounded-lg bg-white/50 p-1">
+                    <Checkbox checked={picked} className="h-5 w-5 rounded-lg" />
+                </div>
+            )}
             <div className="aspect-video overflow-hidden rounded-2xl shadow-small">
                 {assessment.image ? (
                     <img src={assessment.image} alt={assessment.title} className="h-full w-full object-cover" />

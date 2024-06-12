@@ -8,7 +8,7 @@ import { listAssessmentsService } from '@/services/assessment.service';
 const useListOrgAssessment = (query?: Partial<Record<keyof (Assessment & ListQueryOptions), string>>) => {
     const [searchParams] = useSearchParams();
     const search = searchParams.get('search') || '';
-    const type = searchParams.get('type') || 'mcq';
+    const type = searchParams.get('type') || 'all';
 
     const queryKey = query || {};
     const { data } = useCurrOrganization();
@@ -17,7 +17,7 @@ const useListOrgAssessment = (query?: Partial<Record<keyof (Assessment & ListQue
         queryKey.org = data?.id;
     }
 
-    queryKey.type = type;
+    if (type !== 'all') queryKey.type = type;
 
     const actualQuery = {
         ...queryKey,
