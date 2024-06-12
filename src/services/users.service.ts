@@ -35,3 +35,7 @@ export const updateUserService = (user: UpdateUser) => baseAxios.put('/users/sel
 export const listPeopleService = async () => {
     return (await baseAxios.get<List<User>>('/users')).data;
 };
+
+export const getUserInfo = async (id: string) => {
+    return (await baseAxios.get<User>(`/users/${id}`)).data;
+};

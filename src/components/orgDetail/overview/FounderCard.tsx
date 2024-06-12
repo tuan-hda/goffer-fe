@@ -18,8 +18,12 @@ const FounderCard = ({ data, role }: Props) => {
                 </p>
                 <p className="text-start text-sm text-muted-foreground">
                     <span>{role}</span>
-                    <span className="mx-2 text-lg">•</span>
-                    {data.experiences && <span>{getExperienceYear(data.experiences)}</span>}
+                    {data.experiences && data.experiences.length > 0 && (
+                        <>
+                            <span className="mx-2 text-lg">•</span>
+                            <span>{getExperienceYear(data.experiences)}</span>
+                        </>
+                    )}
                 </p>
             </div>
         </div>

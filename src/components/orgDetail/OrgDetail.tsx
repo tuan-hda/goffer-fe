@@ -38,12 +38,6 @@ const OrgDetail = () => {
                             People
                         </TabsTrigger>
                         <TabsTrigger
-                            className="relative mx-2 h-full rounded-none border-b-2 border-b-transparent bg-transparent px-0 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:border-b-foreground data-[state=active]:text-foreground data-[state=active]:shadow-none "
-                            value="funding"
-                        >
-                            Funding
-                        </TabsTrigger>
-                        <TabsTrigger
                             className="relative mx-2 h-full gap-1 rounded-none border-b-2 border-b-transparent bg-transparent px-0 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:border-b-foreground data-[state=active]:text-foreground data-[state=active]:shadow-none "
                             value="jobs"
                         >
@@ -67,7 +61,6 @@ const OrgDetail = () => {
                     <Overview org={org} />
                 </TabsContent>
                 <TabsContent value="people">people</TabsContent>
-                <TabsContent value="funding">funding</TabsContent>
                 <TabsContent value="jobs">jobs</TabsContent>
             </Tabs>
         </div>

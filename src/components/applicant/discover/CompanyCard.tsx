@@ -28,7 +28,7 @@ const CompanyCard = ({ data }: Props) => {
                             <div
                                 className="flex flex-col rounded-[22px] px-4 pb-6 pt-3"
                                 style={{
-                                    background: color ? color : '#fff',
+                                    background: color ? `${color}33` : '#fff',
                                 }}
                             >
                                 <p className="lines-ellipsis mb-3 mt-1 text-[13px] text-gray-500">{data.location}</p>
