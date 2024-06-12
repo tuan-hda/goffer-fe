@@ -9,6 +9,8 @@ import { User } from '@/types/user.type';
 import { getLatestExperience } from '@/utils/profile';
 import { client } from '@/utils/streamchat';
 import { useNavigate } from 'react-router-dom';
+import useListPeople from '@/hooks/useListPeople';
+import { toggleSavedUser } from '@/services/interaction.service';
 
 const colors = ['#F8F9FE'];
 
@@ -19,6 +21,7 @@ interface Props {
 const PersonCard = ({ data }: Props) => {
     const navigate = useNavigate();
     const latestExp = getLatestExperience(data.experiences ?? []);
+    const { refetch } = useListPeople();
 
     const getInTouch = async () => {
         if (client.userID) {
@@ -32,7 +35,10 @@ const PersonCard = ({ data }: Props) => {
         }
     };
 
-    const onSaved = async () => {};
+    const onSaved = async () => {
+        await toggleSavedUser(data.id);
+        await refetch();
+    };
 
     return (
         <Card className="rounded-3xl shadow-none">
@@ -45,7 +51,7 @@ const PersonCard = ({ data }: Props) => {
                 >
                     <div className="mb-4 flex max-w-full items-center gap-1 px-4 text-[13px] text-gray-600">
                         <TbStarFilled className="text-[#FDB022]" /> {+(Math.random() * 10).toFixed(1)} (
-                        {Math.floor(Math.random() * 100)}){data.location && '| '}
+                        {Math.floor(Math.random() * 100)}){data.location && ' | '}
                         <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-gray-500">
                             {data.location}
                         </span>

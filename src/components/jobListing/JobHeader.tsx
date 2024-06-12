@@ -14,6 +14,10 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import classNames from 'classnames';
+import { toggleSavedJob } from '@/services/interaction.service';
+import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
+import { toast } from 'sonner';
 
 type JobHeaderProps = {
     job: Job;
@@ -22,7 +26,17 @@ type JobHeaderProps = {
 const JobHeader = ({ job }: JobHeaderProps) => {
     const navigate = useNavigate();
     const isLoggedIn = !!useAuthStore((state) => state.access);
+    const { refetch } = useGetOrganizationJob(job.id);
 
+    const onBookmark = async (e: any, id: string) => {
+        e.stopPropagation();
+        await toggleSavedJob(id);
+        await refetch();
+    };
+    const onShare = () => {
+        window.navigator.clipboard.writeText(job.publicLink);
+        toast.success('Link copied to clipboard');
+    };
     const handleApply = () => {
         if (isLoggedIn) {
             navigate(`/job/${job.id}/application`);
@@ -44,8 +58,8 @@ const JobHeader = ({ job }: JobHeaderProps) => {
                 <Button variant="black" className="ml-auto gap-2" onClick={handleApply}>
                     <TbBoxAlignBottomFilled className="text-lg" /> Apply
                 </Button>
-                <Button size="icon" variant="outline">
-                    <TbBookmarks className="text-lg" />
+                <Button size="icon" onClick={(e) => onBookmark(e, job.id)} variant={job.saved ? 'black' : 'outline'}>
+                    <TbBookmarks className={classNames('text-lg', job.saved && 'text-white')} />
                 </Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -56,7 +70,7 @@ const JobHeader = ({ job }: JobHeaderProps) => {
                     <DropdownMenuContent>
                         <DropdownMenuLabel>Options</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={onShare}>
                             <TbShare className="mr-2" /> Share
                         </DropdownMenuItem>
                     </DropdownMenuContent>

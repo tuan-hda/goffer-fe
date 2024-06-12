@@ -87,7 +87,6 @@ const SideBar = ({ org }: SideBarProps) => {
         const fetchUnreadCount = async () => {
             const unreadCount = await client.getUnreadCount();
             setUnread(unreadCount.total_unread_count);
-            console.log('fetch');
         };
 
         const handleEvent = (event: any) => {

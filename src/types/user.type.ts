@@ -20,6 +20,8 @@ export type User = {
     education?: Education[];
     experiences?: Experience[];
     saved?: boolean;
+    follow: number;
+    org?: string;
 };
 
 export type Education = {

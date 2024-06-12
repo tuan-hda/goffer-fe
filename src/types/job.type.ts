@@ -28,9 +28,10 @@ export type Job = Omit<NewJob, 'org'> & {
     updatedAt: string;
     publicLink: string;
     org: Organization;
+    saved?: boolean;
+    follow: number;
     questions: Map<string, Question>;
     hasFeedback?: boolean;
-    saved?: boolean;
     assessments?: Map<string, Assessment>;
 };
 
