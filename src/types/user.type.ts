@@ -22,6 +22,8 @@ export type User = {
     saved?: boolean;
     follow: number;
     org?: string;
+    status?: string;
+    badges?: string[];
 };
 
 export type Education = {
