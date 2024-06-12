@@ -1,7 +1,7 @@
 import UserPanel from './UserPanel';
 import useUserInfo from '@/hooks/useUserInfo';
 import { Tab, Tabs } from '@nextui-org/react';
-import { TbBaguette, TbCirclePlus, TbPaperclip, TbPrompt, TbSparkles } from 'react-icons/tb';
+import { TbBaguette, TbPaperclip, TbPrompt, TbSparkles } from 'react-icons/tb';
 import Basic from './Basic';
 import Experiences from './Experiences';
 import ProjectList from '../profile/ProjectList';
@@ -68,7 +68,7 @@ const UserDetail = ({ id }: Props) => {
                 </Tabs>
             </div>
             <div className="right-0 top-0 flex h-[100vh-64px] w-[320px] flex-col overflow-y-scroll px-4">
-                <UserPanel data={user} />
+                <UserPanel id={user.id} />
             </div>
         </div>
     );

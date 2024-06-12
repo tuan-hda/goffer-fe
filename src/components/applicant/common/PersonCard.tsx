@@ -1,5 +1,5 @@
 /* eslint-disable import/named */
-import { TbBookmarks, TbPlanet, TbStarFilled } from 'react-icons/tb';
+import { TbBookmarks, TbLoaderQuarter, TbPlanet, TbStarFilled } from 'react-icons/tb';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Avatar } from '@nextui-org/react';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import useListPeople from '@/hooks/useListPeople';
 import { toggleSavedUser } from '@/services/interaction.service';
 import { SheetTrigger } from '@/components/ui/sheet';
+import { useState } from 'react';
 
 const colors = ['#F8F9FE'];
 
@@ -24,8 +25,11 @@ const PersonCard = ({ data }: Props) => {
     const latestExp = getLatestExperience(data.experiences ?? []);
     const { refetch } = useListPeople();
 
+    const [chatLoading, setChatLoading] = useState(false);
+
     const getInTouch = async () => {
         if (client.userID) {
+            setChatLoading(true);
             await client.upsertUser({ id: data.id, name: data.name, image: data.avatar });
 
             const channel = client.channel('messaging', {
@@ -33,6 +37,7 @@ const PersonCard = ({ data }: Props) => {
             });
             await channel.create();
             navigate('/app/messages');
+            setChatLoading(false);
         }
     };
 
@@ -80,7 +85,11 @@ const PersonCard = ({ data }: Props) => {
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button onClick={getInTouch} variant="black" className="h-8 w-8 rounded-full" size="icon">
-                                <TbPlanet className="text-base" />
+                                {chatLoading ? (
+                                    <TbLoaderQuarter className="animate-spin text-base" />
+                                ) : (
+                                    <TbPlanet className="text-base" />
+                                )}
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>

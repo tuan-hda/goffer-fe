@@ -1,19 +1,32 @@
-import { User } from '@/types/user.type';
 import { Avatar } from '@nextui-org/react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
-import { TbExternalLink, TbPlanet } from 'react-icons/tb';
+import { TbBookmarks, TbExternalLink, TbLoaderQuarter, TbPlanet } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { client } from '@/utils/streamchat';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { toggleSavedUser } from '@/services/interaction.service';
+import useUserInfo from '@/hooks/useUserInfo';
+import { useState } from 'react';
 
 interface Props {
-    data: User;
+    id: string;
 }
-
-const UserPanel = ({ data }: Props) => {
+const UserPanel = ({ id }: Props) => {
     const navigate = useNavigate();
+    const { data, refetch } = useUserInfo(id);
+    if (!data) return;
+
+    const [chatLoading, setChatLoading] = useState(false);
+
+    const onSaved = async () => {
+        await toggleSavedUser(data.id);
+        await refetch();
+    };
+
     const getInTouch = async () => {
         if (client.userID) {
+            setChatLoading(true);
             await client.upsertUser({ id: data.id, name: data.name, image: data.avatar });
 
             const channel = client.channel('messaging', {
@@ -21,6 +34,7 @@ const UserPanel = ({ data }: Props) => {
             });
             await channel.create();
             navigate('/app/messages');
+            setChatLoading(false);
         }
     };
 
@@ -30,15 +44,38 @@ const UserPanel = ({ data }: Props) => {
                 <Avatar src={data.avatar} className="h-40 w-40 rounded-full object-cover" />
                 <Badge className="z-20 -mt-4">{data.status}</Badge>
                 <p className="mt-4 text-2xl font-semibold">{data.name}</p>
-                <Button
-                    onClick={getInTouch}
-                    variant="black"
-                    className="mt-4 w-full max-w-52 gap-2 rounded-2xl text-base"
-                    size="lg"
-                >
-                    <TbPlanet className="text-base" size={20} />
-                    Get in touch
-                </Button>
+                <div className="mt-4 flex gap-2">
+                    <Button
+                        onClick={getInTouch}
+                        variant="black"
+                        className="w-full max-w-fit gap-2 rounded-2xl text-base"
+                        size="lg"
+                    >
+                        {chatLoading ? (
+                            <TbLoaderQuarter className="animate-spin text-base" size={20} />
+                        ) : (
+                            <TbPlanet className="text-base" size={20} />
+                        )}
+                        Get in touch
+                    </Button>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    onClick={onSaved}
+                                    variant={data.saved ? 'black' : 'outline'}
+                                    className="h-10 w-10 rounded-2xl"
+                                    size="icon"
+                                >
+                                    <TbBookmarks className="text-base" size={20} />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Save</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </div>
             </div>
 
             {data.location && (
