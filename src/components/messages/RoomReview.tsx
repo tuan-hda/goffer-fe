@@ -5,7 +5,7 @@ import moment from 'moment';
 import { ChannelPreviewProps } from 'stream-chat-react';
 
 const RoomReview = (props: ChannelPreviewProps) => {
-    const { channel, setActiveChannel } = props;
+    const { channel, setActiveChannel, activeChannel } = props;
 
     const { messages } = channel.state;
     const messagePreview = messages[messages.length - 1]?.text?.slice(0, 30);
@@ -14,7 +14,10 @@ const RoomReview = (props: ChannelPreviewProps) => {
     return (
         <button
             onClick={() => setActiveChannel?.(channel)}
-            className="flex h-[88px] w-full items-center gap-[10px] px-5 text-left"
+            className={classNames(
+                'mx-auto my-2 flex h-20 w-[98%] items-center gap-[10px] rounded-xl px-5 text-left',
+                activeChannel?.cid === channel?.cid && 'bg-beige/30',
+            )}
         >
             <Avatar
                 src={otherUser?.user?.image as string}
