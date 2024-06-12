@@ -11,6 +11,7 @@ import { client } from '@/utils/streamchat';
 import { useNavigate } from 'react-router-dom';
 import useListPeople from '@/hooks/useListPeople';
 import { toggleSavedUser } from '@/services/interaction.service';
+import { SheetTrigger } from '@/components/ui/sheet';
 
 const colors = ['#F8F9FE'];
 
@@ -105,10 +106,11 @@ const PersonCard = ({ data }: Props) => {
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
-
-                <Button size="sm" variant="outline" className="ml-auto text-sm">
-                    Details
-                </Button>
+                <SheetTrigger asChild>
+                    <Button size="sm" variant="outline" className="ml-auto text-sm">
+                        Details
+                    </Button>
+                </SheetTrigger>
             </CardFooter>
         </Card>
     );
