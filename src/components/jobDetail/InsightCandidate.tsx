@@ -10,16 +10,16 @@ import {
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { MoreHorizontal } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 type InsightCandidateProps = {
     candidate: any;
-    handleViewDetail: (id: string) => () => void;
 };
 
-const InsightCandidate = ({ candidate, handleViewDetail }: InsightCandidateProps) => {
+const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
     return (
         <TableRow>
-            <TableCell onClick={handleViewDetail(candidate.id)} className="hidden cursor-pointer sm:table-cell">
+            <TableCell className="hidden cursor-pointer sm:table-cell">
                 <Image
                     alt={`${candidate.name}'s photo`}
                     className="aspect-square rounded-2xl object-cover"
@@ -28,11 +28,13 @@ const InsightCandidate = ({ candidate, handleViewDetail }: InsightCandidateProps
                     width="40"
                 />
             </TableCell>
-            <TableCell onClick={handleViewDetail(candidate.id)} className="cursor-pointer font-medium">
-                <div>
-                    <p className="font-light">{candidate.name}</p>
-                    <p>{candidate.email}</p>
-                </div>
+            <TableCell className="cursor-pointer font-medium">
+                <Link to={`applicant/${candidate.id}`}>
+                    <div>
+                        <p className="font-light">{candidate.name}</p>
+                        <p>{candidate.email}</p>
+                    </div>
+                </Link>
             </TableCell>
             <TableCell>{candidate.appliedOn}</TableCell>
             <TableCell>{candidate.appliedOn}</TableCell>
@@ -46,7 +48,7 @@ const InsightCandidate = ({ candidate, handleViewDetail }: InsightCandidateProps
                 <Badge>87%</Badge>
             </TableCell>
 
-            <TableCell>
+            <TableCell onClick={(e) => e.stopPropagation()}>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button aria-haspopup="true" size="icon" variant="ghost">
@@ -56,7 +58,9 @@ const InsightCandidate = ({ candidate, handleViewDetail }: InsightCandidateProps
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>View detail</DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                            <Link to={`applicant/${candidate.id}`}>View detail</Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem>Move to</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

@@ -39,7 +39,6 @@ type ApplicantProps = {
 const Applicant = ({
     name,
     avatarUrl,
-    jobTitle,
     location,
     experience,
     tools,
@@ -78,7 +77,7 @@ const Applicant = ({
                         </Button>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="default" className="gap-2">
+                                <Button variant="black" className="gap-2">
                                     Applied <TbChevronDown />
                                 </Button>
                             </DropdownMenuTrigger>
@@ -110,7 +109,7 @@ const Applicant = ({
                             <Link to="#" className="font-medium underline">
                                 Resume
                             </Link>
-                            <Badge>{match}% match</Badge>
+                            <Badge variant="outline">{match}% match</Badge>
                         </div>
                         <div className="flex items-center gap-2">
                             <TbBrandLinkedin className="text-lg" />

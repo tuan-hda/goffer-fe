@@ -30,14 +30,6 @@ const SignUpFirstStep = ({
 
     return (
         <>
-            <Link
-                to={`/auth/sign-up?type=${type === 'individual' ? 'organization' : 'individual'}`}
-                className="group relative flex w-fit items-center gap-2"
-            >
-                <TbChevronLeft />
-                Sign up as an {type === 'individual' ? 'organization' : 'individual'}
-                <div className="absolute bottom-0 left-0 hidden w-full border-b-1 border-text group-hover:block" />
-            </Link>
             <img alt="Logo" src="/logo.svg" className="mt-4 h-8 w-8 " />
             <h1 className="mt-3 font-serif text-xl font-bold">Goffer for {type}</h1>
 

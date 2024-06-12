@@ -1,11 +1,10 @@
 import InsightsBar from './InsightsBar';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '../ui/table';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { useNavigate, useParams } from 'react-router-dom';
 import InsightCandidate from './InsightCandidate';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 // type Candidate = {
 //     imageUrl: string;
@@ -88,12 +87,6 @@ const mockCandidates = [
 
 const Insights = () => {
     const candidates = mockCandidates;
-    const navigate = useNavigate();
-    const { domain, id: jobId } = useParams();
-
-    const handleViewDetail = (id: string) => () => {
-        navigate(`/app/organization/${domain}/job/${jobId}/applicant/${id}`);
-    };
 
     return (
         <div className="w-full overflow-x-auto text-sm">
@@ -107,17 +100,16 @@ const Insights = () => {
                                 <CardDescription>Manage your candidates.</CardDescription>
                             </div>
                             <Input placeholder="Filter candidate..." className="ml-auto max-w-xs" />
-                            <DropdownMenu>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuLabel>Filter by progress</DropdownMenuLabel>
-                                    <DropdownMenuItem>Applied</DropdownMenuItem>
-                                    <DropdownMenuItem>Shortlisted</DropdownMenuItem>
-                                    <DropdownMenuItem>Phone call</DropdownMenuItem>
-                                    <DropdownMenuItem>On-site</DropdownMenuItem>
-                                    <DropdownMenuItem>Offer</DropdownMenuItem>
-                                    <DropdownMenuItem>Hire</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Sort by" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="match">Match</SelectItem>
+                                    <SelectItem value="rating">Rating</SelectItem>
+                                    <SelectItem value="assess">Assess avg.</SelectItem>
+                                </SelectContent>
+                            </Select>
                             <Button variant="ghost">Clear filter</Button>
                         </CardHeader>
                         <CardContent>
@@ -138,13 +130,11 @@ const Insights = () => {
                                         </TableHead>
                                     </TableRow>
                                 </TableHeader>
+
+                                {/* Map */}
                                 <TableBody>
                                     {candidates.map((candidate, index) => (
-                                        <InsightCandidate
-                                            key={index}
-                                            candidate={candidate}
-                                            handleViewDetail={handleViewDetail}
-                                        />
+                                        <InsightCandidate key={index} candidate={candidate} />
                                     ))}
                                 </TableBody>
                             </Table>

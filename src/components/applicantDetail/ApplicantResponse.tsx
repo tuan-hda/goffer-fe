@@ -46,11 +46,9 @@ const ApplicantResponse = () => {
                         mock
                         data={{
                             id: '',
-                            author: '',
                             constraint: 1,
                             content: '',
                             description: '',
-                            job: '',
                             type: 'audio',
                         }}
                     />

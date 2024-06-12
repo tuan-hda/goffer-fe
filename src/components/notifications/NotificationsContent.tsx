@@ -1,9 +1,17 @@
 import { Tab, Tabs } from '@nextui-org/react';
 import { Card } from '../ui/card';
 import Notification from './Notification';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
+import useNotification from '@/hooks/useNotification';
+import { Button } from '../ui/button';
 
 const NotificationsContent = () => {
+    const { notifications, channel } = useNotification('admin');
+
+    useEffect(() => {
+        console.log(notifications);
+    }, [notifications]);
+
     return (
         <Tabs variant="underlined">
             <Tab key="Account" title={<span className="flex items-center gap-2">All</span>}>
@@ -16,6 +24,15 @@ const NotificationsContent = () => {
                                 {index < 3 && <div className="border-t border-gray-200/70" />}
                             </Fragment>
                         ))}
+                    <Button
+                        onClick={() => {
+                            channel?.sendMessage({
+                                text: 'Hello, world212312!',
+                            });
+                        }}
+                    >
+                        Send msg
+                    </Button>
                 </Card>
             </Tab>
             <Tab key="Work" title={<span className="flex items-center gap-2">Following</span>}>
