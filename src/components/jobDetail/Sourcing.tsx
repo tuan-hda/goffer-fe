@@ -6,13 +6,20 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import Candidate from './Candidate';
 import { useParams } from 'react-router-dom';
-import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '../ui/pagination';
-import { useState } from 'react';
+import { useMemo } from 'react';
+import { User } from '@/types/user.type';
 
 const Sourcing = () => {
     const { id } = useParams();
-    const [page, setPage] = useState(1);
-    const { data } = useSourcing(id, page);
+    const { data, isFetching, fetchNextPage, hasNextPage } = useSourcing(id);
+
+    const potentials: User[] = useMemo(() => {
+        if (!data) return [];
+
+        return data.pages.reduce((acc: User[], page) => {
+            return [...acc, ...page.results];
+        }, []);
+    }, [data]);
 
     if (!data) return null;
 
@@ -20,9 +27,9 @@ const Sourcing = () => {
         <div className="w-full items-start gap-6 text-sm">
             <div className="flex gap-6">
                 <div className="flex-1 items-center">
-                    <h2 className="mb-3 text-xl">{data.results.length} potentials</h2>
+                    <h2 className="mb-3 text-xl">{potentials.length} potentials</h2>
                     <div className="space-y-4">
-                        {data.results.map((profile) => (
+                        {potentials.map((profile) => (
                             <Candidate
                                 {...profile}
                                 key={profile.id}
@@ -32,20 +39,16 @@ const Sourcing = () => {
                                 experiences={profile.experiences || []}
                             />
                         ))}
+
+                        <div className="flex w-full flex-col">
+                            {isFetching && <p className="text-center">Loading...</p>}
+                            {!isFetching && hasNextPage && (
+                                <Button variant="outline" className="mx-auto" onClick={() => fetchNextPage()}>
+                                    Load more
+                                </Button>
+                            )}
+                        </div>
                     </div>
-                    <Pagination className="mt-6">
-                        <PaginationContent>
-                            {Array(data.totalPages)
-                                .fill(0)
-                                .map((_, index) => (
-                                    <PaginationItem key={index}>
-                                        <PaginationLink onClick={() => setPage(index + 1)} isActive>
-                                            {index + 1}
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                ))}
-                        </PaginationContent>
-                    </Pagination>
                 </div>
 
                 <div>

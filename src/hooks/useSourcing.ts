@@ -1,11 +1,17 @@
 import { getSourcingService } from '@/services/jobs.service';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-const useSourcing = (id?: string, page?: number) => {
-    return useQuery({
+const useSourcing = (id?: string) => {
+    return useInfiniteQuery({
         queryKey: ['sourcing', id],
-        queryFn: () => getSourcingService(id!, page),
+        queryFn: ({ pageParam }) => getSourcingService(id!, pageParam),
         enabled: !!id,
+        initialPageParam: 0,
+        getNextPageParam: (lastPage) => {
+            if (lastPage.page < lastPage.totalPages) {
+                return lastPage.page + 1;
+            }
+        },
     });
 };
 

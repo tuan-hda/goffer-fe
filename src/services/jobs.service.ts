@@ -34,6 +34,7 @@ export const getSourcingService = async (id: string, page?: number) => {
         await baseAxios.get<List<User>>(`/jobs/${id}/sourcing`, {
             params: {
                 page,
+                limit: 2,
             },
         })
     ).data;
