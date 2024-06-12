@@ -48,7 +48,7 @@ const CodingQuestion = () => {
             <div className="col-span-7 flex flex-col gap-6">
                 <Label>
                     Category *
-                    <Select value={question.category || 'algorithm'} onValueChange={handleSelectionChange('category')}>
+                    <Select value={question.category} onValueChange={handleSelectionChange('category')}>
                         <SelectTrigger className="mt-2 max-w-[320px]">
                             <SelectValue placeholder="Category" />
                         </SelectTrigger>
