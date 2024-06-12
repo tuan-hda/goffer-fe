@@ -8,13 +8,14 @@ const pipeline = [
     { title: 'On-site', count: 5 },
     { title: 'Offer', count: 2 },
     { title: 'Hired', count: 1 },
+    { title: 'Rejected', count: 1 },
 ];
 
 const InsightsBar = () => {
     const [selected, setSelected] = useState('Applied');
 
     return (
-        <div className="grid grid-cols-6 rounded-xl bg-white p-2 shadow-2xl">
+        <div className="grid grid-cols-7 rounded-xl border bg-white p-2">
             {pipeline.map((stage, index) => (
                 <button
                     key={index}
