@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 type NotificationProps = {
     isRead?: boolean;
+    notification: Notification;
 };
 
 const Notification = ({ isRead }: NotificationProps) => {
