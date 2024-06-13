@@ -1,8 +1,8 @@
+import { toast } from 'sonner';
 import { CreateJobResult as ResultType } from './data';
 import { GEN_AI_CREATE_JOB as GEN_AI } from './data';
 
 import GenAIProvider from '@/components/genai/GenAIProvider';
-import { toast } from 'sonner';
 
 type GenAICreateJobProviderProps = {
     children?: React.ReactNode;
@@ -15,7 +15,8 @@ const GenAICreateJobProvider = ({ children, onResponse }: GenAICreateJobProvider
             const data = JSON.parse(result) as ResultType;
             return onResponse(data);
         } catch (error) {
-            toast.error(`Failed to ${GEN_AI.title}`);
+            console.log(error);
+            toast.error('Failed to parse data');
             return onResponse(result);
         }
     };

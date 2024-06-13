@@ -12,7 +12,7 @@ type Action = {
     clear: () => void;
 };
 
-const initialData: NewJob = {
+export const initialData: NewJob = {
     title: '',
     description: '',
     slots: 1,
