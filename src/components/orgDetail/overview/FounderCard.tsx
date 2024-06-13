@@ -10,7 +10,7 @@ interface Props {
 
 const FounderCard = ({ data, role, onClick }: Props) => {
     return (
-        <div onClick={onClick} className="mb-4 flex h-16 w-full flex-row items-center gap-2">
+        <div onClick={onClick} className="flex h-16 w-full min-w-64 flex-row items-center gap-2">
             <Avatar size="lg" className="" src={data.avatar} />
 
             <div className="flex h-full flex-col justify-around py-1">

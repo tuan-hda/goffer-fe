@@ -3,11 +3,11 @@ import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { TbBookmarks, TbExternalLink, TbLoaderQuarter, TbPlanet } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
-import { client } from '@/utils/streamchat';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { toggleSavedUser } from '@/services/interaction.service';
 import useUserInfo from '@/hooks/useUserInfo';
 import { useState } from 'react';
+import { useChatContext } from 'stream-chat-react';
 
 interface Props {
     id: string;
@@ -16,6 +16,8 @@ const UserPanel = ({ id }: Props) => {
     const navigate = useNavigate();
     const { data, refetch } = useUserInfo(id);
     if (!data) return;
+
+    const { client, setActiveChannel } = useChatContext();
 
     const [chatLoading, setChatLoading] = useState(false);
 
@@ -33,6 +35,7 @@ const UserPanel = ({ id }: Props) => {
                 members: [client.userID, data.id],
             });
             await channel.create();
+            setActiveChannel?.(channel);
             navigate('/app/messages');
             setChatLoading(false);
         }
