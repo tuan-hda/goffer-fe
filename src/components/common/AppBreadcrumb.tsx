@@ -63,7 +63,7 @@ const routes: Record<string, RouteFunc> = {
             el: 'Custom feedback',
         },
     ],
-    '/app/organization/:domain/job/:id/finalize': (...args: any[]) => [
+    '/app/organization/:domain/job/:id/custom-assessment': (...args: any[]) => [
         {
             el: (
                 <>
@@ -77,7 +77,7 @@ const routes: Record<string, RouteFunc> = {
             to: `/app/organization/${args.at(0)}/job/${args.at(1)}`,
         },
         {
-            el: 'Finalize',
+            el: 'Custom assessment',
         },
     ],
     '/app/organization/:domain/job/:id/applicant/:applicantId': (...args: any[]) => [

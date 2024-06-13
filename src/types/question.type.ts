@@ -28,6 +28,7 @@ export type NewQuestion = {
     exampleInput?: string;
     exampleOutput?: string;
     numberOfTestCaseLines?: number;
+    numberOfOutputLines?: number;
 };
 
 export type Question = NewQuestion & {

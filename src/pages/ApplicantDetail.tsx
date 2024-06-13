@@ -1,4 +1,5 @@
-import { Applicant, ApplicantResponse, ConnectedWorkspace } from '@/components/applicantDetail';
+import { Applicant, ConnectedWorkspace } from '@/components/applicantDetail';
+import ApplicantPerformance from '@/components/applicantDetail/ApplicantPerformance';
 import { Button } from '@/components/ui/button';
 
 const candidateSampleData = {
@@ -22,17 +23,12 @@ const ApplicantDetail = () => {
             <div className="flex-1">
                 <Applicant {...candidateSampleData} />
                 <div className="mt-6">
-                    <p className="text-3xl">Applicant's responses</p>
-                    <div className="mt-4 space-y-8">
-                        <ApplicantResponse />
-                        <ApplicantResponse />
-                        <ApplicantResponse />
-                    </div>
+                    <ApplicantPerformance />
                     <div className="mt-6 flex items-center gap-4">
                         <Button variant="outline" className="w-full" size="lg">
                             Reject
                         </Button>
-                        <Button variant="default" className="w-full" size="lg">
+                        <Button variant="black" className="w-full" size="lg">
                             Move to
                         </Button>
                     </div>

@@ -31,7 +31,9 @@ const ConnectedWorkspace = () => {
                             </TabsTrigger>
                         </TabsList>
                         <TabsContent value="evaluation" className="flex flex-col space-y-2">
-                            <Badge className="mt-1 w-fit justify-center rounded-lg p-2 shadow-none">Overall 4.5</Badge>
+                            <Badge variant="secondary" className="mt-1 w-fit justify-center rounded-lg p-2 shadow-none">
+                                Overall 4.5
+                            </Badge>
                             <div className="mt-3 flex items-center gap-2">
                                 <p className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-serif text-lg font-semibold text-black">
                                     Tell us about yourself

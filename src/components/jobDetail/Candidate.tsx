@@ -1,15 +1,6 @@
 import { Avatar } from '@nextui-org/react';
 import { Card, CardContent } from '../ui/card';
-import {
-    TbBookmark,
-    TbHeartHandshake,
-    TbLocation,
-    TbMail,
-    TbRuler,
-    TbSchool,
-    TbSparkles,
-    TbTools,
-} from 'react-icons/tb';
+import { TbHeartHandshake, TbLocation, TbMail, TbRuler, TbSchool, TbSparkles, TbTools } from 'react-icons/tb';
 import { Badge } from '../ui/badge';
 import classNames from 'classnames';
 import { Button } from '../ui/button';
@@ -103,9 +94,6 @@ const Candidate = ({
                         <div className="mt-4 flex gap-4">
                             <Button className="w-64 gap-2" variant="black">
                                 Get in touch <TbHeartHandshake className="text-lg" />
-                            </Button>
-                            <Button size="icon" variant="outline">
-                                <TbBookmark />
                             </Button>
                         </div>
                     </div>

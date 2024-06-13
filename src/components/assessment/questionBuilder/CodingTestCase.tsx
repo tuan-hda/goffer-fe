@@ -18,10 +18,11 @@ const CodingTestCase = () => {
             setQuestion((prev) => ({ ...prev, [key]: e.target.value }));
         };
 
-    const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!/^\d+$/.test(e.target.value) && e.target.value !== '' && e.target.value !== '0') return;
-        setQuestion((prev) => ({ ...prev, numberOfTestCaseLines: e.target.value as unknown as number }));
-    };
+    const handleNumberChange =
+        (key: 'numberOfTestCaseLines' | 'numberOfOutputLines') => (e: React.ChangeEvent<HTMLInputElement>) => {
+            if (!/^\d+$/.test(e.target.value) && e.target.value !== '' && e.target.value !== '0') return;
+            setQuestion((prev) => ({ ...prev, [key]: e.target.value as unknown as number }));
+        };
 
     return (
         <div className="grid grid-cols-12 gap-10 text-text">
@@ -30,15 +31,26 @@ const CodingTestCase = () => {
                 <p className="text-gray-400">What does the input/output look like?</p>
             </div>
             <div className="col-span-7 flex flex-col gap-6">
-                <Label>
-                    Number of lines for each test case
-                    <Input
-                        value={question.numberOfTestCaseLines}
-                        onChange={handleNumberChange}
-                        className="mt-2 w-[120px]"
-                        type="number"
-                    />
-                </Label>
+                <div className="mt-2 grid grid-cols-2 gap-4">
+                    <Label>
+                        Number of lines for each test case
+                        <Input
+                            value={question.numberOfTestCaseLines}
+                            onChange={handleNumberChange('numberOfTestCaseLines')}
+                            className="mt-2 w-[120px]"
+                            type="number"
+                        />
+                    </Label>
+                    <Label>
+                        Number of lines for each output
+                        <Input
+                            value={question.numberOfOutputLines}
+                            onChange={handleNumberChange('numberOfOutputLines')}
+                            className="mt-2 w-[120px]"
+                            type="number"
+                        />
+                    </Label>
+                </div>
                 <div>
                     <Label>Your example test cases (this will be shown for candidate)</Label>
                     <div className="mt-2 flex gap-4">

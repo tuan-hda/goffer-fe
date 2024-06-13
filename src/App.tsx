@@ -11,10 +11,16 @@ import CommandPalette from './components/command/CommandPalette';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import useStreamStore from './stores/streamStore';
 
 function App() {
     const [isOpen, setOpen] = useState(false);
     const routes = useRoutes(routesConfig);
+    const initClient = useStreamStore((state) => state.initClient);
+
+    useEffect(() => {
+        initClient();
+    }, []);
 
     const inApp = window.location.pathname.startsWith('/app');
 

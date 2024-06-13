@@ -64,6 +64,7 @@ import AssessmentCreate from '@/pages/AssessmentCreate';
 import AssessmentResult from '@/pages/AssessmentResult';
 import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
 import CustomAssessment from '@/pages/CustomAssessment';
+import NewJobLayout from '@/layouts/NewJobLayout';
 
 const routesConfig: RouteObject[] = [
     {
@@ -262,9 +263,20 @@ const routesConfig: RouteObject[] = [
                 element: <NewOrganization />,
             },
             {
-                path: '/app/organization/:domain/new',
-                element: <NewJob />,
+                path: '/app/organization/:domain',
+                element: <NewJobLayout />,
+                children: [
+                    {
+                        path: '/app/organization/:domain/new',
+                        element: <NewJob />,
+                    },
+                    {
+                        path: '/app/organization/:domain/:id',
+                        element: <NewJob />,
+                    },
+                ],
             },
+
             {
                 path: '/project/new',
                 element: <NewProject />,

@@ -35,7 +35,7 @@ const EditExperience = () => {
     return (
         <Select value={data.experience} onValueChange={(value) => setData((prev) => ({ ...prev, experience: value }))}>
             <SelectTrigger className="flex-1">
-                <SelectValue defaultValue={'<1 year'} />
+                <SelectValue />
             </SelectTrigger>
             <SelectContent>
                 {experienceList.map((exp) => (

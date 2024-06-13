@@ -21,7 +21,7 @@ const NewResourceLayout = ({
     secondaryButton,
 }: NewResourceLayoutProps) => {
     const navigate = useNavigate();
-    const { domain } = useParams();
+    const { domain, id } = useParams();
 
     return (
         <form onSubmit={handleSubmit}>
@@ -43,23 +43,18 @@ const NewResourceLayout = ({
                             <div className="absolute -bottom-1 ml-1 w-full border-t border-t-gray-700 opacity-0 transition group-hover:opacity-100" />
                         </button>
 
-                        {showPreview && (
-                            <Button type="button" className="ml-auto min-w-0 rounded-xl" variant="outline">
-                                Preview
-                            </Button>
-                        )}
                         {secondaryButton}
 
                         <Button
                             disabled={loading}
                             type="submit"
                             className={classNames(
-                                'ml-2 min-w-0 rounded-xl',
+                                'ml-auto min-w-0 rounded-xl',
                                 !showPreview && !secondaryButton && 'ml-auto',
                             )}
                         >
                             {loading && <TbLoader className="mr-2 animate-spin text-base" />}
-                            {submitText ?? 'Create'}
+                            {id ? 'Update' : submitText ?? 'Create'}
                         </Button>
                     </div>
                 </div>

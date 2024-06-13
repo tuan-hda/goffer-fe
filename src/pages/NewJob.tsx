@@ -2,22 +2,24 @@ import { TbSword } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FirstPart, SecondPart, ThirdPart } from '@/components/newJob';
 import useCurrOrganization from '@/hooks/useCurrOrganization';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useNewJobStore from '@/stores/newJob';
 import { useEditorRef } from '@udecode/plate-common';
 import { isAxiosError } from 'axios';
-import { createJobService } from '@/services/jobs.service';
+import { createJobService, updateJobService } from '@/services/jobs.service';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { NewJob as NewJobType } from '@/types/job.type';
+import { Job, NewJob as NewJobType } from '@/types/job.type';
 import useListOrganizationJobs from '@/hooks/useListOrganizationJobs';
 import { shallow } from 'zustand/shallow';
 import NewResourceLayout from '@/layouts/NewResourceLayout';
+import useGetCurrentOrgJob from '@/hooks/useGetCurrentOrgJob';
 
 const NewJob = () => {
     const navigate = useNavigate();
-    const { domain } = useParams();
+    const { domain, id } = useParams();
 
     const { data: curr } = useCurrOrganization();
+    const { refetch: refetchCurrJob } = useGetCurrentOrgJob();
     const [data, clear] = useNewJobStore((state) => [state.data, state.clear], shallow);
     const { refetch } = useListOrganizationJobs();
 
@@ -26,7 +28,7 @@ const NewJob = () => {
     const [loading, setLoading] = useState(false);
     const editor = useEditorRef();
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const create = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             setLoading(true);
@@ -58,6 +60,50 @@ const NewJob = () => {
         }
     };
 
+    const update = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            if (id) {
+                const finalData: Partial<Job> = {
+                    title: data.title,
+                    description: JSON.stringify(editor.children),
+                    slots: data.slots,
+                    salaryFrom: data.salaryFrom || 'Negotiable',
+                    salaryTo: data.salaryTo,
+                    workingHours: data.workingHours,
+                    location: data.location,
+                    time: data.time,
+                    experience: data.experience,
+                    skills: data.skills,
+                    tools: data.tools,
+                };
+                if (!finalData.salaryTo) {
+                    delete finalData.salaryTo;
+                }
+                await updateJobService(id, finalData);
+                await Promise.all([refetch(), refetchCurrJob()]);
+                navigate(`/app/organization/${domain}/job/${id}`);
+                setError('');
+            }
+        } catch (error) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (isAxiosError(error)) {
+                return setError(error.response?.data.message || 'Something went wrong. Please try again.');
+            }
+            setError('Something went wrong. Please try again.');
+            console.log('Update job error', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSubmit = id ? update : create;
+
+    useEffect(() => {
+        if (data.description) editor.children = JSON.parse(data.description);
+    }, [editor]);
+
     return (
         <NewResourceLayout handleSubmit={handleSubmit} loading={loading}>
             <div className="mx-auto w-[620px]">
@@ -69,7 +115,7 @@ const NewJob = () => {
                         <AlertDescription>{error}</AlertDescription>
                     </Alert>
                 )}
-                <h1 className="text-3xl">Let&apos;s set up your new job</h1>
+                <h1 className="text-3xl">{id ? 'Edit job' : "Let's set up your new job"}</h1>
                 <FirstPart />
                 <SecondPart />
                 <ThirdPart />
