@@ -1,10 +1,11 @@
 import { Avatar } from '@nextui-org/react';
 import { Button } from '../ui/button';
 import classNames from 'classnames';
+import { Notification as NotificationType } from '@/types/notification.type';
 
 type NotificationProps = {
     isRead?: boolean;
-    notification: Notification;
+    notification: NotificationType;
 };
 
 const Notification = ({ isRead }: NotificationProps) => {

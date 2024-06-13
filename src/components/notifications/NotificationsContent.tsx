@@ -8,7 +8,9 @@ import NotificationWrapper from './NotificationWrapper';
 const NotificationsContent = () => {
     const { data: self } = useSelfProfileQuery();
 
-    const { notifications } = useNotification(self ? `notifications-${self.id}` : undefined);
+    const { notifications, channel } = useNotification(self ? `notifications-${self.id}` : undefined);
+
+    console.log(channel?.id);
 
     const isEmpty = notifications.length === 0;
 
