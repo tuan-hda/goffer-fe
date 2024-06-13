@@ -1,4 +1,5 @@
-import GenAIProvider from '@/components/genai/GenAIProvider';
+import GenAICreateJobProvider from '@/components/genai/GenAICreateJobProvider';
+import { CreateJobResult } from '@/components/genai/data';
 import { Button } from '@/components/ui/button';
 import classNames from 'classnames';
 import { TbChevronLeft, TbLoader, TbSparkles } from 'react-icons/tb';
@@ -24,6 +25,10 @@ const NewResourceLayout = ({
     const navigate = useNavigate();
     const { domain, id } = useParams();
 
+    const handleResponse = (result: CreateJobResult) => {
+        console.log('result', result);
+    };
+
     return (
         <form onSubmit={handleSubmit}>
             <img src="/diamond.png" alt="bloom" className="fixed left-[16vw] top-[4vh] w-[35vw] opacity-50" />
@@ -44,11 +49,11 @@ const NewResourceLayout = ({
                             <div className="absolute -bottom-1 ml-1 w-full border-t border-t-gray-700 opacity-0 transition group-hover:opacity-100" />
                         </button>
 
-                        <GenAIProvider systemMessage="">
-                            <Button variant="black">
+                        <GenAICreateJobProvider onResponse={handleResponse}>
+                            <Button type="button" variant="black">
                                 <TbSparkles className="mr-2 text-xl" /> GenAI
                             </Button>
-                        </GenAIProvider>
+                        </GenAICreateJobProvider>
 
                         {secondaryButton}
 
