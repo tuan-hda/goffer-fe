@@ -1,9 +1,12 @@
 import GenAICreateJobProvider from '@/components/genai/GenAICreateJobProvider';
 import { CreateJobResult } from '@/components/genai/data';
 import { Button } from '@/components/ui/button';
+import useNewJobStore, { initialData } from '@/stores/newJob';
+import { useEditorRef } from '@udecode/plate-common';
 import classNames from 'classnames';
 import { TbChevronLeft, TbLoader, TbSparkles } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 
 type NewResourceLayoutProps = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -24,9 +27,40 @@ const NewResourceLayout = ({
 }: NewResourceLayoutProps) => {
     const navigate = useNavigate();
     const { domain, id } = useParams();
+    const setData = useNewJobStore((state) => state.setData);
+    const editor = useEditorRef();
 
     const handleResponse = (result: CreateJobResult) => {
-        console.log('result', result);
+        console.log(result);
+        if (typeof result === 'string') {
+            return;
+        }
+        const { description, ...rest } = result;
+        setData(() => ({
+            ...initialData,
+            ...rest,
+        }));
+        const backup = editor.children;
+        try {
+            editor.children = description.map((d) => {
+                return {
+                    type: 'p',
+                    lineHeight: '1.5',
+                    children: [
+                        {
+                            text: d,
+                            fontSize: '14px',
+                            color: 'rgba(0, 0, 0, 0.9)',
+                        },
+                    ],
+                    id: 'a6ghm',
+                };
+            });
+        } catch (error) {
+            toast.error('Failed to parse description');
+            console.log(error);
+            editor.children = backup;
+        }
     };
 
     return (
