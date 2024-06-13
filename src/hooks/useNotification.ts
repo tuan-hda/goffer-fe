@@ -1,4 +1,5 @@
 import useStreamStore from '@/stores/streamStore';
+import { Notification } from '@/types/notification.type';
 import { useEffect, useRef, useState } from 'react';
 import { Channel, DefaultGenerics, Event } from 'stream-chat';
 
