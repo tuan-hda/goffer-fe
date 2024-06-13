@@ -5,8 +5,32 @@ import useCurrOrganization from '@/hooks/useCurrOrganization';
 import { toggleSavedOrg } from '@/services/interaction.service';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { People } from './people';
+import Jobs from './Jobs';
 
 const OrgDetail = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const [activeTab, setActiveTab] = useState('overview');
+
+    useEffect(() => {
+        const hash = location.hash.substring(1);
+
+        switch (hash) {
+            case 'people':
+                setActiveTab('people');
+                break;
+            case 'jobs':
+                setActiveTab('jobs');
+                break;
+            default:
+                setActiveTab('overview');
+        }
+    }, [location.hash]);
+
     const { data: org, refetch } = useCurrOrganization();
     if (!org) return;
 
@@ -18,11 +42,18 @@ const OrgDetail = () => {
         await toggleSavedOrg(org.id);
         await refetch();
     };
+    const onTabChange = (value: string) => {
+        setActiveTab(value);
+        navigate({
+            pathname: location.pathname,
+            hash: value === 'overview' ? '' : `#${value}`,
+        });
+    };
 
     return (
         <div className="flex w-full flex-row">
             <OrgPanel data={org} />
-            <Tabs defaultValue="overview" className="w-full">
+            <Tabs defaultValue={activeTab} onValueChange={onTabChange} className="w-full">
                 <div className="flex h-14 items-center justify-between gap-6 border-b px-8">
                     <TabsList className="h-full gap-2 rounded-none bg-transparent p-0">
                         <TabsTrigger
@@ -60,8 +91,12 @@ const OrgDetail = () => {
                 <TabsContent value="overview">
                     <Overview org={org} />
                 </TabsContent>
-                <TabsContent value="people">people</TabsContent>
-                <TabsContent value="jobs">jobs</TabsContent>
+                <TabsContent value="people">
+                    <People />
+                </TabsContent>
+                <TabsContent value="jobs">
+                    <Jobs org={org} />
+                </TabsContent>
             </Tabs>
         </div>
     );

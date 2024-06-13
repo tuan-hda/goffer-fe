@@ -5,11 +5,12 @@ import { Avatar } from '@nextui-org/react';
 interface Props {
     data: User;
     role: string;
+    onClick?: () => void;
 }
 
-const FounderCard = ({ data, role }: Props) => {
+const FounderCard = ({ data, role, onClick }: Props) => {
     return (
-        <div className="mb-4 flex h-16 w-full flex-row items-center gap-2">
+        <div onClick={onClick} className="mb-4 flex h-16 w-full flex-row items-center gap-2">
             <Avatar size="lg" className="" src={data.avatar} />
 
             <div className="flex h-full flex-col justify-around py-1">
