@@ -11,4 +11,7 @@ export type Project = ProjectCreate & {
     _id: string;
     createdAt: string;
     updatedAt: string;
+    owner: string;
 };
+
+export type ProjectUpdate = Partial<Project>;

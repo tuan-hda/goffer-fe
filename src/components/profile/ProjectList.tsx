@@ -2,10 +2,14 @@ import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import Project from '../projects/Project';
 import { Fragment } from 'react';
 import moment from 'moment';
+import useListProject from '@/hooks/useListProject';
 
 const ProjectList = () => {
-    const { data } = useSelfProfileQuery();
-    const projects = data?.projects || [];
+    const { data: self } = useSelfProfileQuery();
+    const { data } = useListProject({
+        owner: self?.id,
+    });
+    const projects = data?.results || [];
     const sortedProjects = projects.sort((a, b) => moment(b.createdAt).diff(moment(a.createdAt)));
 
     return (

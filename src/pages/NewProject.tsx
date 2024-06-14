@@ -1,9 +1,10 @@
 import { FormDraft, PreviewProject } from '@/components/projects';
 import { Button } from '@/components/ui/button';
+import useListProject from '@/hooks/useListProject';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import NewResourceLayout from '@/layouts/NewResourceLayout';
 import { uploadFileService } from '@/services/file.service';
-import { updateSelfService } from '@/services/users.service';
+import { createProjectService } from '@/services/projects.service';
 import useNewProjectStore from '@/stores/newProject';
 import { ProjectCreate } from '@/types/project.type';
 import catchAsync from '@/utils/catchAsync';
@@ -17,7 +18,10 @@ const NewProject = () => {
     const [previewing, setPreviewing] = useState(false);
     const [setError, info] = useNewProjectStore((state) => [state.setError, state.info]);
 
-    const { data: self, refetch } = useSelfProfileQuery();
+    const { data: self } = useSelfProfileQuery();
+    const { refetch } = useListProject({
+        owner: self?.id,
+    });
     const editor = useEditorRef();
     const navigate = useNavigate();
 
@@ -38,7 +42,7 @@ const NewProject = () => {
     const saveProject = () =>
         catchAsync(
             async () => {
-                const previousProjects = self?.projects || [];
+                setLoading(true);
                 const newProject: ProjectCreate = {
                     ...info,
                     content: JSON.stringify(editor.children),
@@ -53,10 +57,7 @@ const NewProject = () => {
                     // Do nothing
                 }
 
-                const updatedProjects = [...previousProjects, newProject];
-                await updateSelfService({
-                    projects: updatedProjects,
-                });
+                await createProjectService(newProject);
                 await refetch();
                 navigate('/app/profile?tab=projects');
             },
@@ -86,7 +87,13 @@ const NewProject = () => {
         <NewResourceLayout
             secondaryButton={
                 previewing ? (
-                    <Button type="button" variant="outline" onClick={() => setPreviewing(false)} className="ml-auto">
+                    <Button
+                        disabled={loading}
+                        type="button"
+                        variant="outline"
+                        onClick={() => setPreviewing(false)}
+                        className="ml-auto"
+                    >
                         Back to draft
                     </Button>
                 ) : null
