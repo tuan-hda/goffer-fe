@@ -1,4 +1,4 @@
-import { Project as ProjectType } from '@/types/project.type';
+import { ProjectCreate as ProjectType } from '@/types/project.type';
 import { useNavigate } from 'react-router-dom';
 
 type ProjectProps = {

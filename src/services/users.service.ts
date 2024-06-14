@@ -1,4 +1,4 @@
-import { GoogleProfile, UpdateUser, User } from '@/types/user.type';
+import { GoogleProfile, UpdateUser, User, UserUpdateRequest } from '@/types/user.type';
 import { baseAxios, noAuthAxios } from './base';
 import axios from 'axios';
 import config from '@/configs/config';
@@ -12,7 +12,7 @@ export const getSelfService = async () => {
     return (await baseAxios.get<User>('/users/self')).data;
 };
 
-export const updateSelfService = async (data: Partial<User>) => {
+export const updateSelfService = async (data: Partial<UserUpdateRequest>) => {
     return baseAxios.put<User>('/users/self', data);
 };
 

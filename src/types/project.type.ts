@@ -1,8 +1,14 @@
-export type Project = {
+export type ProjectCreate = {
     cover: string;
     description: string;
     title: string;
-    content: any[];
+    content: string;
     tools: string[];
     skills: string[];
+};
+
+export type Project = ProjectCreate & {
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
 };

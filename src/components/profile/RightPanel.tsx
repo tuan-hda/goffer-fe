@@ -10,9 +10,20 @@ import { User } from '@/types/user.type';
 import Recommendations from './Recommendations';
 import { Link } from 'react-router-dom';
 import ProjectList from './ProjectList';
+import { useEffect, useState } from 'react';
 
 const RightPanel = () => {
     const { profile, setProfile, cancelUpdate, updateProfile, loading } = useUpdateProfile();
+    const [selectedKey, setSelectedKey] = useState<string | number | null | undefined>();
+
+    useEffect(() => {
+        const search = new URLSearchParams(window.location.search);
+        const tab = search.get('tab');
+        if (tab && ['profile', 'experience', 'projects', 'recommendations'].includes(tab)) {
+            setSelectedKey(tab);
+        }
+    }, []);
+
     if (!profile) return null;
 
     return (
@@ -53,7 +64,14 @@ const RightPanel = () => {
                 className="mt-2 font-semibold"
             />
             <div className="-mx-2 w-full">
-                <Tabs variant="underlined" className="-mx-2 mt-10">
+                <Tabs
+                    selectedKey={selectedKey}
+                    onSelectionChange={(value) => {
+                        setSelectedKey(value);
+                    }}
+                    variant="underlined"
+                    className="-mx-2 mt-10"
+                >
                     <Tab
                         key="profile"
                         title={

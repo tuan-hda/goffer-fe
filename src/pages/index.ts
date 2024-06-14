@@ -38,3 +38,4 @@ export { default as Reports } from './Reports';
 export { default as UsersManagement } from './UsersManagement';
 export { default as QuestionBank } from './QuestionBank';
 export { default as QuestionBuilder } from './QuestionBuilder';
+export { default as ProjectDetail } from './ProjectDetail';

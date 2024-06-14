@@ -6,14 +6,16 @@ import { Textarea } from '../ui/textarea';
 import { useMemo, useRef, useState } from 'react';
 import { Image } from '@nextui-org/react';
 import { MyImageElement } from '../editor/plate-types';
+import { useEditorRef } from '@udecode/plate-common';
 
 const AdditionalInformation = () => {
     const [info, setInfo] = useNewProjectStore((state) => [state.info, state.setInfo]);
     const [uploadImage, setUploadImage] = useState<string | null>(null);
+    const editorRef = useEditorRef();
 
     const images = useMemo(() => {
         const results: string[] = [];
-        info.content.forEach((node) => {
+        editorRef.children.forEach((node) => {
             if (node.type === 'img') {
                 results.push((node as MyImageElement).url);
             }
@@ -46,7 +48,7 @@ const AdditionalInformation = () => {
                 }}
             />
 
-            <Label>Cover Image</Label>
+            <Label>Cover</Label>
             <Tabs defaultValue="upload" className="mt-2 w-[400px]">
                 <TabsList>
                     <TabsTrigger value="upload">Upload</TabsTrigger>
@@ -86,6 +88,7 @@ const AdditionalInformation = () => {
                         <div className="grid grid-cols-3 gap-3 pt-2">
                             {images.map((url, index) => (
                                 <button
+                                    type="button"
                                     onClick={() => {
                                         setInfo((prev) => ({ ...prev, cover: url }));
                                     }}
@@ -112,6 +115,7 @@ const AdditionalInformation = () => {
                                 const gradientUrl = `/gradients/0${index + 1}.png`;
                                 return (
                                     <button
+                                        type="button"
                                         onClick={() => {
                                             setInfo((prev) => ({ ...prev, cover: gradientUrl }));
                                         }}

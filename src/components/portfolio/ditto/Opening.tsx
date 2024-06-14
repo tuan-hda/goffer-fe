@@ -8,7 +8,7 @@ const INTERVAL = 2800;
 
 const wordConfig = {
     left: '12vh',
-    top: 0,
+    top: '0vh',
     rotate: 0,
 };
 const assetsConfig = {
@@ -26,9 +26,11 @@ const transitions = {
 const variants = {
     words: {
         outro: {
-            initial: wordConfig,
+            initial: {
+                ...wordConfig,
+            },
             animate: {
-                top: '-17vh',
+                top: '-18vh',
                 left: '20vh',
                 rotate: -10,
                 transition: transitions.outro,
