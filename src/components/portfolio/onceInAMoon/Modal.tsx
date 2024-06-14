@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Project } from '@/types/project.type';
+import { ProjectCreate } from '@/types/project.type';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
@@ -11,7 +11,7 @@ const scaleAnimation = {
 
 type ModalProps = {
     modal: { active: boolean; index: number };
-    projects: Project[];
+    projects: ProjectCreate[];
 };
 
 export default function Modal({ modal, projects }: ModalProps) {

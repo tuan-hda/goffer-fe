@@ -1,12 +1,7 @@
-import GenAICreateJobProvider from '@/components/genai/GenAICreateJobProvider';
-import { CreateJobResult } from '@/components/genai/data';
 import { Button } from '@/components/ui/button';
-import useNewJobStore, { initialData } from '@/stores/newJob';
-import { useEditorRef } from '@udecode/plate-common';
 import classNames from 'classnames';
-import { TbChevronLeft, TbLoader, TbSparkles } from 'react-icons/tb';
+import { TbChevronLeft, TbLoader } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'sonner';
 
 type NewResourceLayoutProps = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -18,7 +13,6 @@ type NewResourceLayoutProps = {
 };
 
 const NewResourceLayout = ({
-    showPreview = true,
     submitText,
     handleSubmit,
     loading,
@@ -27,41 +21,6 @@ const NewResourceLayout = ({
 }: NewResourceLayoutProps) => {
     const navigate = useNavigate();
     const { domain, id } = useParams();
-    const setData = useNewJobStore((state) => state.setData);
-    const editor = useEditorRef();
-
-    const handleResponse = (result: CreateJobResult) => {
-        console.log(result);
-        if (typeof result === 'string') {
-            return;
-        }
-        const { description, ...rest } = result;
-        setData(() => ({
-            ...initialData,
-            ...rest,
-        }));
-        const backup = editor.children;
-        try {
-            editor.children = description.map((d) => {
-                return {
-                    type: 'p',
-                    lineHeight: '1.5',
-                    children: [
-                        {
-                            text: d,
-                            fontSize: '14px',
-                            color: 'rgba(0, 0, 0, 0.9)',
-                        },
-                    ],
-                    id: 'a6ghm',
-                };
-            });
-        } catch (error) {
-            toast.error('Failed to parse description');
-            console.log(error);
-            editor.children = backup;
-        }
-    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -83,19 +42,9 @@ const NewResourceLayout = ({
                             <div className="absolute -bottom-1 ml-1 w-full border-t border-t-gray-700 opacity-0 transition group-hover:opacity-100" />
                         </button>
 
-                        <GenAICreateJobProvider onResponse={handleResponse}>
-                            <Button type="button" variant="black">
-                                <TbSparkles className="mr-2 text-xl" /> GenAI
-                            </Button>
-                        </GenAICreateJobProvider>
-
                         {secondaryButton}
 
-                        <Button
-                            disabled={loading}
-                            type="submit"
-                            className={classNames('min-w-0 rounded-xl', !showPreview && !secondaryButton && 'ml-auto')}
-                        >
+                        <Button disabled={loading} type="submit" className={classNames('min-w-0 rounded-xl')}>
                             {loading && <TbLoader className="mr-2 animate-spin text-base" />}
                             {id ? 'Update' : submitText ?? 'Create'}
                         </Button>

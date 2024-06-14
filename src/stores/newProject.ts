@@ -1,27 +1,18 @@
-import { Value } from '@udecode/plate-common';
+import { ProjectCreate } from '@/types/project.type';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-export type Info = {
-    cover: string;
-    description: string;
-    title: string;
-    content: Value;
-    tools: string[];
-    skills: string[];
-};
-
-const initialData: Info = {
+const initialData: ProjectCreate = {
     cover: '',
     description: '',
     title: '',
-    content: [],
+    content: '',
     tools: [],
     skills: [],
 };
 
 type State = {
-    info: Info;
+    info: ProjectCreate;
     error: string;
 };
 

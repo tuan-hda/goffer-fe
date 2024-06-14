@@ -394,6 +394,7 @@ const initialValue = [
 type PlateEditorProps = Omit<PlateProps, 'children'> & {
     className?: string;
     wrapperClassName?: string;
+    top?: string;
 };
 
 export function PlateEditor(props: PlateEditorProps) {
@@ -409,7 +410,7 @@ export function PlateEditor(props: PlateEditorProps) {
                             props.wrapperClassName,
                         )}
                     >
-                        <FixedToolbar className="!top-0">
+                        <FixedToolbar className={classNames('top-0', props.top)}>
                             <FixedToolbarButtons />
                         </FixedToolbar>
 

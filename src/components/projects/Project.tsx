@@ -1,13 +1,15 @@
-import { Info } from '@/stores/newProject';
+import { Project as ProjectType } from '@/types/project.type';
 import { Image } from '@nextui-org/react';
 import classNames from 'classnames';
 import { CSSProperties, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 type ProjectProps = {
-    info: Info;
+    info: ProjectType;
+    url?: string;
 };
 
-const Project = ({ info }: ProjectProps) => {
+const Project = ({ info, url }: ProjectProps) => {
     const ref = useRef<HTMLParagraphElement>(null);
     const [style, setStyle] = useState<CSSProperties>({});
 
@@ -31,7 +33,7 @@ const Project = ({ info }: ProjectProps) => {
     }, []);
 
     return (
-        <div className="flex h-[200px] gap-6 rounded-3xl">
+        <Link to={url || info._id} className="flex h-[200px] gap-6 rounded-3xl">
             <div className="aspect-[4/3]">
                 <Image
                     classNames={{
@@ -60,7 +62,7 @@ const Project = ({ info }: ProjectProps) => {
                     <div className="absolute right-0 top-0 h-full w-2 bg-gradient-to-r from-black/0 to-gray-500/10"></div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 

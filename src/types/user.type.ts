@@ -1,3 +1,5 @@
+import { Project, ProjectCreate } from './project.type';
+
 export type User = {
     id: string;
     email: string;
@@ -24,6 +26,10 @@ export type User = {
     org?: string;
     status?: string;
     badges?: string[];
+};
+
+export type UserUpdateRequest = Omit<User, 'projects'> & {
+    projects?: ProjectCreate[];
 };
 
 export type Education = {

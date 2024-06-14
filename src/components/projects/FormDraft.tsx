@@ -75,15 +75,7 @@ const FormDraft = ({ hidden }: FormDraftProps) => {
                 }}
             />
             <div className="h-16"></div>
-            <PlateEditor
-                onChange={(value) =>
-                    setInfo((prev) => ({
-                        ...prev,
-                        content: value,
-                    }))
-                }
-                wrapperClassName="min-h-[400px] border-none shadow-small bg-white/60"
-            />
+            <PlateEditor top="top-16" wrapperClassName="min-h-[400px] border-none shadow-small bg-white/60" />
             <div className="h-24" />
         </div>
     );

@@ -1,11 +1,20 @@
-import { projects } from '@/data/mock/projects';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import Project from '../projects/Project';
 import { Fragment } from 'react';
+import moment from 'moment';
+import useListProject from '@/hooks/useListProject';
 
 const ProjectList = () => {
+    const { data: self } = useSelfProfileQuery();
+    const { data } = useListProject({
+        owner: self?.id,
+    });
+    const projects = data?.results || [];
+    const sortedProjects = projects.sort((a, b) => moment(b.createdAt).diff(moment(a.createdAt)));
+
     return (
         <div className="space-y-8">
-            {projects.map((project, index) => (
+            {sortedProjects.map((project, index) => (
                 <Fragment key={index}>
                     <Project key={index} info={project} />
                     {index < projects.length - 1 && <div className="border-t"></div>}
