@@ -1,9 +1,9 @@
-import { TbSword } from 'react-icons/tb';
+import { TbSparkles, TbSword } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FirstPart, SecondPart, ThirdPart } from '@/components/newJob';
 import useCurrOrganization from '@/hooks/useCurrOrganization';
 import { useEffect, useRef, useState } from 'react';
-import useNewJobStore from '@/stores/newJob';
+import useNewJobStore, { initialData } from '@/stores/newJob';
 import { useEditorRef } from '@udecode/plate-common';
 import { isAxiosError } from 'axios';
 import { createJobService, updateJobService } from '@/services/jobs.service';
@@ -13,6 +13,10 @@ import useListOrganizationJobs from '@/hooks/useListOrganizationJobs';
 import { shallow } from 'zustand/shallow';
 import NewResourceLayout from '@/layouts/NewResourceLayout';
 import useGetCurrentOrgJob from '@/hooks/useGetCurrentOrgJob';
+import GenAICreateJobProvider from '@/components/genai/GenAICreateJobProvider';
+import { Button } from '@/components/ui/button';
+import { CreateJobResult } from '@/components/genai/data';
+import { toast } from 'sonner';
 
 const NewJob = () => {
     const navigate = useNavigate();
@@ -20,7 +24,7 @@ const NewJob = () => {
 
     const { data: curr } = useCurrOrganization();
     const { refetch: refetchCurrJob } = useGetCurrentOrgJob();
-    const [data, clear] = useNewJobStore((state) => [state.data, state.clear], shallow);
+    const [data, setData, clear] = useNewJobStore((state) => [state.data, state.setData, state.clear], shallow);
     const { refetch } = useListOrganizationJobs();
 
     const ref = useRef<HTMLDivElement>(null);
@@ -104,8 +108,51 @@ const NewJob = () => {
         if (data.description) editor.children = JSON.parse(data.description);
     }, [editor]);
 
+    const handleResponse = (result: CreateJobResult) => {
+        console.log(result);
+        if (typeof result === 'string') {
+            return;
+        }
+        const { description, ...rest } = result;
+        setData(() => ({
+            ...initialData,
+            ...rest,
+        }));
+        const backup = editor.children;
+        try {
+            editor.children = description.map((d) => {
+                return {
+                    type: 'p',
+                    lineHeight: '1.5',
+                    children: [
+                        {
+                            text: d,
+                            fontSize: '14px',
+                            color: 'rgba(0, 0, 0, 0.9)',
+                        },
+                    ],
+                    id: 'a6ghm',
+                };
+            });
+        } catch (error) {
+            toast.error('Failed to parse description');
+            console.log(error);
+            editor.children = backup;
+        }
+    };
+
     return (
-        <NewResourceLayout handleSubmit={handleSubmit} loading={loading}>
+        <NewResourceLayout
+            secondaryButton={
+                <GenAICreateJobProvider onResponse={handleResponse}>
+                    <Button type="button" variant="black">
+                        <TbSparkles className="mr-2 text-xl" /> GenAI
+                    </Button>
+                </GenAICreateJobProvider>
+            }
+            handleSubmit={handleSubmit}
+            loading={loading}
+        >
             <div className="mx-auto w-[620px]">
                 <div className="h-16" />
                 {error && (
