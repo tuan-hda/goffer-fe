@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
 import { formSchema } from '@/utils/application';
+import { Job } from './job.type';
+import { User } from './user.type';
 
 export type StringSchemaFields = {
     [P in keyof z.infer<typeof formSchema>]: z.infer<typeof formSchema>[P] extends string | undefined ? P : never;
@@ -23,7 +25,16 @@ export type TextItemProps = {
 
 export type FormItemProps = FileItemProps | TextItemProps;
 
-export type FormProps = z.infer<typeof formSchema>;
+export type NewApply = z.infer<typeof formSchema>;
+
+export type Apply = NewApply & {
+    id: string;
+    job: Job;
+    phase: string;
+    owner: User;
+};
+
+export type EditApply = Partial<Apply>;
 
 export type AnswerProps = {
     questionId: string;

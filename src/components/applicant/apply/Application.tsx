@@ -8,7 +8,7 @@ import useJobQuestions from '@/hooks/useJobQuestions';
 import useJobStore from '@/stores/jobStore';
 import { List } from '@/types/list.type';
 import { Question } from '@/types/question.type';
-import { FormProps } from '@/types/application.type';
+import { NewApply } from '@/types/application.type';
 import { formFields, formSchema } from '@/utils/application';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,6 +16,8 @@ import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { Button } from '@/components/ui/button';
 import { Image } from '@nextui-org/react';
 import { AvatarEdit } from '@/components/common';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { useQueryApply } from '@/hooks/useGetApply';
 
 const Application = () => {
     const navigate = useNavigate();
@@ -25,6 +27,8 @@ const Application = () => {
     const { data } = useJobQuestions(id);
     const { applicationInfo, setInfo, answers } = useJobStore();
     const { data: detail } = useGetOrganizationJob(id);
+    const { data: user } = useSelfProfileQuery();
+    const { data: listApply } = useQueryApply({ owner: user?.id, job: id });
 
     const [loading, setLoading] = useState(false);
     const [avatar, setAvatar] = useState<string>('');
@@ -39,7 +43,7 @@ const Application = () => {
     });
     const totalSteps = questionData.totalResults || 2;
 
-    const form = useForm<FormProps>({
+    const form = useForm<NewApply>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             profilePicture: undefined,
@@ -76,7 +80,7 @@ const Application = () => {
         }
     }, [location.hash, navigate]);
 
-    function onSubmit(values: FormProps) {
+    function onSubmit(values: NewApply) {
         setInfo(values);
         if (stepNum < totalSteps) {
             navigate(`#step-${stepNum + 1}`);
