@@ -1,6 +1,6 @@
 export type ListQueryOptions = {
     page?: number;
     limit?: number;
-    sort?: string;
+    sortBy?: string;
     populate?: string;
 };
