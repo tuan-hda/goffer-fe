@@ -1,4 +1,4 @@
-import { ProjectCreate, Project, ProjectUpdate } from '@/types/project.type';
+import { ProjectCreate, Project, ProjectUpdate, ProjectDetail } from '@/types/project.type';
 import { baseAxios } from './base';
 import { List } from '@/types/list.type';
 import { ListQueryOptions } from '@/types/common.type';
@@ -13,7 +13,7 @@ export const listProjectsService = async (options?: Partial<Record<keyof (Projec
         })
     ).data;
 
-export const getProjectService = async (id: string) => (await baseAxios.get<Project>(`/projects/${id}`)).data;
+export const getProjectService = async (id: string) => (await baseAxios.get<ProjectDetail>(`/projects/${id}`)).data;
 
 export const updateProjectService = async (id: string, data: ProjectUpdate) =>
     (await baseAxios.patch<Project>(`/projects/${id}`, data)).data;

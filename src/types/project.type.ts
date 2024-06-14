@@ -1,3 +1,5 @@
+import { User } from './user.type';
+
 export type ProjectCreate = {
     cover: string;
     description: string;
@@ -8,10 +10,14 @@ export type ProjectCreate = {
 };
 
 export type Project = ProjectCreate & {
-    _id: string;
+    id: string;
     createdAt: string;
     updatedAt: string;
     owner: string;
+};
+
+export type ProjectDetail = Omit<Project, 'owner'> & {
+    owner: User;
 };
 
 export type ProjectUpdate = Partial<Project>;

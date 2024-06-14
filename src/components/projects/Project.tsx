@@ -33,7 +33,10 @@ const Project = ({ info, url }: ProjectProps) => {
     }, []);
 
     return (
-        <Link to={url || info._id} className="flex h-[200px] gap-6 rounded-3xl">
+        <Link
+            to={url || `/project/${info.id}?previousUrl=${location.pathname}`}
+            className="flex h-[200px] gap-6 rounded-3xl"
+        >
             <div className="aspect-[4/3]">
                 <Image
                     classNames={{
