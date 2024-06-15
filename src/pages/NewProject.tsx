@@ -1,4 +1,5 @@
 import { FormDraft, PreviewProject } from '@/components/projects';
+import ProjectGenerateWithAI from '@/components/projects/ProjectGenerateWithAI';
 import { Button } from '@/components/ui/button';
 import useListProject from '@/hooks/useListProject';
 import useProjectDetail from '@/hooks/useProjectDetail';
@@ -141,7 +142,9 @@ const NewProject = () => {
                     <Button disabled={loading} type="button" variant="outline" onClick={() => setPreviewing(false)}>
                         Back to draft
                     </Button>
-                ) : null
+                ) : (
+                    <ProjectGenerateWithAI setInitialValue={setInitialValue} />
+                )
             }
             showPreview={false}
             submitText={previewing ? 'Publish' : 'Continue'}

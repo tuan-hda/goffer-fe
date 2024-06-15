@@ -109,7 +109,6 @@ const NewJob = () => {
     }, [editor]);
 
     const handleResponse = (result: CreateJobResult) => {
-        console.log(result);
         if (typeof result === 'string') {
             return;
         }
