@@ -50,3 +50,36 @@ export const GEN_AI_CREATE_JOB = {
     The response should not include redundant spaces, and generate the longest description possible. The result should be in JSON format.
 `,
 };
+
+export type CreateProjectResult =
+    | {
+          description: string;
+          title: string;
+          content: string[];
+          tools: string[];
+          skills: string[];
+      }
+    | string;
+
+export const GEN_AI_CREATE_PROJECT = {
+    min: 80,
+    title: 'Create Project with AI',
+    systemMessage: `
+    You are a project assistant. Your task is to create a project based on the given information. This project is used for improving quality of user's portfolio. Generate as long as possible.
+    Only return the object with the following format: {
+        description: string;
+        title: string;
+        content: string[];
+        tools: string[];
+        skills: string[];
+    }
+    No yapping. No explanation.
+
+    - for "skills" field, return some of these values: ${skills.map((skill) => skill.value).join(',')}, maximum is 3
+    - for "tools" field, return some of these values: ${tools.map((tool) => tool.value).join(',')}, maximum is 7
+    - for "description", it should be a short description of the project (around 100-200 characters).
+    - for "content", it should be a detailed description of the project, everything about it. Each paragraph should be each line. You should write like an article based on the given information.
+    
+    The response of yours should not include redundant spaces, and generate the longest content possible. The result should be in JSON format, nothing else. No yapping.
+    `,
+};
