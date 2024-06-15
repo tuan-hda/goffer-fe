@@ -286,6 +286,10 @@ const routesConfig: RouteObject[] = [
                 element: <ProjectDetailPage />,
             },
             {
+                path: '/project/:projectId/edit',
+                element: <NewProject />,
+            },
+            {
                 path: '/job',
                 element: <FocusLayout />,
                 children: [
