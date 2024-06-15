@@ -11,9 +11,11 @@ import { TbTerminal } from 'react-icons/tb';
 
 type FormDraftProps = {
     hidden?: boolean;
+    editorKey?: string;
+    initialValue?: any[];
 };
 
-const FormDraft = ({ hidden }: FormDraftProps) => {
+const FormDraft = ({ hidden, editorKey, initialValue }: FormDraftProps) => {
     const [info, setInfo, error] = useNewProjectStore((state) => [state.info, state.setInfo, state.error], shallow);
 
     return (
@@ -75,7 +77,12 @@ const FormDraft = ({ hidden }: FormDraftProps) => {
                 }}
             />
             <div className="h-16"></div>
-            <PlateEditor top="top-16" wrapperClassName="min-h-[400px] border-none shadow-small bg-white/60" />
+            <PlateEditor
+                key={editorKey}
+                initialValue={initialValue}
+                top="top-16"
+                wrapperClassName="min-h-[400px] border-none shadow-small bg-white/60"
+            />
             <div className="h-24" />
         </div>
     );

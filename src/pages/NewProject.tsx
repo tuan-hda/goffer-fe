@@ -1,22 +1,29 @@
 import { FormDraft, PreviewProject } from '@/components/projects';
 import { Button } from '@/components/ui/button';
 import useListProject from '@/hooks/useListProject';
+import useProjectDetail from '@/hooks/useProjectDetail';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import NewResourceLayout from '@/layouts/NewResourceLayout';
 import { uploadFileService } from '@/services/file.service';
-import { createProjectService } from '@/services/projects.service';
+import { createProjectService, updateProjectService } from '@/services/projects.service';
 import useNewProjectStore from '@/stores/newProject';
-import { ProjectCreate } from '@/types/project.type';
+import { ProjectCreate, ProjectUpdate } from '@/types/project.type';
 import catchAsync from '@/utils/catchAsync';
 import { dataURLtoFile } from '@/utils/file';
 import { useEditorRef } from '@udecode/plate-common';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const NewProject = () => {
     const [loading, setLoading] = useState(false);
     const [previewing, setPreviewing] = useState(false);
-    const [setError, info] = useNewProjectStore((state) => [state.setError, state.info]);
+    const [setError, info, setInfo] = useNewProjectStore((state) => [state.setError, state.info, state.setInfo]);
+    const { projectId } = useParams();
+    const { data: project } = useProjectDetail(projectId);
+    const { refetch: refetchProject } = useProjectDetail(projectId);
+
+    const [initialValue, setInitialValue] = useState<any[]>([]);
 
     const { data: self } = useSelfProfileQuery();
     const { refetch } = useListProject({
@@ -39,11 +46,45 @@ const NewProject = () => {
         return res;
     };
 
+    useEffect(() => {
+        if (projectId && project) {
+            try {
+                setInfo({
+                    title: project.title,
+                    cover: project.cover,
+                    content: '',
+                    description: project.description,
+                    skills: project.skills,
+                    tools: project.tools,
+                });
+                const content = JSON.parse(project.content);
+                setInitialValue(content);
+            } catch (error) {
+                toast.error('Failed to load project');
+            }
+        }
+    }, [project, projectId]);
+
+    const editorKey = useMemo(() => {
+        if (initialValue) {
+            return window.crypto.randomUUID();
+        }
+    }, [initialValue]);
+
+    const createProject = async (projectData: ProjectCreate) => {
+        await createProjectService(projectData);
+    };
+
+    const updateProject = async (projectId: string, projectData: Partial<ProjectUpdate>) => {
+        await updateProjectService(projectId, projectData);
+        await refetchProject();
+    };
+
     const saveProject = () =>
         catchAsync(
             async () => {
                 setLoading(true);
-                const newProject: ProjectCreate = {
+                const projectData: ProjectCreate = {
                     ...info,
                     content: JSON.stringify(editor.children),
                 };
@@ -52,12 +93,16 @@ const NewProject = () => {
                     const cover = info.cover;
                     const result = dataURLtoFile(cover, 'cover.jpg');
                     const image = await uploadFileService(result);
-                    newProject.cover = image.data.file.url;
+                    projectData.cover = image.data.file.url;
                 } catch (error) {
                     // Do nothing
                 }
 
-                await createProjectService(newProject);
+                if (!projectId) {
+                    await createProject(projectData);
+                } else {
+                    await updateProject(projectId, projectData);
+                }
                 await refetch();
                 navigate('/app/profile?tab=projects');
             },
@@ -85,15 +130,15 @@ const NewProject = () => {
 
     return (
         <NewResourceLayout
+            helperTitle={
+                <span className="mr-4 text-sm">
+                    {projectId ? 'Edit project' : 'Create new project'}
+                    {projectId ? ` - ${project?.title}` : ''}
+                </span>
+            }
             secondaryButton={
                 previewing ? (
-                    <Button
-                        disabled={loading}
-                        type="button"
-                        variant="outline"
-                        onClick={() => setPreviewing(false)}
-                        className="ml-auto"
-                    >
+                    <Button disabled={loading} type="button" variant="outline" onClick={() => setPreviewing(false)}>
                         Back to draft
                     </Button>
                 ) : null
@@ -103,7 +148,7 @@ const NewProject = () => {
             handleSubmit={handleSubmit}
             loading={loading}
         >
-            <FormDraft hidden={previewing} />
+            <FormDraft editorKey={editorKey} initialValue={initialValue} hidden={previewing} />
             <PreviewProject hidden={!previewing} />
         </NewResourceLayout>
     );

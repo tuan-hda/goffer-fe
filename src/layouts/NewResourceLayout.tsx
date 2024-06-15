@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import classNames from 'classnames';
 import { TbChevronLeft, TbLoader } from 'react-icons/tb';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 type NewResourceLayoutProps = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -10,6 +10,7 @@ type NewResourceLayoutProps = {
     submitText?: string;
     showPreview?: boolean;
     secondaryButton?: React.ReactNode;
+    helperTitle?: React.ReactNode;
 };
 
 const NewResourceLayout = ({
@@ -18,9 +19,13 @@ const NewResourceLayout = ({
     loading,
     children,
     secondaryButton,
+    helperTitle,
 }: NewResourceLayoutProps) => {
     const navigate = useNavigate();
     const { domain, id } = useParams();
+    const [searchParams] = useSearchParams();
+
+    const previousUrl = searchParams.get('previousUrl');
 
     return (
         <form onSubmit={handleSubmit}>
@@ -35,12 +40,14 @@ const NewResourceLayout = ({
                     <div className="mx-auto flex h-full max-w-7xl items-center gap-2">
                         <button
                             type="button"
-                            onClick={() => navigate(domain ? `/app/organization/${domain}` : '/app')}
+                            onClick={() => navigate(previousUrl || (domain ? `/app/organization/${domain}` : '/app'))}
                             className="group relative mr-auto flex flex-shrink-0 gap-2 text-sm"
                         >
                             <TbChevronLeft className="text-xl" /> Go home
                             <div className="absolute -bottom-1 ml-1 w-full border-t border-t-gray-700 opacity-0 transition group-hover:opacity-100" />
                         </button>
+
+                        {helperTitle}
 
                         {secondaryButton}
 

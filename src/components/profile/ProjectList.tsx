@@ -1,7 +1,6 @@
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import Project from '../projects/Project';
 import { Fragment } from 'react';
-import moment from 'moment';
 import useListProject from '@/hooks/useListProject';
 
 const ProjectList = () => {
@@ -10,11 +9,10 @@ const ProjectList = () => {
         owner: self?.id,
     });
     const projects = data?.results || [];
-    const sortedProjects = projects.sort((a, b) => moment(b.createdAt).diff(moment(a.createdAt)));
 
     return (
         <div className="space-y-8">
-            {sortedProjects.map((project, index) => (
+            {projects.map((project, index) => (
                 <Fragment key={index}>
                     <Project key={index} info={project} />
                     {index < projects.length - 1 && <div className="border-t"></div>}

@@ -39,6 +39,7 @@ import {
     UsersManagement,
     QuestionBank,
     QuestionBuilder,
+    ProjectDetailPage,
 } from '../pages';
 import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
@@ -276,9 +277,16 @@ const routesConfig: RouteObject[] = [
                     },
                 ],
             },
-
             {
                 path: '/project/new',
+                element: <NewProject />,
+            },
+            {
+                path: '/project/:projectId',
+                element: <ProjectDetailPage />,
+            },
+            {
+                path: '/project/:projectId/edit',
                 element: <NewProject />,
             },
             {
