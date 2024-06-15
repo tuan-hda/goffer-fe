@@ -3,8 +3,6 @@ import { PlainPlate, Reveal } from '../common';
 import { ProjectDetail } from '@/types/project.type';
 import { Fragment } from 'react/jsx-runtime';
 import { useCallback } from 'react';
-import { produce } from 'immer';
-import { Node } from 'slate';
 
 type ProjectDetailContentProps = {
     scaleType?: 'actual' | 'viewport';
@@ -32,11 +30,43 @@ const ProjectDetailContent = ({ scaleType = 'viewport', data }: ProjectDetailCon
         image: 'w-full rounded-none',
     };
 
+    const traverse = (node: any, fontSize: string, lineHeight: number) => {
+        const result = {
+            ...node,
+            fontSize,
+            lineHeight,
+        };
+        if (node.children) {
+            result.children = node.children.map((child: any) => traverse(child, fontSize, lineHeight));
+        }
+        return result;
+    };
+
     const getPlateData = useCallback(() => {
         try {
-            const parseData = JSON.parse(data.content);
-            const styledContent = produce(parseData, (draft) => {});
-        } catch (error) {}
+            const nodeList = JSON.parse(data.content);
+            return nodeList.map((node: any) => {
+                switch (node.type) {
+                    case 'heading-three':
+                        node.type = 'h3';
+                        break;
+                    case 'heading-two':
+                        node.type = 'h2';
+                        break;
+                    case 'heading-one':
+                        node.type = 'h1';
+                        break;
+                    default:
+                        node.type = 'p';
+                        node.fontSize = scaleType === 'viewport' ? '2vh' : '1.25rem';
+                }
+                node.lineHeight = 2;
+                return traverse(node, node.fontSize, node.lineHeight);
+            });
+        } catch (error) {
+            console.log(error);
+            return [];
+        }
     }, []);
 
     return (
@@ -50,7 +80,7 @@ const ProjectDetailContent = ({ scaleType = 'viewport', data }: ProjectDetailCon
                         SKILLS:{' '}
                         <span className="portfolio-secondary">
                             {data.skills.map((skill, index) => (
-                                <Fragment>
+                                <Fragment key={skill}>
                                     <span>{skill}</span> {index < data.skills.length - 1 && <span>•</span>}{' '}
                                 </Fragment>
                             ))}
@@ -64,7 +94,7 @@ const ProjectDetailContent = ({ scaleType = 'viewport', data }: ProjectDetailCon
                         TOOLS:{' '}
                         <span className="portfolio-secondary">
                             {data.tools.map((tool, index) => (
-                                <Fragment>
+                                <Fragment key={tool}>
                                     <span>{tool}</span> {index < data.tools.length - 1 && <span>•</span>}{' '}
                                 </Fragment>
                             ))}
@@ -83,7 +113,7 @@ const ProjectDetailContent = ({ scaleType = 'viewport', data }: ProjectDetailCon
 
             <Reveal threshold={0.2}>
                 <div className="portfolio-text space-y-[6vh]">
-                    <PlainPlate />
+                    <PlainPlate data={getPlateData()} />
                 </div>
             </Reveal>
         </div>

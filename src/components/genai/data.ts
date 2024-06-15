@@ -47,6 +47,6 @@ export const GEN_AI_CREATE_JOB = {
     - for "salaryFrom" from, return a number in string format
     - for "salaryTo", return a number in string format if user specify the data, else return undefined
     - for "description" field, return string list. Some section like: responsibilities, requirements, benefits should come with list format if possible (comes with a "-"). Each item in description should be each line.
-    The response should not include redundant spaces, and generate the longest description possible.
+    The response should not include redundant spaces, and generate the longest description possible. The result should be in JSON format.
 `,
 };
