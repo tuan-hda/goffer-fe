@@ -16,11 +16,14 @@ import catchAsync from '@/utils/catchAsync';
 import { User } from '@/types/user.type';
 import { updateSelfService } from '@/services/users.service';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import classNames from 'classnames';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const GenerateProfileWithAI = () => {
     const [opened, setOpened] = useState(false);
     const [loading, setLoading] = useState(false);
     const [profileResult, setProfileResult] = useState<GenerateProfileResult | null>(null);
+    const { data: self } = useSelfProfileQuery();
 
     const { refetch } = useSelfProfileQuery();
 
@@ -131,11 +134,24 @@ const GenerateProfileWithAI = () => {
                 </AlertDialogContent>
             </AlertDialog>
 
-            <GenAIGenerateProfileProvider onResponse={handleResponse}>
-                <Button variant="black" className="ml-auto" size="icon">
-                    <TbSparkles className="text-lg" />
-                </Button>
-            </GenAIGenerateProfileProvider>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger>
+                        <div className={classNames((!self || !self.isPro) && 'pointer-events-none')}>
+                            <GenAIGenerateProfileProvider onResponse={handleResponse}>
+                                <Button disabled={!self || !self.isPro} variant="black" className="ml-auto" size="icon">
+                                    <TbSparkles className="text-lg" />
+                                </Button>
+                            </GenAIGenerateProfileProvider>
+                        </div>
+                    </TooltipTrigger>
+                    {(!self || !self.isPro) && (
+                        <TooltipContent>
+                            <p>Subscribe to Pro plan to unlock</p>
+                        </TooltipContent>
+                    )}
+                </Tooltip>
+            </TooltipProvider>
         </>
     );
 };

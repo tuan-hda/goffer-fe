@@ -3,6 +3,8 @@ import { GenerateProfileResult as ResultType } from './data';
 import { GEN_AI_GENERATE_PROFILE as GEN_AI } from './data';
 
 import GenAIProvider from '@/components/genai/GenAIProvider';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import classNames from 'classnames';
 
 type GenAIGenerateProfileProviderProps = {
     children?: React.ReactNode;
@@ -10,6 +12,8 @@ type GenAIGenerateProfileProviderProps = {
 };
 
 const GenAIGenerateProfileProvider = ({ children, onResponse }: GenAIGenerateProfileProviderProps) => {
+    const { data: self } = useSelfProfileQuery();
+
     const handleResponse = (result: string) => {
         try {
             const data = JSON.parse(result) as ResultType;
@@ -22,7 +26,7 @@ const GenAIGenerateProfileProvider = ({ children, onResponse }: GenAIGeneratePro
     };
     return (
         <GenAIProvider onResponse={handleResponse} {...GEN_AI}>
-            {children}
+            <div className={classNames(self?.isPro ? 'pointer-events-auto' : 'pointer')}>{children}</div>
         </GenAIProvider>
     );
 };
