@@ -44,7 +44,7 @@ const ApplicantResponse = () => {
                 <CardContent className="pb-2">
                     <AudioRecorder
                         mock
-                        data={{
+                        question={{
                             id: '',
                             constraint: 1,
                             content: '',

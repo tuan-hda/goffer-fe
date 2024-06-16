@@ -5,7 +5,12 @@ import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFill
 import { LiaUndoAltSolid } from 'react-icons/lia';
 import { Question } from '@/types/question.type';
 import moment from 'moment';
-import useJobStore from '@/stores/jobStore';
+import classNames from 'classnames';
+import useUserAnswer from '@/hooks/useUserAnswer';
+import { uploadFileService } from '@/services/file.service';
+import { isAxiosError } from 'axios';
+import { toast } from 'sonner';
+import { submitApplyAudioAnswerService } from '@/services/answer.service';
 
 interface IconButtonProps {
     ariaLabel: string;
@@ -20,6 +25,23 @@ const formatTime = (x: number) => {
     var minutes = Math.floor(d.asMinutes());
     var seconds = Math.floor(d.asSeconds()) % 60;
     return `${minutes < 10 ? minutes : `0${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
+};
+
+const upload = async (blobUrl: string) => {
+    try {
+        const response = await fetch(blobUrl);
+        const blob = await response.blob();
+        const file = new File([blob], 'audio.webm', { type: blob.type });
+
+        const result = await uploadFileService(file, 'audio');
+        return result.data;
+    } catch (error) {
+        console.log('Error uploading file:', error);
+        if (isAxiosError(error)) {
+            toast.error(error.response?.data.message || 'Error uploading file. Please try again.');
+            return;
+        }
+    }
 };
 
 const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonProps) => (
@@ -37,11 +59,11 @@ const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonP
 );
 
 interface Props {
-    data: Question;
+    question: Question;
     mock?: boolean;
 }
 
-const AudioRecorder = ({ data, mock }: Props) => {
+const AudioRecorder = ({ question, mock }: Props) => {
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
@@ -52,7 +74,7 @@ const AudioRecorder = ({ data, mock }: Props) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
     const frameRef = useRef<number | null>(null);
-    const { answers, updateAnswer, removeAnswer } = useJobStore();
+    const { data: answer, refetch } = useUserAnswer(question.id);
 
     useEffect(() => {
         if (mock) {
@@ -64,18 +86,20 @@ const AudioRecorder = ({ data, mock }: Props) => {
     }, [mock]);
 
     useEffect(() => {
+        refetch();
+    }, [question.id]);
+
+    useEffect(() => {
         const audio = audioRef.current;
-        const answer = answers.find((a) => a.questionId === data.id);
 
         const handleError = () => {
             console.error('Error loading the audio file.');
             setAudioURL(undefined);
-            removeAnswer(data.id);
         };
 
         if (!mock && audio && answer) {
-            audio.src = answer.audioUrl;
-            setAudioURL(answer.audioUrl);
+            audio.src = answer.url;
+            setAudioURL(answer.url);
             setRightTime(answer.duration);
             audio.addEventListener('error', handleError);
         } else if (!mock) {
@@ -86,15 +110,23 @@ const AudioRecorder = ({ data, mock }: Props) => {
         return () => {
             audio && audio.removeEventListener('error', handleError);
         };
-    }, [answers, data.id]);
+    }, [answer, question.id]);
 
     useEffect(() => {
-        audioURL &&
-            updateAnswer({
-                questionId: data.id,
-                audioUrl: audioURL,
-                duration: rightTime,
-            });
+        const uploadAnswer = async () => {
+            if (audioURL && rightTime >= (question.constraint ?? 0)) {
+                const audio = await upload(audioURL);
+
+                if (audio)
+                    submitApplyAudioAnswerService({
+                        url: audio.file.url,
+                        question: question.id,
+                        duration: rightTime,
+                    });
+            }
+        };
+
+        uploadAnswer();
     }, [audioURL]);
 
     useEffect(() => {
@@ -138,7 +170,7 @@ const AudioRecorder = ({ data, mock }: Props) => {
                         mediaRecorderInstance.stop();
                     }
                 },
-                (data.constraint ?? 0) * 1000,
+                (question.constraint ?? 0) * 1000,
             );
 
             mediaRecorderInstance.onstop = () => {
@@ -260,27 +292,38 @@ const AudioRecorder = ({ data, mock }: Props) => {
     })();
 
     return (
-        <div className="relative flex items-center justify-around gap-6 rounded-full border bg-white p-4 shadow-none">
-            <IconButton {...startProps} />
+        <div>
+            <div className="relative flex items-center justify-around gap-6 rounded-full border bg-white p-4 shadow-none">
+                <IconButton {...startProps} />
 
-            <p>{formatTime(leftTime)}</p>
+                <p>{formatTime(leftTime)}</p>
 
-            {audioURL ? (
-                <Progress
-                    aria-label="progress"
-                    className="h-2"
-                    color="success"
-                    size="md"
-                    value={(leftTime / rightTime) * 100}
-                />
-            ) : (
-                <canvas ref={canvasRef} id="visualizer" className="hidden flex-1 md:block" width={400} height={40} />
-            )}
+                {audioURL ? (
+                    <Progress
+                        aria-label="progress"
+                        className="h-2"
+                        color="success"
+                        size="md"
+                        value={(leftTime / rightTime) * 100}
+                    />
+                ) : (
+                    <canvas
+                        ref={canvasRef}
+                        id="visualizer"
+                        className="hidden flex-1 md:block"
+                        width={400}
+                        height={40}
+                    />
+                )}
 
-            <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
+                <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
 
-            <p>{formatTime(audioURL ? rightTime : data.constraint ?? 180)}</p>
-            <IconButton ariaLabel="Reset" onPress={handleReset} Icon={<LiaUndoAltSolid />} isDisabled={!audioURL} />
+                <p>{formatTime(audioURL ? rightTime : question.constraint ?? 180)}</p>
+                <IconButton ariaLabel="Reset" onPress={handleReset} Icon={<LiaUndoAltSolid />} isDisabled={!audioURL} />
+            </div>
+            <p className={classNames('my-3 text-center text-sm', answer && answer.duration < 20 && 'text-danger')}>
+                Recording must be at least 20 seconds long.
+            </p>
         </div>
     );
 };

@@ -13,17 +13,3 @@ export const uploadFileService = async (file: File, type?: string) => {
         },
     });
 };
-
-export const uploadAudioService = async (audioBlob: Blob) => {
-    const audioFile = new File([audioBlob], 'audio_recording.wav', {
-        type: 'audio/wav',
-    });
-
-    try {
-        const response = await uploadFileService(audioFile);
-        console.log('File uploaded successfully!', response);
-        // Xử lý thêm tự chọn, ví dụ: cập nhật UI hoặc lưu URL file đã tải
-    } catch (error) {
-        console.error('Upload failed', error);
-    }
-};

@@ -1,8 +1,6 @@
 import { TbInfoCircle, TbMessageCircle2 } from 'react-icons/tb';
 import AudioRecorder from '../common/AudioRecorder';
 import { Question } from '@/types/question.type';
-import classNames from 'classnames';
-import useJobStore from '@/stores/jobStore';
 
 interface Props {
     number: number;
@@ -12,8 +10,6 @@ interface Props {
 
 const ApplyQuestion = ({ number, total, data }: Props) => {
     if (!data) return;
-    const { answers } = useJobStore();
-    const answer = answers.find((a) => a.questionId === data.id);
 
     return (
         <div className="flex flex-col gap-9 text-text">
@@ -30,12 +26,7 @@ const ApplyQuestion = ({ number, total, data }: Props) => {
                 )}
             </div>
 
-            <div>
-                <AudioRecorder data={data} mock />
-                <p className={classNames('my-3 text-center text-sm', answer && answer.duration < 20 && 'text-danger')}>
-                    Recording must be at least 20 seconds long.
-                </p>
-            </div>
+            <AudioRecorder question={data} mock />
 
             <div className="flex items-center gap-2">
                 <TbMessageCircle2 className="mb-0.5" />
