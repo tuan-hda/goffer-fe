@@ -10,9 +10,13 @@ import { useEffect, useRef, useState } from 'react';
 import { fileSizeToString } from '@/utils/file';
 import { Link } from 'react-router-dom';
 import Educations from './Educations';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import classNames from 'classnames';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const Basic = () => {
     const ref = useRef<HTMLButtonElement>(null);
+    const { data: self } = useSelfProfileQuery();
     const { profile, setProfile, loading, cancelUpdate, updateProfile } = useUpdateProfile();
     const [file, setFile] = useState<File | null>(null);
 
@@ -97,14 +101,32 @@ const Basic = () => {
             <div className="group">
                 <div className="mt-6 flex items-center gap-2">
                     <p className="font-medium text-black">Resume</p>
-                    <Button
-                        asChild
-                        size="sm"
-                        variant="black"
-                        className="ml-auto h-7 opacity-0 transition group-hover:opacity-100"
-                    >
-                        <Link to="/app/enhance">Enhance resume with AI ✨</Link>
-                    </Button>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    asChild
+                                    size="sm"
+                                    variant="black"
+                                    className={classNames(
+                                        'ml-auto h-7 opacity-0 transition',
+                                        !self || !self.isPro ? 'group-hover:opacity-40' : 'group-hover:opacity-100',
+                                    )}
+                                >
+                                    {self?.isPro ? (
+                                        <Link to="/app/enhance">Enhance resume with AI ✨</Link>
+                                    ) : (
+                                        <div>Enhance resume with AI ✨</div>
+                                    )}
+                                </Button>
+                            </TooltipTrigger>
+                            {(!self || !self.isPro) && (
+                                <TooltipContent>
+                                    <p>Subscribe to Pro plan to unlock</p>
+                                </TooltipContent>
+                            )}
+                        </Tooltip>
+                    </TooltipProvider>
 
                     <UploadPopover
                         onAttach={(data) =>
