@@ -11,6 +11,7 @@ import Recommendations from './Recommendations';
 import { Link } from 'react-router-dom';
 import ProjectList from './ProjectList';
 import { useEffect, useState } from 'react';
+import GenerateProfileWithAI from './GenerateProfileWithAI';
 
 const RightPanel = () => {
     const { profile, setProfile, cancelUpdate, updateProfile, loading } = useUpdateProfile();
@@ -29,8 +30,9 @@ const RightPanel = () => {
     return (
         <div className="min-w-0 flex-1 text-sm">
             <div className="flex items-center">
-                <h1 className="font-serif text-4xl font-black text-black">{profile.name}</h1>
-                <Button variant="outline" size="icon" className="ml-auto">
+                <h1 className="mr-auto font-serif text-4xl font-black text-black">{profile.name}</h1>
+                <GenerateProfileWithAI />
+                <Button variant="outline" size="icon" className="ml-2">
                     <TbShare className="text-lg" />
                 </Button>
                 <DropdownMenu>

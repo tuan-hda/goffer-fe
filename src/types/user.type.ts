@@ -1,4 +1,4 @@
-import { Project, ProjectCreate } from './project.type';
+import { ProjectCreate } from './project.type';
 
 export type User = {
     id: string;
