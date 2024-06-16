@@ -66,6 +66,7 @@ import AssessmentResult from '@/pages/AssessmentResult';
 import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
 import CustomAssessment from '@/pages/CustomAssessment';
 import NewJobLayout from '@/layouts/NewJobLayout';
+import SubscribeResult from '@/components/subscribe/SubscribeResult';
 
 const routesConfig: RouteObject[] = [
     {
@@ -323,6 +324,10 @@ const routesConfig: RouteObject[] = [
 
                     { path: '/assessment/:id/success', element: <AssessmentSuccess /> },
                 ],
+            },
+            {
+                path: '/subscribe',
+                element: <SubscribeResult />,
             },
         ],
     },

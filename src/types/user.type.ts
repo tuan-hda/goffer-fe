@@ -26,6 +26,7 @@ export type User = {
     org?: string;
     status?: string;
     badges?: string[];
+    isPro?: boolean;
 };
 
 export type UserUpdateRequest = Omit<User, 'projects'> & {
