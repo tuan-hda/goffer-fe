@@ -1,6 +1,5 @@
 import { Avatar } from '@nextui-org/react';
 import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
 import { TbExternalLink } from 'react-icons/tb';
 import { Editable } from '../common';
 import SocialLink from './SocialLink';
@@ -98,16 +97,7 @@ const LeftPanel = () => {
                     );
                 }}
             />
-            <p className="mb-5 mt-8 text-xs font-light text-gray-500">BADGES</p>
-            <div className="flex flex-wrap gap-4">
-                <Badge variant="outline" className="rounded-xl px-3 py-2 text-sm font-normal">
-                    💰 Pull Shark
-                </Badge>
-                <Badge variant="outline" className="rounded-xl px-3 py-2 text-sm font-normal">
-                    🐰 New Me Super Shy
-                </Badge>
-            </div>
-            <p className="mb-3 mt-11 text-xs font-light text-gray-500">LINKS</p>
+            <p className="mb-3 mt-8 text-xs font-light text-gray-500">LINKS</p>
             <div>
                 {profile.links &&
                     profile.links.slice(0, lastIndex).map((link, index) => (
