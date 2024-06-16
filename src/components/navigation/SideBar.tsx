@@ -22,6 +22,7 @@ import AdminMenu from './AdminMenu';
 import { adminItems } from './adminItems';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { useChatContext } from 'stream-chat-react';
+import SubscriptionIndividual from '../proPlan/SubscriptionIndividual';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -240,6 +241,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                         </div>
                                     </Link>
                                 )}
+                                {!domain && !collapsed && <SubscriptionIndividual />}
                                 <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
                                     <TbHelp className="text-xl" />
                                     <p

@@ -39,3 +39,5 @@ export const listPeopleService = async () => {
 export const getUserInfo = async (id: string) => {
     return (await baseAxios.get<User>(`/users/${id}`)).data;
 };
+
+export const subscribeProService = async () => (await baseAxios.post('/users/subscribe-pro')).data;

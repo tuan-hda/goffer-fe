@@ -21,6 +21,7 @@ const NewOrganization = () => {
         website: '',
         visibility: '',
         description: '',
+        location: '',
     });
 
     const location = useLocation();

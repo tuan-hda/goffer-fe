@@ -34,6 +34,7 @@ const Cancel = ({ setData, setStep, isError = false }: CancelProps) => {
                         name: '',
                         visibility: '',
                         website: '',
+                        location: '',
                     });
                     setStep(1);
                     navigate('/organization/new');
