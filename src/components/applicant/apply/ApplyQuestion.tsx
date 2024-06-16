@@ -7,10 +7,11 @@ import useJobStore from '@/stores/jobStore';
 interface Props {
     number: number;
     total: number;
-    data: Question;
+    data?: Question;
 }
 
 const ApplyQuestion = ({ number, total, data }: Props) => {
+    if (!data) return;
     const { answers } = useJobStore();
     const answer = answers.find((a) => a.questionId === data.id);
 
@@ -24,11 +25,13 @@ const ApplyQuestion = ({ number, total, data }: Props) => {
                     <TbInfoCircle size={24} />
                 </div>
                 <p className="my-2  text-2xl font-medium text-text">{data.content}</p>
-                <p className="text-lg font-light text-default-400">{data.description}</p>
+                {typeof data.description === 'string' && (
+                    <p className="text-lg font-light text-default-400">{data.description}</p>
+                )}
             </div>
 
             <div>
-                <AudioRecorder data={data} />
+                <AudioRecorder data={data} mock />
                 <p className={classNames('my-3 text-center text-sm', answer && answer.duration < 20 && 'text-danger')}>
                     Recording must be at least 20 seconds long.
                 </p>

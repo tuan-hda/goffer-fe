@@ -4,64 +4,26 @@ import ProgressFooter from '../common/ProgressFooter';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ApplyQuestion from './ApplyQuestion';
 import { useEffect, useState } from 'react';
-import useJobQuestions from '@/hooks/useJobQuestions';
-import useJobStore from '@/stores/jobStore';
-import { List } from '@/types/list.type';
-import { Question } from '@/types/question.type';
 import { NewApply } from '@/types/application.type';
 import { formFields, formSchema } from '@/utils/application';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { Button } from '@/components/ui/button';
-import { Image } from '@nextui-org/react';
+import { Image, Snippet } from '@nextui-org/react';
 import { AvatarEdit } from '@/components/common';
-import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
-import { useQueryApply } from '@/hooks/useGetApply';
+import useApplyJob from '@/hooks/useApplyJob';
+import { submitApplicationService, updateApplyService } from '@/services/apply.service';
+import { TbLoaderQuarter } from 'react-icons/tb';
 
 const Application = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { id } = useParams();
-
-    const { data } = useJobQuestions(id);
-    const { applicationInfo, setInfo, answers } = useJobStore();
-    const { data: detail } = useGetOrganizationJob(id);
-    const { data: user } = useSelfProfileQuery();
-    const { data: listApply } = useQueryApply({ owner: user?.id, job: id });
-
-    const [loading, setLoading] = useState(false);
-    const [avatar, setAvatar] = useState<string>('');
+    const { data, isLoading, refetch } = useApplyJob(id || '');
 
     const [stepNum, setStepNum] = useState(0);
-    const [questionData, setQuestionData] = useState<List<Question>>({
-        results: [],
-        page: 0,
-        limit: 0,
-        totalPages: 0,
-        totalResults: 0,
-    });
-    const totalSteps = questionData.totalResults || 2;
-
-    const form = useForm<NewApply>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            profilePicture: undefined,
-            resume: undefined,
-            fullName: '',
-            location: '',
-            email: '',
-            phoneNumber: '',
-            role: '',
-            lastCompany: '',
-            linkedIn: '',
-            personalWebsite: '',
-        },
-    });
-
-    useEffect(() => {
-        data && setQuestionData(data);
-    }, [data]);
+    const [loading, setLoading] = useState(false);
+    const [buttonLoad, setButtonLoad] = useState(false);
 
     useEffect(() => {
         const stepHash = location.hash;
@@ -80,25 +42,63 @@ const Application = () => {
         }
     }, [location.hash, navigate]);
 
-    function onSubmit(values: NewApply) {
-        setInfo(values);
+    const job = data?.job;
+    const totalSteps = job?.questions.length || 2;
+    const defaultValues = {
+        profilePicture: data?.profilePicture || data?.applicant?.avatar,
+        resume: data?.resume || data?.applicant?.resume,
+        name: data?.name || data?.applicant?.name,
+        location: data?.location || data?.applicant?.location,
+        email: data?.email || data?.applicant?.email,
+        phoneNumber: data?.phoneNumber,
+        role: data?.role,
+        lastCompany: data?.lastCompany,
+        linkedIn: data?.linkedIn || data?.applicant?.refDoc,
+        personalWebsite: data?.personalWebsite,
+    };
+
+    const form = useForm<NewApply>({
+        resolver: zodResolver(formSchema),
+        defaultValues,
+    });
+
+    useEffect(() => {
+        if (data) {
+            form.reset(defaultValues);
+        }
+    }, [data, form]);
+
+    async function onSubmit(values: NewApply) {
+        if (data?.id) await updateApplyService({ ...values, id: data.id });
+        else await submitApplicationService(values);
+
+        await refetch();
+
         if (stepNum < totalSteps) {
             navigate(`#step-${stepNum + 1}`);
         }
     }
 
     const handleNextStep = async () => {
+        setButtonLoad(true);
+
         if (stepNum === 0) await form.handleSubmit(onSubmit)();
         else if (stepNum < totalSteps) {
-            const questionId = questionData.results[stepNum - 1].id;
-            const answer = answers.find((a) => a.questionId === questionId);
-            if (answer && answer.duration >= 2) navigate(`#step-${stepNum + 1}`);
+            const questionId = job?.questions[stepNum - 1].id;
+            // const answer = answers.find((a) => a.questionId === questionId);
+            // if (answer && answer.duration >= 2) navigate(`#step-${stepNum + 1}`);
         } else {
-            console.log('success', applicationInfo, answers);
+            console.log('success');
         }
+
+        setButtonLoad(false);
     };
 
-    return (
+    return isLoading ? (
+        <div className="m-auto h-full w-full">
+            <Snippet />
+        </div>
+    ) : (
         <div className="text-sm">
             <div className="bg-image fixed bottom-0 left-0 right-0 top-0" />
 
@@ -106,13 +106,13 @@ const Application = () => {
                 {/* Title */}
                 <div className="flex-1">
                     <div className="mb-5">
-                        <Image src={detail?.org.logo} alt="logo" className="z-[1] h-16 w-16 rounded-full" />
-                        <p className="mt-3 text-sm font-medium">{detail?.org.name}</p>
-                        <p className="mt-1 font-serif text-4xl font-black text-text">{detail?.title}</p>
+                        <Image src={job?.org.logo} alt="logo" className="z-[1] h-16 w-16 rounded-full" />
+                        <p className="mt-3 text-sm font-medium">{job?.org.name}</p>
+                        <p className="mt-1 font-serif text-4xl font-black text-text">{job?.title}</p>
                         <p className="mt-3">
-                            <span className="text-sm text-default-500">{detail?.location}</span>
+                            <span className="text-sm text-default-500">{job?.location}</span>
                             <span className="mx-2 text-sm text-default-500">•</span>
-                            <span className="text-sm text-default-500">{detail?.time}</span>
+                            <span className="text-sm text-default-500">{job?.time}</span>
                         </p>
                     </div>
                     {stepNum === 0 ? (
@@ -121,9 +121,9 @@ const Application = () => {
                                 <p className="mb-1 font-medium">Upload photo (optional)</p>
                                 <AvatarEdit
                                     loading={loading}
-                                    setAvatar={setAvatar}
+                                    setAvatar={(value) => form.setValue('profilePicture', value)}
                                     setLoading={setLoading}
-                                    avatar={avatar}
+                                    avatar={form.getValues('profilePicture')}
                                 />
                             </div>
                             <form
@@ -136,7 +136,7 @@ const Application = () => {
                             </form>
                         </Form>
                     ) : (
-                        <ApplyQuestion total={totalSteps} number={stepNum} data={questionData.results[stepNum - 1]} />
+                        <ApplyQuestion total={totalSteps} number={stepNum} data={job?.questions[stepNum - 1]} />
                     )}
                 </div>
 
@@ -162,7 +162,7 @@ const Application = () => {
                         variant="black"
                         onClick={handleNextStep}
                     >
-                        Next
+                        {buttonLoad ? <TbLoaderQuarter className="h-4 w-4 animate-spin" /> : 'Next'}
                         {/* {endContent} */}
                     </Button>
                 </div>

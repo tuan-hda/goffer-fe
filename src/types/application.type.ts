@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { UseFormReturn } from 'react-hook-form';
 import { formSchema } from '@/utils/application';
-import { Job } from './job.type';
+import { JobResponse } from './job.type';
 import { User } from './user.type';
 
 export type StringSchemaFields = {
@@ -27,14 +27,21 @@ export type FormItemProps = FileItemProps | TextItemProps;
 
 export type NewApply = z.infer<typeof formSchema>;
 
-export type Apply = NewApply & {
+export type Apply = Omit<NewApply, 'profilePicture' | 'resume'> & {
     id: string;
-    job: Job;
+    job: JobResponse;
     phase: string;
-    owner: User;
+    applicant: User;
+    profilePicture: string;
+    resume: string;
 };
 
 export type EditApply = Partial<Apply>;
+
+export type ApplyResponse = Omit<EditApply, 'job' | 'applicant'> & {
+    job: JobResponse;
+    applicant: User;
+};
 
 export type AnswerProps = {
     questionId: string;

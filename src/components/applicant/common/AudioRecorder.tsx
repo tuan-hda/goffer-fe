@@ -132,11 +132,14 @@ const AudioRecorder = ({ data, mock }: Props) => {
                 setLeftTime((prevDuration) => prevDuration + 1);
             }, 1000);
             // Set a timer to stop recording after 3 minutes (180000 milliseconds)
-            setTimeout(() => {
-                if (mediaRecorderInstance.state !== 'inactive') {
-                    mediaRecorderInstance.stop();
-                }
-            }, data.constraint * 1000);
+            setTimeout(
+                () => {
+                    if (mediaRecorderInstance.state !== 'inactive') {
+                        mediaRecorderInstance.stop();
+                    }
+                },
+                (data.constraint ?? 0) * 1000,
+            );
 
             mediaRecorderInstance.onstop = () => {
                 // Dừng mọi tracks của stream để không còn sử dụng microphone nữa.
@@ -276,7 +279,7 @@ const AudioRecorder = ({ data, mock }: Props) => {
 
             <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
 
-            <p>{formatTime(audioURL ? rightTime : data.constraint)}</p>
+            <p>{formatTime(audioURL ? rightTime : data.constraint ?? 180)}</p>
             <IconButton ariaLabel="Reset" onPress={handleReset} Icon={<LiaUndoAltSolid />} isDisabled={!audioURL} />
         </div>
     );

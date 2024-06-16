@@ -12,14 +12,15 @@ function isValidPhoneNumber(phoneNumber: string): boolean {
 }
 
 export const formSchema = z.object({
-    profilePicture: z.instanceof(File).optional(),
+    profilePicture: z.string().url().optional(),
     resume: z
-        .instanceof(File)
+        .string()
+        .url()
         .optional()
-        .refine((file) => file, {
+        .refine((value) => value !== '', {
             message: 'Please select a valid file',
         }),
-    fullName: z.string().min(2, { message: 'Please enter your full name' }),
+    name: z.string().min(2, { message: 'Please enter your full name' }),
     location: z.string().optional(),
     email: z.string().email({ message: 'Please enter a valid email' }),
     phoneNumber: z.string().refine((value) => isValidPhoneNumber(value), {
@@ -40,7 +41,7 @@ export const formFields = [
     {
         type: 'text',
         label: 'Full name',
-        name: 'fullName',
+        name: 'name',
         placeholder: 'Enter your full name',
     },
     {
