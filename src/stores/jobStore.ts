@@ -2,14 +2,15 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
 import { Job } from '@/types/job.type';
-import { AnswerProps, NewApply } from '@/types/application.type';
+import { NewApply } from '@/types/application.type';
+import { NewAnswer } from '@/types/answer.type';
 
 type State = {
     tabKey: string;
     jobDetailOpening: boolean;
     detail?: Job;
     applicationInfo?: NewApply;
-    answers: AnswerProps[];
+    applyAnswer?: NewAnswer;
 };
 
 type Action = {
@@ -17,8 +18,7 @@ type Action = {
     updateJobDetailOpening: (_: State['jobDetailOpening']) => void;
     setDetail: (_: State['detail']) => void;
     setInfo: (_: State['applicationInfo']) => void;
-    updateAnswer: (_: AnswerProps) => void;
-    removeAnswer: (_: string) => void;
+    setApplyAnswer: (_: NewAnswer) => void;
     resetDetail: () => void;
 };
 
@@ -31,32 +31,18 @@ const useJobStore = create<State & Action>()(
                 jobDetailOpening: false,
                 detail: undefined,
                 applicationInfo: undefined,
-                answers: [],
+                applyAnswer: undefined,
                 updateTabKey: (tabKey) => set(() => ({ tabKey: tabKey })),
                 updateJobDetailOpening: (opening) => set(() => ({ jobDetailOpening: opening })),
                 setDetail: (detail) => set(() => ({ detail: detail })),
                 setInfo: (info) => set(() => ({ applicationInfo: info })),
-                updateAnswer: (answer) =>
-                    set((state) => {
-                        const index = state.answers.findIndex((a) => a.questionId === answer.questionId);
-                        if (index !== -1) {
-                            state.answers[index] = answer;
-                            console.log('🚀 ~ set ~ update answer:', answer);
-                        } else {
-                            state.answers.push(answer);
-                            console.log('🚀 ~ set ~ add answer:', answer);
-                        }
-                    }),
+                setApplyAnswer: (answer) => set(() => ({ applyAnswer: answer })),
                 resetDetail: () =>
                     set(() => ({
                         detail: undefined,
                         applicationInfo: undefined,
-                        answers: [],
+                        applyAnswer: undefined,
                     })),
-                removeAnswer: (id) =>
-                    set((state) => {
-                        state.answers = state.answers.filter((answer) => answer.questionId !== id);
-                    }),
             }),
 
             {

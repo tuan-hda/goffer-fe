@@ -9,3 +9,5 @@ export type AnswerResponse = Omit<NewAnswer, 'apply'> & {
     id: string;
     owner: string;
 };
+
+export type EditAnswer = Partial<AnswerResponse>;

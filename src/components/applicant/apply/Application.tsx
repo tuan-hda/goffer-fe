@@ -14,12 +14,17 @@ import { AvatarEdit } from '@/components/common';
 import useApplyJob from '@/hooks/useApplyJob';
 import { submitApplicationService, updateApplyService } from '@/services/apply.service';
 import { TbLoaderQuarter } from 'react-icons/tb';
+import { uploadAudio } from '../common/AudioRecorder';
+import { submitApplyAudioAnswerService } from '@/services/answer.service';
+import useJobStore from '@/stores/jobStore';
+import ApplySuccess from './ApplySuccess';
 
 const Application = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { id } = useParams();
     const { data, isLoading, refetch } = useApplyJob(id || '');
+    const { applyAnswer } = useJobStore();
 
     const [stepNum, setStepNum] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -35,6 +40,7 @@ const Application = () => {
             const step = match ? parseInt(match[1], 10) : 0;
             if (step >= 1 && step <= totalSteps) {
                 setStepNum(step);
+                if (step === totalSteps && data) updateApplyService({ id: data.id, phase: 'applied' });
             } else {
                 setStepNum(0);
                 navigate('#', { replace: true });
@@ -43,7 +49,7 @@ const Application = () => {
     }, [location.hash, navigate]);
 
     const job = data?.job;
-    const totalSteps = job?.questions.length || 2;
+    const totalSteps = job?.questions ? job.questions.length + 1 : 2;
     const defaultValues = {
         profilePicture: data?.profilePicture || data?.applicant?.avatar,
         resume: data?.resume || data?.applicant?.resume,
@@ -70,7 +76,7 @@ const Application = () => {
 
     async function onSubmit(values: NewApply) {
         if (data?.id) await updateApplyService({ ...values, id: data.id });
-        else await submitApplicationService(values);
+        else if (job?.id) await submitApplicationService({ ...values, job: job.id });
 
         await refetch();
 
@@ -84,11 +90,22 @@ const Application = () => {
 
         if (stepNum === 0) await form.handleSubmit(onSubmit)();
         else if (stepNum < totalSteps) {
-            const questionId = job?.questions[stepNum - 1].id;
-            // const answer = answers.find((a) => a.questionId === questionId);
-            // if (answer && answer.duration >= 2) navigate(`#step-${stepNum + 1}`);
+            if (applyAnswer && applyAnswer.duration >= 20) {
+                const audio = await uploadAudio(applyAnswer.url);
+
+                if (audio)
+                    await submitApplyAudioAnswerService({
+                        url: audio.file.url,
+                        question: applyAnswer.question,
+                        duration: applyAnswer.duration,
+                        // apply: data?.id,
+                    });
+                if (stepNum < totalSteps) {
+                    navigate(`#step-${stepNum + 1}`);
+                }
+            }
         } else {
-            console.log('success');
+            console.log('Apply success');
         }
 
         setButtonLoad(false);
@@ -135,43 +152,47 @@ const Application = () => {
                                 ))}
                             </form>
                         </Form>
+                    ) : stepNum === totalSteps ? (
+                        <ApplySuccess />
                     ) : (
-                        <ApplyQuestion total={totalSteps} number={stepNum} data={job?.questions[stepNum - 1]} />
+                        <ApplyQuestion total={totalSteps - 1} order={stepNum} question={job?.questions[stepNum - 1]} />
                     )}
                 </div>
 
-                <div className="mt-4 flex w-full items-center justify-between">
-                    <div>
-                        {/* {(onStartPress || startContent) && ( */}
+                {stepNum < totalSteps && (
+                    <div className="mt-4 flex w-full items-center justify-between">
+                        <div>
+                            {/* {(onStartPress || startContent) && ( */}
+                            <Button
+                                // className={classNames(rate !== undefined && 'mb-1')}
+                                color="secondary"
+                                size="lg"
+                                variant="outline"
+                                onClick={() => navigate(-1)}
+                            >
+                                Back
+                                {/* {startContent ? startContent : 'Back'} */}
+                            </Button>
+                            {/* )} */}
+                        </div>
                         <Button
                             // className={classNames(rate !== undefined && 'mb-1')}
-                            color="secondary"
+                            color="primary"
                             size="lg"
-                            variant="outline"
-                            onClick={() => navigate(-1)}
+                            variant="black"
+                            onClick={handleNextStep}
+                            disabled={(applyAnswer?.duration ?? 0) < 20 || buttonLoad}
                         >
-                            Back
-                            {/* {startContent ? startContent : 'Back'} */}
+                            {buttonLoad ? <TbLoaderQuarter className="h-4 w-4 animate-spin" /> : 'Next'}
+                            {/* {endContent} */}
                         </Button>
-                        {/* )} */}
                     </div>
-                    <Button
-                        // className={classNames(rate !== undefined && 'mb-1')}
-                        color="primary"
-                        size="lg"
-                        variant="black"
-                        onClick={handleNextStep}
-                    >
-                        {buttonLoad ? <TbLoaderQuarter className="h-4 w-4 animate-spin" /> : 'Next'}
-                        {/* {endContent} */}
-                    </Button>
-                </div>
+                )}
             </div>
             <ProgressFooter
                 rate={(stepNum * 100) / totalSteps}
                 onStartPress={() => navigate(-1)}
                 endContent={stepNum < totalSteps ? 'Next' : 'Submit'}
-                // endProps={{ type: 'submit' }}
                 onEndPress={handleNextStep}
             />
         </div>

@@ -5,6 +5,7 @@ const useUserAnswer = (questionId: string) => {
     return useQuery({
         queryKey: ['getUserAnswer', questionId],
         queryFn: () => getUserAnswerFromQuestionService(questionId),
+        enabled: !!questionId,
     });
 };
 

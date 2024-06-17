@@ -3,14 +3,14 @@ import { Button, Progress } from '@nextui-org/react';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFilled } from 'react-icons/tb';
 import { LiaUndoAltSolid } from 'react-icons/lia';
-import { Question } from '@/types/question.type';
 import moment from 'moment';
 import classNames from 'classnames';
-import useUserAnswer from '@/hooks/useUserAnswer';
 import { uploadFileService } from '@/services/file.service';
 import { isAxiosError } from 'axios';
 import { toast } from 'sonner';
-import { submitApplyAudioAnswerService } from '@/services/answer.service';
+import { AnswerResponse } from '@/types/answer.type';
+import useJobStore from '@/stores/jobStore';
+import { Question } from '@/types/question.type';
 
 interface IconButtonProps {
     ariaLabel: string;
@@ -27,7 +27,7 @@ const formatTime = (x: number) => {
     return `${minutes < 10 ? minutes : `0${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 
-const upload = async (blobUrl: string) => {
+export const uploadAudio = async (blobUrl: string) => {
     try {
         const response = await fetch(blobUrl);
         const blob = await response.blob();
@@ -59,11 +59,12 @@ const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonP
 );
 
 interface Props {
+    audio?: AnswerResponse;
     question: Question;
     mock?: boolean;
 }
 
-const AudioRecorder = ({ question, mock }: Props) => {
+const AudioRecorder = ({ audio, question, mock }: Props) => {
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
@@ -74,7 +75,9 @@ const AudioRecorder = ({ question, mock }: Props) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
     const frameRef = useRef<number | null>(null);
-    const { data: answer, refetch } = useUserAnswer(question.id);
+
+    const { setApplyAnswer } = useJobStore();
+    const constraint = question.constraint ?? 180;
 
     useEffect(() => {
         if (mock) {
@@ -86,47 +89,36 @@ const AudioRecorder = ({ question, mock }: Props) => {
     }, [mock]);
 
     useEffect(() => {
-        refetch();
-    }, [question.id]);
-
-    useEffect(() => {
-        const audio = audioRef.current;
+        const audioInstall = audioRef.current;
 
         const handleError = () => {
             console.error('Error loading the audio file.');
             setAudioURL(undefined);
         };
 
-        if (!mock && audio && answer) {
-            audio.src = answer.url;
-            setAudioURL(answer.url);
-            setRightTime(answer.duration);
-            audio.addEventListener('error', handleError);
+        if (!mock && audioInstall && audio) {
+            audioInstall.src = audio.url;
+            setAudioURL(audio.url);
+            setRightTime(audio.duration);
+            audioInstall.addEventListener('error', handleError);
         } else if (!mock) {
             setAudioURL(undefined);
             setRightTime(0);
         }
 
         return () => {
-            audio && audio.removeEventListener('error', handleError);
+            audioInstall && audioInstall.removeEventListener('error', handleError);
         };
-    }, [answer, question.id]);
+    }, [audio]);
 
     useEffect(() => {
-        const uploadAnswer = async () => {
-            if (audioURL && rightTime >= (question.constraint ?? 0)) {
-                const audio = await upload(audioURL);
-
-                if (audio)
-                    submitApplyAudioAnswerService({
-                        url: audio.file.url,
-                        question: question.id,
-                        duration: rightTime,
-                    });
-            }
-        };
-
-        uploadAnswer();
+        if (audioURL) {
+            setApplyAnswer({
+                url: audioURL,
+                duration: rightTime,
+                question: question.id,
+            });
+        }
     }, [audioURL]);
 
     useEffect(() => {
@@ -164,14 +156,11 @@ const AudioRecorder = ({ question, mock }: Props) => {
                 setLeftTime((prevDuration) => prevDuration + 1);
             }, 1000);
             // Set a timer to stop recording after 3 minutes (180000 milliseconds)
-            setTimeout(
-                () => {
-                    if (mediaRecorderInstance.state !== 'inactive') {
-                        mediaRecorderInstance.stop();
-                    }
-                },
-                (question.constraint ?? 0) * 1000,
-            );
+            setTimeout(() => {
+                if (mediaRecorderInstance.state !== 'inactive') {
+                    mediaRecorderInstance.stop();
+                }
+            }, constraint * 1000);
 
             mediaRecorderInstance.onstop = () => {
                 // Dừng mọi tracks của stream để không còn sử dụng microphone nữa.
@@ -318,10 +307,15 @@ const AudioRecorder = ({ question, mock }: Props) => {
 
                 <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
 
-                <p>{formatTime(audioURL ? rightTime : question.constraint ?? 180)}</p>
+                <p>{formatTime(audioURL ? rightTime : constraint)}</p>
                 <IconButton ariaLabel="Reset" onPress={handleReset} Icon={<LiaUndoAltSolid />} isDisabled={!audioURL} />
             </div>
-            <p className={classNames('my-3 text-center text-sm', answer && answer.duration < 20 && 'text-danger')}>
+            <p
+                className={classNames(
+                    'my-3 text-center text-sm',
+                    !isRecording && 0 < rightTime && rightTime < 20 && 'text-danger',
+                )}
+            >
                 Recording must be at least 20 seconds long.
             </p>
         </div>
