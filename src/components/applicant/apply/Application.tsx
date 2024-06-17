@@ -16,19 +16,19 @@ import { submitApplicationService, updateApplyService } from '@/services/apply.s
 import { TbLoaderQuarter } from 'react-icons/tb';
 import { uploadAudio } from '../common/AudioRecorder';
 import { submitApplyAudioAnswerService } from '@/services/answer.service';
-import useJobStore from '@/stores/jobStore';
 import ApplySuccess from './ApplySuccess';
+import useApplyStore from '@/stores/applyStore';
 
 const Application = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { id } = useParams();
     const { data, isLoading, refetch } = useApplyJob(id || '');
-    const { applyAnswer } = useJobStore();
+    const { answer, loading, setLoading } = useApplyStore();
 
     const [stepNum, setStepNum] = useState(0);
-    const [loading, setLoading] = useState(false);
-    const [buttonLoad, setButtonLoad] = useState(false);
+    const [avatarLoading, setLAvatarLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         const stepHash = location.hash;
@@ -86,18 +86,18 @@ const Application = () => {
     }
 
     const handleNextStep = async () => {
-        setButtonLoad(true);
+        setUploading(true);
 
         if (stepNum === 0) await form.handleSubmit(onSubmit)();
         else if (stepNum < totalSteps) {
-            if (applyAnswer && applyAnswer.duration >= 20) {
-                const audio = await uploadAudio(applyAnswer.url);
+            if (answer && answer.duration >= 20) {
+                const audio = await uploadAudio(answer.url);
 
                 if (audio)
                     await submitApplyAudioAnswerService({
                         url: audio.file.url,
-                        question: applyAnswer.question,
-                        duration: applyAnswer.duration,
+                        question: answer.question,
+                        duration: answer.duration,
                         // apply: data?.id,
                     });
                 if (stepNum < totalSteps) {
@@ -108,7 +108,7 @@ const Application = () => {
             console.log('Apply success');
         }
 
-        setButtonLoad(false);
+        setUploading(false);
     };
 
     return isLoading ? (
@@ -137,9 +137,9 @@ const Application = () => {
                             <div className="pt-1">
                                 <p className="mb-1 font-medium">Upload photo (optional)</p>
                                 <AvatarEdit
-                                    loading={loading}
+                                    loading={avatarLoading}
                                     setAvatar={(value) => form.setValue('profilePicture', value)}
-                                    setLoading={setLoading}
+                                    setLoading={setLAvatarLoading}
                                     avatar={form.getValues('profilePicture')}
                                 />
                             </div>
@@ -181,9 +181,9 @@ const Application = () => {
                             size="lg"
                             variant="black"
                             onClick={handleNextStep}
-                            disabled={(applyAnswer?.duration ?? 0) < 20 || buttonLoad}
+                            disabled={stepNum !== 0 && ((answer?.duration ?? 0) < 20 || loading)}
                         >
-                            {buttonLoad ? <TbLoaderQuarter className="h-4 w-4 animate-spin" /> : 'Next'}
+                            {uploading ? <TbLoaderQuarter className="h-4 w-4 animate-spin" /> : 'Next'}
                             {/* {endContent} */}
                         </Button>
                     </div>

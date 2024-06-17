@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { AnswerResponse } from '@/types/answer.type';
 import useJobStore from '@/stores/jobStore';
 import { Question } from '@/types/question.type';
+import useApplyStore from '@/stores/applyStore';
 
 interface IconButtonProps {
     ariaLabel: string;
@@ -76,7 +77,7 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const frameRef = useRef<number | null>(null);
 
-    const { setApplyAnswer } = useJobStore();
+    const { setAnswer, setLoading } = useApplyStore();
     const constraint = question.constraint ?? 180;
 
     useEffect(() => {
@@ -113,7 +114,7 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
 
     useEffect(() => {
         if (audioURL) {
-            setApplyAnswer({
+            setAnswer({
                 url: audioURL,
                 duration: rightTime,
                 question: question.id,
@@ -227,6 +228,7 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
         }
         isPlaying && setIsPlaying(false);
         setIsRecording(true);
+        setLoading(true);
         startRecording();
     }, [audioURL, isPlaying]);
 
@@ -240,6 +242,7 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
             setMediaRecorder(null);
             frameRef.current && cancelAnimationFrame(frameRef.current);
             setIsRecording(false);
+            setLoading(false);
         }
     }, [mediaRecorder]);
 
