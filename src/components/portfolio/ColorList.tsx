@@ -1,13 +1,17 @@
-const ColorList = () => {
+type ColorListProps = {
+    colors: string[];
+};
+
+const ColorList = ({ colors }: ColorListProps) => {
     return (
-        <div className="grid grid-cols-7 gap-2">
-            <div className="aspect-square rounded-full bg-gray-800" />
-            <div className="aspect-square rounded-full bg-gray-700" />
-            <div className="aspect-square rounded-full bg-gray-600" />
-            <div className="aspect-square rounded-full bg-gray-500" />
-            <div className="aspect-square rounded-full bg-gray-400" />
-            <div className="aspect-square rounded-full bg-gray-300" />
-            <div className="aspect-square rounded-full bg-gray-200" />
+        <div className="grid grid-cols-8 gap-1">
+            {colors.map((color, index) => (
+                <div
+                    key={index}
+                    className="aspect-square rounded-full outline outline-[0.5px] outline-gray-300"
+                    style={{ backgroundColor: color }}
+                />
+            ))}
         </div>
     );
 };

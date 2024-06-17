@@ -136,13 +136,20 @@ const GenerateProfileWithAI = () => {
 
             <TooltipProvider>
                 <Tooltip>
-                    <TooltipTrigger>
-                        <div className={classNames((!self || !self.isPro) && 'pointer-events-none')}>
-                            <GenAIGenerateProfileProvider onResponse={handleResponse}>
-                                <Button disabled={!self || !self.isPro} variant="black" className="ml-auto" size="icon">
-                                    <TbSparkles className="text-lg" />
-                                </Button>
-                            </GenAIGenerateProfileProvider>
+                    <TooltipTrigger asChild>
+                        <div>
+                            <div className={classNames((!self || !self.isPro) && 'pointer-events-none')}>
+                                <GenAIGenerateProfileProvider onResponse={handleResponse}>
+                                    <Button
+                                        disabled={!self || !self.isPro}
+                                        variant="black"
+                                        className="ml-auto"
+                                        size="icon"
+                                    >
+                                        <TbSparkles className="text-lg" />
+                                    </Button>
+                                </GenAIGenerateProfileProvider>
+                            </div>
                         </div>
                     </TooltipTrigger>
                     {(!self || !self.isPro) && (

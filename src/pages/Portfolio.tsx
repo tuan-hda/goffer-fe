@@ -1,10 +1,20 @@
 import { PortfolioSetup, TemplateList } from '@/components/portfolio';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import usePortfolioStore from '@/stores/portfolioStore';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { TbPaint } from 'react-icons/tb';
+import { shallow } from 'zustand/shallow';
 
 const Portfolio = () => {
-    const [portfolio, setPortfolio] = useState(false);
+    const [portfolio, setPortfolio] = usePortfolioStore((state) => [state.portfolio, state.setPortfolio], shallow);
+    const { data: self } = useSelfProfileQuery();
+
+    useEffect(() => {
+        if (self?.portfolio) {
+            setPortfolio(self.portfolio);
+        }
+    }, [self?.portfolio]);
 
     return (
         <div className="px-6 py-5 text-sm">
@@ -13,13 +23,7 @@ const Portfolio = () => {
                     <TbPaint className="text-lg" /> Portfolio
                 </BreadcrumbItem>
             </Breadcrumbs>
-            <div className="pt-5">
-                {portfolio ? (
-                    <PortfolioSetup setPortfolio={setPortfolio} />
-                ) : (
-                    <TemplateList setPortfolio={setPortfolio} />
-                )}
-            </div>
+            <div className="pt-5">{portfolio?.template ? <PortfolioSetup /> : <TemplateList />}</div>
         </div>
     );
 };

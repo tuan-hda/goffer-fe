@@ -1,44 +1,72 @@
-import { useState } from 'react';
 import { Button } from '../ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import Upload from '../common/Upload';
 import ColorPaletteList from './ColorPaletteList';
+import usePortfolioStore from '@/stores/portfolioStore';
+import { TEMPLATE } from '@/data/portfolio';
+import { shallow } from 'zustand/shallow';
+import { PortfolioConfiguration } from '@/types/portfolio.type';
 
 const SetupBar = () => {
-    const [logoType, setLogoType] = useState<'text' | 'image'>('text');
+    const [portfolio, setPortfolio] = usePortfolioStore((state) => [state.portfolio, state.setPortfolio], shallow);
+
+    const handleChange = (key: keyof PortfolioConfiguration) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPortfolio((prev) => ({
+            ...prev,
+            [key]: e.target.value,
+        }));
+    };
 
     return (
         <Card className="rounded-2xl">
             <CardHeader>
-                <CardTitle className="text-base">Setting up your portfolio</CardTitle>
+                <CardTitle className="text-base">{portfolio?.template && TEMPLATE[portfolio.template].name}</CardTitle>
             </CardHeader>
             <CardContent>
                 <Label>
-                    <span>Portfolio's domain</span>
-                    <Input placeholder="Custom domain" className="mt-2" />
+                    <span>Brand name</span>
+                    <div className="mt-2 flex">
+                        <Input
+                            onChange={handleChange('brandName')}
+                            value={portfolio?.brandName}
+                            placeholder="Your name or brand"
+                            className="mr-2 flex-1"
+                        />
+                    </div>
                 </Label>
                 <div className="h-6" />
                 <Label>
-                    <span>Your logo</span>
-                    <RadioGroup
-                        value={logoType}
-                        onValueChange={(value) => setLogoType(value as 'text' | 'image')}
-                        defaultValue="text"
-                        className="mb-3 mt-2"
-                    >
-                        <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="text" id="r1" />
-                            <Label htmlFor="r1">Text</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="image" id="r2" />
-                            <Label htmlFor="r2">Image</Label>
-                        </div>
-                    </RadioGroup>
-                    {logoType === 'text' ? <Input placeholder="Your logo here..." /> : <Upload />}
+                    <span>Portfolio's domain</span>
+                    <div className="mt-2 flex">
+                        <Input
+                            onChange={handleChange('portfolioDomain')}
+                            value={portfolio?.portfolioDomain}
+                            placeholder="Custom domain"
+                            className="mr-2 flex-1"
+                        />
+                        <Button variant="outline" className="pointer-events-none">
+                            .goffer.online
+                        </Button>
+                    </div>
+                </Label>
+                <div className="h-6" />
+                <Label>
+                    <span className="block">Your logo</span>
+                    <Upload
+                        directUpload
+                        showingImage
+                        accept="image/*"
+                        fileUrl={portfolio?.logo}
+                        onAttach={(url) =>
+                            setPortfolio((prev) => ({
+                                ...prev,
+                                logo: url,
+                            }))
+                        }
+                        className="mt-3 flex-1"
+                    />
                 </Label>
 
                 <div className="h-6" />
