@@ -110,7 +110,9 @@ const Basic = () => {
                                     variant="black"
                                     className={classNames(
                                         'ml-auto h-7 opacity-0 transition',
-                                        !self || !self.isPro ? 'group-hover:opacity-40' : 'group-hover:opacity-100',
+                                        !self || !self.isPro || !self.resume
+                                            ? 'group-hover:opacity-40'
+                                            : 'group-hover:opacity-100',
                                     )}
                                 >
                                     {self?.isPro ? (
@@ -120,9 +122,12 @@ const Basic = () => {
                                     )}
                                 </Button>
                             </TooltipTrigger>
-                            {(!self || !self.isPro) && (
+                            {(!self || !self.isPro || !self.resume) && (
                                 <TooltipContent>
-                                    <p>Subscribe to Pro plan to unlock</p>
+                                    <p>
+                                        {(!self || !self.isPro) && 'Subscribe to Pro plan to unlock'}
+                                        {self?.isPro && !self.resume && 'Upload your resume to analyze'}
+                                    </p>
                                 </TooltipContent>
                             )}
                         </Tooltip>

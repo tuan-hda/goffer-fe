@@ -14,9 +14,10 @@ type UploadProps = {
     showingImage?: boolean;
     directUpload?: boolean;
     onDelete?: () => void;
+    accept?: string;
 };
 
-const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className, onDelete }: UploadProps) => {
+const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className, onDelete, accept }: UploadProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
@@ -97,7 +98,13 @@ const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className, onDe
 
     return (
         <div className={className}>
-            <input onChange={handleChange} type="file" ref={ref} className="pointer-events-none hidden" />
+            <input
+                accept={accept}
+                onChange={handleChange}
+                type="file"
+                ref={ref}
+                className="pointer-events-none hidden"
+            />
 
             <div
                 {...getRootProps()}

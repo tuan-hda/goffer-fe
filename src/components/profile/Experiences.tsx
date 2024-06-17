@@ -12,7 +12,7 @@ const Experiences = () => {
         <div>
             {experiences.map((experience, index) => (
                 <ExperienceEditable key={index} experiences={experiences} index={index} updateProfile={updateProfile}>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-start gap-4">
                         {experience.logo ? (
                             <Avatar src={experience.logo} className="h-14 w-14" />
                         ) : (

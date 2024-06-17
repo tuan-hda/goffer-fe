@@ -1,3 +1,4 @@
+import { PortfolioConfiguration } from './portfolio.type';
 import { ProjectCreate } from './project.type';
 
 export type User = {
@@ -27,6 +28,7 @@ export type User = {
     status?: string;
     badges?: string[];
     isPro?: boolean;
+    portfolio?: PortfolioConfiguration;
 };
 
 export type UserUpdateRequest = Omit<User, 'projects'> & {
