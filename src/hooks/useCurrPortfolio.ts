@@ -13,6 +13,7 @@ const useCurrPortfolio = () => {
         isLoading,
         notFound: !user || !user.isPro || !portfolio || portfolio.status === 'draft',
         portfolio,
+        user,
     };
 };
 

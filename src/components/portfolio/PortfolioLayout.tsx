@@ -6,7 +6,7 @@ import useCurrPortfolio from '@/hooks/useCurrPortfolio';
 import { NotFound } from '@/pages';
 
 const PortfolioLayout = () => {
-    const { isLoading, notFound, portfolio } = useCurrPortfolio();
+    const { isLoading, user, notFound, portfolio } = useCurrPortfolio();
 
     if (isLoading) {
         return (
@@ -26,8 +26,8 @@ const PortfolioLayout = () => {
             className="portfolio-bg-dots portfolio-text flex min-h-screen flex-col overflow-x-clip tracking-wider md:text-base lg:text-lg xl:text-xl"
         >
             <Header logo="Marie" hideExperiences={false} />
-            <Outlet />
-            <Footer />
+            <Outlet context={[portfolio]} />
+            <Footer links={user?.links} />
         </div>
     );
 };

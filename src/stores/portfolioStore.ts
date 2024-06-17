@@ -21,6 +21,7 @@ const initialData = {
         brandName: '',
         logo: '',
         status: 'draft',
+        images: ['', '', ''],
     } as PortfolioConfiguration,
 };
 

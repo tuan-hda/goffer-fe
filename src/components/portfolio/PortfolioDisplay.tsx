@@ -4,10 +4,10 @@ import OnceInAMoon from './onceInAMoon/OnceInAMoon';
 import useCurrPortfolio from '@/hooks/useCurrPortfolio';
 
 const PortfolioDisplay = () => {
-    const { portfolio } = useCurrPortfolio();
+    const { portfolio, user } = useCurrPortfolio();
 
     if (portfolio?.template === TEMPLATE.ONCE_IN_A_MOON.key) {
-        return <OnceInAMoon portfolio={portfolio} />;
+        return <OnceInAMoon user={user!} portfolio={portfolio} />;
     }
     return <Ditto portfolio={portfolio} />;
 };

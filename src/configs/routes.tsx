@@ -67,6 +67,7 @@ import CustomAssessment from '@/pages/CustomAssessment';
 import NewJobLayout from '@/layouts/NewJobLayout';
 import SubscribeResult from '@/components/subscribe/SubscribeResult';
 import PortfolioDisplayPage from '@/pages/PortfolioDisplayPage';
+import ProjectDetail from '@/components/portfolio/ProjectDetail';
 
 const routesConfig: RouteObject[] = [
     {
@@ -329,6 +330,20 @@ const routesConfig: RouteObject[] = [
                 path: '/subscribe',
                 element: <SubscribeResult />,
             },
+            {
+                path: '/portfolio',
+                element: <PortfolioLayout />,
+                children: [
+                    {
+                        path: ':portfolioDomain',
+                        element: <PortfolioDisplayPage />,
+                    },
+                    {
+                        path: ':portfolioDomain/:projectId',
+                        element: <ProjectDetail />,
+                    },
+                ],
+            },
         ],
     },
     {
@@ -338,16 +353,6 @@ const routesConfig: RouteObject[] = [
     {
         path: '/test',
         element: <DrawRectangle />,
-    },
-    {
-        path: '/portfolio',
-        element: <PortfolioLayout />,
-        children: [
-            {
-                path: ':portfolioDomain',
-                element: <PortfolioDisplayPage />,
-            },
-        ],
     },
     { path: '*', element: <NotFound /> },
 ];

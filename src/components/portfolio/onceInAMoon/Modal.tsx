@@ -66,7 +66,13 @@ export default function Modal({ modal, projects }: ModalProps) {
                                 style={{ backgroundColor: color }}
                                 key={`modal_${index}`}
                             >
-                                <img src={`${cover}`} width={300} height={0} className="object-cover" alt="image" />
+                                <img
+                                    src={`${cover}`}
+                                    width={300}
+                                    height={0}
+                                    className="h-full object-cover"
+                                    alt="image"
+                                />
                             </div>
                         );
                     })}
