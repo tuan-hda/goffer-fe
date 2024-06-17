@@ -1,5 +1,5 @@
+import { Button } from '@/components/ui/button';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
-import { Button } from '@nextui-org/react';
 import { TbArrowRight } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,14 +14,9 @@ const ApplySuccess = () => {
                 about you.
             </p>
             <p className="font-serif">You should be hearing back from us shortly!</p>
-            <Button
-                size="lg"
-                endContent={<TbArrowRight size={24} />}
-                onPress={() => navigate('/app/jobs')}
-                variant="flat"
-                color="primary"
-            >
+            <Button size="lg" className="gap-x-2" onClick={() => navigate('/app/jobs')} variant="black" color="primary">
                 View more jobs
+                <TbArrowRight size={24} />
             </Button>
         </div>
     );

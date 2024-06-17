@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { FileItemProps, FormItemProps, TextItemProps } from './Application';
 import { Avatar } from '@nextui-org/react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -12,6 +11,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Button } from '@/components/ui/button';
 import { CaretSortIcon } from '@radix-ui/react-icons';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { FileItemProps, FormItemProps, TextItemProps } from '@/types/application.type';
+import { BsFileEarmarkPdf } from 'react-icons/bs';
+import { UploadPopover } from '@/components/common';
 
 const ImageField = ({ form, name, label }: FileItemProps) => {
     const { data: user } = useSelfProfileQuery();
@@ -79,31 +81,42 @@ const ImageField = ({ form, name, label }: FileItemProps) => {
 };
 
 const FileField = ({ form, name, label }: FileItemProps) => {
+    const resumeUrl = form.watch('resume');
+    const fileName = resumeUrl ? resumeUrl.split('/').pop() : null;
+
     return (
         <FormField
             control={form.control}
             name={name}
-            render={({ field: { onChange, onBlur, name, ref } }) => (
-                <FormItem className="my-2 flex flex-col justify-between">
+            render={({ field: { value, ref } }) => (
+                <FormItem>
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                        {
-                            <Input
-                                type="file"
-                                id={'fileField' + name}
-                                className="h-10 bg-white pt-2 text-gray-500 focus-visible:border-none focus-visible:ring-1 focus-visible:ring-black/70"
-                                name={name}
-                                ref={ref}
-                                onBlur={onBlur}
-                                accept="application/pdf"
-                                onChange={(event) => {
-                                    const files = event.target.files;
-                                    if (files) {
-                                        onChange(files[0]);
-                                    }
-                                }}
-                            />
-                        }
+                        <UploadPopover
+                            onAttach={async (data) => {
+                                form.setValue('resume', data);
+                            }}
+                            fileUrl={value}
+                            trigger={
+                                <Button
+                                    ref={ref}
+                                    variant="outline"
+                                    className="h-10 w-full items-center justify-start border-1 border-input bg-white text-gray-500 transition group-hover:opacity-100"
+                                >
+                                    {value ? (
+                                        <>
+                                            <BsFileEarmarkPdf className="text-2xl text-red-500" />
+                                            <p className="ml-2 truncate text-text">{fileName}</p>
+                                        </>
+                                    ) : (
+                                        <p className="font-semibold text-text">
+                                            Choose File
+                                            <span className="ml-3 font-normal text-gray-500">No file chosen</span>
+                                        </p>
+                                    )}
+                                </Button>
+                            }
+                        />
                     </FormControl>
                     <FormMessage />
                 </FormItem>
