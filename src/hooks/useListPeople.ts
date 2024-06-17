@@ -1,8 +1,9 @@
 import { listPeopleService } from '@/services/users.service';
+import { SeparatedDomainUser } from '@/types/user.type';
 import { useQuery } from '@tanstack/react-query';
 
-const useListPeople = () => {
-    return useQuery({ queryKey: ['listPeople'], queryFn: listPeopleService });
+const useListPeople = (query?: Partial<Record<keyof SeparatedDomainUser, string>>) => {
+    return useQuery({ queryKey: ['listPeople', query], queryFn: () => listPeopleService(query) });
 };
 
 export default useListPeople;

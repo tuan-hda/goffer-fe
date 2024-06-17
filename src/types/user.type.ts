@@ -31,6 +31,10 @@ export type User = {
     portfolio?: PortfolioConfiguration;
 };
 
+export type SeparatedDomainUser = User & {
+    portfolioDomain?: string;
+};
+
 export type UserUpdateRequest = Omit<User, 'projects'> & {
     projects?: ProjectCreate[];
 };

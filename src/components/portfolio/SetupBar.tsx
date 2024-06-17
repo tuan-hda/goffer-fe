@@ -27,30 +27,30 @@ const SetupBar = () => {
             <CardContent>
                 <Label>
                     <span>Brand name</span>
-                    <div className="mt-2 flex">
-                        <Input
-                            onChange={handleChange('brandName')}
-                            value={portfolio?.brandName}
-                            placeholder="Your name or brand"
-                            className="mr-2 flex-1"
-                        />
-                    </div>
                 </Label>
+                <div className="mt-2 flex">
+                    <Input
+                        onChange={handleChange('brandName')}
+                        value={portfolio?.brandName}
+                        placeholder="Your name or brand"
+                        className="mr-2 flex-1"
+                    />
+                </div>
                 <div className="h-6" />
                 <Label>
                     <span>Portfolio's domain</span>
-                    <div className="mt-2 flex">
-                        <Input
-                            onChange={handleChange('portfolioDomain')}
-                            value={portfolio?.portfolioDomain}
-                            placeholder="Custom domain"
-                            className="mr-2 flex-1"
-                        />
-                        <Button variant="outline" className="pointer-events-none">
-                            .goffer.online
-                        </Button>
-                    </div>
                 </Label>
+                <div className="mt-2 flex">
+                    <Input
+                        onChange={handleChange('portfolioDomain')}
+                        value={portfolio?.portfolioDomain}
+                        placeholder="Custom domain"
+                        className="mr-2 flex-1"
+                    />
+                    <Button variant="outline" className="pointer-events-none">
+                        .goffer.online
+                    </Button>
+                </div>
                 <div className="h-6" />
                 <Label>
                     <span className="block">Your logo</span>
