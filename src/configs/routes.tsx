@@ -56,8 +56,7 @@ import {
 } from '../layouts';
 import Editor from '@/components/common/editor/Editor';
 import { Application, JobApply } from '@/components/applicant/apply';
-import { Ditto, OnceInAMoon, PortfolioLayout } from '@/components/portfolio';
-import ProjectDetail from '@/components/portfolio/ProjectDetail';
+import { PortfolioLayout } from '@/components/portfolio';
 import { OrgDetail } from '@/components/orgDetail';
 import DrawRectangle from '@/components/canvas/DrawRectangle';
 import AssessmentOrg from '@/pages/AssessmentOrg';
@@ -67,6 +66,7 @@ import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
 import CustomAssessment from '@/pages/CustomAssessment';
 import NewJobLayout from '@/layouts/NewJobLayout';
 import SubscribeResult from '@/components/subscribe/SubscribeResult';
+import PortfolioDisplayPage from '@/pages/PortfolioDisplayPage';
 
 const routesConfig: RouteObject[] = [
     {
@@ -340,20 +340,12 @@ const routesConfig: RouteObject[] = [
         element: <DrawRectangle />,
     },
     {
-        path: '/p',
+        path: '/portfolio',
         element: <PortfolioLayout />,
         children: [
             {
-                index: true,
-                element: <OnceInAMoon />,
-            },
-            {
-                path: '1',
-                element: <Ditto />,
-            },
-            {
-                path: '/p/:id',
-                element: <ProjectDetail />,
+                path: ':portfolioDomain',
+                element: <PortfolioDisplayPage />,
             },
         ],
     },

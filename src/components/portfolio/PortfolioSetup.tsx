@@ -1,7 +1,6 @@
 import { TbArrowLeft, TbExternalLink, TbLoader } from 'react-icons/tb';
 import PortfolioPreview from './PortfolioPreview';
 import SetupBar from './SetupBar';
-import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 import usePortfolioStore from '@/stores/portfolioStore';
 import { Switch } from '../ui/switch';
@@ -81,10 +80,14 @@ const PortfolioSetup = () => {
                 )}
                 {self?.portfolio?.status === 'published' && (
                     <Button variant="outline" asChild>
-                        <Link to="/p/1" target="_blank" className="flex items-center gap-2">
+                        <a
+                            href={`/portfolio/${self.portfolio.portfolioDomain}`}
+                            target="_blank"
+                            className="flex items-center gap-2"
+                        >
                             Open your portfolio
                             <TbExternalLink className="text-lg" />
-                        </Link>
+                        </a>
                     </Button>
                 )}
             </div>

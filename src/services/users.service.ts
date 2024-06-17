@@ -1,4 +1,4 @@
-import { GoogleProfile, UpdateUser, User, UserUpdateRequest } from '@/types/user.type';
+import { GoogleProfile, SeparatedDomainUser, UpdateUser, User, UserUpdateRequest } from '@/types/user.type';
 import { baseAxios, noAuthAxios } from './base';
 import axios from 'axios';
 import config from '@/configs/config';
@@ -32,8 +32,12 @@ export const googleProfileService = async (accessToken: string) => {
 
 export const updateUserService = (user: UpdateUser) => baseAxios.put('/users/self', user);
 
-export const listPeopleService = async () => {
-    return (await baseAxios.get<List<User>>('/users')).data;
+export const listPeopleService = async (query?: Partial<Record<keyof SeparatedDomainUser, string>>) => {
+    return (
+        await baseAxios.get<List<User>>('/users', {
+            params: query,
+        })
+    ).data;
 };
 
 export const getUserInfo = async (id: string) => {
