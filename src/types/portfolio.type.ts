@@ -23,4 +23,5 @@ export type PortfolioConfiguration = {
     brandName?: string;
     logo?: string;
     status?: 'draft' | 'published';
+    images?: string[];
 };

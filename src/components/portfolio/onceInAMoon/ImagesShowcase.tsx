@@ -1,8 +1,13 @@
 import { useAnimation, useScroll, useTransform } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { PortfolioConfiguration } from '@/types/portfolio.type';
 
-const ImagesShowcase = () => {
+type ImagesShowcaseProps = {
+    portfolio: PortfolioConfiguration;
+};
+
+const ImagesShowcase = ({ portfolio }: ImagesShowcaseProps) => {
     const [hovering, setHovering] = useState(false);
     const [mount, setMount] = useState(false);
     const animate = useAnimation();
@@ -46,12 +51,7 @@ const ImagesShowcase = () => {
         [-1000, 1000],
         [-1200, 1000],
     ];
-    const imgs = [
-        'https://media.contra.com/image/upload/v1689528859/x2a5yyzhauyg8ttduvtp.gif',
-        'https://media.contra.com/image/upload/v1669011150/bid4annvfzfutjkuvd59.gif',
-        'https://media.contra.com/image/upload/egv71imze4f2lwoh96el.png',
-    ];
-
+    const imgs = portfolio.images || [];
     return (
         <div className="relative flex h-[100vh]">
             <motion.div

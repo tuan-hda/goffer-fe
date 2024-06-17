@@ -8,7 +8,7 @@ export const createProjectService = async (data: ProjectCreate) =>
 
 export const listProjectsService = async (options?: Partial<Record<keyof (Project & ListQueryOptions), string>>) =>
     (
-        await baseAxios.get<List<Project>>('/projects', {
+        await baseAxios.get<List<ProjectDetail>>('/projects', {
             params: options,
         })
     ).data;

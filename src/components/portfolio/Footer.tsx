@@ -1,26 +1,11 @@
 import { Reveal } from '../common';
 import GetInTouch from './GetInTouch';
 
-const links = [
-    {
-        name: 'Facebook',
-        url: 'https://www.facebook.com/',
-    },
-    {
-        name: 'Instagram',
-        url: 'https://www.instagram.com/',
-    },
-    {
-        name: 'Twitter',
-        url: 'https://twitter.com/',
-    },
-    {
-        name: 'LinkedIn',
-        url: 'https://www.linkedin.com/',
-    },
-];
+type FooterProps = {
+    links: { label: string; url: string }[];
+};
 
-const Footer = () => {
+const Footer = ({ links }: FooterProps) => {
     return (
         <div className="mt-[20vh] flex flex-col py-[calc(35vh-200px)] text-center">
             <Reveal>
@@ -35,7 +20,7 @@ const Footer = () => {
                             rel="noreferrer"
                             className="mx-4 font-mono text-[2vh] underline hover:text-black"
                         >
-                            {link.name} ↑
+                            {link.label} ↑
                         </a>
                     ))}
                 </div>

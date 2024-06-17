@@ -12,7 +12,7 @@ const Portfolio = () => {
 
     useEffect(() => {
         if (self?.portfolio) {
-            setPortfolio(self.portfolio);
+            setPortfolio((prev) => ({ ...prev, ...self.portfolio }));
         }
     }, [self?.portfolio]);
 

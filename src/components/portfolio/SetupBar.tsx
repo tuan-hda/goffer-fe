@@ -19,6 +19,17 @@ const SetupBar = () => {
         }));
     };
 
+    const handleImageChange = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPortfolio((prev) => {
+            const images = prev?.images || [];
+            images[index] = e.target.value;
+            return {
+                ...prev,
+                images,
+            };
+        });
+    };
+
     return (
         <Card className="rounded-2xl">
             <CardHeader>
@@ -68,6 +79,19 @@ const SetupBar = () => {
                         className="mt-3 flex-1"
                     />
                 </Label>
+
+                <div className="h-6" />
+
+                {portfolio?.template === 'ONCE_IN_A_MOON' && (
+                    <div className="space-y-3">
+                        <Label>
+                            <span>Projects showcase</span>
+                        </Label>
+                        <Input value={portfolio.images?.at(0)} onChange={handleImageChange(0)} placeholder="Image 1" />
+                        <Input value={portfolio.images?.at(1)} onChange={handleImageChange(1)} placeholder="Image 2" />
+                        <Input value={portfolio.images?.at(2)} onChange={handleImageChange(2)} placeholder="Image 3" />
+                    </div>
+                )}
 
                 <div className="h-6" />
                 <Label>

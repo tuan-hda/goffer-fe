@@ -1,12 +1,13 @@
-import useUpdateProfile from '@/hooks/useUpdateProfile';
+import { Experience } from '@/types/user.type';
 import { Avatar } from '@nextui-org/react';
 import moment from 'moment';
 import { Fragment } from 'react';
 
-const Experiences = () => {
-    const { profile } = useUpdateProfile();
-    const experiences = profile?.experiences || [];
+type ExperiencesProps = {
+    experiences: Experience[];
+};
 
+const Experiences = ({ experiences }: ExperiencesProps) => {
     if (experiences.length === 0) return null;
 
     return (
