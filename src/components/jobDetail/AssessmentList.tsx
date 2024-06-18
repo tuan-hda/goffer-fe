@@ -5,13 +5,18 @@ import useSetupJobStore from '@/stores/setupJobStore';
 import { shallow } from 'zustand/shallow';
 import { Assessment } from '@/types/assessment.type';
 
-const AssessmentList = () => {
+type AssessmentListProps = {
+    isGlobal?: boolean;
+};
+
+const AssessmentList = ({ isGlobal }: AssessmentListProps) => {
     const { data: assessmentList, isLoading } = useListOrgAssessment({
         populate: 'owner',
+        job: isGlobal ? 'all' : 'global',
     });
     const [data, setData] = useSetupJobStore((state) => [state.data, state.setData], shallow);
     const assessments = data.assessments;
-    const setAssessments = (assessments: Map<string, Assessment>) => setData((state) => ({ ...state, assessments }));
+    const setAssessments = (assessments: Assessment[]) => setData((state) => ({ ...state, assessments }));
 
     if (isLoading) {
         return (
@@ -26,13 +31,12 @@ const AssessmentList = () => {
     }
 
     const handlePick = (assessment: Assessment) => {
-        const newAssessments = new Map(assessments);
-        if (newAssessments.has(assessment.id)) {
-            newAssessments.delete(assessment.id);
+        const index = assessments.findIndex((a) => a.id === assessment.id);
+        if (index === -1) {
+            setAssessments([...assessments, assessment]);
         } else {
-            newAssessments.set(assessment.id, assessment);
+            setAssessments(assessments.filter((a) => a.id !== assessment.id));
         }
-        setAssessments(newAssessments);
     };
 
     return (
@@ -40,7 +44,7 @@ const AssessmentList = () => {
             {assessmentList.results.map((assessment) => (
                 <AssessmentOrgItem
                     onPick={handlePick}
-                    picked={assessments.has(assessment.id)}
+                    picked={assessments.findIndex((a) => a.id === assessment.id) !== -1}
                     mode="pick"
                     key={assessment.id}
                     assessment={assessment}

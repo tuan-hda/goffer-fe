@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@nextui-org/react';
-import { TbCopy, TbDots, TbReport, TbTrash } from 'react-icons/tb';
+import { TbCopy, TbDetails, TbDots, TbReport, TbTrash } from 'react-icons/tb';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,18 +11,28 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { DialogTrigger } from '@/components/ui/dialog';
 import { Assessment } from '@/types/assessment.type';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import AssessmentOrgItemDelete from './AssessmentOrgItemDelete';
 import { Checkbox } from '@/components/ui/checkbox';
+import moment from 'moment';
+import { Badge } from '@/components/ui/badge';
 
 type AssessmentOrgItemProps = {
     assessment: Assessment;
     mode?: 'pick' | 'normal';
     picked?: boolean;
     onPick?: (assessment: Assessment) => void;
+    pickContent?: React.ReactNode;
 };
 
-const AssessmentOrgItem = ({ assessment, mode = 'normal', picked = false, onPick }: AssessmentOrgItemProps) => {
+const AssessmentOrgItem = ({
+    assessment,
+    mode = 'normal',
+    picked = false,
+    onPick,
+    pickContent,
+}: AssessmentOrgItemProps) => {
+    const { domain } = useParams();
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -37,7 +47,7 @@ const AssessmentOrgItem = ({ assessment, mode = 'normal', picked = false, onPick
         <div onClick={handleClick} className="group relative cursor-pointer">
             {mode === 'pick' && (
                 <div className="absolute right-2 top-2 flex items-center justify-center rounded-lg bg-white/50 p-1">
-                    <Checkbox checked={picked} className="h-5 w-5 rounded-lg" />
+                    {pickContent ?? <Checkbox checked={picked} className="h-5 w-5 rounded-lg" />}
                 </div>
             )}
             <div className="aspect-video overflow-hidden rounded-2xl shadow-small">
@@ -53,11 +63,10 @@ const AssessmentOrgItem = ({ assessment, mode = 'normal', picked = false, onPick
                 <Avatar src={assessment.owner.avatar || 'default-avatar-url.jpg'} />
                 <div className="min-w-0 flex-1">
                     <p className="overflow-hidden text-ellipsis whitespace-nowrap">{assessment.title}</p>
-                    <p className="text-xs font-light text-gray-400">
-                        {new Date(assessment.createdAt).toLocaleString()}
-                    </p>
+                    <p className="text-xs font-light text-gray-400">Edited {moment(assessment.updatedAt).fromNow()}</p>
                 </div>
             </div>
+            {!assessment.job && <Badge className="mt-2 font-normal">Global</Badge>}
             <div
                 onClick={(e) => e.stopPropagation()}
                 className="pointer-events-none absolute -bottom-2 right-0 opacity-0 transition group-hover:pointer-events-auto group-hover:opacity-100"
@@ -73,14 +82,18 @@ const AssessmentOrgItem = ({ assessment, mode = 'normal', picked = false, onPick
                             <DropdownMenuLabel>Options</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem asChild>
-                                <Link to={assessment.id + '/results'}>
+                                <Link to={`/app/organization/${domain}/assessment/${assessment.id}`}>
+                                    <TbDetails className="mr-2" /> View detail
+                                </Link>
+                            </DropdownMenuItem>{' '}
+                            <DropdownMenuItem asChild>
+                                <Link to={`/app/organization/${domain}/assessment/${assessment.id}/results`}>
                                     <TbReport className="mr-2" /> View results
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <TbCopy className="mr-2" /> Duplicate
                             </DropdownMenuItem>
-
                             <DialogTrigger asChild>
                                 <DropdownMenuItem>
                                     <TbTrash className="mr-2" />

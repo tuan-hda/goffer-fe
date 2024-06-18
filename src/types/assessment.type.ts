@@ -1,3 +1,4 @@
+import { Job } from './job.type';
 import { QUESTION_TYPE, Question } from './question.type';
 import { User } from './user.type';
 
@@ -7,7 +8,6 @@ export type NewAssessment = {
     questions: Map<string, Question>;
     duration: number;
     org: string;
-    job?: string;
     order: number;
     status?: 'draft' | 'published' | 'archived';
     image?: string;
@@ -19,11 +19,12 @@ export type NewAssessmentRequest = Omit<NewAssessment, 'questions'> & {
     questions: string[];
 };
 
-export type Assessment = Omit<NewAssessment, 'questions'> & {
+export type Assessment = Omit<NewAssessment, 'questions' | 'job'> & {
     id: string;
     createdAt: Date;
     owner: User;
     questions: Map<string, Question>;
     deleted: boolean;
     updatedAt: Date;
+    job?: Job;
 };

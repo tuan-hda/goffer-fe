@@ -17,6 +17,10 @@ const useListOrgAssessment = (query?: Partial<Record<keyof (Assessment & ListQue
         queryKey.org = data?.id;
     }
 
+    if (!queryKey.job) {
+        queryKey.job = 'all';
+    }
+
     if (type !== 'all') queryKey.type = type;
 
     const actualQuery = {

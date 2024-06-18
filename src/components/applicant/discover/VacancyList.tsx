@@ -30,11 +30,11 @@ const VacancyList = () => {
                         >
                             <CardContent className="px-6 pb-3 pt-6">
                                 <Image
-                                    src={item.org.logo}
+                                    src={item.org?.logo}
                                     className="h-full w-full object-cover"
                                     classNames={{ wrapper: 'h-16 w-16 bg-white' }}
                                 />
-                                <p className="mt-4 font-medium">{item.org.name}</p>
+                                <p className="mt-4 font-medium">{item.org?.name}</p>
                                 <p className="mt-1 text-gray-500">{item.title}</p>
                                 <p className="mt-2 text-lg font-medium">
                                     ${item.salaryFrom} - ${item.salaryTo}
