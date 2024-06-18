@@ -1,5 +1,5 @@
-import { useState, useEffect, Key } from 'react';
-import { Input, Tabs, Tab, Button , Select, SelectItem, Selection } from '@nextui-org/react';
+import { useState, Key } from 'react';
+import { Input, Tabs, Tab, Button, Select, SelectItem, Selection } from '@nextui-org/react';
 import { RiSearchLine } from 'react-icons/ri';
 import useJobStore from '@/stores/jobStore';
 import { MdOutlineCleaningServices } from 'react-icons/md';

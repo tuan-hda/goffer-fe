@@ -1,4 +1,3 @@
- 
 import { Button, Progress } from '@nextui-org/react';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFilled } from 'react-icons/tb';
@@ -9,7 +8,6 @@ import { uploadFileService } from '@/services/file.service';
 import { isAxiosError } from 'axios';
 import { toast } from 'sonner';
 import { AnswerResponse } from '@/types/answer.type';
-import useJobStore from '@/stores/jobStore';
 import { Question } from '@/types/question.type';
 import useApplyStore from '@/stores/applyStore';
 

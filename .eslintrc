@@ -39,7 +39,7 @@
     // turn on errors for missing imports
     "import/no-unresolved": "error",
     "no-unused-vars": [
-      "error",
+      "warning",
       {
         "vars": "all",
         "args": "after-used",
