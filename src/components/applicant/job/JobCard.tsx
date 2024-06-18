@@ -32,9 +32,9 @@ const JobCard = ({ data }: Props) => {
             shadow="md"
         >
             <CardHeader className="gap-4 p-4">
-                <Avatar alt="Album cover" radius="md" size="lg" src={org.logo} />
+                <Avatar alt="Album cover" radius="md" size="lg" src={org?.logo} />
                 <div className="flex flex-1 flex-col items-start">
-                    <p className="text-xl font-semibold text-default-700">{org.name}</p>
+                    <p className="text-xl font-semibold text-default-700">{org?.name}</p>
                     <p className="text-sm font-normal text-default-500">Posted 18h ago</p>
                 </div>
                 <Button

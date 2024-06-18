@@ -315,15 +315,15 @@ const routesConfig: RouteObject[] = [
                 element: <AssessmentLayout />,
                 children: [
                     {
-                        path: '/assessment/:id',
+                        path: '/assessment/:assessmentId',
                         element: <Assessment />,
                     },
                     {
-                        path: '/assessment/:id/:type',
+                        path: '/assessment/:assessmentId/:type',
                         element: <AssessmentSession />,
                     },
 
-                    { path: '/assessment/:id/success', element: <AssessmentSuccess /> },
+                    { path: '/assessment/:assessmentId/success', element: <AssessmentSuccess /> },
                 ],
             },
             {
