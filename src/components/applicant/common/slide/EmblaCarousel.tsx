@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable import/named */
+ 
+ 
 import { useCallback, useEffect, useState } from 'react';
 import { EmblaOptionsType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';

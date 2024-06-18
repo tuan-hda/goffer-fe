@@ -1,6 +1,5 @@
 import { toast } from 'sonner';
-import { CreateJobResult as ResultType } from './data';
-import { GEN_AI_CREATE_JOB as GEN_AI } from './data';
+import { CreateJobResult as ResultType , GEN_AI_CREATE_JOB as GEN_AI } from './data';
 
 import GenAIProvider from '@/components/genai/GenAIProvider';
 

@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-undef */
+ 
 import { Button, Progress } from '@nextui-org/react';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFilled } from 'react-icons/tb';
@@ -22,9 +22,9 @@ interface IconButtonProps {
 }
 
 const formatTime = (x: number) => {
-    var d = moment.duration(x, 'seconds');
-    var minutes = Math.floor(d.asMinutes());
-    var seconds = Math.floor(d.asSeconds()) % 60;
+    const d = moment.duration(x, 'seconds');
+    const minutes = Math.floor(d.asMinutes());
+    const seconds = Math.floor(d.asSeconds()) % 60;
     return `${minutes < 10 ? minutes : `0${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 

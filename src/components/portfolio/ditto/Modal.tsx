@@ -17,8 +17,8 @@ const Modal = ({ modal }: ModalProps) => {
 
     useEffect(() => {
         //Move cursor
-        let xMoveCursor = gsap.quickTo(cursor.current, 'left', { duration: 0.5, ease: 'power3' });
-        let yMoveCursor = gsap.quickTo(cursor.current, 'top', { duration: 0.5, ease: 'power3' });
+        const xMoveCursor = gsap.quickTo(cursor.current, 'left', { duration: 0.5, ease: 'power3' });
+        const yMoveCursor = gsap.quickTo(cursor.current, 'top', { duration: 0.5, ease: 'power3' });
 
         window.addEventListener('mousemove', (e) => {
             const { pageX, pageY } = e;
