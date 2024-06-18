@@ -4,11 +4,16 @@ import ProjectList from './ProjectList';
 import Experiences from './Experiences';
 import Recommendations from './Recommendation';
 import About from './About';
-import useCurrPortfolio from '@/hooks/useCurrPortfolio';
 import useListProject from '@/hooks/useListProject';
+import { PortfolioConfiguration } from '@/types/portfolio.type';
+import { User } from '@/types/user.type';
 
-const Ditto = () => {
-    const { portfolio, user } = useCurrPortfolio();
+type Props = {
+    portfolio: PortfolioConfiguration;
+    user: User;
+};
+
+const Ditto = ({ portfolio, user }: Props) => {
     const { data: projects } = useListProject({
         owner: user?.id,
     });

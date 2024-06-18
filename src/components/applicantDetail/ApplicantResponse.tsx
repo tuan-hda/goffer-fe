@@ -44,13 +44,15 @@ const ApplicantResponse = () => {
                 <CardContent className="pb-2">
                     <AudioRecorder
                         mock
-                        question={{
-                            id: '',
-                            constraint: 1,
-                            content: '',
-                            description: '',
-                            type: 'audio',
-                        }}
+                        question={
+                            {
+                                id: '',
+                                constraint: 1,
+                                content: '',
+                                description: '',
+                                type: 'audio',
+                            } as any
+                        }
                     />
                     <div className="-mx-6 my-4 border-t border-dashed border-t-gray-500" />
                     <Button

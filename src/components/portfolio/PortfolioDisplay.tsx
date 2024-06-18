@@ -6,10 +6,14 @@ import useCurrPortfolio from '@/hooks/useCurrPortfolio';
 const PortfolioDisplay = () => {
     const { portfolio, user } = useCurrPortfolio();
 
+    if (!portfolio || !user) {
+        return null;
+    }
+
     if (portfolio?.template === TEMPLATE.ONCE_IN_A_MOON.key) {
         return <OnceInAMoon user={user!} portfolio={portfolio} />;
     }
-    return <Ditto portfolio={portfolio} />;
+    return <Ditto user={user} portfolio={portfolio} />;
 };
 
 export default PortfolioDisplay;

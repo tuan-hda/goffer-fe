@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import { Button, Progress } from '@nextui-org/react';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFilled } from 'react-icons/tb';
@@ -9,7 +8,6 @@ import { uploadFileService } from '@/services/file.service';
 import { isAxiosError } from 'axios';
 import { toast } from 'sonner';
 import { AnswerResponse } from '@/types/answer.type';
-import useJobStore from '@/stores/jobStore';
 import { Question } from '@/types/question.type';
 import useApplyStore from '@/stores/applyStore';
 
@@ -22,9 +20,9 @@ interface IconButtonProps {
 }
 
 const formatTime = (x: number) => {
-    var d = moment.duration(x, 'seconds');
-    var minutes = Math.floor(d.asMinutes());
-    var seconds = Math.floor(d.asSeconds()) % 60;
+    const d = moment.duration(x, 'seconds');
+    const minutes = Math.floor(d.asMinutes());
+    const seconds = Math.floor(d.asSeconds()) % 60;
     return `${minutes < 10 ? minutes : `0${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 

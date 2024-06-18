@@ -94,7 +94,7 @@ const AssessmentBuilderHeader = () => {
                 )}
                 <Button variant="black" onClick={handleSubmit}>
                     {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
-                    {!!data ? 'Update' : 'Create'}
+                    {data ? 'Update' : 'Create'}
                 </Button>
             </div>
         </div>

@@ -24,7 +24,7 @@ const Application = () => {
     const location = useLocation();
     const { id } = useParams();
     const { data, isLoading, refetch } = useApplyJob(id || '');
-    const { answer, loading, setLoading } = useApplyStore();
+    const { answer, loading } = useApplyStore();
 
     const [stepNum, setStepNum] = useState(0);
     const [avatarLoading, setLAvatarLoading] = useState(false);

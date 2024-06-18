@@ -83,7 +83,7 @@ const PortfolioSetup = () => {
                         <a
                             href={`/portfolio/${self.portfolio.portfolioDomain}`}
                             target="_blank"
-                            className="flex items-center gap-2"
+                            className="flex items-center gap-2" rel="noreferrer"
                         >
                             Open your portfolio
                             <TbExternalLink className="text-lg" />
