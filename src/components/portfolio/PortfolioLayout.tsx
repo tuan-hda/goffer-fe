@@ -25,9 +25,12 @@ const PortfolioLayout = () => {
             style={portfolio.palette as React.CSSProperties}
             className="portfolio-bg-dots portfolio-text flex min-h-screen flex-col overflow-x-clip tracking-wider md:text-base lg:text-lg xl:text-xl"
         >
-            <Header logo="Marie" hideExperiences={false} />
+            <Header
+                logo={<img src={portfolio.logo} className="h-20 w-40 rounded-xl object-cover" />}
+                hideExperiences={false}
+            />
             <Outlet context={[portfolio]} />
-            <Footer links={user?.links} />
+            <Footer links={user?.links || []} />
         </div>
     );
 };

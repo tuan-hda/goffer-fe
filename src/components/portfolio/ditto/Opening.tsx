@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import GetInTouch from '../GetInTouch';
 import { motion, useAnimation } from 'framer-motion';
+import { PortfolioConfiguration } from '@/types/portfolio.type';
+import { User } from '@/types/user.type';
 
 const DURATION = 1.1;
 const DELAY = 0.76 * DURATION;
@@ -67,12 +69,29 @@ const variants = {
     },
 };
 
-const baseWords = ['a brand strategist', 'a wonderful strategist', 'a ui/ux magician'];
 const baseAssets = ['✰︎', '✹︎', '✎︎'];
 
-const Opening = () => {
+type OpeningProps = {
+    portfolio: PortfolioConfiguration;
+    user: User;
+};
+
+const Opening = ({ portfolio, user }: OpeningProps) => {
     const [indexes, setIndexes] = useState([0, 1]);
     const ctrls = useAnimation();
+
+    const appendArticle = (word: string) => {
+        const vowels = ['a', 'e', 'i', 'o', 'u'];
+        return vowels.includes(word[0].toLowerCase()) ? 'an ' + word : 'a ' + word;
+    };
+
+    const baseWords = useMemo(() => {
+        const skills = user.skills || [];
+        if (skills.length === 0) return ['developer', 'designer', 'freelancer'];
+        if (skills.length === 1) return [skills[0], skills[0], skills[0]];
+        if (skills.length === 2) return [skills[0], skills[1], skills[0]];
+        return skills.map((skill) => appendArticle(skill.toLowerCase()));
+    }, [user.skills]);
 
     useEffect(() => {
         ctrls.set('initial');
@@ -92,9 +111,10 @@ const Opening = () => {
 
     return (
         <div className="mx-auto mt-[16vh] w-[72vw]">
-            <p className="text-[2.2vh]">WE DESIGN BRANDS THAT BRING JOY TO THE WORLD.</p>
             <h1 className="mt-[2vh] flex font-serif text-[10vh] font-medium leading-[100%] tracking-tight">
-                <span className="inline-block h-[11.5vh] flex-shrink-0 overflow-hidden whitespace-nowrap">Tuan is</span>
+                <span className="inline-block h-[11.5vh] flex-shrink-0 overflow-hidden whitespace-nowrap">
+                    {portfolio.brandName} is
+                </span>
                 <div className="relative inline-block h-[11.5vh] w-full min-w-0 overflow-hidden">
                     {/* Assets loop */}
                     <motion.span variants={variants.asset.outro} className="absolute" initial="initial" animate={ctrls}>
@@ -135,10 +155,10 @@ const Opening = () => {
                     </motion.span>
                 </div>
             </h1>
-            <p className="ml-[12vh] font-serif text-[10vh] font-medium leading-[100%] tracking-tight">
-                ➺ based in Vietnam
+            <p className="mt-[1vh] font-serif text-[10vh] font-medium leading-[100%] tracking-tight">
+                ➺ based in {user.location}
             </p>
-            <GetInTouch className="ml-[28vh] mt-[4vh]" />
+            <GetInTouch className="mt-[4vh]" />
         </div>
     );
 };

@@ -1,8 +1,8 @@
-import { ProjectCreate as ProjectType } from '@/types/project.type';
+import { ProjectDetail } from '@/types/project.type';
 import { useNavigate } from 'react-router-dom';
 
 type ProjectProps = {
-    data: ProjectType;
+    data: ProjectDetail;
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -11,7 +11,7 @@ const Project = ({ data, setModal }: ProjectProps) => {
 
     return (
         <div
-            onClick={() => navigate('/p/agma22ka9065bndal')}
+            onClick={() => navigate(data.id)}
             className="group relative rounded-[4vh]"
             onMouseEnter={() => setModal(() => true)}
             onMouseLeave={() => {
@@ -20,7 +20,7 @@ const Project = ({ data, setModal }: ProjectProps) => {
         >
             <div className="aspect-[1.1] w-full overflow-hidden rounded-[4vh]">
                 <img
-                    src="https://media.contra.com/image/upload/f_auto,c_limit,w_3840,q_auto/tgloyevfbfdtimwahyml"
+                    src={data.cover}
                     className="h-full w-full object-cover transition group-hover:scale-[1.2]"
                     style={{
                         transitionDuration: '0.85s',
