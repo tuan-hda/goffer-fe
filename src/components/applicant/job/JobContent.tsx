@@ -9,7 +9,7 @@ const JobContent = () => {
     return (
         <div>
             {/* Title */}
-            <p className="font-serif text-lg font-medium text-default-500 underline">{detail?.org.name}</p>
+            <p className="font-serif text-lg font-medium text-default-500 underline">{detail?.org?.name}</p>
             <p className="font-serif text-4xl font-black text-text">{detail?.title}</p>
             <p>
                 <span className="font-serif text-sm font-medium text-default-500">{detail?.owner?.name}</span>

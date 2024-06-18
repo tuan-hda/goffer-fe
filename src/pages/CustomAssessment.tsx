@@ -36,7 +36,7 @@ const CustomAssessment = () => {
                             description: assessment.description,
                             questions: assessment.questions,
                             duration: assessment.duration,
-                            org: assessment.org,
+                            org: assessment.org?.id,
                             job: id,
                             order: assessment.order,
                             status: assessment.status,

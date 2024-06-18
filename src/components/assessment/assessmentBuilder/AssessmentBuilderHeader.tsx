@@ -42,9 +42,10 @@ const AssessmentBuilderHeader = () => {
             async () => {
                 if (!data) return;
                 setLoading(true);
+                const { org, job, ...rest } = assessment;
                 await updateAssessmentService({
                     ...data,
-                    ...assessment,
+                    ...rest,
                 });
                 await refetch();
                 await refetchCurr();
@@ -72,7 +73,7 @@ const AssessmentBuilderHeader = () => {
                             <Button variant="outline">
                                 <Link
                                     className="flex"
-                                    to={`/app/organization/${domain}/job/${data.job.id}`}
+                                    to={`/app/organization/${domain}/job/${data.job.id}/custom-assessment`}
                                     target="_blank"
                                 >
                                     Already linked to a job <TbExternalLink className="ml-2 text-lg" />

@@ -16,7 +16,11 @@ const AssessmentResults = () => {
 
     useEffect(() => {
         if (data) {
-            setAssessment(data);
+            setAssessment({
+                ...data,
+                job: data.job?.id,
+                org: data.org?.id,
+            });
         } else {
             setAssessment(initialData);
         }

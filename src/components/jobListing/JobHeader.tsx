@@ -49,10 +49,10 @@ const JobHeader = ({ job }: JobHeaderProps) => {
         <>
             <div className="flex items-center gap-2">
                 <div className="flex h-fit w-fit items-center gap-4 overflow-hidden">
-                    <Image src={job.org.logo} className="h-16 w-16 rounded-3xl" />
+                    <Image src={job.org?.logo} className="h-16 w-16 rounded-3xl" />
                     <div>
-                        <p className="font-semibold">{job.org.name}</p>
-                        <p>{job.org.field}</p>
+                        <p className="font-semibold">{job.org?.name}</p>
+                        <p>{job.org?.field}</p>
                     </div>
                 </div>
                 <Button variant="black" className="ml-auto gap-2" onClick={handleApply}>

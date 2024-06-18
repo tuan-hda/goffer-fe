@@ -1,12 +1,21 @@
-import { Assessment, NewAssessment, NewAssessmentRequest } from '@/types/assessment.type';
+import { Assessment, AssessmentUpdate, NewAssessment, AssessmentRequest } from '@/types/assessment.type';
 import { baseAxios } from './base';
 import { ListQueryOptions } from '@/types/common.type';
 import { List } from '@/types/list.type';
 import { Question } from '@/types/question.type';
 
-const mapDataToRequestAssessment = ({ questions, ...assessment }: NewAssessment | Assessment) => {
-    const innerAssessment: NewAssessmentRequest = { ...assessment, questions: [] };
-    innerAssessment.questions = Array.from(questions.values()).map((q) => q.id);
+const mapDataToRequestAssessment = ({ questions, ...assessment }: NewAssessment | Partial<Assessment>) => {
+    const innerAssessment: AssessmentRequest = {
+        questions: [],
+        org: typeof assessment.org === 'string' ? assessment.org : assessment.org?.id,
+        title: assessment.title,
+        description: assessment.description,
+        duration: assessment.duration,
+        order: assessment.order || -1,
+        status: assessment.status,
+        type: assessment.type,
+    };
+    innerAssessment.questions = Array.from(questions?.values() || []).map((q) => q.id);
     return innerAssessment;
 };
 
@@ -27,9 +36,9 @@ export const getAssessmentService = async (id: string) => {
     return result;
 };
 
-export const updateAssessmentService = async ({ deleted, createdAt, updatedAt, id, ...assessment }: Assessment) => {
+export const updateAssessmentService = async (assessment: Partial<Assessment>) => {
     const innerAssessment = mapDataToRequestAssessment(assessment);
-    return (await baseAxios.patch(`/assessments/${id}`, innerAssessment)).data;
+    return (await baseAxios.patch(`/assessments/${assessment.id}`, innerAssessment)).data;
 };
 
 export const updateAssessmentWithIdService = async (id: string, data: Partial<Assessment>) => {
@@ -38,4 +47,10 @@ export const updateAssessmentWithIdService = async (id: string, data: Partial<As
 
 export const deleteAssessmentService = async (id: string) => {
     return (await baseAxios.delete(`/assessments/${id}`)).data;
+};
+
+export const getPublicAssessmentService = async (id: string) => {
+    const result = (await baseAxios.get<Assessment>(`/assessments/public/${id}`)).data;
+    result.questions = new Map((result.questions as unknown as Question[]).map((q) => [q.id, q]));
+    return result;
 };

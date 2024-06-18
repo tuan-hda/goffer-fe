@@ -19,7 +19,7 @@ const NewJobLayout = () => {
             const data = await getJobService(id!);
             setData({
                 ...data,
-                org: data.org?.id,
+                org: data.org?.id || '',
             });
             setFailed(false);
         } catch (error) {
