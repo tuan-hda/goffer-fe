@@ -70,7 +70,7 @@ export default function Modal({ modal, projects }: ModalProps) {
                                     src={`${cover}`}
                                     width={300}
                                     height={0}
-                                    className="h-full object-cover"
+                                    className="h-full w-full object-cover"
                                     alt="image"
                                 />
                             </div>

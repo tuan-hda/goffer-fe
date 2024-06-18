@@ -4,14 +4,23 @@ import ProjectList from './ProjectList';
 import Experiences from './Experiences';
 import Recommendations from './Recommendation';
 import About from './About';
+import useCurrPortfolio from '@/hooks/useCurrPortfolio';
+import useListProject from '@/hooks/useListProject';
 
 const Ditto = () => {
+    const { portfolio, user } = useCurrPortfolio();
+    const { data: projects } = useListProject({
+        owner: user?.id,
+    });
+
+    if (!portfolio || !user) return null;
+
     return (
         <>
             <Reveal threshold={0}>
-                <Opening />
+                <Opening portfolio={portfolio} user={user} />
             </Reveal>
-            <ProjectList />
+            <ProjectList projects={projects?.results || []} />
             <div className="h-[28vh]"></div>
             <Reveal>
                 <Experiences />
@@ -22,7 +31,7 @@ const Ditto = () => {
             </Reveal>
             <div className="h-[32vh]"></div>
             <Reveal>
-                <About />
+                <About user={user} />
             </Reveal>
         </>
     );
