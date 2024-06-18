@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable import/named */
+ 
 import { useCallback, useEffect, useState } from 'react';
 import { EmblaCarouselType } from 'embla-carousel';
 

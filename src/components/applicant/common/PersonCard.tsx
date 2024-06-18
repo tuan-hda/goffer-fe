@@ -1,4 +1,4 @@
-/* eslint-disable import/named */
+ 
 import { TbBookmarks, TbLoaderQuarter, TbPlanet, TbStarFilled } from 'react-icons/tb';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Avatar } from '@nextui-org/react';

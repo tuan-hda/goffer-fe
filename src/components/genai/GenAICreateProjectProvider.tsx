@@ -1,6 +1,5 @@
 import { toast } from 'sonner';
-import { CreateProjectResult as ResultType } from './data';
-import { GEN_AI_CREATE_PROJECT as GEN_AI } from './data';
+import { CreateProjectResult as ResultType , GEN_AI_CREATE_PROJECT as GEN_AI } from './data';
 
 import GenAIProvider from '@/components/genai/GenAIProvider';
 

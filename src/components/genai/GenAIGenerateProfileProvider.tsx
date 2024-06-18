@@ -1,6 +1,5 @@
 import { toast } from 'sonner';
-import { GenerateProfileResult as ResultType } from './data';
-import { GEN_AI_GENERATE_PROFILE as GEN_AI } from './data';
+import { GenerateProfileResult as ResultType , GEN_AI_GENERATE_PROFILE as GEN_AI } from './data';
 
 import GenAIProvider from '@/components/genai/GenAIProvider';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';

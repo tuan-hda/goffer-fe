@@ -1,6 +1,5 @@
-import { useAnimation, useScroll, useTransform } from 'framer-motion';
+import { useAnimation, useScroll, useTransform , motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import { PortfolioConfiguration } from '@/types/portfolio.type';
 
 type ImagesShowcaseProps = {

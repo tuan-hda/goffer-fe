@@ -1,10 +1,9 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable import/named */
 import { useCallback, useEffect, useState } from 'react';
 import { EmblaOptionsType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { Image } from '@nextui-org/react';
+// import { OptionsType } from 'embla-carousel/components/Options';
 
 type PropType = {
     slides: string[];
@@ -13,11 +12,11 @@ type PropType = {
 
 const EmblaCarousel = (props: PropType) => {
     const { slides, options } = props;
-    const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay({ playOnInit: true, delay: 3000 })]);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [emblaRef, emblaApi] = useEmblaCarousel(options as any, [Autoplay({ playOnInit: true, delay: 3000 })] as any);
+    const [, /*isPlaying */ setIsPlaying] = useState(false);
 
     const toggleAutoplay = useCallback(() => {
-        const autoplay = emblaApi?.plugins()?.autoplay;
+        const autoplay = emblaApi?.plugins()?.autoplay as any;
         if (!autoplay) return;
 
         const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play;
@@ -25,13 +24,13 @@ const EmblaCarousel = (props: PropType) => {
     }, [emblaApi]);
 
     useEffect(() => {
-        const autoplay = emblaApi?.plugins()?.autoplay;
+        const autoplay = emblaApi?.plugins()?.autoplay as any;
         if (!autoplay) return;
 
         setIsPlaying(autoplay.isPlaying());
         emblaApi
-            .on('autoplay:play', () => setIsPlaying(true))
-            .on('autoplay:stop', () => setIsPlaying(false))
+            ?.on('autoplay:play' as any, () => setIsPlaying(true))
+            .on('autoplay:stop' as any, () => setIsPlaying(false))
             .on('reInit', () => setIsPlaying(false));
     }, [emblaApi]);
 
@@ -44,7 +43,7 @@ const EmblaCarousel = (props: PropType) => {
                             <Image
                                 isZoomed
                                 alt="Card background"
-                                className="object-cover w-full aspect-square rounded-xl"
+                                className="aspect-square w-full rounded-xl object-cover"
                                 src={image_url}
                                 onMouseEnter={toggleAutoplay}
                                 onMouseLeave={toggleAutoplay}

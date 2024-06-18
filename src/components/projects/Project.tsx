@@ -1,11 +1,11 @@
-import { Project as ProjectType } from '@/types/project.type';
+import { ProjectCreate } from '@/types/project.type';
 import { Image } from '@nextui-org/react';
 import classNames from 'classnames';
-import { CSSProperties, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 type ProjectProps = {
-    info: ProjectType;
+    info: ProjectCreate;
     url?: string;
 };
 
@@ -32,11 +32,22 @@ const Project = ({ info, url }: ProjectProps) => {
         };
     }, []);
 
+    const Wrapper = useCallback(
+        ({ children, className }: { className?: string; children?: React.ReactNode }) => {
+            if ('id' in info) {
+                return (
+                    <Link className={className} to={url || `/project/${info.id}?previousUrl=${location.pathname}`}>
+                        {children}
+                    </Link>
+                );
+            }
+            return <div className={className}>{children}</div>;
+        },
+        [info],
+    );
+
     return (
-        <Link
-            to={url || `/project/${info.id}?previousUrl=${location.pathname}`}
-            className="flex h-[200px] gap-6 rounded-3xl"
-        >
+        <Wrapper>
             <div className="aspect-[4/3]">
                 <Image
                     classNames={{
@@ -65,7 +76,7 @@ const Project = ({ info, url }: ProjectProps) => {
                     <div className="absolute right-0 top-0 h-full w-2 bg-gradient-to-r from-black/0 to-gray-500/10"></div>
                 </div>
             </div>
-        </Link>
+        </Wrapper>
     );
 };
 
