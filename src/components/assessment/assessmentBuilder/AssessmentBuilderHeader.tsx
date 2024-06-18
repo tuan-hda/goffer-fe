@@ -8,11 +8,10 @@ import useNewAssessmentStore from '@/stores/newAssessmentStore';
 import catchAsync from '@/utils/catchAsync';
 import _ from 'lodash';
 import { useState } from 'react';
-import { TbLoader, TbReport, TbTrash } from 'react-icons/tb';
+import { TbExternalLink, TbLoader, TbReport, TbTrash } from 'react-icons/tb';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
 import AssessmentOrgItemDelete from '../org/AssessmentOrgItemDelete';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const AssessmentBuilderHeader = () => {
     const [loading, setLoading] = useState(false);
@@ -65,27 +64,39 @@ const AssessmentBuilderHeader = () => {
 
     return (
         <div>
-            <div className="col-span-full flex items-center gap-4">
+            <div className="col-span-full flex items-center gap-2">
                 <h1 className="mr-auto text-2xl">Assessment Builder</h1>
                 {!!data && (
                     <>
-                        <p className="mr-2 text-gray-500">This assessment not linked to a job yet.</p>
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <Link to="results" className="hover:underline">
-                                        <TbReport className="text-lg" />
-                                    </Link>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>Add to library</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
+                        {data.job ? (
+                            <Button variant="outline">
+                                <Link
+                                    className="flex"
+                                    to={`/app/organization/${domain}/job/${data.job.id}`}
+                                    target="_blank"
+                                >
+                                    Already linked to a job <TbExternalLink className="ml-2 text-lg" />
+                                </Link>
+                            </Button>
+                        ) : (
+                            <p className="mr-2 text-gray-500">This is a global assessment. Use it as a template.</p>
+                        )}
+
+                        {data.job && (
+                            <Button variant="ghost" size="icon" asChild>
+                                <Link
+                                    className="flex"
+                                    to={`/app/organization/${domain}/job/${data.job.id}/results`}
+                                    target="_blank"
+                                >
+                                    <TbReport className="text-lg" />
+                                </Link>
+                            </Button>
+                        )}
 
                         <AssessmentOrgItemDelete>
                             <DialogTrigger asChild>
-                                <Button size="icon" variant="ghost">
+                                <Button className="mr-2" size="icon" variant="ghost">
                                     <TbTrash className="text-lg" />
                                 </Button>
                             </DialogTrigger>

@@ -43,11 +43,9 @@ export const getSourcingService = async (id: string, page?: number) => {
 export const getJobService = async (id: string) => {
     const response = (await baseAxios.get<JobResponse>(`/jobs/${id}`)).data;
     const questionsMap = new Map(response.questions.map((question: Question) => [question.id, question]));
-    const assessmentsMap = new Map(response.assessments.map((assessment: Assessment) => [assessment.id, assessment]));
     const finalResponse: Job = {
         ...response,
         questions: questionsMap,
-        assessments: assessmentsMap,
     };
     return finalResponse;
 };

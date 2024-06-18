@@ -1,36 +1,25 @@
-import useSetupJobStore from '@/stores/setupJobStore';
 import { Assessment } from '@/types/assessment.type';
-import { shallow } from 'zustand/shallow';
 import AssessmentOrgItem from '../assessment/org/AssessmentOrgItem';
 
-const AssessmentListOrder = () => {
-    const [data, setData] = useSetupJobStore((state) => [state.data, state.setData], shallow);
-    const assessments = data.assessments;
-    const setAssessments = (assessments: Map<string, Assessment>) => setData((state) => ({ ...state, assessments }));
+type AssessmentListOrderProps = {
+    assessments: Assessment[];
+    selectedAssessments: string[];
+    refetch: () => void;
+    handlePick: (assessment: Assessment) => void;
+};
 
-    const handlePick = (assessment: Assessment) => {
-        const newAssessments = new Map(assessments);
-        if (newAssessments.has(assessment.id)) {
-            newAssessments.delete(assessment.id);
-        } else {
-            newAssessments.set(assessment.id, assessment);
-        }
-        setAssessments(newAssessments);
-    };
-
+const AssessmentListOrder = ({ assessments, selectedAssessments, handlePick }: AssessmentListOrderProps) => {
     return (
         <div className="mt-6 grid grid-cols-3 gap-6">
-            {assessments.size === 0 ? (
-                <p className="min-h-[271px]">You have not selected any assessment</p>
+            {assessments.length === 0 ? (
+                <p className="col-span-full min-h-[271px]">Your namespace's assessments will be shown here.</p>
             ) : (
-                Array.from(assessments).map(([_, assessment], index) => (
+                assessments.map((assessment) => (
                     <div key={assessment.id}>
-                        <p className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl p-2 text-lg shadow-small">
-                            {index + 1}
-                        </p>
                         <AssessmentOrgItem
                             onPick={handlePick}
-                            picked={assessments.has(assessment.id)}
+                            picked={selectedAssessments.includes(assessment.id)}
+                            pickContent={<PickContent index={selectedAssessments.indexOf(assessment.id)} />}
                             mode="pick"
                             key={assessment.id}
                             assessment={assessment}
@@ -40,6 +29,11 @@ const AssessmentListOrder = () => {
             )}
         </div>
     );
+};
+
+const PickContent = ({ index }: { index: number }) => {
+    if (index === -1) return <div className="h-5 w-5 rounded-lg border border-black"></div>;
+    return <div className="flex h-5 w-5 items-center justify-center rounded-lg bg-black text-white">{index + 1}</div>;
 };
 
 export default AssessmentListOrder;

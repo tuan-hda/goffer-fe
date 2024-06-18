@@ -58,9 +58,6 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
         } else if (data.hasFeedback === undefined) {
             setMaxStep(3);
             navigate(`/app/organization/${domain}/job/${id}/custom-feedback`);
-        } else if (!data.assessments) {
-            setMaxStep(4);
-            navigate(`/app/organization/${domain}/job/${id}/custom-assessment`);
         } else {
             setMaxStep(5);
         }
@@ -87,7 +84,6 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
             });
             navigate(`/app/organization/${domain}/job/${id}/custom-assessment`);
         } else {
-            await updateJob({ assessments: setupJob.assessments });
             navigate(`/app/organization/${domain}/job/${id}`);
         }
         await refetch();
@@ -97,7 +93,6 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
         setSetupJob((prev) => ({
             ...prev,
             hasFeedback: data?.hasFeedback,
-            assessments: data?.assessments || new Map(),
         }));
     }, [data]);
 

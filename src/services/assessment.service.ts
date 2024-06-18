@@ -7,14 +7,11 @@ import { Question } from '@/types/question.type';
 const mapDataToRequestAssessment = ({ questions, ...assessment }: NewAssessment | Assessment) => {
     const innerAssessment: NewAssessmentRequest = { ...assessment, questions: [] };
     innerAssessment.questions = Array.from(questions.values()).map((q) => q.id);
-    if (!innerAssessment.job) {
-        delete innerAssessment.job;
-    }
     return innerAssessment;
 };
 
-export const createAssessmentService = async (assessment: NewAssessment) => {
-    const innerAssessment = mapDataToRequestAssessment(assessment);
+export const createAssessmentService = async (assessment: NewAssessment, mapData = true) => {
+    const innerAssessment = mapData ? mapDataToRequestAssessment(assessment) : assessment;
     return (await baseAxios.post('/assessments', innerAssessment)).data;
 };
 
@@ -33,6 +30,10 @@ export const getAssessmentService = async (id: string) => {
 export const updateAssessmentService = async ({ deleted, createdAt, updatedAt, id, ...assessment }: Assessment) => {
     const innerAssessment = mapDataToRequestAssessment(assessment);
     return (await baseAxios.patch(`/assessments/${id}`, innerAssessment)).data;
+};
+
+export const updateAssessmentWithIdService = async (id: string, data: Partial<Assessment>) => {
+    return (await baseAxios.patch(`/assessments/${id}`, data)).data;
 };
 
 export const deleteAssessmentService = async (id: string) => {

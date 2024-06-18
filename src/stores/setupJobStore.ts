@@ -5,7 +5,8 @@ import { immer } from 'zustand/middleware/immer';
 type State = {
     data: {
         hasFeedback?: boolean;
-        assessments: Map<string, Assessment>;
+        assessments: Assessment[];
+        selectedAssessments: string[];
     };
 };
 
@@ -15,7 +16,8 @@ type Action = {
 
 const initialData = {
     hasFeedback: false,
-    assessments: new Map(),
+    assessments: [],
+    selectedAssessments: [],
 };
 
 // Create your store, which includes both state and (optionally) actions

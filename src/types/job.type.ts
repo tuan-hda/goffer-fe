@@ -32,7 +32,7 @@ export type Job = Omit<NewJob, 'org'> & {
     follow: number;
     questions: Map<string, Question>;
     hasFeedback?: boolean;
-    assessments?: Map<string, Assessment>;
+    assessments?: Assessment[];
 };
 
 export type UpdateJobRequest = Omit<Job, 'questions' | 'assessments'> & {
