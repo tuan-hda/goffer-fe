@@ -13,6 +13,8 @@ const useListOrgQuestions = (query?: Partial<Record<keyof (Question & ListQueryO
     const queryKey = query || {};
     const { data } = useCurrOrganization();
 
+    queryKey.limit = '100';
+
     if (!queryKey.org) {
         queryKey.org = data?.id;
     }

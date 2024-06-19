@@ -20,7 +20,7 @@ export type Answer = {
     url?: string;
     summary?: string;
     assessment?: string;
-    question: Question;
+    question: string;
     owner: User;
     duration?: number; // duration in seconds
     point?: number;

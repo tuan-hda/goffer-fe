@@ -18,3 +18,14 @@ export const getTakingAssessmentByAssessmentId = async (assessmentId: string) =>
         })
     ).data;
 };
+
+export const submitAnswerService = async (
+    takeAssessmentId: string,
+    answer: {
+        question: string;
+        content: string;
+        point?: number;
+    },
+) => {
+    return (await baseAxios.post(`/assessments/taking/submit`, { takeAssessmentId, answer })).data;
+};

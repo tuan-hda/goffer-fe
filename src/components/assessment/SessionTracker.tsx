@@ -14,14 +14,39 @@ import {
 } from '../ui/dialog';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TbHourglassHigh } from 'react-icons/tb';
+import useCurrPublicAssessment from '@/hooks/useCurrPublicAssessment';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import useCurrTakingAssessment from '@/hooks/useCurrTakingAssessment';
+import { remainTime } from '@/utils/time';
+import { useEffect, useState } from 'react';
+import moment from 'moment';
+import classNames from 'classnames';
 
 const SessionTracker = () => {
     const navigate = useNavigate();
     const { id } = useParams();
+    const [remain, setRemain] = useState(0);
+
+    const { data: self } = useSelfProfileQuery();
+
+    const { data: session } = useCurrTakingAssessment();
+    const { data } = useCurrPublicAssessment();
+    const questions = data?.questions;
 
     const handleSubmit = () => {
         navigate(`/assessment/${id}/success`);
     };
+
+    useEffect(() => {
+        if (session) {
+            const interval = setInterval(() => {
+                setRemain(remainTime(session?.endingAt));
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [session]);
+
+    if (!questions) return null;
 
     return (
         <Card className="sticky top-10 h-fit max-w-[340px] flex-1 rounded-3xl !border-none bg-white p-8 text-sm shadow-medium">
@@ -29,39 +54,39 @@ const SessionTracker = () => {
             <div className="rounded-2xl bg-black p-7">
                 <div className="flex items-center justify-center gap-3">
                     <TbHourglassHigh className="text-4xl text-white" />
-                    <p className="font-mono text-4xl text-white">00:32:10</p>
+                    <p className="font-mono text-4xl text-white">{moment.utc(remain).format('HH:mm:ss')}</p>
                 </div>
-                <Progress value={50} className="mt-4 h-[4px]" color="white" />
+                <Progress
+                    value={(remain / ((data?.duration || 0) * 60 * 1000)) * 100}
+                    className="mt-4 h-[4px]"
+                    color="white"
+                />
             </div>
             <div className="mt-8 grid grid-cols-5 gap-3">
-                {Array(20)
-                    .fill(0)
-                    .map((_, i) => (
-                        <button
-                            onClick={() =>
-                                document.getElementById(`q-${i}`)?.scrollIntoView({
-                                    behavior: 'smooth',
-                                })
-                            }
-                            key={i}
-                            className="flex items-center justify-center rounded-xl border p-3"
-                        >
-                            {i + 1}
-                        </button>
-                    ))}
+                {Array.from(questions.values()).map((q, i) => (
+                    <button
+                        onClick={() =>
+                            document.getElementById(`q-${i}`)?.scrollIntoView({
+                                behavior: 'smooth',
+                            })
+                        }
+                        key={i}
+                        className={classNames(
+                            'flex items-center justify-center rounded-xl border p-3',
+                            session?.answers.find((a) => a.question === q.id) && 'bg-slate-200',
+                        )}
+                    >
+                        {i + 1}
+                    </button>
+                ))}
             </div>
             <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
             <div className="flex items-center gap-4">
-                <Avatar
-                    src="https://res.cloudinary.com/doxsstgkc/image/upload/v1714493760/goffer/rklmzhk6m6abekce57ha.jpg"
-                    size="lg"
-                />
+                <Avatar src={self?.avatar} size="lg" />
                 <div>
-                    <p className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-medium">
-                        Tuan Hoang Dinh Anh
-                    </p>
+                    <p className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-medium">{self?.name}</p>
                     <p className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-medium text-text/70">
-                        hdatdragon2@gmail.com
+                        {self?.email}
                     </p>
                 </div>
             </div>

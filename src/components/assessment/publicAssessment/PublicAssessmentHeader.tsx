@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import useCurrPublicAssessment from '@/hooks/useCurrPublicAssessment';
+import useCurrTakingAssessment from '@/hooks/useCurrTakingAssessment';
 import { createTakeAssessmentSessionService } from '@/services/takeAssessment.service';
 import catchAsync from '@/utils/catchAsync';
 import { Image } from '@nextui-org/react';
@@ -10,9 +11,9 @@ import { toast } from 'sonner';
 
 const PublicAssessmentHeader = () => {
     const { data } = useCurrPublicAssessment();
+    const { refetch } = useCurrTakingAssessment();
 
     const { assessmentId } = useParams();
-    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
 
@@ -21,6 +22,7 @@ const PublicAssessmentHeader = () => {
             async () => {
                 setLoading(true);
                 await createTakeAssessmentSessionService(assessmentId!);
+                await refetch();
             },
             () => {
                 setLoading(false);
@@ -44,11 +46,11 @@ const PublicAssessmentHeader = () => {
                         <p>{data.org?.field}</p>
                     </div>
                 </div>
-                <Button variant="black" className="ml-auto gap-2" onClick={startAssessment}>
+                <Button disabled={loading} variant="black" className="ml-auto gap-2" onClick={startAssessment}>
+                    {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
                     <TbTriangleFilled className="rotate-90 text-base" /> Start
                 </Button>
-                <Button disabled={loading} onClick={copyLink} size="icon" variant="outline">
-                    {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
+                <Button onClick={copyLink} size="icon" variant="outline">
                     <TbShare className="text-lg" />
                 </Button>
             </div>
