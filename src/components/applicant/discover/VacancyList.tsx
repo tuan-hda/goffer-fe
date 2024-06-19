@@ -20,7 +20,7 @@ const VacancyList = () => {
     return (
         <div className="mb-10 mt-10 grid w-full flex-1 grid-cols-3 gap-6 pr-2">
             {data?.results.map((item, i) => (
-                <Sheet key={i}>
+                <Sheet key={i} onOpenChange={async (open) => !open && (await refetch())}>
                     <SheetTrigger asChild>
                         <Card
                             key={i}

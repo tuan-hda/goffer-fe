@@ -3,7 +3,7 @@ import { Avatar } from '@nextui-org/react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { defaultCountries, FlagImage, parseCountry, usePhoneInput } from 'react-international-phone';
- 
+
 import 'react-international-phone/style.css';
 import { useController } from 'react-hook-form';
 import { Command, CommandList, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
@@ -80,7 +80,7 @@ const ImageField = ({ form, name, label }: FileItemProps) => {
     );
 };
 
-const FileField = ({ form, name, label }: FileItemProps) => {
+const FileField = ({ form, name, label, disabled }: FileItemProps) => {
     const resumeUrl = form.watch('resume');
     const fileName = resumeUrl ? resumeUrl.split('/').pop() : null;
 
@@ -100,6 +100,7 @@ const FileField = ({ form, name, label }: FileItemProps) => {
                             trigger={
                                 <Button
                                     ref={ref}
+                                    disabled={disabled}
                                     variant="outline"
                                     className="h-10 w-full items-center justify-start border-1 border-input bg-white text-gray-500 transition group-hover:opacity-100"
                                 >

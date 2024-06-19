@@ -13,6 +13,7 @@ export type FileItemProps = {
     type: 'image' | 'file';
     label: string;
     name: keyof z.infer<typeof formSchema>;
+    disabled?: boolean;
 };
 
 export type TextItemProps = {
@@ -21,6 +22,7 @@ export type TextItemProps = {
     label: string;
     name: StringSchemaFields[keyof StringSchemaFields];
     placeholder?: string;
+    disabled?: boolean;
 };
 
 export type FormItemProps = FileItemProps | TextItemProps;

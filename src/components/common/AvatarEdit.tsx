@@ -13,9 +13,18 @@ type AvatarEditProps = {
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     className?: string;
     uploadClassName?: string;
+    disabled?: boolean;
 };
 
-const AvatarEdit = ({ avatar, setAvatar, loading, setLoading, className, uploadClassName }: AvatarEditProps) => {
+const AvatarEdit = ({
+    avatar,
+    setAvatar,
+    loading,
+    setLoading,
+    className,
+    uploadClassName,
+    disabled,
+}: AvatarEditProps) => {
     const ref = useRef<HTMLInputElement>(null);
 
     const upload = async (file: File) => {
@@ -53,6 +62,7 @@ const AvatarEdit = ({ avatar, setAvatar, loading, setLoading, className, uploadC
                     onClick={() => ref.current?.click()}
                     className={classNames('w-[200px] border', uploadClassName)}
                     variant="faded"
+                    disabled={disabled}
                 >
                     <TbCamera className="text-base" /> Upload
                 </Button>
@@ -61,11 +71,14 @@ const AvatarEdit = ({ avatar, setAvatar, loading, setLoading, className, uploadC
                     onClick={() => ref.current?.click()}
                     type="button"
                     className={classNames('group relative mx-auto block h-[100px] w-[100px] rounded-full', className)}
+                    disabled={disabled}
                 >
                     <Avatar src={avatar} className="h-full w-full" />
-                    <div className="absolute left-0 top-0 flex h-full w-full rounded-full bg-gray-500/50 opacity-0 transition group-hover:opacity-100">
-                        <span className="m-auto text-sm text-white">Change</span>
-                    </div>
+                    {!disabled && (
+                        <div className="absolute left-0 top-0 flex h-full w-full rounded-full bg-gray-500/50 opacity-0 transition group-hover:opacity-100">
+                            <span className="m-auto text-sm text-white">Change</span>
+                        </div>
+                    )}
                 </button>
             )}
             <input onChange={handleFileChange} type="file" accept=".png,.jpeg,.jpg" className="hidden" ref={ref} />
