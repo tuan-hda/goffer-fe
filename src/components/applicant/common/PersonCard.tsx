@@ -1,4 +1,3 @@
- 
 import { TbBookmarks, TbLoaderQuarter, TbPlanet, TbStarFilled } from 'react-icons/tb';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Avatar } from '@nextui-org/react';
@@ -56,8 +55,8 @@ const PersonCard = ({ data }: Props) => {
                     }}
                 >
                     <div className="mb-4 flex max-w-full items-center gap-1 px-4 text-[13px] text-gray-600">
-                        <TbStarFilled className="text-[#FDB022]" /> {+(Math.random() * 10).toFixed(1)} (
-                        {Math.floor(Math.random() * 100)}){data.location && ' | '}
+                        {/* <TbStarFilled className="text-[#FDB022]" /> {+(Math.random() * 10).toFixed(1)} (
+                        {Math.floor(Math.random() * 100)}){data.location && ' | '} */}
                         <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-gray-500">
                             {data.location}
                         </span>

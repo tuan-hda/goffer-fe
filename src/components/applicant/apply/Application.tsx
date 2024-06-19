@@ -9,7 +9,7 @@ import { formFields, formSchema } from '@/utils/application';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
-import { Image, Snippet } from '@nextui-org/react';
+import { Chip, Image, Snippet } from '@nextui-org/react';
 import { AvatarEdit } from '@/components/common';
 import useApplyJob from '@/hooks/useApplyJob';
 import { submitApplicationService, updateApplyService } from '@/services/apply.service';
@@ -24,11 +24,12 @@ const Application = () => {
     const location = useLocation();
     const { id } = useParams();
     const { data, isLoading, refetch } = useApplyJob(id || '');
-    const { answer, loading } = useApplyStore();
+    const { answer, loading, setPhase } = useApplyStore();
 
     const [stepNum, setStepNum] = useState(0);
     const [avatarLoading, setLAvatarLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
+    const [readOnly, setReadOnly] = useState(false);
 
     useEffect(() => {
         const stepHash = location.hash;
@@ -40,7 +41,8 @@ const Application = () => {
             const step = match ? parseInt(match[1], 10) : 0;
             if (step >= 1 && step <= totalSteps) {
                 setStepNum(step);
-                if (step === totalSteps && data) updateApplyService({ id: data.id, phase: 'applied' });
+                if (step === totalSteps && data && data.phase === 'init')
+                    updateApplyService({ id: data.id, phase: 'applied' });
             } else {
                 setStepNum(0);
                 navigate('#', { replace: true });
@@ -65,18 +67,21 @@ const Application = () => {
 
     const form = useForm<NewApply>({
         resolver: zodResolver(formSchema),
+        disabled: readOnly,
         defaultValues,
     });
 
     useEffect(() => {
         if (data) {
             form.reset(defaultValues);
+            setPhase(data.phase);
         }
+        setReadOnly(!(!data?.id || data?.phase === 'init'));
     }, [data, form]);
 
     async function onSubmit(values: NewApply) {
-        if (data?.id) await updateApplyService({ ...values, id: data.id });
-        else if (job?.id) await submitApplicationService({ ...values, job: job.id });
+        if (data?.id && data.phase === 'init') await updateApplyService({ ...values, id: data.id });
+        else if (data?.id === undefined && job?.id) await submitApplicationService({ ...values, job: job.id });
 
         await refetch();
 
@@ -90,7 +95,7 @@ const Application = () => {
 
         if (stepNum === 0) await form.handleSubmit(onSubmit)();
         else if (stepNum < totalSteps) {
-            if (answer && answer.duration >= 20) {
+            if (answer && answer.duration >= 20 && data?.phase === 'init') {
                 const audio = await uploadAudio(answer.url);
 
                 if (audio)
@@ -98,11 +103,11 @@ const Application = () => {
                         url: audio.file.url,
                         question: answer.question,
                         duration: answer.duration,
-                        // apply: data?.id,
+                        apply: data?.id,
                     });
-                if (stepNum < totalSteps) {
-                    navigate(`#step-${stepNum + 1}`);
-                }
+            }
+            if (stepNum < totalSteps) {
+                navigate(`#step-${stepNum + 1}`);
             }
         } else {
             console.log('Apply success');
@@ -130,6 +135,14 @@ const Application = () => {
                             <span className="text-sm text-default-500">{job?.location}</span>
                             <span className="mx-2 text-sm text-default-500">•</span>
                             <span className="text-sm text-default-500">{job?.time}</span>
+                            {readOnly && (
+                                <>
+                                    <span className="mx-2 text-sm text-default-500">•</span>
+                                    <Chip color="success" radius="sm" variant="flat">
+                                        This job already applied
+                                    </Chip>
+                                </>
+                            )}
                         </p>
                     </div>
                     {stepNum === 0 ? (
@@ -141,6 +154,7 @@ const Application = () => {
                                     setAvatar={(value) => form.setValue('profilePicture', value)}
                                     setLoading={setLAvatarLoading}
                                     avatar={form.getValues('profilePicture')}
+                                    disabled={readOnly}
                                 />
                             </div>
                             <form
@@ -148,7 +162,7 @@ const Application = () => {
                                 className="mt-7 flex grid-cols-2 flex-col gap-6 md:grid"
                             >
                                 {formFields.map((field) => (
-                                    <FormFieldItem {...field} form={form} key={field.name} />
+                                    <FormFieldItem {...field} form={form} key={field.name} disabled={readOnly} />
                                 ))}
                             </form>
                         </Form>
