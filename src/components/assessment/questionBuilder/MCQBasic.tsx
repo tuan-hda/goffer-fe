@@ -2,6 +2,7 @@ import Upload from '@/components/common/Upload';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { mcqCategory } from '@/data/categories';
 import useNewQuestionStore from '@/stores/newQuestionStore';
 import { NewQuestion } from '@/types/question.type';
 import { shallow } from 'zustand/shallow';
@@ -49,13 +50,11 @@ const MCQBasic = () => {
                         <SelectValue placeholder="Category" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="engineering">Engineering</SelectItem>
-                        <SelectItem value="education">Education</SelectItem>
-                        <SelectItem value="designing">Designing</SelectItem>
-                        <SelectItem value="copywriting">Copywriting</SelectItem>
-                        <SelectItem value="socialmedia">Social Media</SelectItem>
-                        <SelectItem value="entertainment">Entertainment</SelectItem>
-                        <SelectItem value="translation">Translation</SelectItem>
+                        {mcqCategory.map((category) => (
+                            <SelectItem key={category.value} value={category.value}>
+                                {category.label}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </Label>

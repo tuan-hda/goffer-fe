@@ -29,27 +29,26 @@ const AssessmentBuilderBasic = () => {
     return (
         <>
             <p className="mb-4 text-xl">Basic information</p>
-            <Label className="w-[280px]">
-                Title *
-                <Input
-                    onChange={handleChange('title')}
-                    value={assessment.title}
-                    placeholder="Title here..."
-                    className="mt-2"
-                />
-            </Label>
-            <Label className="mt-4 w-[480px]">
-                Description *
+            <Label className="w-[280px]">Title *</Label>
+            <Input
+                onChange={handleChange('title')}
+                value={assessment.title}
+                placeholder="Title here..."
+                className="mt-2 w-[280px]"
+            />
+
+            <div className="flex w-[480px] flex-col">
+                <Label className="mt-4 w-[480px]">Description *</Label>
                 <Textarea
                     value={assessment.description}
                     onChange={handleDescriptionChange}
                     placeholder="Description here..."
-                    className="mt-2"
+                    className="mt-2 w-[480px]"
                 />
-                <p className="ml-auto mt-2 w-fit text-xs font-light text-gray-400">
+                <p className="ml-auto mt-2 text-xs font-light text-gray-400">
                     {assessment.description?.length || 0}/5000
                 </p>
-            </Label>
+            </div>
 
             <div className="mt-4 w-[280px]">
                 <Label className="w-[280px]">Image</Label>
