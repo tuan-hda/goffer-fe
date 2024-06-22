@@ -36,12 +36,15 @@ const Project = ({ info, url }: ProjectProps) => {
         ({ children, className }: { className?: string; children?: React.ReactNode }) => {
             if ('id' in info) {
                 return (
-                    <Link className={className} to={url || `/project/${info.id}?previousUrl=${location.pathname}`}>
+                    <Link
+                        className={classNames('flex h-[200px] gap-8', className)}
+                        to={url || `/project/${info.id}?previousUrl=${location.pathname}`}
+                    >
                         {children}
                     </Link>
                 );
             }
-            return <div className={className}>{children}</div>;
+            return <div className={classNames('flex h-[200px] gap-8', className)}>{children}</div>;
         },
         [info],
     );
