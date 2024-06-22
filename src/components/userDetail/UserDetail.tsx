@@ -20,7 +20,7 @@ const UserDetail = ({ id }: Props) => {
         owner: id,
     });
     const { data: self } = useSelfProfileQuery();
-    const { data: recommendations } = useListRecommendations(id);
+    const { data: recommendations, refetch } = useListRecommendations(id);
     if (!user) return;
 
     return (
@@ -63,22 +63,21 @@ const UserDetail = ({ id }: Props) => {
                         </div>
                         <div className="h-7"></div>
                     </Tab>
-                    {recommendations && recommendations.results.length > 0 && (
-                        <Tab
-                            key="recommendations"
-                            title={
-                                <span className="flex items-center gap-2">
-                                    <TbSparkles className="text-lg" /> Recommendations
-                                </span>
-                            }
-                        >
-                            <Recommendations
-                                recommendations={recommendations?.results || []}
-                                userId={id}
-                                showNewRecommendation={id !== self?.id}
-                            />
-                        </Tab>
-                    )}
+                    <Tab
+                        key="recommendations"
+                        title={
+                            <span className="flex items-center gap-2">
+                                <TbSparkles className="text-lg" /> Recommendations
+                            </span>
+                        }
+                    >
+                        <Recommendations
+                            refetch={refetch}
+                            recommendations={recommendations?.results || []}
+                            userId={id}
+                            showNewRecommendation={id !== self?.id}
+                        />
+                    </Tab>
                 </Tabs>
             </div>
             <div className="right-0 top-0 flex h-[100vh-64px] w-[320px] flex-shrink-0 flex-col overflow-y-scroll px-4">

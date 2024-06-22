@@ -14,6 +14,7 @@ import catchAsync from '@/utils/catchAsync';
 import { useState } from 'react';
 import { createRecommendationService } from '@/services/recommendation.service';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { toast } from 'sonner';
 
 type Props = {
     userId: string;
@@ -33,6 +34,7 @@ const NewRecommendation = ({ userId }: Props) => {
                     content: recommendation,
                     user: userId,
                 });
+                toast.success('Recommendation created successfully');
                 setOpen(false);
             },
             () => {

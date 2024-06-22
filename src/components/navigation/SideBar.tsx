@@ -23,6 +23,8 @@ import { adminItems } from './adminItems';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { useChatContext } from 'stream-chat-react';
 import SubscriptionIndividual from '../proPlan/SubscriptionIndividual';
+import useNotification from '@/hooks/useNotification';
+import useNotificationStore from '@/stores/notifications';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -33,6 +35,7 @@ type SideBarProps = {
 const SideBar = ({ org }: SideBarProps) => {
     const { domain } = useParams();
     const { data: self } = useSelfProfileQuery();
+    const hasNewNotification = useNotificationStore((state) => state.hasNewNotification);
 
     // TODO: Remove logout from this file
     const [logout] = useAuthStore((state) => [state.logOut, state.access], shallow);
@@ -190,17 +193,24 @@ const SideBar = ({ org }: SideBarProps) => {
                             <div className="mx-[14px]">
                                 <UserPopover collapsed={collapsed} />
                                 {(org
-                                    ? orgItems(domain!, {
-                                          onClickMap: {
-                                              0: openAskAI,
+                                    ? orgItems(
+                                          domain!,
+                                          {
+                                              onClickMap: {
+                                                  0: openAskAI,
+                                              },
                                           },
-                                      })
-                                    : items({
-                                          onClickMap: {
-                                              0: openAskAI,
-                                              1: openBillingCustomerPortal,
+                                          hasNewNotification,
+                                      )
+                                    : items(
+                                          {
+                                              onClickMap: {
+                                                  0: openAskAI,
+                                                  1: openBillingCustomerPortal,
+                                              },
                                           },
-                                      })
+                                          hasNewNotification,
+                                      )
                                 ).map((item, index) => (
                                     <Fragment key={index}>
                                         {item.divider && <div className="mx-2 my-4 border-t border-t-gray-200/70" />}

@@ -1,5 +1,5 @@
 import { Avatar } from '@nextui-org/react';
-import { TbDots, TbEyeOff, TbLoader, TbStarFilled, TbTrash } from 'react-icons/tb';
+import { TbDots, TbEye, TbEyeOff, TbLoader, TbStarFilled, TbTrash } from 'react-icons/tb';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -23,17 +23,19 @@ import {
 import { Button } from '../ui/button';
 import { useState } from 'react';
 import catchAsync from '@/utils/catchAsync';
-import { deleteRecommendationService } from '@/services/recommendation.service';
-import useListRecommendations from '@/hooks/useListRecommendations';
+import { deleteRecommendationService, updateRecommendationService } from '@/services/recommendation.service';
+import classNames from 'classnames';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+import { List } from '@/types/list.type';
 
 type Props = {
     info: RecommendationType;
+    refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<List<RecommendationType>, Error>>;
 };
 
-const Recommendation = ({ info }: Props) => {
+const Recommendation = ({ info, refetch }: Props) => {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
-    const { refetch } = useListRecommendations(info.user.id);
     const { data: self } = useSelfProfileQuery();
 
     const handleDelete = () =>
@@ -49,9 +51,15 @@ const Recommendation = ({ info }: Props) => {
             },
         );
 
+    const toggle = () =>
+        catchAsync(async () => {
+            await updateRecommendationService(info.id, { isHide: !info.isHide });
+            await refetch();
+        });
+
     return (
         <div className="group relative">
-            <div className="relative flex items-center gap-4">
+            <div className={classNames('relative flex items-center gap-4', info.isHide && 'opacity-30')}>
                 <Avatar src={info.user.avatar} className="h-16 w-16" />
                 <div className="space-y-0.5">
                     <div className="flex items-baseline gap-2 text-base">
@@ -62,7 +70,7 @@ const Recommendation = ({ info }: Props) => {
                 </div>
                 <TbStarFilled className="absolute left-[46px] top-0 text-xl text-yellow-400" />
             </div>
-            <p className="mt-4 text-[15px]">{info.content}</p>
+            <p className={classNames('mt-4 text-[15px]', info.isHide && 'opacity-30')}>{info.content}</p>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DropdownMenu>
                     <DropdownMenuTrigger className="absolute right-2 top-2 opacity-0 transition group-hover:opacity-100">
@@ -72,8 +80,13 @@ const Recommendation = ({ info }: Props) => {
                         <DropdownMenuLabel>Options</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {info.user.id === self?.id && (
-                            <DropdownMenuItem className="cursor-pointer">
-                                Hide this recommendation <TbEyeOff className="ml-3 text-lg" />
+                            <DropdownMenuItem onClick={toggle} className="cursor-pointer">
+                                {info.isHide ? 'Show' : 'Hide'} this recommendation
+                                {info.isHide ? (
+                                    <TbEye className="ml-3 text-lg" />
+                                ) : (
+                                    <TbEyeOff className="ml-3 text-lg" />
+                                )}
                             </DropdownMenuItem>
                         )}
                         {info.owner.id === self?.id && (

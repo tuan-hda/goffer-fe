@@ -1,26 +1,32 @@
 import { Card } from '../ui/card';
 import Notification from './Notification';
-import { Fragment } from 'react';
-import useNotification from '@/hooks/useNotification';
-import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { Fragment, useEffect } from 'react';
 import NotificationWrapper from './NotificationWrapper';
+import useNotificationStore from '@/stores/notifications';
+import { shallow } from 'zustand/shallow';
 
 const NotificationsContent = () => {
-    const { data: self } = useSelfProfileQuery();
+    const { notifications, clearNewNotification } = useNotificationStore(
+        (state) => ({
+            notifications: state.notifications,
+            clearNewNotification: state.clearNewNotification,
+        }),
+        shallow,
+    );
 
-    const { notifications, channel } = useNotification(self ? `notifications-${self.id}` : undefined);
-
-    console.log(channel?.id);
+    useEffect(() => {
+        notifications.length > 0 && clearNewNotification();
+    }, []);
 
     const isEmpty = notifications.length === 0;
 
     return (
-        <Card className="min-h-[200px] overflow-hidden border-none p-7 shadow-medium">
+        <Card className="min-h-[200px] overflow-hidden border-none shadow-medium">
             <NotificationWrapper isEmpty={isEmpty}>
                 {notifications.map((notification, index) => (
                     <Fragment key={index}>
                         <Notification notification={notification} />
-                        {index < 3 && <div className="border-t border-gray-200/70" />}
+                        {index < notifications.length - 1 && <div className="border-t border-gray-200/70" />}
                     </Fragment>
                 ))}
             </NotificationWrapper>
