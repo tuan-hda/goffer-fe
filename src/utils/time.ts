@@ -14,3 +14,20 @@ export function formatUTCDate(time: string) {
     //     return createdAtMoment.format('DD-MM-YYYY'); // "dd-mm-yyyy"
     // }
 }
+
+export function remainTime(endingAt?: string) {
+    if (!endingAt) {
+        return 0;
+    }
+    const now = moment();
+    const endTime = moment(endingAt);
+
+    if (endTime <= now) {
+        return 0;
+    }
+
+    // Calculate the duration between now and the ending time
+    const duration = moment.duration(endTime.diff(now));
+    // Format the duration as hh:mm:ss
+    return duration.asMilliseconds();
+}

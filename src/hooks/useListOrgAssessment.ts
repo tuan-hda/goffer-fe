@@ -13,6 +13,8 @@ const useListOrgAssessment = (query?: Partial<Record<keyof (Assessment & ListQue
     const queryKey = query || {};
     const { data } = useCurrOrganization();
 
+    queryKey.limit = '100';
+
     if (!queryKey.org) {
         queryKey.org = data?.id;
     }

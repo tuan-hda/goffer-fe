@@ -1,6 +1,7 @@
 import AssessmentList from '@/components/jobDetail/AssessmentList';
 import AssessmentListOrder from '@/components/jobDetail/AssessmentListOrder';
 import { Button } from '@/components/ui/button';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
 import useGetCurrentOrgJob from '@/hooks/useGetCurrentOrgJob';
 import useListOrgAssessment from '@/hooks/useListOrgAssessment';
 import { createAssessmentService } from '@/services/assessment.service';
@@ -17,6 +18,8 @@ import { toast } from 'sonner';
 const CustomAssessment = () => {
     const { domain, id } = useParams();
     const data = useSetupJobStore((state) => state.data);
+    const { data: org } = useCurrOrganization();
+
     const [loading, setLoading] = useState(false);
     const { data: assessments, refetch } = useListOrgAssessment({
         job: id,
@@ -36,7 +39,7 @@ const CustomAssessment = () => {
                             description: assessment.description,
                             questions: assessment.questions,
                             duration: assessment.duration,
-                            org: assessment.org?.id,
+                            org: org?.id,
                             job: id,
                             order: assessment.order,
                             status: assessment.status,

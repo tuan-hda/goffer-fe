@@ -15,7 +15,7 @@ const AssessmentSuccess = () => {
                 <div className="flex h-full">
                     <div className="relative m-auto flex max-w-[400px] flex-col items-center gap-4 text-center">
                         <Image className="h-20 w-20" src="/success1.png" />
-                        <p className="mt-2 text-base font-medium">Submitted successfully</p>
+                        <p className="mt-2 text-base font-medium">You already submitted this assessment</p>
                         <p>
                             Thank you for spending time taking the assessment. We will inform you through email about
                             the result.

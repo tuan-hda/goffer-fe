@@ -1,11 +1,17 @@
 export const mcqCategory = [
-    { value: 'Engineering', label: 'Engineering' },
-    { value: 'Education', label: 'Education' },
-    { value: 'Designing', label: 'Designing' },
-    { value: 'Copywriting', label: 'Copywriting' },
-    { value: 'Social Media', label: 'Social Media' },
-    { value: 'Entertainment', label: 'Entertainment' },
-    { value: 'Translation', label: 'Translation' },
+    { value: 'engineering', label: 'Engineering' },
+    { value: 'education', label: 'Education' },
+    { value: 'designing', label: 'Designing' },
+    { value: 'copywriting', label: 'Copywriting' },
+    { value: 'social media', label: 'Social Media' },
+    { value: 'entertainment', label: 'Entertainment' },
+    { value: 'translation', label: 'Translation' },
+    { value: 'operating systems', label: 'Operating systems' },
+    { value: 'databases', label: 'Databases' },
+    { value: 'cloud computing', label: 'Cloud computing' },
+    { value: 'programming', label: 'Programming' },
+    { value: 'networking', label: 'Networking' },
+    { value: 'algorithms', label: 'Algorithms' },
 ];
 
 export const behavioralCategory = [

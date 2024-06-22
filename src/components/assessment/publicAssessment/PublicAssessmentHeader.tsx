@@ -1,19 +1,33 @@
 import { Button } from '@/components/ui/button';
 import useCurrPublicAssessment from '@/hooks/useCurrPublicAssessment';
+import useCurrTakingAssessment from '@/hooks/useCurrTakingAssessment';
+import { createTakeAssessmentSessionService } from '@/services/takeAssessment.service';
+import catchAsync from '@/utils/catchAsync';
 import { Image } from '@nextui-org/react';
-import { TbShare, TbTriangleFilled } from 'react-icons/tb';
+import { useState } from 'react';
+import { TbLoader, TbShare, TbTriangleFilled } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const PublicAssessmentHeader = () => {
     const { data } = useCurrPublicAssessment();
+    const { refetch } = useCurrTakingAssessment();
 
-    const navigate = useNavigate();
     const { assessmentId } = useParams();
 
-    const startAssessment = () => {
-        navigate(`/assessment/${assessmentId}/session`);
-    };
+    const [loading, setLoading] = useState(false);
+
+    const startAssessment = () =>
+        catchAsync(
+            async () => {
+                setLoading(true);
+                await createTakeAssessmentSessionService(assessmentId!);
+                await refetch();
+            },
+            () => {
+                setLoading(false);
+            },
+        );
 
     const copyLink = async () => {
         await navigator.clipboard.writeText(window.location.href);
@@ -32,7 +46,8 @@ const PublicAssessmentHeader = () => {
                         <p>{data.org?.field}</p>
                     </div>
                 </div>
-                <Button variant="black" className="ml-auto gap-2" onClick={startAssessment}>
+                <Button disabled={loading} variant="black" className="ml-auto gap-2" onClick={startAssessment}>
+                    {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
                     <TbTriangleFilled className="rotate-90 text-base" /> Start
                 </Button>
                 <Button onClick={copyLink} size="icon" variant="outline">

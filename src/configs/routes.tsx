@@ -311,6 +311,10 @@ const routesConfig: RouteObject[] = [
                 ],
             },
             {
+                path: '/subscribe',
+                element: <SubscribeResult />,
+            },
+            {
                 path: '/assessment',
                 element: <AssessmentLayout />,
                 children: [
@@ -325,10 +329,6 @@ const routesConfig: RouteObject[] = [
 
                     { path: '/assessment/:assessmentId/success', element: <AssessmentSuccess /> },
                 ],
-            },
-            {
-                path: '/subscribe',
-                element: <SubscribeResult />,
             },
             {
                 path: '/portfolio',
