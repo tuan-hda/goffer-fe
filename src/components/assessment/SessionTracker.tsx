@@ -13,7 +13,7 @@ import {
     DialogTrigger,
 } from '../ui/dialog';
 import { useNavigate, useParams } from 'react-router-dom';
-import { TbHourglassHigh } from 'react-icons/tb';
+import { TbHourglassHigh, TbLoader } from 'react-icons/tb';
 import useCurrPublicAssessment from '@/hooks/useCurrPublicAssessment';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import useCurrTakingAssessment from '@/hooks/useCurrTakingAssessment';
@@ -21,11 +21,14 @@ import { remainTime } from '@/utils/time';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import classNames from 'classnames';
+import { submitAllService } from '@/services/takeAssessment.service';
+import catchAsync from '@/utils/catchAsync';
 
 const SessionTracker = () => {
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { assessmentId } = useParams();
     const [remain, setRemain] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const { data: self } = useSelfProfileQuery();
 
@@ -33,13 +36,32 @@ const SessionTracker = () => {
     const { data } = useCurrPublicAssessment();
     const questions = data?.questions;
 
-    const handleSubmit = () => {
-        navigate(`/assessment/${id}/success`);
+    const handleSubmit = async () => {
+        try {
+            async () => {
+                if (!session) return;
+                await submitAllService(session?.id!);
+                setLoading(true);
+            };
+        } catch (error) {
+            // Do nothing
+        } finally {
+            setLoading(false);
+            navigate(`/assessment/${assessmentId}/success`, {
+                replace: true,
+            });
+        }
     };
 
     useEffect(() => {
         if (session) {
             const interval = setInterval(() => {
+                if (remainTime(session?.endingAt) <= 0) {
+                    clearInterval(interval);
+                    navigate(`/assessment/${assessmentId}/success`, {
+                        replace: true,
+                    });
+                }
                 setRemain(remainTime(session?.endingAt));
             }, 1000);
             return () => clearInterval(interval);
@@ -109,7 +131,8 @@ const SessionTracker = () => {
                             <DialogClose asChild>
                                 <Button variant="outline">Cancel</Button>
                             </DialogClose>
-                            <Button onClick={handleSubmit} variant="black">
+                            <Button disabled={loading} onClick={handleSubmit} variant="black">
+                                {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
                                 Submit
                             </Button>
                         </DialogFooter>

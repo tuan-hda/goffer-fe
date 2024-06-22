@@ -2,7 +2,7 @@ import { User } from './user.type';
 import { Assessment } from './assessment.type';
 import { Answer } from './answer.type';
 
-export type TakeAssessmentStatus = 'pending' | 'completed' | 'in-progress' | 'cancelled';
+export type TakeAssessmentStatus = 'pending' | 'closed';
 
 export type TakeAssessment = {
     id: string;

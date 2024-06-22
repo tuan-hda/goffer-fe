@@ -17,6 +17,7 @@ const QuestionList = () => {
             await submitAnswerService(session?.id!, {
                 content: value,
                 question: questionId,
+                ref: session?.id!,
             });
             refetch();
         } catch (error) {

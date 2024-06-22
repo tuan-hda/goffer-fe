@@ -25,7 +25,12 @@ export const submitAnswerService = async (
         question: string;
         content: string;
         point?: number;
+        ref: string;
     },
 ) => {
     return (await baseAxios.post(`/assessments/taking/submit`, { takeAssessmentId, answer })).data;
+};
+
+export const submitAllService = async (takeAssessmentId: string) => {
+    return (await baseAxios.post(`/assessments/taking/finish`, { takeAssessmentId })).data;
 };
