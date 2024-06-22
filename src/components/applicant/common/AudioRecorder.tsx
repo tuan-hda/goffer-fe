@@ -75,7 +75,7 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const frameRef = useRef<number | null>(null);
 
-    const { setAnswer, setLoading } = useApplyStore();
+    const { phase, setAnswer, setLoading } = useApplyStore();
     const constraint = question.constraint ?? 180;
 
     useEffect(() => {
@@ -309,7 +309,12 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
                 <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
 
                 <p>{formatTime(audioURL ? rightTime : constraint)}</p>
-                <IconButton ariaLabel="Reset" onPress={handleReset} Icon={<LiaUndoAltSolid />} isDisabled={!audioURL} />
+                <IconButton
+                    ariaLabel="Reset"
+                    onPress={handleReset}
+                    Icon={<LiaUndoAltSolid />}
+                    isDisabled={!audioURL || phase !== 'init'}
+                />
             </div>
             <p
                 className={classNames(

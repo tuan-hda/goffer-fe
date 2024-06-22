@@ -56,7 +56,7 @@ const JobHeader = ({ job }: JobHeaderProps) => {
                     </div>
                 </div>
                 <Button variant="black" className="ml-auto gap-2" onClick={handleApply}>
-                    <TbBoxAlignBottomFilled className="text-lg" /> Apply
+                    <TbBoxAlignBottomFilled className="text-lg" /> {job.applied ? 'Applied' : 'Apply'}
                 </Button>
                 <Button size="icon" onClick={(e) => onBookmark(e, job.id)} variant={job.saved ? 'black' : 'outline'}>
                     <TbBookmarks className={classNames('text-lg', job.saved && 'text-white')} />

@@ -6,11 +6,13 @@ import { NewAnswer } from '@/types/answer.type';
 type State = {
     loading: boolean;
     answer?: NewAnswer;
+    phase?: string;
 };
 
 type Action = {
     setLoading: (_: State['loading']) => void;
-    setAnswer: (_: NewAnswer) => void;
+    setAnswer: (_: State['answer']) => void;
+    setPhase: (_: State['phase']) => void;
 };
 
 const useApplyStore = create<State & Action>()(
@@ -21,6 +23,7 @@ const useApplyStore = create<State & Action>()(
                 answer: undefined,
                 setLoading: (loading) => set(() => ({ loading: loading })),
                 setAnswer: (answer) => set(() => ({ answer: answer })),
+                setPhase: (phase) => set(() => ({ phase: phase })),
             }),
 
             {
