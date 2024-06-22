@@ -2,6 +2,7 @@ import { Label } from '../ui/label';
 import AdditionalInformation from './AdditionalInformation';
 import useNewProjectStore from '@/stores/newProject';
 import Project from './Project';
+import { useMemo } from 'react';
 
 type PreviewProjectProps = {
     hidden?: boolean;
@@ -18,6 +19,11 @@ export type Info = {
 const PreviewProject = ({ hidden = false }: PreviewProjectProps) => {
     const info = useNewProjectStore((state) => state.info);
 
+    const image = useMemo(() => {
+        console.log('changed');
+        return info.cover;
+    }, [info.cover]);
+
     if (hidden) return null;
     return (
         <div className="flex w-full text-sm text-text">
@@ -28,7 +34,7 @@ const PreviewProject = ({ hidden = false }: PreviewProjectProps) => {
                     <Label>Preview</Label>
                     <p className="mb-7 mt-1">Here's what your project will look like to others.</p>
 
-                    <Project info={info} />
+                    <Project image={info.cover} info={info} />
                 </div>
             </div>
         </div>
