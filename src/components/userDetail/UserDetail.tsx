@@ -6,6 +6,9 @@ import Basic from './Basic';
 import Experiences from './Experiences';
 import ProjectList from '../profile/ProjectList';
 import Recommendations from '../profile/Recommendations';
+import useListProject from '@/hooks/useListProject';
+import useListRecommendations from '@/hooks/useListRecommendations';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 
 interface Props {
     id: string;
@@ -13,11 +16,16 @@ interface Props {
 
 const UserDetail = ({ id }: Props) => {
     const { data: user } = useUserInfo(id);
+    const { data: projects } = useListProject({
+        owner: id,
+    });
+    const { data: self } = useSelfProfileQuery();
+    const { data: recommendations, refetch } = useListRecommendations(id);
     if (!user) return;
 
     return (
         <div className="flex h-full text-sm">
-            <div className="mr-4 h-full flex-1">
+            <div className="mr-4 h-full min-w-1 flex-1">
                 <Tabs variant="underlined" className="">
                     <Tab
                         key="profile"
@@ -51,7 +59,7 @@ const UserDetail = ({ id }: Props) => {
                     >
                         <div className="h-2"></div>
                         <div className="!max-w-2xl">
-                            <ProjectList />
+                            <ProjectList projects={projects?.results || []} />
                         </div>
                         <div className="h-7"></div>
                     </Tab>
@@ -63,11 +71,16 @@ const UserDetail = ({ id }: Props) => {
                             </span>
                         }
                     >
-                        <Recommendations />
+                        <Recommendations
+                            refetch={refetch}
+                            recommendations={recommendations?.results || []}
+                            userId={id}
+                            showNewRecommendation={id !== self?.id}
+                        />
                     </Tab>
                 </Tabs>
             </div>
-            <div className="right-0 top-0 flex h-[100vh-64px] w-[320px] flex-col overflow-y-scroll px-4">
+            <div className="right-0 top-0 flex h-[100vh-64px] w-[320px] flex-shrink-0 flex-col overflow-y-scroll px-4">
                 <UserPanel id={user.id} />
             </div>
         </div>

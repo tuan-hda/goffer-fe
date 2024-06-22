@@ -99,8 +99,8 @@ const UserPanel = ({ id }: Props) => {
                 <>
                     <p className="mb-5 mt-8 self-start text-xs font-light text-gray-500">BADGES</p>
                     <div className="flex flex-wrap items-start gap-4">
-                        {data.badges.map((badge) => (
-                            <Badge variant="outline" className="rounded-xl px-3 py-2 text-sm font-normal">
+                        {data.badges.map((badge, index) => (
+                            <Badge variant="outline" key={index} className="rounded-xl px-3 py-2 text-sm font-normal">
                                 {badge}
                             </Badge>
                         ))}

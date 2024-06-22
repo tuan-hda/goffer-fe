@@ -9,6 +9,7 @@ interface NotificationState {
     notifications: Notification[];
     hasNewNotification: boolean;
     setClient: (client: StreamChat) => void;
+    setChannel: (channel: Channel) => void;
     fetchNotifications: (id: string) => void;
     clearNewNotification: () => void;
     disconnectChannel: () => void;
@@ -21,11 +22,10 @@ const useNotificationStore = create<NotificationState>((set, get) => ({
     notifications: [],
     hasNewNotification: false,
     setClient: (client) => set({ client }),
+    setChannel: (channel) => set({ channel }),
     fetchNotifications: async (id: string) => {
-        const { client, onNewMessage, disconnectChannel } = get();
+        const { client, onNewMessage } = get();
         if (!client || !id) return;
-
-        disconnectChannel(); // Disconnect from the previous channel if any
 
         const channel = client.channel('messaging', id);
         const response = await channel.query({

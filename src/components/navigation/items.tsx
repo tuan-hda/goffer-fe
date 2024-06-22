@@ -40,7 +40,10 @@ type LinkItem = {
 
 export type Item = ButtonItem | LinkItem;
 
-export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> }) => Item[] = ({ onClickMap }) => [
+export const items: (
+    { onClickMap }: { onClickMap: Record<number, () => void> },
+    hasNotification?: boolean,
+) => Item[] = ({ onClickMap }, hasNewNotification = false) => [
     {
         type: 'button',
         element: {
@@ -64,7 +67,7 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
             content: 'Notifications',
             startContent: <TbBell className="text-xl" />,
             path: '/app/notifications',
-            endContent: <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
+            endContent: hasNewNotification && <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
         },
     },
     {
@@ -120,10 +123,12 @@ export const items: ({ onClickMap }: { onClickMap: Record<number, () => void> })
     },
 ];
 
-export const orgItems: (_: string, { onClickMap }: { onClickMap: Record<number, () => void> }) => Item[] = (
-    domain: string,
-    { onClickMap },
-) => [
+export const orgItems: (
+    _: string,
+    { onClickMap }: { onClickMap: Record<number, () => void> },
+
+    hasNotification?: boolean,
+) => Item[] = (domain: string, { onClickMap }, hasNewNotification = false) => [
     {
         type: 'button',
         element: {
@@ -148,7 +153,7 @@ export const orgItems: (_: string, { onClickMap }: { onClickMap: Record<number, 
             content: 'Notifications',
             startContent: <TbBell className="flex-shrink-0 text-xl" />,
             path: `/app/organization/${domain}/notifications`,
-            endContent: <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
+            endContent: hasNewNotification && <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
         },
     },
     {

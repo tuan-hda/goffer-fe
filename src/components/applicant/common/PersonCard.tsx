@@ -46,17 +46,16 @@ const PersonCard = ({ data }: Props) => {
     };
 
     return (
-        <Card className="rounded-3xl shadow-none">
-            <CardContent className="-mx-[20px] pb-0 pt-1">
+        <Card className="flex flex-col rounded-3xl shadow-none">
+            <CardContent className="-mx-[20px] flex-1 pb-0 pt-1">
                 <div
-                    className="flex flex-col items-center rounded-[22px] pb-6 pt-4"
+                    className="flex h-full flex-col items-center rounded-[22px] pb-6 pt-4"
                     style={{
                         background: colors[Math.floor(Math.random() * colors.length)],
                     }}
                 >
                     <div className="mb-4 flex max-w-full items-center gap-1 px-4 text-[13px] text-gray-600">
-                        {/* <TbStarFilled className="text-[#FDB022]" /> {+(Math.random() * 10).toFixed(1)} (
-                        {Math.floor(Math.random() * 100)}){data.location && ' | '} */}
+                        {data.location || 'Any working location'}
                         <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-gray-500">
                             {data.location}
                         </span>

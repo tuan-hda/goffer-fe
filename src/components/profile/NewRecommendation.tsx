@@ -1,6 +1,6 @@
 import { Image } from '@nextui-org/react';
 import { Button } from '../ui/button';
-import { TbPlus } from 'react-icons/tb';
+import { TbLoader, TbPlus } from 'react-icons/tb';
 import {
     AlertDialog,
     AlertDialogCancel,
@@ -10,11 +10,41 @@ import {
     AlertDialogTrigger,
 } from '../ui/alert-dialog';
 import { Textarea } from '../ui/textarea';
+import catchAsync from '@/utils/catchAsync';
+import { useState } from 'react';
+import { createRecommendationService } from '@/services/recommendation.service';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { toast } from 'sonner';
 
-const NewRecommendation = () => {
+type Props = {
+    userId: string;
+};
+
+const NewRecommendation = ({ userId }: Props) => {
+    const [loading, setLoading] = useState(false);
+    const { data: self } = useSelfProfileQuery();
+    const [recommendation, setRecommendation] = useState('');
+    const [open, setOpen] = useState(false);
+
+    const handleSubmit = () =>
+        catchAsync(
+            async () => {
+                setLoading(true);
+                createRecommendationService({
+                    content: recommendation,
+                    user: userId,
+                });
+                toast.success('Recommendation created successfully');
+                setOpen(false);
+            },
+            () => {
+                setLoading(false);
+            },
+        );
+
     return (
         <>
-            <AlertDialog>
+            <AlertDialog open={open} onOpenChange={setOpen}>
                 <AlertDialogTrigger asChild>
                     <Button
                         variant="outline"
@@ -41,15 +71,23 @@ const NewRecommendation = () => {
                 </AlertDialogTrigger>
                 <AlertDialogContent className="gap-1">
                     <AlertDialogTitle>Leave a recommendation ✨</AlertDialogTitle>
-                    <Textarea className="mt-2 min-h-[100px]" placeholder="Write your recommendation here" />
+                    <Textarea
+                        value={recommendation}
+                        onChange={(e) => setRecommendation(e.target.value)}
+                        className="mt-2 min-h-[100px]"
+                        placeholder="Write your recommendation here"
+                    />
                     <AlertDialogFooter className="mt-4 items-center">
-                        <p className="mr-10 text-[13px] leading-[17px] text-black/70">
-                            Leaving recommendation as Tuan Hoang Dinh Anh - Bosch
+                        <p className="mr-10 w-full text-[13px] leading-[17px] text-black/70">
+                            Leaving recommendation as {self?.name}
                         </p>
-                        <AlertDialogCancel asChild>
+                        <AlertDialogCancel asChild disabled={loading}>
                             <Button variant="outline">Cancel</Button>
                         </AlertDialogCancel>
-                        <Button variant="black">Submit</Button>
+                        <Button onClick={handleSubmit} variant="black" disabled={loading}>
+                            {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
+                            Submit
+                        </Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

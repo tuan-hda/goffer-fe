@@ -2,13 +2,18 @@ import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import Project from '../projects/Project';
 import { Fragment } from 'react';
 import useListProject from '@/hooks/useListProject';
+import { ProjectDetail } from '@/types/project.type';
 
-const ProjectList = () => {
+type Props = {
+    projects?: ProjectDetail[];
+};
+
+const ProjectList = ({ projects: outerProjects }: Props) => {
     const { data: self } = useSelfProfileQuery();
     const { data } = useListProject({
         owner: self?.id,
     });
-    const projects = data?.results || [];
+    const projects = outerProjects || data?.results || [];
 
     return (
         <div className="space-y-8">

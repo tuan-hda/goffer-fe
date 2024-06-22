@@ -6,4 +6,5 @@ export type Notification = {
     createdAt: string;
     read: boolean;
     user?: User;
+    link?: string;
 };

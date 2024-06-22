@@ -12,10 +12,13 @@ import { Link } from 'react-router-dom';
 import ProjectList from './ProjectList';
 import { useEffect, useState } from 'react';
 import GenerateProfileWithAI from './GenerateProfileWithAI';
+import useListRecommendations from '@/hooks/useListRecommendations';
 
 const RightPanel = () => {
     const { profile, setProfile, cancelUpdate, updateProfile, loading } = useUpdateProfile();
     const [selectedKey, setSelectedKey] = useState<string | number | null | undefined>();
+
+    const { data: recommendations, refetch } = useListRecommendations(profile?.id, true);
 
     useEffect(() => {
         const search = new URLSearchParams(window.location.search);
@@ -120,7 +123,7 @@ const RightPanel = () => {
                             </span>
                         }
                     >
-                        <Recommendations />
+                        <Recommendations refetch={refetch} recommendations={recommendations?.results || []} />
                     </Tab>
                 </Tabs>
             </div>
