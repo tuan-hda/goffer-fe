@@ -3,13 +3,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import useIndividualJobs from '@/hooks/useIndividualJobs';
+import useJobsRecommender from '@/hooks/useJobsRecommender';
 import { toggleSavedJob } from '@/services/interaction.service';
 import { Image } from '@nextui-org/react';
 import classNames from 'classnames';
 import { TbBookmarks, TbCalendar, TbMapPin } from 'react-icons/tb';
 
 const VacancyList = () => {
-    const { data, refetch } = useIndividualJobs();
+    const { refetch } = useIndividualJobs();
+    const { data } = useJobsRecommender();
 
     const onBookmark = async (e: any, id: string) => {
         e.stopPropagation();
@@ -19,7 +21,7 @@ const VacancyList = () => {
 
     return (
         <div className="mb-10 mt-10 grid w-full flex-1 grid-cols-3 gap-6 pr-2">
-            {data?.results.map((item, i) => (
+            {data?.map((item, i) => (
                 <Sheet key={i} onOpenChange={async (open) => !open && (await refetch())}>
                     <SheetTrigger asChild>
                         <Card

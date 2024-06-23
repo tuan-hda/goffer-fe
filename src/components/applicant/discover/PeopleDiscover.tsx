@@ -4,7 +4,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { UserDetail } from '@/components/userDetail';
 
 const PeopleDiscover = () => {
-    const { data, refetch } = useListPeople();
+    const { refetch, data } = useListPeople();
 
     return (
         <div className="mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-rows-4">
