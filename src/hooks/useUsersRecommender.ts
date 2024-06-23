@@ -1,10 +1,19 @@
 import { getUsersRecommenderService } from '@/services/recommender.service';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const useUsersRecommender = () => {
-    return useQuery({
-        queryKey: ['usersRecommendation'],
-        queryFn: async () => getUsersRecommenderService(),
+    const [searchParams] = useSearchParams();
+
+    return useInfiniteQuery({
+        queryKey: ['usersRecommendation', Object.fromEntries(searchParams.entries())],
+        queryFn: ({ pageParam }) => getUsersRecommenderService(pageParam, Object.fromEntries(searchParams.entries())),
+        initialPageParam: 0,
+        getNextPageParam: (lastPage) => {
+            if (lastPage.endOfResults) return undefined;
+            return lastPage.page + 1;
+        },
     });
 };
 

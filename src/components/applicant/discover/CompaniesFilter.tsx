@@ -1,16 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import MultipleSelector, { Option } from '@/components/ui/mutli-selector';
-import skillOptions from '@/data/skills';
-import toolOptions from '@/data/tools';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import fields from '@/data/fields';
+
 import { useEffect, useState } from 'react';
 import { TbSearch, TbSparkles } from 'react-icons/tb';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const Filter = () => {
+const CompaniesFilter = () => {
     const [value, setValue] = useState('');
-    const [skills, setSkills] = useState<Option[]>([]);
-    const [tools, setTools] = useState<Option[]>([]);
+    const [field, setField] = useState('');
     const [, setSearchParams] = useSearchParams();
 
     const filter = () => {
@@ -18,36 +18,21 @@ const Filter = () => {
         if (value) {
             query.searchQuery = value;
         }
-        if (skills.length) {
-            query.skills = skills.map((skill) => skill.value).join(',');
+        if (field) {
+            query.field = field;
         }
-        if (tools.length) {
-            query.tools = tools.map((tool) => tool.value).join(',');
-        }
+
         setSearchParams(query);
     };
 
     useEffect(() => {
         const params = Object.fromEntries(new URLSearchParams(window.location.search).entries());
         setValue(params.searchQuery || '');
-        setSkills(
-            (params.skills || '')
-                .split(',')
-                .filter((skill) => skill)
-                .map((skill) => ({ label: skill, value: skill })),
-        );
-        setTools(
-            (params.tools || '')
-                .split(',')
-                .filter((tool) => tool)
-                .map((tool) => ({ label: tool, value: tool })),
-        );
     }, []);
 
     const clear = () => {
         setValue('');
-        setSkills([]);
-        setTools([]);
+        setField('');
         setSearchParams({});
     };
 
@@ -66,29 +51,19 @@ const Filter = () => {
                     className="h-10 flex-1 rounded-xl bg-white pl-12 pr-36"
                 />
             </div>
-            <div>
-                <p className="mb-1 mt-6">Skills</p>
-                <MultipleSelector
-                    value={skills}
-                    onChange={(skills) => {
-                        setSkills(skills);
-                    }}
-                    className="min-h-10 bg-white"
-                    options={skillOptions}
-                    maxSelected={5}
-                />
-            </div>
-
-            <div>
-                <p className="mb-1 mt-4">Tools</p>
-                <MultipleSelector
-                    value={tools}
-                    onChange={setTools}
-                    className="min-h-10 bg-white"
-                    maxSelected={5}
-                    options={toolOptions}
-                />
-            </div>
+            <Label className="mb-2 mt-6 block">Field</Label>
+            <Select value={field} onValueChange={setField}>
+                <SelectTrigger>
+                    <SelectValue placeholder="Field" />
+                </SelectTrigger>
+                <SelectContent>
+                    {fields.map((f, index) => (
+                        <SelectItem key={index} value={f.name}>
+                            {f.name}
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
 
             <div className="mt-8 flex items-center justify-between gap-4">
                 <Button onClick={clear} variant="outline" className="flex-1">
@@ -102,4 +77,4 @@ const Filter = () => {
     );
 };
 
-export default Filter;
+export default CompaniesFilter;

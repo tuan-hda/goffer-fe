@@ -1,13 +1,19 @@
-import { getJobsRecommenderService, getUsersRecommenderService } from '@/services/recommender.service';
-import { useQuery } from '@tanstack/react-query';
+import { getJobsRecommenderService } from '@/services/recommender.service';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 const useJobsRecommender = () => {
     const [searchParams] = useSearchParams();
 
-    return useQuery({
-        queryKey: ['jobsRecommendation', searchParams.get('searchQuery')],
-        queryFn: async () => getJobsRecommenderService(1, searchParams.get('searchQuery') || ''),
+    return useInfiniteQuery({
+        queryKey: ['jobsRecommendation', Object.fromEntries(searchParams.entries())],
+        queryFn: ({ pageParam = 0 }) =>
+            getJobsRecommenderService(pageParam, Object.fromEntries(searchParams.entries())),
+        initialPageParam: 0,
+        getNextPageParam: (lastPage) => {
+            if (lastPage.endOfResults) return undefined;
+            return lastPage.page + 1;
+        },
     });
 };
 
