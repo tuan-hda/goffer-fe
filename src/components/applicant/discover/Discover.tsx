@@ -4,8 +4,18 @@ import { TbSearch } from 'react-icons/tb';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PeopleDiscover from './PeopleDiscover';
 import CompaniesDiscover from './CompaniesDiscover';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Discover = () => {
+    const navigate = useNavigate();
+    const [value, setValue] = useState('');
+
+    const search = async () => {
+        navigate(`/app/discover?searchQuery=${value}`);
+    };
+
     return (
         <div className="flex min-h-screen px-5 py-8 text-sm">
             <div className="relative mx-auto flex max-w-screen-xl flex-1 gap-10">
@@ -18,7 +28,18 @@ const Discover = () => {
                         <div className="mb-8 mt-6 flex items-center gap-6">
                             <div className="relative flex min-w-0 flex-1 items-center">
                                 <TbSearch className="absolute left-4 text-xl text-gray-400" />
-                                <Input placeholder="Search..." className="h-12 flex-1 rounded-2xl bg-white pl-12" />
+                                <Input
+                                    value={value}
+                                    onChange={(e) => setValue(e.target.value)}
+                                    placeholder="Search..."
+                                    className="h-12 flex-1 rounded-2xl bg-white pl-12 pr-36"
+                                />
+                                <div className="absolute right-2 flex gap-4">
+                                    <button onClick={() => navigate('/app/discover')}>Clear</button>
+                                    <Button onClick={search} variant="black">
+                                        Search
+                                    </Button>
+                                </div>
                             </div>
                             <TabsList className="h-12 gap-2 rounded-2xl bg-[#333] px-[6px]">
                                 <TabsTrigger className="h-9 text-white" value="people">

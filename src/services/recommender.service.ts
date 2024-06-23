@@ -15,12 +15,13 @@ export const getUsersRecommenderService = async (page = 1) => {
     ).data;
 };
 
-export const getJobsRecommenderService = async (page = 1) => {
+export const getJobsRecommenderService = async (page = 1, searchQuery = '') => {
     return (
         await baseAxios.get<List<Job>>('/recombee/jobs', {
             params: {
                 page,
                 populate: 'org,owner',
+                searchQuery,
             },
         })
     ).data;

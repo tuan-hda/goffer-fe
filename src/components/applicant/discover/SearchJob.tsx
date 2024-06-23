@@ -8,6 +8,7 @@ import tools from '@/data/tools';
 import { Image } from '@nextui-org/react';
 import { useState } from 'react';
 import { TbSearch } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
 
 const experienceList = [
     {
@@ -38,11 +39,17 @@ const experienceList = [
 
 const SearchJob = () => {
     const [range, setRange] = useState('');
+    const [value, setValue] = useState('');
     const [salaryRange, setSalaryRange] = useState({ from: '', to: '' });
+    const navigate = useNavigate();
 
     const clearRange = () => {
         setSalaryRange({ from: '', to: '' });
         setRange('');
+    };
+
+    const findWork = () => {
+        navigate(`/app/jobs?searchQuery=${value}`);
     };
 
     return (
@@ -67,13 +74,15 @@ const SearchJob = () => {
                 </div>
                 <div className="relative z-[10] mb-4 flex flex-1 items-center">
                     <Input
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
                         placeholder="Your magical words here..."
                         className="h-16 flex-1 rounded-3xl bg-white/90 pl-12 pr-48 shadow-medium"
                     />
                     <TbSearch className="absolute left-4 text-xl" />
                     <div className="absolute right-3 flex items-center gap-6">
-                        <button>Clear</button>
-                        <Button className="rounded-2xl p-5" variant="black">
+                        <button onClick={() => navigate('/app/jobs')}>Clear</button>
+                        <Button onClick={findWork} className="rounded-2xl p-5" variant="black">
                             <span>Find work</span>
                         </Button>
                     </div>
@@ -143,20 +152,19 @@ const SearchJob = () => {
                     </PopoverContent>
                 </Popover>
 
-                <Select>
-                    <SelectTrigger className="-mt-[10px] h-10 rounded-2xl bg-white">
-                        <SelectValue className="bg-white/90" placeholder="Date posted" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="past-24hrs">Past 24 hours</SelectItem>
-                        <SelectItem value="past-week">Past week</SelectItem>
-                        <SelectItem value="past-month">Past month</SelectItem>
-                    </SelectContent>
-                </Select>
+                <MultipleSelector
+                    placeholder="Skills"
+                    className="h-10 rounded-2xl bg-white/90"
+                    maxSelected={2}
+                    options={skills}
+                />
 
-                <MultipleSelector className="h-10 rounded-2xl bg-white/90" maxSelected={2} options={skills} />
-
-                <MultipleSelector className="h-10 rounded-2xl bg-white/90" maxSelected={2} options={tools} />
+                <MultipleSelector
+                    placeholder="Tools"
+                    className="h-10 rounded-2xl bg-white/90"
+                    maxSelected={2}
+                    options={tools}
+                />
             </div>
         </div>
     );
