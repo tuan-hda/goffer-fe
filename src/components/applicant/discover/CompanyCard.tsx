@@ -1,4 +1,3 @@
- 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Organization } from '@/types/organization.type';

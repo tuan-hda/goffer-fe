@@ -6,9 +6,23 @@ import { toggleSavedOrg } from '@/services/interaction.service';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import Jobs from './Jobs';
+import { useEffect } from 'react';
+import { interactWithItemService } from '@/services/recommender.service';
 
 const OrgDetail = () => {
     const { data: org, refetch } = useCurrOrganization();
+
+    useEffect(() => {
+        (async () => {
+            try {
+                if (!org) return;
+                interactWithItemService(org.id, 'view');
+            } catch (error) {
+                console.log('error create interaction', error);
+            }
+        })();
+    }, [org]);
+
     if (!org) return;
 
     const onShare = () => {

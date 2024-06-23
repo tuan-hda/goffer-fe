@@ -32,3 +32,9 @@ export const getCompaniesRecommenderService = async (page = 1) => {
         })
     ).data;
 };
+
+export const interactWithItemService = async (itemId: string, action: 'view' | 'bookmark') => {
+    return await baseAxios.post(`/recombee/interact/${itemId}`, {
+        interactionType: action,
+    });
+};
