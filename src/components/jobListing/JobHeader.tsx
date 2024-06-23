@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import { toggleSavedJob } from '@/services/interaction.service';
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { toast } from 'sonner';
+import { interactWithItemService } from '@/services/recommender.service';
 
 type JobHeaderProps = {
     job: Job;
@@ -31,6 +32,9 @@ const JobHeader = ({ job }: JobHeaderProps) => {
     const onBookmark = async (e: any, id: string) => {
         e.stopPropagation();
         await toggleSavedJob(id);
+        if (!job.saved) {
+            await interactWithItemService(job.id, 'bookmark');
+        }
         await refetch();
     };
     const onShare = () => {

@@ -4,43 +4,13 @@ import { TbChevronLeft } from 'react-icons/tb';
 import classNames from 'classnames';
 import { Textarea } from '../ui/textarea';
 import { useState } from 'react';
+import fields from '@/data/fields';
 
 type ThirdStepProps = {
     setStep: React.Dispatch<React.SetStateAction<number>>;
     data: NewOrganization;
     setData: React.Dispatch<React.SetStateAction<NewOrganization>>;
 };
-
-const fields = [
-    {
-        name: 'Engineering',
-        img: '/macbook.png',
-    },
-    {
-        name: 'Education',
-        img: '/education.png',
-    },
-    {
-        name: 'Designing',
-        img: '/design.png',
-    },
-    {
-        name: 'Copywriting',
-        img: '/copywriting.png',
-    },
-    {
-        name: 'Social Media',
-        img: '/socialmedia.png',
-    },
-    {
-        name: 'Entertainment',
-        img: '/entertainment.png',
-    },
-    {
-        name: 'Translation',
-        img: '/translator.png',
-    },
-];
 
 const ThirdStep = ({ setStep, data, setData }: ThirdStepProps) => {
     const [other, setOther] = useState('');

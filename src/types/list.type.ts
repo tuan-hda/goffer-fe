@@ -4,4 +4,5 @@ export type List<T> = {
     limit: number;
     totalPages: number;
     totalResults: number;
+    endOfResults?: boolean;
 };

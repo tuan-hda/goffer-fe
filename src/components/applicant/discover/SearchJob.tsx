@@ -1,48 +1,53 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import MultipleSelector from '@/components/ui/mutli-selector';
+import MultipleSelector, { Option } from '@/components/ui/mutli-selector';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { experienceList } from '@/data/experiences';
 import skills from '@/data/skills';
 import tools from '@/data/tools';
 import { Image } from '@nextui-org/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TbSearch } from 'react-icons/tb';
-
-const experienceList = [
-    {
-        value: '0-1 year',
-        label: '0-1 year',
-    },
-    {
-        value: '1-2 years',
-        label: '1-2 years',
-    },
-    {
-        value: '2-4 years',
-        label: '2-4 years',
-    },
-    {
-        value: '4-7 years',
-        label: '4-7 years',
-    },
-    {
-        value: '7-10 years',
-        label: '7-10 years',
-    },
-    {
-        value: '10+ years',
-        label: '10+ years',
-    },
-];
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SearchJob = () => {
     const [range, setRange] = useState('');
+    const [value, setValue] = useState('');
     const [salaryRange, setSalaryRange] = useState({ from: '', to: '' });
+    const [yoe, setYoe] = useState('');
+    const [selectedSkills, setSelectedSkills] = useState<Option[]>([]);
+    const [selectedTools, setSelectedTools] = useState<Option[]>([]);
+    const [, setSearchParams] = useSearchParams();
 
     const clearRange = () => {
         setSalaryRange({ from: '', to: '' });
         setRange('');
+    };
+
+    const findWork = () => {
+        const query: Record<string, string> = {};
+        if (value) query.searchQuery = value;
+        if (salaryRange.from) {
+            query.salaryFrom = salaryRange.from;
+        }
+        if (salaryRange.to) {
+            query.salaryTo = salaryRange.to;
+        }
+        if (yoe) query.experience = yoe;
+        if (selectedSkills.length) query.skills = selectedSkills.map((skill) => skill.value).join(',');
+        if (selectedTools.length) query.tools = selectedTools.map((tool) => tool.value).join(',');
+        setSearchParams(query);
+    };
+
+    const clear = () => {
+        setValue('');
+        setRange('');
+        setSalaryRange({ from: '', to: '' });
+        setYoe('');
+        setSelectedSkills([]);
+        setSelectedTools([]);
+        setSearchParams({});
     };
 
     return (
@@ -61,28 +66,26 @@ const SearchJob = () => {
                 />
             </div>
             <div className="mt-12 flex gap-4">
-                <div className="flex h-16 max-w-[300px] flex-1 items-center justify-between rounded-3xl bg-[#333] px-5 text-white">
-                    <p className="font-medium">Search result</p>
-                    <p className="text-gray-300">20 jobs found</p>
-                </div>
                 <div className="relative z-[10] mb-4 flex flex-1 items-center">
                     <Input
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
                         placeholder="Your magical words here..."
-                        className="h-16 flex-1 rounded-3xl bg-white/90 pl-12 pr-48 shadow-medium"
+                        className="h-16 flex-1 rounded-3xl bg-white/50 pl-12 pr-48 shadow-medium backdrop-blur-xl"
                     />
                     <TbSearch className="absolute left-4 text-xl" />
                     <div className="absolute right-3 flex items-center gap-6">
-                        <button>Clear</button>
-                        <Button className="rounded-2xl p-5" variant="black">
-                            <span>Find work</span>
+                        <button onClick={clear}>Clear</button>
+                        <Button onClick={findWork} className="rounded-2xl p-5" variant="black">
+                            <span>Apply filters</span>
                         </Button>
                     </div>
                 </div>
             </div>
 
-            <div className="relative z-[11] grid grid-cols-5 items-center gap-4">
-                <Select>
-                    <SelectTrigger className="-mt-[10px] h-10 rounded-2xl bg-white">
+            <div className="relative z-[11] grid grid-cols-4 gap-4">
+                <Select value={yoe} onValueChange={setYoe}>
+                    <SelectTrigger className="h-10 rounded-2xl bg-white">
                         <SelectValue placeholder="Years of exp" />
                     </SelectTrigger>
                     <SelectContent>
@@ -96,10 +99,7 @@ const SearchJob = () => {
 
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
-                            className="-mt-[10px] h-10 w-full justify-start rounded-2xl bg-white/90"
-                        >
+                        <Button variant="outline" className="h-10 w-full justify-start rounded-2xl bg-white/90">
                             {range || 'Salary range'}
                         </Button>
                     </PopoverTrigger>
@@ -137,26 +137,29 @@ const SearchJob = () => {
                                 className="text-sm"
                                 size="sm"
                             >
-                                Apply filter
+                                OK
                             </Button>
                         </div>
                     </PopoverContent>
                 </Popover>
 
-                <Select>
-                    <SelectTrigger className="-mt-[10px] h-10 rounded-2xl bg-white">
-                        <SelectValue className="bg-white/90" placeholder="Date posted" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="past-24hrs">Past 24 hours</SelectItem>
-                        <SelectItem value="past-week">Past week</SelectItem>
-                        <SelectItem value="past-month">Past month</SelectItem>
-                    </SelectContent>
-                </Select>
+                <MultipleSelector
+                    value={selectedSkills}
+                    onChange={setSelectedSkills}
+                    placeholder="Skills"
+                    className="min-h-10 rounded-2xl bg-white/90"
+                    maxSelected={3}
+                    options={skills}
+                />
 
-                <MultipleSelector className="h-10 rounded-2xl bg-white/90" maxSelected={2} options={skills} />
-
-                <MultipleSelector className="h-10 rounded-2xl bg-white/90" maxSelected={2} options={tools} />
+                <MultipleSelector
+                    value={selectedTools}
+                    onChange={setSelectedTools}
+                    placeholder="Tools"
+                    className="min-h-10 rounded-2xl bg-white/90"
+                    maxSelected={5}
+                    options={tools}
+                />
             </div>
         </div>
     );

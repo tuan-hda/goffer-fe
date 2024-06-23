@@ -7,6 +7,7 @@ export type ProjectCreate = {
     content: string;
     tools: string[];
     skills: string[];
+    id?: string;
 };
 
 export type Project = ProjectCreate & {

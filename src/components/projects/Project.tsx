@@ -5,11 +5,12 @@ import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from
 import { Link } from 'react-router-dom';
 
 type ProjectProps = {
+    image?: string;
     info: ProjectCreate;
     url?: string;
 };
 
-const Project = ({ info, url }: ProjectProps) => {
+const Project = ({ info, url, image }: ProjectProps) => {
     const ref = useRef<HTMLParagraphElement>(null);
     const [style, setStyle] = useState<CSSProperties>({});
 
@@ -46,7 +47,7 @@ const Project = ({ info, url }: ProjectProps) => {
             }
             return <div className={classNames('flex h-[200px] gap-8', className)}>{children}</div>;
         },
-        [info],
+        [info.id],
     );
 
     return (
@@ -54,10 +55,10 @@ const Project = ({ info, url }: ProjectProps) => {
             <div className="aspect-[4/3]">
                 <Image
                     classNames={{
-                        wrapper: classNames('overflow-hidden h-full !max-w-full w-full', !info.cover && 'bg-gray-100'),
+                        wrapper: classNames('overflow-hidden h-full !max-w-full w-full', !image && 'bg-gray-100'),
                         img: 'rounded-2xl object-cover h-full w-full',
                     }}
-                    src={info.cover}
+                    src={image}
                 />
             </div>
             <div className="flex h-full min-w-0 flex-1 flex-col gap-y-3">
