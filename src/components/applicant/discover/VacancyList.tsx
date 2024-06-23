@@ -5,23 +5,26 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import useIndividualJobs from '@/hooks/useIndividualJobs';
 import useJobsRecommender from '@/hooks/useJobsRecommender';
 import { toggleSavedJob } from '@/services/interaction.service';
+import { interactWithItemService } from '@/services/recommender.service';
 import { Image } from '@nextui-org/react';
 import classNames from 'classnames';
 import { TbBookmarks, TbCalendar, TbMapPin } from 'react-icons/tb';
 
 const VacancyList = () => {
-    const { refetch } = useIndividualJobs();
-    const { data } = useJobsRecommender();
+    const { data, refetch } = useJobsRecommender();
 
-    const onBookmark = async (e: any, id: string) => {
+    const onBookmark = async (e: any, id: string, isSaved?: boolean) => {
         e.stopPropagation();
         await toggleSavedJob(id);
+        if (!isSaved) {
+            await interactWithItemService(id, 'bookmark');
+        }
         await refetch();
     };
 
     return (
         <div className="mb-10 mt-10 grid w-full flex-1 grid-cols-3 gap-6 pr-2">
-            {data?.map((item, i) => (
+            {data?.results.map((item, i) => (
                 <Sheet key={i} onOpenChange={async (open) => !open && (await refetch())}>
                     <SheetTrigger asChild>
                         <Card
@@ -43,7 +46,7 @@ const VacancyList = () => {
                                 </p>
                                 <Button
                                     size="icon"
-                                    onClick={(e) => onBookmark(e, item.id)}
+                                    onClick={(e) => onBookmark(e, item.id, item.saved)}
                                     className="absolute right-5 top-5"
                                     variant={item.saved ? 'black' : 'ghost'}
                                 >

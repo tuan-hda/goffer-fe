@@ -5,12 +5,11 @@ import { UserDetail } from '@/components/userDetail';
 import useUsersRecommender from '@/hooks/useUsersRecommender';
 
 const PeopleDiscover = () => {
-    const { refetch } = useListPeople();
-    const { data } = useUsersRecommender();
+    const { data, refetch } = useUsersRecommender();
 
     return (
         <div className="mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-rows-4">
-            {data?.map((person) => (
+            {data?.results.map((person) => (
                 <Sheet key={person.id} onOpenChange={async (open) => !open && (await refetch())}>
                     <PersonCard data={person} />
 
