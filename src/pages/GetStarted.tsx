@@ -40,7 +40,7 @@ const GetStarted = () => {
         }
         await updateUserService(data);
         await refetch();
-        navigate(`/app/${user?.initialType}`);
+        navigate(`/app`);
     };
 
     return (
