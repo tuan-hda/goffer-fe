@@ -40,6 +40,18 @@ export const getCompaniesRecommenderService = async (page = 1, params?: Record<s
     ).data;
 };
 
+export const getCandidatesRecommenderService = async (id: string, page = 1, params?: Record<string, string>) => {
+    return (
+        await baseAxios.get<List<User>>(`/recombee/candidates/${id}`, {
+            params: {
+                page,
+                populate: 'org',
+                ...params,
+            },
+        })
+    ).data;
+};
+
 export const interactWithItemService = async (itemId: string, action: 'view' | 'bookmark') => {
     return await baseAxios.post(`/recombee/interact/${itemId}`, {
         interactionType: action,

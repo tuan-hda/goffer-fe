@@ -105,7 +105,7 @@ const Overview = () => {
                 </div>
             </div>
 
-            <div className="min-w-0 text-sm">
+            <div className="min-w-0 flex-1 text-sm">
                 <p className="mb-2 text-xl">Share your opportunity</p>
                 <Card className="mb-6 flex flex-col items-center bg-white/100 p-6 shadow-none">
                     <Image className="h-64" src="/map.png" />
