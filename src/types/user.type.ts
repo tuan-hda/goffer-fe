@@ -29,6 +29,7 @@ export type User = {
     badges?: string[];
     isPro?: boolean;
     portfolio?: PortfolioConfiguration;
+    yoe?: number;
 };
 
 export type SeparatedDomainUser = User & {

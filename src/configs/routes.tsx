@@ -111,7 +111,6 @@ const routesConfig: RouteObject[] = [
                         path: '/app',
                         element: <ApplicantLayout />,
                         children: [
-                            { path: '/app/home', element: <Editor /> },
                             {
                                 path: '/app/discover',
                                 element: <Discover />,

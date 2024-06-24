@@ -42,7 +42,7 @@ const CompaniesDiscover = () => {
                         Load more
                     </Button>
                 )}
-                {!isFetching && !hasNextPage && <p className="text-center">You've reached the end of the list./</p>}
+                {!isFetching && !hasNextPage && <p className="text-center">You've reached the end of the list.</p>}
             </div>
         </>
     );

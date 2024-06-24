@@ -88,6 +88,13 @@ const UserPanel = ({ id }: Props) => {
                 </>
             )}
 
+            {data.yoe && (
+                <>
+                    <p className="mb-2 mt-8 self-start text-xs font-light text-gray-500">YEARS OF EXPERIENCE</p>
+                    <p className="text-text">{data.yoe}</p>
+                </>
+            )}
+
             {data.bio && (
                 <>
                     <p className="mb-2 mt-8 self-start text-xs font-light text-gray-500">BIO</p>

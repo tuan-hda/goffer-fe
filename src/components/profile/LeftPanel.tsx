@@ -5,6 +5,8 @@ import { Editable } from '../common';
 import SocialLink from './SocialLink';
 import { User } from '@/types/user.type';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
+import { toast } from 'sonner';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const LeftPanel = () => {
     const { loading, profile, setProfile, updateProfile, data, cancelUpdate } = useUpdateProfile();
@@ -97,6 +99,28 @@ const LeftPanel = () => {
                     );
                 }}
             />
+            <p className="mb-3 mt-8 text-xs font-light text-gray-500">YEARS OF EXPERIENCE</p>
+            <Select
+                value={String(profile.yoe || 0)}
+                onValueChange={async (value) => {
+                    await updateProfile({
+                        yoe: Number(value),
+                    });
+                    toast.success('Updated');
+                }}
+            >
+                <SelectTrigger className="h-10 w-full">
+                    <SelectValue placeholder="Select your yoe" />
+                </SelectTrigger>
+                <SelectContent>
+                    {Array.from({ length: 81 }, (_, i) => (
+                        <SelectItem key={i} value={i.toString()}>
+                            {i}
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+
             <p className="mb-3 mt-8 text-xs font-light text-gray-500">LINKS</p>
             <div>
                 {profile.links &&
