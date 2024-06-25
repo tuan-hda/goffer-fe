@@ -44,7 +44,7 @@ const Composer: FC = () => {
         <ComposerPrimitive.Root className="flex w-[calc(100%-32px)] max-w-[42rem] items-end rounded-2xl border p-0.5 transition-shadow focus-within:shadow-sm">
             <ComposerPrimitive.Input
                 placeholder="Write a message..."
-                className="h-12 max-h-40 flex-grow resize-none bg-transparent p-3.5 text-sm outline-none placeholder:text-foreground/50"
+                className="h-12 max-h-40 flex-grow resize-none bg-transparent p-3.5 text-base outline-none placeholder:text-foreground/50"
             />
             <ThreadPrimitive.If running={false}>
                 <ComposerPrimitive.Send className="m-2 flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-2xl font-bold shadow transition-opacity disabled:opacity-10">
