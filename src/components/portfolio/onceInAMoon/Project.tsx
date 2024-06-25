@@ -18,9 +18,9 @@ const Project = ({ data, setModal, index }: ProjectProps) => {
             onMouseLeave={() => {
                 setModal({ active: false, index });
             }}
-            className="project flex h-[20vh] w-full cursor-pointer items-center justify-between border-t border-gray-300 px-24 transition-all duration-200"
+            className="project flex h-[26vh] w-full cursor-pointer items-center justify-between border-t border-gray-300 px-24 transition-all duration-200"
         >
-            <h2 className="m-0 text-[5vh] font-medium transition-all duration-400">{data.title}</h2>
+            <h2 className="m-0 text-[5vh] font-medium leading-[120%] transition-all duration-400">{data.title}</h2>
         </div>
     );
 };
