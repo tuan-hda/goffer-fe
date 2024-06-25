@@ -50,6 +50,8 @@ export const GEN_AI_CREATE_JOB = {
     The response should not include redundant spaces, and generate the longest description possible. The result should be in JSON format.
 `,
 };
+/* Generate Senior Software Engineer. Should have at least 4 yoe. Focus in Web development with tech stacks: NextJS, Java Spring Boot. Each should have at least 3 years of experience using.
+ */
 
 export type CreateProjectResult =
     | {
@@ -110,6 +112,8 @@ export type GenerateProfileResult =
           links: { label: string; url: string }[];
       }
     | string;
+/* Generate MERN project. I'm doing with my team (has four members and I was the leader) in UIT. The project is about Hiring web platform.
+ */
 
 export const GEN_AI_GENERATE_PROFILE = {
     min: 80,
