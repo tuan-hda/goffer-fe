@@ -12,6 +12,7 @@ import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useStreamStore from './stores/streamStore';
+import { RuntimeProvider } from './providers/RuntimeProvider';
 
 function App() {
     const [isOpen, setOpen] = useState(false);
@@ -45,7 +46,7 @@ function App() {
     return (
         <PlateController>
             <NextUIProvider>
-                {routes}
+                <RuntimeProvider>{routes}</RuntimeProvider>
                 <Toaster position="top-right" />
             </NextUIProvider>
             {inApp && (

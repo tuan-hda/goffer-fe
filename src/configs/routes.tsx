@@ -68,6 +68,7 @@ import NewJobLayout from '@/layouts/NewJobLayout';
 import SubscribeResult from '@/components/subscribe/SubscribeResult';
 import PortfolioDisplayPage from '@/pages/PortfolioDisplayPage';
 import ProjectDetail from '@/components/portfolio/ProjectDetail';
+import Test from '@/pages/Test';
 
 const routesConfig: RouteObject[] = [
     {
@@ -351,7 +352,7 @@ const routesConfig: RouteObject[] = [
     },
     {
         path: '/test',
-        element: <DrawRectangle />,
+        element: <Test />,
     },
     { path: '*', element: <NotFound /> },
 ];
