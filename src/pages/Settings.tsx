@@ -24,7 +24,7 @@ const Settings = () => {
                     >
                         <Account />
                     </Tab>
-                    <Tab
+                    {/* <Tab
                         key="Work"
                         title={
                             <span className="flex items-center gap-2">
@@ -53,7 +53,7 @@ const Settings = () => {
                         }
                     >
                         <div></div>
-                    </Tab>
+                    </Tab> */}
                 </Tabs>
             </div>
         </div>
