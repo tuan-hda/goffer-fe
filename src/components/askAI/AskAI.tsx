@@ -28,13 +28,14 @@ const AskAI = ({ isOpen, onClose }: AskAIProps) => {
 
     return createPortal(
         <div
+            onClick={onClose}
             className={classNames(
                 'pointer-events-none fixed bottom-0 left-0 right-0 top-0 z-50 flex bg-black/70 opacity-0 backdrop-blur-sm transition',
                 isOpen && 'pointer-events-auto opacity-100',
             )}
         >
-            <div className="relative m-auto w-[720px] rounded-3xl bg-white p-5">
-                <div className="absolute left-0 right-0 top-0 z-[1] flex items-center gap-2 rounded-t-3xl bg-white/50 px-8 pb-2 pt-7 text-lg font-semibold backdrop-blur-md">
+            <div className="relative m-auto w-[720px] rounded-3xl bg-white p-5" onClick={(e) => e.stopPropagation()}>
+                <div className="absolute left-0 right-0 top-0 z-[1] flex items-center gap-2 rounded-t-3xl bg-white/30 px-8 pb-2 pt-7 text-lg font-semibold backdrop-blur-md">
                     Goffer Copilot
                     <TbSparkles className="text-xl" />
                 </div>

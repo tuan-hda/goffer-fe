@@ -1,6 +1,6 @@
 import { conductQueryService } from '@/services/rag.service';
 import { AssistantRuntimeProvider, useLocalRuntime, type ChatModelAdapter } from '@assistant-ui/react';
-
+import removeMd from 'remove-markdown';
 const MyModelAdapter: ChatModelAdapter = {
     async run({ messages, abortSignal }) {
         // TODO replace with your own API
@@ -8,11 +8,12 @@ const MyModelAdapter: ChatModelAdapter = {
             const result = await conductQueryService(messages, abortSignal);
 
             const data = await result.json();
+
             return {
                 content: [
                     {
                         type: 'text',
-                        text: data,
+                        text: removeMd(data),
                     },
                 ],
             };
