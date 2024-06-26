@@ -35,9 +35,9 @@ const AskAI = ({ isOpen, onClose }: AskAIProps) => {
             )}
         >
             <div className="relative m-auto w-[720px] rounded-3xl bg-white p-5" onClick={(e) => e.stopPropagation()}>
-                <div className="absolute left-0 right-0 top-0 z-[1] flex items-center gap-2 rounded-t-3xl bg-white/30 px-8 pb-2 pt-7 text-lg font-semibold backdrop-blur-md">
+                <div className="absolute left-0 right-0 top-0 z-[1] flex items-center gap-2 rounded-t-3xl bg-white/30 px-8 pb-5 pt-6 font-serif text-[26px] font-black backdrop-blur-md">
                     Goffer Copilot
-                    <TbSparkles className="text-xl" />
+                    <TbSparkles className="text-3xl" />
                 </div>
                 <div className="h-[600px]">
                     <Thread />

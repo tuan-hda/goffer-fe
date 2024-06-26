@@ -79,9 +79,9 @@ const AssistantMessage: FC = () => {
                 <AvatarFallback>A</AvatarFallback>
             </Avatar>
 
-            <div className="mt-2 flex-grow">
+            <div className="flex-grow rounded-2xl bg-gradient-to-b from-[#F6F6F6] to-[#F3F2ED] p-4 shadow-small">
                 <MessagePrimitive.InProgress className="inline-block size-3 animate-pulse rounded-full bg-foreground" />
-                <p className="max-w-xl whitespace-pre-line break-words text-foreground">
+                <p className="max-w-xl whitespace-pre-line break-words font-serif text-[19px] text-foreground">
                     <MessagePrimitive.Content />
                 </p>
             </div>
