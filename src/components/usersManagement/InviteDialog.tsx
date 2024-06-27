@@ -3,8 +3,38 @@ import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
+import { addMemberService } from '@/services/membership.service';
+import { toast } from 'sonner';
+import { useRef } from 'react';
+import useInvitedMember from '@/hooks/useInvitedMember';
 
 const InviteDialog = () => {
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const { data: org } = useCurrOrganization();
+    const { data: orgMemberships, refetch } = useInvitedMember(org?.id || '');
+
+    const inviteNewMember = async (email?: string) => {
+        if (!org?.id || !email) return;
+        addMemberService({ email, org: org.id })
+            .then(async (membership) => {
+                if (membership) {
+                    toast.success('Invitation sent successfully');
+                    if (inputRef.current) {
+                        inputRef.current.value = '';
+                        inputRef.current.focus();
+                    }
+                    await refetch();
+                }
+            })
+            .catch((error) => toast.error(`Failed to send invitation: ${(error as Error)?.message}`));
+    };
+    const handleKeyDown = async (event: any) => {
+        if (event.key === 'Enter') {
+            await inviteNewMember(event.target.value);
+        }
+    };
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -23,26 +53,32 @@ const InviteDialog = () => {
                 <div>
                     <Label htmlFor="email">Email</Label>
                     <div className="mt-2 flex items-center gap-2">
-                        <Input id="email" placeholder="contact@example.com" />
-                        <Button variant="black">Send invite</Button>
+                        <Input onKeyDown={handleKeyDown} ref={inputRef} id="email" placeholder="contact@example.com" />
+                        <Button onClick={() => inviteNewMember(inputRef.current?.value)} variant="black">
+                            Send invite
+                        </Button>
                     </div>
                 </div>
 
                 <div className="mt-2">
                     <p className="font-medium">Sent invites</p>
                     <div className="mt-2 space-y-1">
-                        <div className="flex justify-between">
-                            <p>hdatdragon2@gmail.com</p>
-                            <p>Sent</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p>hdatdragon184@gmail.com</p>
-                            <p className="text-green-500">Accepted</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p>hdatdragon18402@gmail.com</p>
-                            <p className="text-red-500">Rejected</p>
-                        </div>
+                        {orgMemberships &&
+                            orgMemberships.data
+                                .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+                                .slice(0, 3)
+                                .map((item) => (
+                                    <div className="flex justify-between">
+                                        <p>{item.user.email}</p>
+                                        {item.status === 'sent' ? (
+                                            <p>Sent</p>
+                                        ) : item.status === 'accepted' ? (
+                                            <p className="text-green-500">Accepted</p>
+                                        ) : (
+                                            <p className="text-red-500">Rejected</p>
+                                        )}
+                                    </div>
+                                ))}
                     </div>
                     {/* <p>Your sent invites will be shown here.</p> */}
                 </div>
