@@ -21,7 +21,7 @@ const NotificationsContent = () => {
     const isEmpty = notifications.length === 0;
 
     return (
-        <Card className="min-h-[200px] overflow-hidden border-none shadow-medium">
+        <Card className="min-h-[400px] overflow-hidden border-none shadow-medium">
             <NotificationWrapper isEmpty={isEmpty}>
                 {notifications.map((notification, index) => (
                     <Fragment key={index}>

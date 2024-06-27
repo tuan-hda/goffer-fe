@@ -7,4 +7,5 @@ export type Notification = {
     read: boolean;
     user?: User;
     link?: string;
+    owner?: User;
 };

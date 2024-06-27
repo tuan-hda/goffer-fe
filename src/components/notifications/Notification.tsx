@@ -14,7 +14,7 @@ const Notification = ({ isRead, notification }: NotificationProps) => {
     return (
         <div className={classNames('flex gap-3 px-8 py-7', isRead && 'bg-primary/10')}>
             <div className="relative">
-                <Avatar src={notification?.user?.avatar} />
+                <Avatar src={notification?.owner?.avatar} />
                 {isRead && (
                     <div className="absolute left-0 top-0 h-[12px] w-[12px] rounded-full border-2 border-white bg-primary" />
                 )}

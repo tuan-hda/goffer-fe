@@ -60,7 +60,7 @@ const Recommendation = ({ info, refetch }: Props) => {
     return (
         <div className="group relative">
             <div className={classNames('relative flex items-center gap-4', info.isHide && 'opacity-30')}>
-                <Avatar src={info.user.avatar} className="h-16 w-16" />
+                <Avatar src={info.owner.avatar} className="h-16 w-16" />
                 <div className="space-y-0.5">
                     <div className="flex items-baseline gap-2 text-base">
                         <span className="font-medium">{info.owner.name}</span> <span>•</span>
