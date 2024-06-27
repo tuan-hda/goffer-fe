@@ -21,7 +21,7 @@ const CustomAssessment = () => {
     const { data: org } = useCurrOrganization();
 
     const [loading, setLoading] = useState(false);
-    const { data: assessments, refetch } = useListOrgAssessment({
+    const { list: assessments, refetch } = useListOrgAssessment({
         job: id,
         populate: 'owner',
     });
@@ -99,7 +99,7 @@ const CustomAssessment = () => {
                     handlePick={handlePick}
                     selectedAssessments={selectedAssessments.map((a) => a.id)}
                     refetch={refetch}
-                    assessments={assessments?.results || []}
+                    assessments={assessments || []}
                 />
                 <div className="my-14 border-t"></div>
                 <div className="flex items-center gap-4">

@@ -25,7 +25,7 @@ export const createAssessmentService = async (assessment: NewAssessment, mapData
 };
 
 export const listAssessmentsService = async (
-    query?: Partial<Record<keyof (Assessment & ListQueryOptions), string>>,
+    query?: Partial<Record<keyof (Assessment & ListQueryOptions), unknown>>,
 ) => {
     return (await baseAxios.get<List<Assessment>>('/assessments', { params: query })).data;
 };

@@ -7,15 +7,27 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const QuestionBankList = () => {
-    const { data: mcq, refetch: mcqRefetch } = useListOrgQuestions({
+    const {
+        list: mcq,
+        refetch: mcqRefetch,
+        totalResults: mcqTotalResults,
+    } = useListOrgQuestions({
         type: 'mcq',
         populate: 'author',
     });
-    const { data: coding, refetch: codingRefetch } = useListOrgQuestions({
+    const {
+        list: coding,
+        refetch: codingRefetch,
+        totalResults: codingTotalResults,
+    } = useListOrgQuestions({
         type: 'coding',
         populate: 'author',
     });
-    const { data: behavioral, refetch: behavioralRefetch } = useListOrgQuestions({
+    const {
+        list: behavioral,
+        refetch: behavioralRefetch,
+        totalResults: behavioralTotalResults,
+    } = useListOrgQuestions({
         type: 'behavioral',
         populate: 'author',
     });
@@ -41,13 +53,13 @@ const QuestionBankList = () => {
         >
             <TabsList className="mb-2">
                 <TabsTrigger value="mcq">
-                    <span>MCQ ({mcq?.totalResults || 0})</span>
+                    <span>MCQ ({mcqTotalResults || 0})</span>
                 </TabsTrigger>
                 <TabsTrigger value="coding">
-                    <span>Coding question ({coding?.totalResults || 0})</span>
+                    <span>Coding question ({codingTotalResults || 0})</span>
                 </TabsTrigger>
                 <TabsTrigger value="behavioral">
-                    <span>Behavioral question ({behavioral?.totalResults || 0})</span>
+                    <span>Behavioral question ({behavioralTotalResults || 0})</span>
                 </TabsTrigger>
             </TabsList>
             <TabsContent value="mcq">

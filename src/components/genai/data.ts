@@ -148,8 +148,8 @@ export const GEN_AI_GENERATE_PROFILE = {
     
     - for "oneLiner" field, return a short title for user (should be a role with some fancy words) based on the given information
     - for "bio" field, return a short description of user (around 100-200 characters) based on the given information
-    - for "skills" field, return some of these values: ${skills.map((skill) => skill.value).join(',')}, maximum is 3. Based on the given information
-    - for "tools" field, return some of these values: ${tools.map((tool) => tool.value).join(',')}, maximum is 7. Based on the given information
+    - for "skills" field, return some of these values: ${skills.map((skill) => skill.value).join(',')}. Do not return values that are not from the list.
+    - for "tools" field, return some of these values: ${tools.map((tool) => tool.value).join(',')}. Do not return values that are not from the list.
     - for "education" field, take input from the user and return the data in the format of the object above. If user don't specify the data, return an empty array.
     - for "experiences" field, take input from the user and return the data in the format of the object above. If user don't specify the data, return an empty array.
     - for "location" field, if user don't specify data related to the location, return "Any location", else return the location

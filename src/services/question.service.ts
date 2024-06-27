@@ -7,7 +7,7 @@ export const createQuestionService = async (data: NewQuestion) => {
     return (await baseAxios.post<Question>('/questions', data)).data;
 };
 
-export const listQuestionsService = async (query?: Partial<Record<keyof (Question & ListQueryOptions), string>>) => {
+export const listQuestionsService = async (query?: Partial<Record<keyof (Question & ListQueryOptions), unknown>>) => {
     return (await baseAxios.get<List<Question>>('/questions', { params: query })).data;
 };
 

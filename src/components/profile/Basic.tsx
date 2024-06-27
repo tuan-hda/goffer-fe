@@ -53,7 +53,7 @@ const Basic = () => {
 
             <p className="mt-6 font-medium text-black">Skills</p>
             <Editable
-                partialDelete={profile.skills && profile.skills.length === 3}
+                // partialDelete={profile.skills && profile.skills.length === 3}
                 type="multi-selector"
                 mode={!profile.skills || profile.skills.length === 0 ? 'new' : 'active'}
                 values={profile.skills}
@@ -62,7 +62,6 @@ const Basic = () => {
                 onCancel={cancelUpdate('skills')}
                 onSave={() => updateProfile({ skills: profile.skills })}
                 placeholder="Select your skills..."
-                limit={3}
                 options={skills}
             >
                 <div className="flex flex-wrap gap-4">
@@ -76,7 +75,7 @@ const Basic = () => {
 
             <p className="mt-6 font-medium text-black">Tools</p>
             <Editable
-                partialDelete={profile.tools && profile.tools.length === 7}
+                // partialDelete={profile.tools && profile.tools.length === 7}
                 type="multi-selector"
                 values={profile.tools || []}
                 setValues={(values) => setProfile({ ...profile, tools: values.map((value) => value.value) })}
@@ -86,7 +85,6 @@ const Basic = () => {
                 saving={loading}
                 onCancel={cancelUpdate('tools')}
                 onSave={() => updateProfile({ tools: profile.tools })}
-                limit={7}
                 options={tools}
             >
                 <div className="flex flex-wrap gap-4">

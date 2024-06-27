@@ -8,7 +8,7 @@ import { TbSearch, TbX } from 'react-icons/tb';
 import { Link, useSearchParams } from 'react-router-dom';
 
 const AssessmentOrgHeader = () => {
-    const { data } = useListOrgAssessment({ populate: 'owner' });
+    const { list } = useListOrgAssessment({ populate: 'owner' });
     const [searchParams, setSearchParams] = useSearchParams();
     const [value, setValue] = useState('');
 
@@ -31,7 +31,7 @@ const AssessmentOrgHeader = () => {
     return (
         <div>
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl">Assessment ({data?.results.length || 0})</h1>
+                <h1 className="text-2xl">Assessment ({list?.length || 0})</h1>
                 <Button asChild>
                     <Link to="builder">Create assessment</Link>
                 </Button>

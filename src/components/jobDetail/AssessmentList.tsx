@@ -4,13 +4,20 @@ import AssessmentOrgItem from '../assessment/org/AssessmentOrgItem';
 import useSetupJobStore from '@/stores/setupJobStore';
 import { shallow } from 'zustand/shallow';
 import { Assessment } from '@/types/assessment.type';
+import { Button } from '../ui/button';
 
 type AssessmentListProps = {
     isGlobal?: boolean;
 };
 
 const AssessmentList = ({ isGlobal }: AssessmentListProps) => {
-    const { data: assessmentList, isLoading } = useListOrgAssessment({
+    const {
+        list: assessmentList,
+        isLoading,
+        isFetching,
+        hasNextPage,
+        fetchNextPage,
+    } = useListOrgAssessment({
         populate: 'owner',
         job: isGlobal ? 'all' : 'global',
     });
@@ -26,7 +33,7 @@ const AssessmentList = ({ isGlobal }: AssessmentListProps) => {
         );
     }
 
-    if (!assessmentList || assessmentList.results.length === 0) {
+    if (!assessmentList || assessmentList.length === 0) {
         return <div className="mt-10">No assessment here.</div>;
     }
 
@@ -41,7 +48,7 @@ const AssessmentList = ({ isGlobal }: AssessmentListProps) => {
 
     return (
         <div className="mt-6 grid grid-cols-3 gap-6">
-            {assessmentList.results.map((assessment) => (
+            {assessmentList.map((assessment) => (
                 <AssessmentOrgItem
                     onPick={handlePick}
                     picked={assessments.findIndex((a) => a.id === assessment.id) !== -1}
@@ -50,6 +57,15 @@ const AssessmentList = ({ isGlobal }: AssessmentListProps) => {
                     assessment={assessment}
                 />
             ))}
+            <div className="mt-10 flex w-full flex-col justify-center">
+                {isFetching && <p className="text-center">Loading...</p>}
+                {!isFetching && hasNextPage && (
+                    <Button variant="outline" className="mx-auto" onClick={() => fetchNextPage()}>
+                        Load more
+                    </Button>
+                )}
+                {!isFetching && !hasNextPage && <p className="text-center">You've reached the end of the list.</p>}
+            </div>
         </div>
     );
 };

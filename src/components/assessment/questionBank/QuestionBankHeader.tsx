@@ -15,6 +15,10 @@ const QuestionBankHeader = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [value, setValue] = useState('');
 
+    const list = useMemo(() => {
+        return data?.pages.flatMap((page) => page.results);
+    }, [data]);
+
     const setSearch = useMemo(() => {
         return _.debounce((value: string) => {
             searchParams.set('search', value);
@@ -37,7 +41,7 @@ const QuestionBankHeader = () => {
         <div>
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl">{data.totalResults} questions</h1>
+                    <h1 className="text-2xl">{data.pages.at(0)?.totalResults || 0} questions</h1>
                     <p>
                         {difficultyCount?.['1'] || 0} easy, {difficultyCount?.['2'] || 0} medium,{' '}
                         {difficultyCount?.['3'] || 0} hard

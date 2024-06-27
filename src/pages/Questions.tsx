@@ -21,7 +21,7 @@ import { shallow } from 'zustand/shallow';
 const Questions = () => {
     const { create, loading } = useCreateQuestionBehavioral(true);
     const [open, setOpen] = useState(false);
-    const { data: mcq } = useListOrgQuestions({ type: 'behavioral', populate: 'author' });
+    const { list: mcq } = useListOrgQuestions({ type: 'behavioral', populate: 'author' });
     const { id } = useParams();
     const { data } = useGetOrganizationJob(id!);
     const [assessment, setAssessment] = useNewAssessmentStore(
@@ -77,7 +77,7 @@ const Questions = () => {
                 <QuestionBankListBehavioral mode="pick" />
             </div>
             {!mcq ||
-                (mcq.results.length === 0 && (
+                (mcq.length === 0 && (
                     <div className="flex w-full flex-col items-center justify-center p-20 text-sm">
                         <Image src="/flowerlike.png" width={240} height={240} />
                         <p>You have no question yet.</p>
