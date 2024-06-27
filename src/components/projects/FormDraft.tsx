@@ -44,39 +44,44 @@ const FormDraft = ({ hidden, editorKey, initialValue }: FormDraftProps) => {
                 className="-mx-3 w-full border-0 text-4xl font-semibold shadow-none focus-visible:ring-0"
                 placeholder="Your project title"
             />
-            <MultipleSelector
-                className="mt-8 h-14 rounded-full border-none bg-white/60 shadow-small"
-                placeholder="Skills..."
-                maxSelected={3}
-                options={skills}
-                value={info.skills.map((tool) => ({
-                    label: tool,
-                    value: tool,
-                }))}
-                onChange={(selected) => {
-                    setInfo((prev) => ({
-                        ...prev,
-                        skills: selected.map(({ value }) => value),
-                    }));
-                }}
-            />
-            <MultipleSelector
-                className="mt-11 h-14 rounded-full border-none bg-white/60 shadow-small"
-                placeholder="Tools..."
-                maxSelected={5}
-                options={tools}
-                value={info.tools.map((tool) => ({
-                    label: tool,
-                    value: tool,
-                }))}
-                onChange={(selected) => {
-                    setInfo((prev) => ({
-                        ...prev,
-                        tools: selected.map(({ value }) => value),
-                    }));
-                }}
-            />
-            <div className="h-16"></div>
+            <div>
+                <MultipleSelector
+                    className="mt-8 h-fit rounded-2xl border-none bg-white/60 shadow-small"
+                    placeholder="Skills..."
+                    maxSelected={3}
+                    options={skills}
+                    value={info.skills.map((tool) => ({
+                        label: tool,
+                        value: tool,
+                    }))}
+                    onChange={(selected) => {
+                        setInfo((prev) => ({
+                            ...prev,
+                            skills: selected.map(({ value }) => value),
+                        }));
+                    }}
+                />
+            </div>
+            <div className="h-2"></div>
+            <div>
+                <MultipleSelector
+                    className="h-fit rounded-2xl border-none bg-white/60 shadow-small"
+                    placeholder="Tools..."
+                    maxSelected={5}
+                    options={tools}
+                    value={info.tools.map((tool) => ({
+                        label: tool,
+                        value: tool,
+                    }))}
+                    onChange={(selected) => {
+                        setInfo((prev) => ({
+                            ...prev,
+                            tools: selected.map(({ value }) => value),
+                        }));
+                    }}
+                />
+            </div>
+            <div className="h-2"></div>
             <PlateEditor
                 key={editorKey}
                 initialValue={initialValue}

@@ -120,6 +120,7 @@ import { ListElement } from '../plate-ui/list-element';
 import { autoformatPlugin } from './autoformatPlugin';
 import { TabbableElement } from './TabbaleElement';
 import { dragOverCursorPlugin } from './dragOverCursorPlugin';
+import { MENTIONABLES } from './mentionables';
 
 const resetBlockTypesCommonRule = {
     types: [ELEMENT_BLOCKQUOTE, ELEMENT_TODO_LI],
@@ -383,11 +384,11 @@ export const plugins = createPlugins(
     },
 );
 
-const initialValue = [
+export const initialValue = [
     {
         id: '1',
         type: 'p',
-        children: [{ text: 'Hello, World!' }],
+        children: [{ text: '' }],
     },
 ];
 
@@ -397,11 +398,18 @@ type PlateEditorProps = Omit<PlateProps, 'children'> & {
     top?: string;
 };
 
-export function PlateEditor(props: PlateEditorProps) {
+export function PlateEditor({ initialValue: outerInitialValue, ...props }: PlateEditorProps) {
+    console.log('initival', initialValue);
     return (
         <DndProvider backend={HTML5Backend}>
             <CommentsProvider>
-                <Plate {...props} plugins={plugins}>
+                <Plate
+                    initialValue={
+                        !outerInitialValue || outerInitialValue.length === 0 ? initialValue : outerInitialValue
+                    }
+                    {...props}
+                    plugins={plugins}
+                >
                     <div
                         className={classNames(
                             'relative',
@@ -429,7 +437,7 @@ export function PlateEditor(props: PlateEditorProps) {
 
                         <CommentsPopover />
 
-                        {/* <CursorOverlay containerRef={containerRef} /> */}
+                        {/* <CursorOverla containerRef={containerRef} /> */}
                     </div>
                 </Plate>
             </CommentsProvider>
