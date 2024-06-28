@@ -1,47 +1,5 @@
+import React, { lazy, Suspense } from 'react';
 import { Outlet, RouteObject } from 'react-router-dom';
-import {
-    AboutUs,
-    ContactUs,
-    LandingPage,
-    NotFound,
-    Pricing,
-    SignUp,
-    TrustedBy,
-    Login,
-    ForgotPassword,
-    ResetPassword,
-    GetStarted,
-    Settings,
-    NewOrganization,
-    OrgSettings,
-    OrgJobs,
-    NewJob,
-    JobDetail,
-    Questions,
-    CustomFeedback,
-    Finalize,
-    ApplicantDetail,
-    PreviewJob,
-    WhoAreWe,
-    Feature,
-    Profile,
-    Team,
-    Notifications,
-    Assessment,
-    AssessmentSession,
-    AssessmentSuccess,
-    Messages,
-    Enhance,
-    Dashboard,
-    Portfolio,
-    NewProject,
-    Reports,
-    UsersManagement,
-    QuestionBank,
-    QuestionBuilder,
-    ProjectDetailPage,
-} from '../pages';
-import { Discover, JobDiscover } from '@/components/applicant/discover';
 import {
     AdminLayout,
     AppLayout,
@@ -54,21 +12,65 @@ import {
     OrgLayout,
     RootLayout,
 } from '../layouts';
-import Editor from '@/components/common/editor/Editor';
-import { Application, JobApply } from '@/components/applicant/apply';
 import { PortfolioLayout } from '@/components/portfolio';
-import { OrgDetail } from '@/components/orgDetail';
-import DrawRectangle from '@/components/canvas/DrawRectangle';
-import AssessmentOrg from '@/pages/AssessmentOrg';
-import AssessmentCreate from '@/pages/AssessmentCreate';
-import AssessmentResult from '@/pages/AssessmentResult';
-import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
-import CustomAssessment from '@/pages/CustomAssessment';
 import NewJobLayout from '@/layouts/NewJobLayout';
-import SubscribeResult from '@/components/subscribe/SubscribeResult';
-import PortfolioDisplayPage from '@/pages/PortfolioDisplayPage';
-import ProjectDetail from '@/components/portfolio/ProjectDetail';
-import Test from '@/pages/Test';
+import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
+
+const AboutUs = lazy(() => import('../pages/AboutUs'));
+const ContactUs = lazy(() => import('../pages/ContactUs'));
+const LandingPage = lazy(() => import('../pages/LandingPage'));
+const NotFound = lazy(() => import('../pages/NotFound'));
+const Pricing = lazy(() => import('../pages/Pricing'));
+const SignUp = lazy(() => import('../pages/SignUp'));
+const TrustedBy = lazy(() => import('../pages/TrustedBy'));
+const Login = lazy(() => import('../pages/Login'));
+const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('../pages/ResetPassword'));
+const GetStarted = lazy(() => import('../pages/GetStarted'));
+const Settings = lazy(() => import('../pages/Settings'));
+const NewOrganization = lazy(() => import('../pages/NewOrganization'));
+const OrgSettings = lazy(() => import('../pages/OrgSettings'));
+const OrgJobs = lazy(() => import('../pages/OrgJobs'));
+const NewJob = lazy(() => import('../pages/NewJob'));
+const JobDetail = lazy(() => import('../pages/JobDetail'));
+const Questions = lazy(() => import('../pages/Questions'));
+const CustomFeedback = lazy(() => import('../pages/CustomFeedback'));
+const Finalize = lazy(() => import('../pages/Finalize'));
+const ApplicantDetail = lazy(() => import('../pages/ApplicantDetail'));
+const PreviewJob = lazy(() => import('../pages/PreviewJob'));
+const WhoAreWe = lazy(() => import('../pages/WhoAreWe'));
+const Feature = lazy(() => import('../pages/Feature'));
+const Profile = lazy(() => import('../pages/Profile'));
+const Team = lazy(() => import('../pages/Team'));
+const Notifications = lazy(() => import('../pages/Notifications'));
+const Assessment = lazy(() => import('../pages/Assessment'));
+const AssessmentSession = lazy(() => import('../pages/AssessmentSession'));
+const AssessmentSuccess = lazy(() => import('../pages/AssessmentSuccess'));
+const Messages = lazy(() => import('../pages/Messages'));
+const Enhance = lazy(() => import('../pages/Enhance'));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Portfolio = lazy(() => import('../pages/Portfolio'));
+const NewProject = lazy(() => import('../pages/NewProject'));
+const Reports = lazy(() => import('../pages/Reports'));
+const UsersManagement = lazy(() => import('../pages/UsersManagement'));
+const QuestionBank = lazy(() => import('../pages/QuestionBank'));
+const QuestionBuilder = lazy(() => import('../pages/QuestionBuilder'));
+const ProjectDetailPage = lazy(() => import('../pages/ProjectDetailPage'));
+const Discover = lazy(() => import('@/components/applicant/discover/Discover'));
+const JobDiscover = lazy(() => import('@/components/applicant/discover/JobDiscover'));
+const Editor = lazy(() => import('@/components/common/editor/Editor'));
+const Application = lazy(() => import('@/components/applicant/apply/Application'));
+const JobApply = lazy(() => import('@/components/applicant/apply/JobApply'));
+const OrgDetail = lazy(() => import('@/components/orgDetail/OrgDetail'));
+const DrawRectangle = lazy(() => import('@/components/canvas/DrawRectangle'));
+const AssessmentOrg = lazy(() => import('@/pages/AssessmentOrg'));
+const AssessmentCreate = lazy(() => import('@/pages/AssessmentCreate'));
+const AssessmentResult = lazy(() => import('@/pages/AssessmentResult'));
+const CustomAssessment = lazy(() => import('@/pages/CustomAssessment'));
+const SubscribeResult = lazy(() => import('@/components/subscribe/SubscribeResult'));
+const PortfolioDisplayPage = lazy(() => import('@/pages/PortfolioDisplayPage'));
+const ProjectDetail = lazy(() => import('@/components/portfolio/ProjectDetail'));
+const Test = lazy(() => import('@/pages/Test'));
 
 const routesConfig: RouteObject[] = [
     {
@@ -79,29 +81,100 @@ const routesConfig: RouteObject[] = [
                 path: '/',
                 element: <LandingLayout />,
                 children: [
-                    { path: '/', element: <LandingPage /> },
-                    { path: 'who-are-we', element: <WhoAreWe /> },
-                    { path: 'features', element: <Feature /> },
-                    { path: 'trusted-by', element: <TrustedBy /> },
-                    { path: 'pricing', element: <Pricing /> },
+                    {
+                        path: '/',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <LandingPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'who-are-we',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <WhoAreWe />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'features',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Feature />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'trusted-by',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <TrustedBy />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'pricing',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Pricing />
+                            </Suspense>
+                        ),
+                    },
                 ],
             },
             {
                 path: '/about-us',
-                element: <AboutUs />,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <AboutUs />
+                    </Suspense>
+                ),
             },
             {
                 path: '/contact',
-                element: <ContactUs />,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ContactUs />
+                    </Suspense>
+                ),
             },
             {
                 path: '/auth',
                 element: <AuthLayout />,
                 children: [
-                    { path: 'sign-up', element: <SignUp /> },
-                    { path: 'login', element: <Login /> },
-                    { path: 'forgot-password', element: <ForgotPassword /> },
-                    { path: 'reset-password', element: <ResetPassword /> },
+                    {
+                        path: 'sign-up',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <SignUp />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'login',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Login />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'forgot-password',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <ForgotPassword />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'reset-password',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <ResetPassword />
+                            </Suspense>
+                        ),
+                    },
                 ],
             },
             {
@@ -114,13 +187,28 @@ const routesConfig: RouteObject[] = [
                         children: [
                             {
                                 path: '/app/discover',
-                                element: <Discover />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <Discover />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/company/:domain',
-                                element: <OrgDetail />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <OrgDetail />
+                                    </Suspense>
+                                ),
                             },
-                            { path: '/app/jobs', element: <JobDiscover /> },
+                            {
+                                path: '/app/jobs',
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <JobDiscover />
+                                    </Suspense>
+                                ),
+                            },
                         ],
                     },
                     {
@@ -129,133 +217,251 @@ const routesConfig: RouteObject[] = [
                         children: [
                             {
                                 index: true,
-                                element: <Dashboard />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <Dashboard />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: 'reports',
-                                element: <Reports />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <Reports />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: 'users',
-                                element: <UsersManagement />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <UsersManagement />
+                                    </Suspense>
+                                ),
                             },
                         ],
                     },
                     {
                         path: '/app/profile',
-                        element: <Profile />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Profile />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/portfolio',
-                        element: <Portfolio />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Portfolio />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/messages',
-                        element: <Messages />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Messages />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/enhance',
-                        element: <Enhance />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Enhance />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/settings',
-                        element: <Settings />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Settings />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/notifications',
-                        element: <Notifications />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Notifications />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain',
-                        element: <OrgJobs />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <OrgJobs />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain/settings',
-                        element: <OrgSettings />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <OrgSettings />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain/notifications',
-                        element: <Notifications />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Notifications />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain/team',
-                        element: <Team />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Team />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain/assessment',
-                        element: <AssessmentOrgLayout />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <AssessmentOrgLayout />
+                            </Suspense>
+                        ),
                         children: [
                             {
                                 index: true,
-                                element: <AssessmentOrg />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <AssessmentOrg />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/organization/:domain/assessment/builder',
-                                element: <AssessmentCreate />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <AssessmentCreate />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/organization/:domain/assessment/:id',
-                                element: <AssessmentCreate />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <AssessmentCreate />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/organization/:domain/assessment/:id/results',
-                                element: <AssessmentResult />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <AssessmentResult />
+                                    </Suspense>
+                                ),
                             },
                         ],
                     },
                     {
                         path: '/app/organization/:domain/bank',
-                        element: <QuestionBank />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <QuestionBank />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain/bank/:id',
-                        element: <QuestionBuilder />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <QuestionBuilder />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain/bank/builder/:type',
-                        element: <QuestionBuilder />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <QuestionBuilder />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain/messages',
-                        element: <Messages />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Messages />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain/job/:id',
                         element: (
-                            <OrgLayout>
-                                <OrgDetailLayout>
-                                    <Outlet />
-                                </OrgDetailLayout>
-                            </OrgLayout>
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <OrgLayout>
+                                    <OrgDetailLayout>
+                                        <Outlet />
+                                    </OrgDetailLayout>
+                                </OrgLayout>
+                            </Suspense>
                         ),
                         children: [
                             {
                                 path: '/app/organization/:domain/job/:id',
-                                element: <JobDetail />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <JobDetail />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/organization/:domain/job/:id/preview',
-                                element: <PreviewJob />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <PreviewJob />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/organization/:domain/job/:id/questions',
-                                element: <Questions />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <Questions />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/organization/:domain/job/:id/custom-feedback',
-                                element: <CustomFeedback />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <CustomFeedback />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/organization/:domain/job/:id/custom-assessment',
-                                element: <CustomAssessment />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <CustomAssessment />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/organization/:domain/job/:id/finalize',
-                                element: <Finalize />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <Finalize />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: '/app/organization/:domain/job/:id/applicant/:candidateId',
-                                element: <ApplicantDetail />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <ApplicantDetail />
+                                    </Suspense>
+                                ),
                             },
                         ],
                     },
@@ -263,33 +469,61 @@ const routesConfig: RouteObject[] = [
             },
             {
                 path: '/organization/new',
-                element: <NewOrganization />,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <NewOrganization />
+                    </Suspense>
+                ),
             },
             {
                 path: '/app/organization/:domain',
-                element: <NewJobLayout />,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <NewJobLayout />
+                    </Suspense>
+                ),
                 children: [
                     {
                         path: '/app/organization/:domain/new',
-                        element: <NewJob />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <NewJob />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/app/organization/:domain/:id',
-                        element: <NewJob />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <NewJob />
+                            </Suspense>
+                        ),
                     },
                 ],
             },
             {
                 path: '/project/new',
-                element: <NewProject />,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <NewProject />
+                    </Suspense>
+                ),
             },
             {
                 path: '/project/:projectId',
-                element: <ProjectDetailPage />,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ProjectDetailPage />
+                    </Suspense>
+                ),
             },
             {
                 path: '/project/:projectId/edit',
-                element: <NewProject />,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <NewProject />
+                    </Suspense>
+                ),
             },
             {
                 path: '/job',
@@ -300,11 +534,19 @@ const routesConfig: RouteObject[] = [
                         children: [
                             {
                                 index: true,
-                                element: <JobApply />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <JobApply />
+                                    </Suspense>
+                                ),
                             },
                             {
                                 path: 'application',
-                                element: <Application />,
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <Application />
+                                    </Suspense>
+                                ),
                             },
                         ],
                     },
@@ -312,7 +554,11 @@ const routesConfig: RouteObject[] = [
             },
             {
                 path: '/subscribe',
-                element: <SubscribeResult />,
+                element: (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <SubscribeResult />
+                    </Suspense>
+                ),
             },
             {
                 path: '/assessment',
@@ -320,14 +566,28 @@ const routesConfig: RouteObject[] = [
                 children: [
                     {
                         path: '/assessment/:assessmentId',
-                        element: <Assessment />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Assessment />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: '/assessment/:assessmentId/:type',
-                        element: <AssessmentSession />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <AssessmentSession />
+                            </Suspense>
+                        ),
                     },
-
-                    { path: '/assessment/:assessmentId/success', element: <AssessmentSuccess /> },
+                    {
+                        path: '/assessment/:assessmentId/success',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <AssessmentSuccess />
+                            </Suspense>
+                        ),
+                    },
                 ],
             },
             {
@@ -336,11 +596,19 @@ const routesConfig: RouteObject[] = [
                 children: [
                     {
                         path: ':portfolioDomain',
-                        element: <PortfolioDisplayPage />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <PortfolioDisplayPage />
+                            </Suspense>
+                        ),
                     },
                     {
                         path: ':portfolioDomain/:projectId',
-                        element: <ProjectDetail />,
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <ProjectDetail />
+                            </Suspense>
+                        ),
                     },
                 ],
             },
@@ -348,13 +616,28 @@ const routesConfig: RouteObject[] = [
     },
     {
         path: '/get-started',
-        element: <GetStarted />,
+        element: (
+            <Suspense fallback={<div>Loading...</div>}>
+                <GetStarted />
+            </Suspense>
+        ),
     },
     {
         path: '/test',
-        element: <Test />,
+        element: (
+            <Suspense fallback={<div>Loading...</div>}>
+                <Test />
+            </Suspense>
+        ),
     },
-    { path: '*', element: <NotFound /> },
+    {
+        path: '*',
+        element: (
+            <Suspense fallback={<div>Loading...</div>}>
+                <NotFound />
+            </Suspense>
+        ),
+    },
 ];
 
 export default routesConfig;
