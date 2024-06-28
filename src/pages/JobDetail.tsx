@@ -1,6 +1,4 @@
-import { Feedbacks, Insights, Overview, Sourcing } from '@/components/jobDetail';
 import { Button } from '@/components/ui/button';
-import { Tab, Tabs } from '@nextui-org/react';
 import {
     TbArchive,
     TbChevronDown,
@@ -30,6 +28,7 @@ import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import JobPanels from '@/components/jobDetail/JobPanels';
 
 const JobDetail = () => {
     const { id, domain } = useParams();
@@ -183,25 +182,7 @@ const JobDetail = () => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <div className="-mx-[6px] w-[calc(100%+12px)]">
-                <Tabs aria-label="Options" className="-ml-2 mt-2" variant="underlined">
-                    <Tab key="overview" title="Overview">
-                        <Overview />
-                    </Tab>
-                    <Tab key="sourcing" title="Sourcing">
-                        <Sourcing />
-                    </Tab>
-                    <Tab key="insights" title="Insights">
-                        <Insights />
-                    </Tab>
-                    <Tab key="analytics" title="Analytics">
-                        <Analytics />
-                    </Tab>
-                    <Tab key="feedbacks" title="Feedbacks">
-                        <Feedbacks />
-                    </Tab>
-                </Tabs>
-            </div>
+            <JobPanels />
         </div>
     );
 };
