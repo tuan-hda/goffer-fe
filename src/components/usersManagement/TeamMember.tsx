@@ -2,8 +2,13 @@ import { TbUserPlus } from 'react-icons/tb';
 import MemberList from './MemberList';
 import InviteDialog from './InviteDialog';
 import { Image } from '@nextui-org/react';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
+import useInvitedMember from '@/hooks/useInvitedMember';
 
 const TeamMember = () => {
+    const { data: org } = useCurrOrganization();
+    const { data: orgMemberships, refetch } = useInvitedMember(org?.id || '');
+
     return (
         <div className="mt-4 flex h-2 gap-20 text-sm">
             <div className="min-w-0 max-w-[240px] flex-1">
@@ -11,7 +16,9 @@ const TeamMember = () => {
                 <p className="mt-1 text-gray-500">
                     Manage your existing team, change roles/permissions, or add new team members.
                 </p>
-                <p className="mt-2">20 members.</p>
+                <p className="mt-2">
+                    {orgMemberships?.data.filter((item) => item.status === 'accepted').length} members.
+                </p>
             </div>
             <div className="flex-1">
                 <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-dashed border-[#EBEBEE] px-20 py-10">
