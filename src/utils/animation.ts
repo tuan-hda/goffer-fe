@@ -13,7 +13,7 @@ export const fadeInAnimationFn: (_: number) => Variants = (index) => ({
     },
     visible: {
         opacity: 1,
-        y: 0,
+        y: '0px',
         transition: {
             delay: index * 0.25,
             duration: 1,

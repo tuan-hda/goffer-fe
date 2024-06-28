@@ -41,7 +41,7 @@ const Overview = () => {
                     <p className="text-sm">Slots</p>
                     <div className="mt-1 flex items-center gap-2">
                         <TbUser className="text-base" />
-                        <span>3/{job.slots}</span>
+                        <span>0/{job.slots}</span>
                     </div>
                     <p className="mt-5 text-sm">Salary from</p>
                     <div className="mt-1 flex items-center gap-2">
