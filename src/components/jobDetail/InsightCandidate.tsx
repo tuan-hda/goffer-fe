@@ -6,14 +6,22 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
+    DropdownMenuPortal,
+    DropdownMenuSeparator,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { MoreHorizontal } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Apply } from '@/types/application.type';
+import moment from 'moment';
+import pipeline from '@/data/pipeline';
 
 type InsightCandidateProps = {
-    candidate: any;
+    candidate: Apply;
 };
 
 const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
@@ -24,29 +32,27 @@ const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
                     alt={`${candidate.name}'s photo`}
                     className="aspect-square rounded-2xl object-cover"
                     height="40"
-                    src={candidate.imageUrl}
+                    src={candidate.owner?.avatar}
                     width="40"
                 />
             </TableCell>
             <TableCell className="cursor-pointer font-medium">
-                <Link to={`applicant/${candidate.id}`}>
+                <Link to={`applicant/${candidate.id}`} target="_blank">
                     <div>
                         <p className="font-light">{candidate.name}</p>
                         <p>{candidate.email}</p>
                     </div>
                 </Link>
             </TableCell>
-            <TableCell>{candidate.appliedOn}</TableCell>
-            <TableCell>{candidate.appliedOn}</TableCell>
+            <TableCell>{moment(candidate.createdAt).format('DD/MM/YY')}</TableCell>
+            <TableCell>{moment(candidate.updatedAt).format('DD/MM/YY')}</TableCell>
 
             <TableCell className="hidden md:table-cell">
-                <Badge variant="outline">{candidate.match}%</Badge>
+                {candidate.match ? <Badge variant="outline">{candidate.match || 0}%</Badge> : '-'}
             </TableCell>
-            <TableCell className="hidden md:table-cell">{candidate.rating}</TableCell>
+            <TableCell className="hidden md:table-cell">{candidate.rating ?? '-'}</TableCell>
 
-            <TableCell>
-                <Badge>87%</Badge>
-            </TableCell>
+            <TableCell>{candidate.assessmentAvg ? <Badge>${candidate.assessmentAvg}%</Badge> : '-'}</TableCell>
 
             <TableCell onClick={(e) => e.stopPropagation()}>
                 <DropdownMenu>
@@ -61,7 +67,21 @@ const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
                         <DropdownMenuItem asChild>
                             <Link to={`applicant/${candidate.id}`}>View detail</Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Move to</DropdownMenuItem>
+                        <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger>
+                            <DropdownMenuPortal>
+                                <DropdownMenuSubContent>
+                                    {pipeline.map((stage) => (
+                                        <DropdownMenuItem
+                                            disabled={candidate.phase === stage.title.toLowerCase()}
+                                            key={stage.title}
+                                        >
+                                            {stage.title}
+                                        </DropdownMenuItem>
+                                    ))}
+                                </DropdownMenuSubContent>
+                            </DropdownMenuPortal>
+                        </DropdownMenuSub>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </TableCell>

@@ -35,9 +35,14 @@ export type Apply = Omit<NewApply, 'job' | 'profilePicture' | 'resume'> & {
     id: string;
     job: JobResponse;
     phase: string;
-    applicant: User;
+    owner?: User;
     profilePicture: string;
     resume: string;
+    createdAt: string;
+    updatedAt: string;
+    match?: number;
+    rating?: number;
+    assessmentAvg?: number;
 };
 
 export type EditApply = Partial<NewApply> & {

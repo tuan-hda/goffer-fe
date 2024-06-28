@@ -4,8 +4,8 @@ const pipeline = [
     { title: 'Phone call', count: 10 },
     { title: 'On-site', count: 5 },
     { title: 'Offer', count: 2 },
-    { title: 'Hired', count: 1 },
     { title: 'Rejected', count: 1 },
+    { title: 'Hired', count: 1 },
 ];
 
 export default pipeline;
