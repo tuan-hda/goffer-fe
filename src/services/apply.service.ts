@@ -1,10 +1,10 @@
 import { baseAxios } from './base';
 import { List } from '@/types/list.type';
-import { Apply, ApplyResponse, EditApply, NewApply } from '@/types/application.type';
+import { Apply, ApplyCount, ApplyResponse, EditApply, NewApply } from '@/types/application.type';
 
 export const submitApplicationService = async (data: NewApply) => (await baseAxios.post<Apply>('/apply', data)).data;
 
-export const listApplicationService = async (query?: Record<string, string>) => {
+export const listApplicationService = async (query?: Record<string, unknown>) => {
     return (
         await baseAxios.get<List<Apply>>('/apply', {
             params: {
@@ -24,3 +24,11 @@ export const getApplyJob = async (jobId: string) => {
 };
 
 export const updateApplyService = async (data: EditApply) => (await baseAxios.patch<Apply>('/apply', data)).data;
+
+export const countApplicationsByPhasesService = async (params?: Partial<Record<keyof Apply, unknown>>) => {
+    return (
+        await baseAxios.get<ApplyCount[]>('/apply/count', {
+            params,
+        })
+    ).data;
+};

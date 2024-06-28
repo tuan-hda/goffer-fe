@@ -1,18 +1,20 @@
+import pipeline from '@/data/pipeline';
+import useCountApplicationsByPhases from '@/hooks/useCountApplicationsByPhases';
 import classNames from 'classnames';
 import { useState } from 'react';
-
-const pipeline = [
-    { title: 'Applied', count: 20 },
-    { title: 'Shortlisted', count: 15 },
-    { title: 'Phone call', count: 10 },
-    { title: 'On-site', count: 5 },
-    { title: 'Offer', count: 2 },
-    { title: 'Hired', count: 1 },
-    { title: 'Rejected', count: 1 },
-];
+import { useParams } from 'react-router-dom';
 
 const InsightsBar = () => {
     const [selected, setSelected] = useState('Applied');
+    const { id } = useParams();
+
+    const { data: count } = useCountApplicationsByPhases({
+        job: id,
+    });
+
+    const getCountByPhase = (phase: string) => {
+        return count?.find((c) => c._id === phase)?.count ?? 0;
+    };
 
     return (
         <div className="grid grid-cols-7 rounded-xl border bg-white p-2">
@@ -26,7 +28,7 @@ const InsightsBar = () => {
                     )}
                 >
                     <p className="font-mono text-sm font-semibold uppercase">{stage.title}</p>
-                    <p className="font-mono text-3xl font-semibold">{stage.count}</p>
+                    <p className="font-mono text-3xl font-semibold">{getCountByPhase(stage.title.toLowerCase())}</p>
                 </button>
             ))}
         </div>

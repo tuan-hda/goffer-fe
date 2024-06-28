@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { PlateEditor } from '../editor/PlateEditor';
 import { Value } from '@udecode/plate-common';
 
@@ -29,6 +29,13 @@ const PlainPlate = ({ data }: PlainPlateProps) => {
             clearInterval(interval);
         };
     }, []);
+
+    const key = useMemo(() => {
+        if (data) {
+            return window.crypto.randomUUID();
+        }
+    }, [data]);
+
     return (
         <>
             <div
@@ -39,7 +46,7 @@ const PlainPlate = ({ data }: PlainPlateProps) => {
             />
             {!description && (
                 <div ref={ref} className="pointer-events-none fixed opacity-0">
-                    <PlateEditor className="!bg-transparent p-0" readOnly value={data} />
+                    <PlateEditor key={key} className="!bg-transparent p-0" readOnly initialValue={data} />
                 </div>
             )}
         </>

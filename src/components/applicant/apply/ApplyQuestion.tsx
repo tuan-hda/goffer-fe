@@ -17,14 +17,16 @@ const ApplyQuestion = ({ order, total, question }: Props) => {
         <div className="flex flex-col gap-9 text-text">
             <div>
                 <div className="flex items-center gap-x-3 text-default-500">
-                    <p className="text-xl">
+                    <p className="text-sm">
                         Question {order} of {total}
                     </p>
-                    <TbInfoCircle size={24} />
                 </div>
-                <p className="my-2  text-2xl font-medium text-text">{question.content}</p>
+                <p className="font my-2 text-base text-text">
+                    {question.content} Tell us a time you had to deal with a difficult customer. What was the situation
+                    and how did you handle it?
+                </p>
                 {typeof question.description === 'string' && (
-                    <p className="text-lg font-light text-default-400">{question.description}</p>
+                    <p className="text-sm font-light text-default-400">{question.description}</p>
                 )}
             </div>
 
