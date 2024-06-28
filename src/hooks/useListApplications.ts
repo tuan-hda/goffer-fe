@@ -7,7 +7,7 @@ const useListApplications = () => {
         queryKey: ['listApplications'],
         queryFn: ({ pageParam }) =>
             listApplicationService({
-                pageParam,
+                page: pageParam,
             }),
         initialPageParam: 0,
         getNextPageParam: (lastPage, allPages) => {

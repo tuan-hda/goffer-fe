@@ -2,11 +2,15 @@ import pipeline from '@/data/pipeline';
 import useCountApplicationsByPhases from '@/hooks/useCountApplicationsByPhases';
 import classNames from 'classnames';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const InsightsBar = () => {
     const [selected, setSelected] = useState('Applied');
+    const { id } = useParams();
 
-    const { data: count } = useCountApplicationsByPhases();
+    const { data: count } = useCountApplicationsByPhases({
+        job: id,
+    });
 
     const getCountByPhase = (phase: string) => {
         return count?.find((c) => c._id === phase)?.count ?? 0;
