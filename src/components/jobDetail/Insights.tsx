@@ -5,6 +5,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import InsightCandidate from './InsightCandidate';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import useListApplications from '@/hooks/useListApplications';
 
 // type Candidate = {
 //     imageUrl: string;
@@ -87,6 +88,7 @@ const mockCandidates = [
 
 const Insights = () => {
     const candidates = mockCandidates;
+    const { list } = useListApplications();
 
     return (
         <div className="w-full overflow-x-auto text-sm">

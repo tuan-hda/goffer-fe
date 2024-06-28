@@ -399,7 +399,6 @@ type PlateEditorProps = Omit<PlateProps, 'children'> & {
 };
 
 export function PlateEditor({ initialValue: outerInitialValue, ...props }: PlateEditorProps) {
-    console.log('initival', initialValue);
     return (
         <DndProvider backend={HTML5Backend}>
             <CommentsProvider>

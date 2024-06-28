@@ -49,3 +49,8 @@ export type ApplyResponse = Omit<EditApply, 'job' | 'applicant'> & {
     job: JobResponse;
     applicant: User;
 };
+
+export type ApplyCount = {
+    _id: string;
+    count: number;
+};

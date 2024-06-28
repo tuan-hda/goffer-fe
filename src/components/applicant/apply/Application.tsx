@@ -130,7 +130,7 @@ const Application = () => {
                     <div className="mb-5">
                         <Image src={job?.org?.logo} alt="logo" className="z-[1] h-16 w-16 rounded-full" />
                         <p className="mt-3 text-sm font-medium">{job?.org?.name}</p>
-                        <p className="mt-1 font-serif text-4xl font-black text-text">{job?.title}</p>
+                        <p className="mt-1 text-3xl font-medium text-text">{job?.title}</p>
                         <p className="mt-3">
                             <span className="text-sm text-default-500">{job?.location}</span>
                             <span className="mx-2 text-sm text-default-500">•</span>
@@ -138,8 +138,8 @@ const Application = () => {
                             {readOnly && (
                                 <>
                                     <span className="mx-2 text-sm text-default-500">•</span>
-                                    <Chip color="success" radius="sm" variant="flat">
-                                        This job already applied
+                                    <Chip color="success" className="text-xs" radius="sm" variant="flat">
+                                        Already applied this job
                                     </Chip>
                                 </>
                             )}
