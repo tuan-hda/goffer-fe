@@ -1,3 +1,5 @@
+import useApplicationById from '@/hooks/useApplicationById';
+import useApplyJob from '@/hooks/useApplyJob';
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
@@ -80,7 +82,7 @@ const routes: Record<string, RouteFunc> = {
             el: 'Custom assessment',
         },
     ],
-    '/app/organization/:domain/job/:id/applicant/:applicantId': (...args: any[]) => [
+    '/app/organization/:domain/job/:id/applicant/:applicationId': (...args: any[]) => [
         {
             el: (
                 <>
@@ -106,8 +108,9 @@ const AppBreadcrumb = () => {
         Object.keys(routes).map((k) => ({ path: k })),
         location.pathname,
     );
-    const { domain, id } = useParams();
+    const { domain, id, applicationId } = useParams();
     const { data: job } = useGetOrganizationJob(id);
+    const { data: application } = useApplicationById(applicationId);
 
     const renderFn = matches && matches.length > 0 && routes[matches.at(0)?.route.path as keyof typeof routes];
 
@@ -120,8 +123,11 @@ const AppBreadcrumb = () => {
                 res.push(job.title);
             }
         }
+        if (application) {
+            res.push(application?.owner?.name || 'Applicant');
+        }
         setArgs(res);
-    }, [domain, id, job]);
+    }, [domain, id, job, application]);
 
     if (!matches || !renderFn) return null;
 

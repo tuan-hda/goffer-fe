@@ -102,11 +102,11 @@ const InsightsHeader = () => {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectLabel>Match percent</SelectLabel>
+                            <SelectLabel>Match score</SelectLabel>
                             <SelectItem value="all">Match: All</SelectItem>
-                            <SelectItem value="0-50">Match: 0-50%</SelectItem>
-                            <SelectItem value="50-80">Match: 50-80%</SelectItem>
-                            <SelectItem value="80-100">Match: 80-100%</SelectItem>
+                            <SelectItem value="0-50">Match: 0-5</SelectItem>
+                            <SelectItem value="50-80">Match: 5-8</SelectItem>
+                            <SelectItem value="80-100">Match: 8-10</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>

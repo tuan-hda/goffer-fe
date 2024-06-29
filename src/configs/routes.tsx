@@ -457,7 +457,7 @@ const routesConfig: RouteObject[] = [
                                 ),
                             },
                             {
-                                path: '/app/organization/:domain/job/:id/applicant/:candidateId',
+                                path: '/app/organization/:domain/job/:id/applicant/:applicationId',
                                 element: (
                                     <Suspense fallback={<div>Loading...</div>}>
                                         <ApplicantDetail />

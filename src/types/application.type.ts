@@ -43,6 +43,7 @@ export type Apply = Omit<NewApply, 'job' | 'profilePicture' | 'resume'> & {
     match?: number;
     rating?: number;
     assessmentAvg?: number;
+    reason?: string;
 };
 
 export type EditApply = Partial<NewApply> & {
