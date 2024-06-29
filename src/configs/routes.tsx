@@ -70,6 +70,7 @@ const CustomAssessment = lazy(() => import('@/pages/CustomAssessment'));
 const SubscribeResult = lazy(() => import('@/components/subscribe/SubscribeResult'));
 const PortfolioDisplayPage = lazy(() => import('@/pages/PortfolioDisplayPage'));
 const ProjectDetail = lazy(() => import('@/components/portfolio/ProjectDetail'));
+const Invitation = lazy(() => import('@/components/invitation/Invitation'));
 const Test = lazy(() => import('@/pages/Test'));
 
 const routesConfig: RouteObject[] = [
@@ -607,6 +608,20 @@ const routesConfig: RouteObject[] = [
                         element: (
                             <Suspense fallback={<div>Loading...</div>}>
                                 <ProjectDetail />
+                            </Suspense>
+                        ),
+                    },
+                ],
+            },
+            {
+                path: '/invitation',
+                element: <FocusLayout />,
+                children: [
+                    {
+                        path: ':id',
+                        element: (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Invitation />
                             </Suspense>
                         ),
                     },

@@ -1,4 +1,5 @@
-import { User } from "./user.type";
+import { Organization } from './organization.type';
+import { User } from './user.type';
 
 export type NewMembership = {
     email: string;
@@ -8,12 +9,12 @@ export type NewMembership = {
     title?: string;
 };
 
-export type Membership = Omit<NewMembership, 'email' | 'role' | 'status'> & {
+export type Membership = Omit<NewMembership, 'email' | 'role' | 'status' | 'org'> & {
     id: string;
     role: string;
     status: string;
     user: User;
-    org: string;
+    org: Organization;
     invitationToken: string;
     createdAt: string;
     updatedAt: string;
