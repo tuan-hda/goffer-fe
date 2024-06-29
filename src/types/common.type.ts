@@ -3,4 +3,5 @@ export type ListQueryOptions = {
     limit?: number;
     sortBy?: string;
     populate?: string;
+    q?: string;
 };

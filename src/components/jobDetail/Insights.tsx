@@ -4,11 +4,11 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import InsightCandidate from './InsightCandidate';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import useListApplications from '@/hooks/useListApplications';
 import { Pagination } from '@nextui-org/react';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import InsightsHeader from './InsightsHeader';
 
 // type Candidate = {
 //     imageUrl: string;
@@ -28,7 +28,6 @@ const Insights = () => {
 
     const { data } = useListApplications({
         populate: 'owner',
-        page: currentPage,
     });
     const list = data?.results || [];
     const totalResults = data?.totalResults || 0;
@@ -47,28 +46,14 @@ const Insights = () => {
 
                 <div className="mt-6 text-sm">
                     <Card className="bg-white/100 shadow-none">
+                        <InsightsHeader />
                         {list?.length === 0 ? (
-                            <div className="p-6 text-sm">No candidate yet.</div>
+                            <div className="flex flex-col items-center gap-4 p-6 text-sm">
+                                <img src="/states/empty1.avif" className="w-64" />
+                                <p className="text-center">No candidates found.</p>
+                            </div>
                         ) : (
                             <>
-                                <CardHeader className="flex flex-row gap-4">
-                                    <div>
-                                        <CardTitle className="text-base">Candidate</CardTitle>
-                                        <CardDescription>Manage your candidates.</CardDescription>
-                                    </div>
-                                    <Input placeholder="Filter candidate..." className="ml-auto max-w-xs" />
-                                    <Select>
-                                        <SelectTrigger className="w-[180px]">
-                                            <SelectValue placeholder="Sort by" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="match">Match</SelectItem>
-                                            <SelectItem value="rating">Rating</SelectItem>
-                                            <SelectItem value="assess">Assess avg.</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <Button variant="ghost">Clear filter</Button>
-                                </CardHeader>
                                 <CardContent>
                                     <Table>
                                         <TableHeader>
