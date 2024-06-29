@@ -22,7 +22,6 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 import classNames from 'classnames';
 import { submitAllService } from '@/services/takeAssessment.service';
-import catchAsync from '@/utils/catchAsync';
 
 const SessionTracker = () => {
     const navigate = useNavigate();
@@ -32,35 +31,34 @@ const SessionTracker = () => {
 
     const { data: self } = useSelfProfileQuery();
 
-    const { data: session } = useCurrTakingAssessment();
+    const { data: session, refetch } = useCurrTakingAssessment();
     const { data } = useCurrPublicAssessment();
     const questions = data?.questions;
 
     const handleSubmit = async () => {
         try {
-            async () => {
-                if (!session) return;
-                await submitAllService(session?.id!);
-                setLoading(true);
-            };
+            if (!session) return;
+            await submitAllService(session?.id!);
+            await refetch();
+            setLoading(true);
         } catch (error) {
             // Do nothing
         } finally {
             setLoading(false);
-            navigate(`/assessment/${assessmentId}/success`, {
-                replace: true,
-            });
         }
     };
 
     useEffect(() => {
         if (session) {
-            const interval = setInterval(() => {
+            const interval = setInterval(async () => {
                 if (remainTime(session?.endingAt) <= 0) {
                     clearInterval(interval);
-                    navigate(`/assessment/${assessmentId}/success`, {
-                        replace: true,
-                    });
+                    try {
+                        await submitAllService(session?.id!);
+                        await refetch();
+                    } catch (error) {
+                        //
+                    }
                 }
                 setRemain(remainTime(session?.endingAt));
             }, 1000);
@@ -131,7 +129,7 @@ const SessionTracker = () => {
                             <DialogClose asChild>
                                 <Button variant="outline">Cancel</Button>
                             </DialogClose>
-                            <Button disabled={loading} onClick={handleSubmit} variant="black">
+                            <Button type="button" disabled={loading} onClick={handleSubmit} variant="black">
                                 {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
                                 Submit
                             </Button>

@@ -13,23 +13,20 @@ const AssessmentLayout = () => {
     useEffect(() => {
         if (!isLoading) {
             if (session) {
-                if (location.pathname !== `/assessment/${assessmentId}/session` && remainTime(session.endingAt) > 0) {
-                    navigate(`/assessment/${assessmentId}/session`, {
-                        replace: true,
-                    });
-                } else if (
+                if (
                     location.pathname !== `/assessment/${assessmentId}/success` &&
                     (remainTime(session.endingAt) <= 0 || session.status === 'closed')
                 ) {
-                    navigate(`/assessment/${assessmentId}/success`, {
-                        replace: true,
-                    });
+                    navigate(`/assessment/${assessmentId}/success`);
+                } else if (
+                    location.pathname !== `/assessment/${assessmentId}/session` &&
+                    remainTime(session.endingAt) > 0 &&
+                    session.status !== 'closed'
+                ) {
+                    navigate(`/assessment/${assessmentId}/session`);
                 }
             } else {
-                if (location.pathname !== `/assessment/${assessmentId}`)
-                    navigate(`/assessment/${assessmentId}`, {
-                        replace: true,
-                    });
+                if (location.pathname !== `/assessment/${assessmentId}`) navigate(`/assessment/${assessmentId}`);
             }
         }
     }, [session, location, isLoading, assessmentId, navigate]);

@@ -48,11 +48,15 @@ const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
             <TableCell>{moment(candidate.updatedAt).format('DD/MM/YY')}</TableCell>
 
             <TableCell className="hidden md:table-cell">
-                {candidate.match ? <Badge variant="outline">{candidate.match || 0}%</Badge> : '-'}
+                {candidate.match ? <Badge variant="outline">{Math.round(candidate.match) || 0}%</Badge> : '-'}
             </TableCell>
-            <TableCell className="hidden md:table-cell">{candidate.rating ?? '-'}</TableCell>
+            <TableCell className="hidden md:table-cell">
+                {candidate.rating ? Math.round((candidate.rating || 0) * 10) / 10 : '-'}
+            </TableCell>
 
-            <TableCell>{candidate.assessmentAvg ? <Badge>${candidate.assessmentAvg}%</Badge> : '-'}</TableCell>
+            <TableCell>
+                {candidate.assessmentAvg ? <Badge>{Math.round(candidate.assessmentAvg)}%</Badge> : '-'}
+            </TableCell>
 
             <TableCell onClick={(e) => e.stopPropagation()}>
                 <DropdownMenu>
