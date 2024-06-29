@@ -60,7 +60,7 @@ const AssessmentOrgItem = ({
                 )}
             </div>
             <div className="mt-3 flex items-center gap-3">
-                <Avatar src={assessment.owner.avatar || 'default-avatar-url.jpg'} />
+                <Avatar src={assessment.owner?.avatar || 'default-avatar-url.jpg'} />
                 <div className="min-w-0 flex-1">
                     <p className="overflow-hidden text-ellipsis whitespace-nowrap">{assessment.title}</p>
                     <p className="text-xs font-light text-gray-400">Edited {moment(assessment.updatedAt).fromNow()}</p>

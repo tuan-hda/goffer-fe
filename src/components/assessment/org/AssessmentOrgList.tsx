@@ -36,10 +36,12 @@ const AssessmentOrgList = () => {
     }
 
     return (
-        <div className="mt-10 grid grid-cols-4 gap-6">
-            {data.map((assessment) => (
-                <AssessmentOrgItem key={assessment.id} assessment={assessment} />
-            ))}
+        <div>
+            <div className="mt-10 grid grid-cols-4 gap-6">
+                {data.map((assessment) => (
+                    <AssessmentOrgItem key={assessment.id} assessment={assessment} />
+                ))}
+            </div>
             <div className="mt-10 flex w-full flex-col justify-center">
                 {isFetching && <p className="text-center">Loading...</p>}
                 {!isFetching && hasNextPage && (

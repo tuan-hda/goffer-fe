@@ -34,7 +34,7 @@ export type AssessmentRequest = {
 export type Assessment = Omit<NewAssessment, 'questions' | 'job' | 'org'> & {
     id: string;
     createdAt: Date;
-    owner: User;
+    owner?: User;
     questions: Map<string, Question>;
     deleted: boolean;
     updatedAt: Date;
