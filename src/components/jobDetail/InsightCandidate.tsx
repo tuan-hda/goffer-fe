@@ -7,7 +7,6 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuPortal,
-    DropdownMenuSeparator,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
@@ -19,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { Apply } from '@/types/application.type';
 import moment from 'moment';
 import pipeline from '@/data/pipeline';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 type InsightCandidateProps = {
     candidate: Apply;
@@ -48,7 +48,20 @@ const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
             <TableCell>{moment(candidate.updatedAt).format('DD/MM/YY')}</TableCell>
 
             <TableCell className="hidden md:table-cell">
-                {candidate.match ? <Badge variant="outline">{Math.round(candidate.match) || 0}%</Badge> : '-'}
+                {candidate.match ? (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Badge variant="outline">{Math.round(candidate.match) || 0}</Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{candidate.reason}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                ) : (
+                    '-'
+                )}
             </TableCell>
             <TableCell className="hidden md:table-cell">
                 {candidate.rating ? Math.round((candidate.rating || 0) * 10) / 10 : '-'}
