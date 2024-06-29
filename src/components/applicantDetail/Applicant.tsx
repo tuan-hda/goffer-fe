@@ -4,6 +4,7 @@ import {
     TbChevronDown,
     TbDots,
     TbFile,
+    TbGlobe,
     TbLocation,
     TbMail,
     TbPhone,
@@ -21,41 +22,29 @@ import {
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
+import { Apply } from '@/types/application.type';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 
 type ApplicantProps = {
-    name: string;
-    avatarUrl: string;
-    jobTitle: string;
-    location: string;
-    experience: string;
-    tools: string;
-    description: string;
-    match: number;
-    isPro?: boolean;
-    email: string;
-    phone: string;
+    data: Apply;
 };
 
-const Applicant = ({
-    name,
-    avatarUrl,
-    location,
-    experience,
-    tools,
-    description,
-    match,
-    isPro,
-    email,
-    phone,
-}: ApplicantProps) => {
+const Applicant = ({ data }: ApplicantProps) => {
     return (
         <div className="flex-1">
             <div className="flex items-start gap-5">
-                <Avatar src={avatarUrl} className="h-24 w-24 flex-shrink-0 rounded-3xl" />
+                <Avatar src={data.profilePicture} className="h-24 w-24 flex-shrink-0 rounded-3xl" />
                 <div className="flex flex-1 flex-col">
                     <div className="flex items-center gap-2">
-                        <p className="font-serif text-2xl font-semibold">{name}</p>
-                        {isPro && (
+                        <p className="font-serif text-2xl font-semibold">{data.name}</p>
+                        {data.owner?.isPro && (
                             <Badge className="rounded-lg bg-gradient-to-r from-[#FAE4A7] to-[#E5D4FF] text-black shadow-none">
                                 PRO
                             </Badge>
@@ -95,28 +84,51 @@ const Applicant = ({
                     <div className="mt-1 flex items-center gap-6">
                         <div className="flex items-start gap-2 underline hover:underline">
                             <TbMail className="h-5 flex-shrink-0 text-lg" />
-                            <p className="min-w-0">{email}</p>
+                            <p className="min-w-0">{data.email}</p>
                         </div>
                         <div className="flex items-start gap-2 underline hover:underline">
                             <TbPhone className="h-5 flex-shrink-0 text-lg" />
-                            <p className="min-w-0">{phone}</p>
+                            <p className="min-w-0">{data.phoneNumber}</p>
                         </div>
                     </div>
 
-                    <div className="-mb-1 mt-2 flex gap-6 pb-3">
+                    <div className="-mb-1 mt-2 flex gap-4 pb-3">
                         <div className="flex items-center gap-2">
                             <TbFile className="text-lg" />
-                            <Link to="#" className="font-medium underline">
+                            <Link to={data.resume} target="_blank" className="font-medium underline">
                                 Resume
                             </Link>
-                            <Badge variant="outline">{match}% match</Badge>
+                            <Dialog>
+                                <DialogTrigger>
+                                    <Badge>Match score: {data.match}</Badge>
+                                </DialogTrigger>
+                                <DialogContent>
+                                    <DialogHeader>
+                                        <DialogTitle>Match score: {data.match}</DialogTitle>
+                                    </DialogHeader>
+                                    <div>
+                                        <p className="font-medium underline">Reason for this score:</p>
+                                        <p className="mt-2">{data.reason}</p>
+                                    </div>
+                                </DialogContent>
+                            </Dialog>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <TbBrandLinkedin className="text-lg" />
-                            <Link to="#" className="font-medium underline">
-                                LinkedIn
-                            </Link>
-                        </div>
+                        {data.linkedIn && (
+                            <div className="flex items-center gap-2">
+                                <TbBrandLinkedin className="text-lg" />
+                                <Link target="_blank" to={data.linkedIn} className="font-medium underline">
+                                    LinkedIn
+                                </Link>
+                            </div>
+                        )}
+                        {data.personalWebsite && (
+                            <div className="flex items-center gap-2">
+                                <TbGlobe className="text-lg" />
+                                <Link target="_blank" to={data.personalWebsite} className="font-medium underline">
+                                    Personal Website
+                                </Link>
+                            </div>
+                        )}
                     </div>
 
                     <Collapsible>
@@ -124,19 +136,25 @@ const Applicant = ({
                             Show description <TbChevronDown className="text-base" />
                         </CollapsibleTrigger>
                         <CollapsibleContent>
-                            <div className="mt-2 flex items-start gap-2">
-                                <TbLocation className="h-5 flex-shrink-0" />
-                                <p className="min-w-0">{location}</p>
-                            </div>
-                            <div className="mt-1 flex items-start gap-2">
-                                <TbSchool className="h-5 flex-shrink-0" />
-                                <p className="min-w-0">{experience}</p>
-                            </div>
-                            <div className="mt-1 flex items-start gap-2">
-                                <TbTools className="h-5 flex-shrink-0" />
-                                <p className="min-w-0">Tools: {tools}</p>
-                            </div>
-                            <p className="mt-2 text-text/70">{description}</p>
+                            {data.location && (
+                                <div className="mt-2 flex items-start gap-2">
+                                    <TbLocation className="h-5 flex-shrink-0" />
+                                    <p className="min-w-0">{data.location}</p>
+                                </div>
+                            )}
+                            {data.lastCompany && (
+                                <div className="mt-1 flex items-start gap-2">
+                                    <TbSchool className="h-5 flex-shrink-0" />
+                                    <p className="min-w-0">{data.lastCompany}</p>
+                                </div>
+                            )}
+                            {data.owner?.tools && data.owner.tools.length > 0 && (
+                                <div className="mt-1 flex items-start gap-2">
+                                    <TbTools className="h-5 flex-shrink-0" />
+                                    <p className="min-w-0">Tools: {data.owner?.tools?.join(', ')}</p>
+                                </div>
+                            )}
+                            <p className="mt-2 text-text/70">{data.owner?.bio}</p>
                         </CollapsibleContent>
                     </Collapsible>
                 </div>

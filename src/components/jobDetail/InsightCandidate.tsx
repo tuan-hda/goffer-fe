@@ -37,7 +37,7 @@ const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
                 />
             </TableCell>
             <TableCell className="cursor-pointer font-medium">
-                <Link to={`applicant/${candidate.id}`} target="_blank">
+                <Link to={`applicant/${candidate.id}`}>
                     <div>
                         <p className="font-light">{candidate.name}</p>
                         <p>{candidate.email}</p>
