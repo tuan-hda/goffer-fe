@@ -151,7 +151,7 @@ const Application = () => {
                                 <p className="mb-1 font-medium">Upload photo (optional)</p>
                                 <AvatarEdit
                                     loading={avatarLoading}
-                                    setAvatar={(value) => form.setValue('profilePicture', value)}
+                                    setAvatar={(value: string | undefined) => form.setValue('profilePicture', value)}
                                     setLoading={setLAvatarLoading}
                                     avatar={form.getValues('profilePicture')}
                                     disabled={readOnly}
