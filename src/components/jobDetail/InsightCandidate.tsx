@@ -14,17 +14,83 @@ import {
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { MoreHorizontal } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Apply } from '@/types/application.type';
 import moment from 'moment';
 import pipeline from '@/data/pipeline';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import catchAsync from '@/utils/catchAsync';
+import { updateApplyService } from '@/services/apply.service';
+import useListApplications from '@/hooks/useListApplications';
+import useCountApplicationsByPhases from '@/hooks/useCountApplicationsByPhases';
 
 type InsightCandidateProps = {
     candidate: Apply;
 };
 
 const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
+    const { id } = useParams();
+    const { refetch: refetchApplied } = useListApplications({
+        populate: 'owner',
+        job: id,
+        phase: 'applied',
+    });
+    const { refetch: refetchShortlisted } = useListApplications({
+        populate: 'owner',
+        job: id,
+        phase: 'shortlisted',
+    });
+    const { refetch: refetchInterviewed } = useListApplications({
+        populate: 'owner',
+        job: id,
+        phase: 'interviewed',
+    });
+    const { refetch: refetchHired } = useListApplications({
+        populate: 'owner',
+        job: id,
+        phase: 'hired',
+    });
+    const { refetch: refetchRejected } = useListApplications({
+        populate: 'owner',
+        job: id,
+        phase: 'rejected',
+    });
+    const { refetch: refetchOffer } = useListApplications({
+        populate: 'owner',
+        job: id,
+        phase: 'offer',
+    });
+    const { refetch: refetchAssessed } = useListApplications({
+        populate: 'owner',
+        job: id,
+        phase: 'assessed',
+    });
+
+    const { refetch: refetchCount } = useCountApplicationsByPhases({
+        job: id,
+    });
+    const moveTo = (phase: string) => () =>
+        catchAsync(
+            async () => {
+                await updateApplyService(candidate.id, {
+                    phase,
+                });
+                await Promise.all(
+                    [
+                        refetchApplied,
+                        refetchShortlisted,
+                        refetchInterviewed,
+                        refetchHired,
+                        refetchRejected,
+                        refetchOffer,
+                        refetchAssessed,
+                        refetchCount,
+                    ].map((refetch) => refetch()),
+                );
+            },
+            () => {},
+        );
+
     return (
         <TableRow>
             <TableCell className="hidden cursor-pointer sm:table-cell">
@@ -92,6 +158,7 @@ const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
                                         <DropdownMenuItem
                                             disabled={candidate.phase === stage.title.toLowerCase()}
                                             key={stage.title}
+                                            onClick={moveTo(stage.value)}
                                         >
                                             {stage.title}
                                         </DropdownMenuItem>

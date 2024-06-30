@@ -34,6 +34,12 @@ const useListApplications = (params?: Partial<Record<keyof (Apply & ListQueryOpt
         params.assessmentAvg = searchParams.get('assess');
     }
 
+    if (searchParams.get('sortBy')) {
+        params.sortBy = searchParams.get('sortBy');
+    }
+
+    if (!params.phase) params.phase = searchParams.get('phase') || 'applied';
+
     const query = useQuery({
         queryKey: ['listApplications', params],
         queryFn: () => listApplicationService(params),

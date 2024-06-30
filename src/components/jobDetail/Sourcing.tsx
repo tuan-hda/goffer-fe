@@ -34,7 +34,9 @@ const Sourcing = () => {
     }, [data]);
 
     const applyFilter = () => {
-        const query: Record<string, string> = {};
+        const query: Record<string, string> = {
+            tab: 'sourcing',
+        };
         if (value) query.searchQuery = value;
         if (experience) query.experience = experience;
         if (selectedSkills.length) query.skills = selectedSkills.map((skill) => skill.value).join(',');
@@ -47,7 +49,9 @@ const Sourcing = () => {
         setExperience('');
         setSelectedSkills([]);
         setSelectedTools([]);
-        setSearchParams({});
+        setSearchParams({
+            tab: 'sourcing',
+        });
     };
 
     return (
@@ -60,7 +64,6 @@ const Sourcing = () => {
                             <Candidate
                                 {...profile}
                                 key={profile.id}
-                                match={90}
                                 tools={profile.tools || []}
                                 skills={profile.skills || []}
                                 experiences={profile.experiences || []}

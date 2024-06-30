@@ -5,10 +5,12 @@ import { useSearchParams } from 'react-router-dom';
 const useJobsRecommender = () => {
     const [searchParams] = useSearchParams();
 
+    const params = Object.fromEntries(searchParams.entries());
+    delete params.tab;
+
     return useInfiniteQuery({
-        queryKey: ['jobsRecommendation', Object.fromEntries(searchParams.entries())],
-        queryFn: ({ pageParam = 0 }) =>
-            getJobsRecommenderService(pageParam, Object.fromEntries(searchParams.entries())),
+        queryKey: ['jobsRecommendation', params],
+        queryFn: ({ pageParam = 0 }) => getJobsRecommenderService(pageParam, params),
         initialPageParam: 0,
         getNextPageParam: (lastPage) => {
             if (lastPage.endOfResults) return undefined;

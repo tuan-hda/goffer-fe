@@ -7,7 +7,7 @@ import InsightCandidate from './InsightCandidate';
 import useListApplications from '@/hooks/useListApplications';
 import { Pagination } from '@nextui-org/react';
 import { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import InsightsHeader from './InsightsHeader';
 
 // type Candidate = {
@@ -25,9 +25,11 @@ const Insights = () => {
     const currentPage = useMemo(() => {
         return parseInt(searchParams.get('page') || '1');
     }, [searchParams]);
+    const { id } = useParams();
 
     const { data } = useListApplications({
         populate: 'owner',
+        job: id,
     });
     const list = data?.results || [];
     const totalResults = data?.totalResults || 0;

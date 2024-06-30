@@ -16,23 +16,11 @@ type CandidateProps = {
     tools: string[];
     skills: string[];
     bio?: string;
-    match: number;
     isPro?: boolean;
     email: string;
 };
 
-const Candidate = ({
-    name,
-    avatar,
-    oneLiner,
-    location,
-    experiences,
-    tools,
-    match,
-    isPro,
-    skills,
-    email,
-}: CandidateProps) => {
+const Candidate = ({ name, avatar, oneLiner, location, experiences, tools, isPro, skills, email }: CandidateProps) => {
     return (
         <Card className="relative w-full cursor-pointer rounded-2xl border bg-white/100 pt-5 text-text shadow-none transition hover:shadow-small">
             <div className="absolute right-5 top-5 flex items-center gap-2">
@@ -41,9 +29,6 @@ const Candidate = ({
                         PRO
                     </Badge>
                 )}
-                <Badge className={classNames('pointer-events-none gap-2 rounded-lg bg-black text-white shadow-none')}>
-                    <TbSparkles /> {match}% match
-                </Badge>
             </div>
 
             <CardContent className="pb-5">

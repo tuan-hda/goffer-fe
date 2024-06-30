@@ -4,11 +4,11 @@ import { useSearchParams } from 'react-router-dom';
 
 const useCompaniesRecommender = () => {
     const [searchParams] = useSearchParams();
-
+    const params = Object.fromEntries(searchParams.entries());
+    delete params.tab;
     return useInfiniteQuery({
-        queryKey: ['companiesRecommendation', Object.fromEntries(searchParams.entries())],
-        queryFn: ({ pageParam }) =>
-            getCompaniesRecommenderService(pageParam, Object.fromEntries(searchParams.entries())),
+        queryKey: ['companiesRecommendation', params],
+        queryFn: ({ pageParam }) => getCompaniesRecommenderService(pageParam, params),
         initialPageParam: 0,
         getNextPageParam: (lastPage) => {
             if (lastPage.endOfResults) return undefined;

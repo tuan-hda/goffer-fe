@@ -15,7 +15,7 @@ import { useSearchParams } from 'react-router-dom';
 
 const InsightsHeader = () => {
     const [search, setSearch] = useState('');
-    const [sortBy, setSortBy] = useState('match');
+    const [sortBy, setSortBy] = useState('match:desc');
     const [filter, setFilter] = useState({
         match: 'all',
         rating: 'all',
@@ -27,17 +27,23 @@ const InsightsHeader = () => {
     useEffect(() => {
         const urlSearchParams = new URLSearchParams(window.location.search);
         setSearch(urlSearchParams.get('q') || '');
-        setSortBy(urlSearchParams.get('sortBy') || 'match');
+        if (urlSearchParams.get('sortBy')) {
+            setSortBy(urlSearchParams.get('sortBy') as string);
+        } else {
+            setSearchParams({ sortBy: 'match:desc', tab: 'insights' });
+        }
         setFilter({
             match: urlSearchParams.get('match') || 'all',
             rating: urlSearchParams.get('rating') || 'all',
-            assess: urlSearchParams.get('assess') || 'all',
+            assess: urlSearchParams.get('assessmentAvg') || 'all',
         });
     }, []);
 
     const apply = () => {
+        const searchParams = new URLSearchParams(window.location.search);
         const query: Record<string, string> = {
             tab: 'insights',
+            phase: searchParams.get('phase') || 'applied',
         };
         if (search) query.q = search;
         if (sortBy) query.sortBy = sortBy;
@@ -49,7 +55,7 @@ const InsightsHeader = () => {
 
     const clear = () => {
         setSearch('');
-        setSortBy('match');
+        setSortBy('match:desc');
         setFilter({
             match: 'all',
             rating: 'all',
@@ -57,6 +63,8 @@ const InsightsHeader = () => {
         });
         setSearchParams({
             tab: 'insights',
+            sortBy: 'match:desc',
+            phase: 'applied',
         });
     };
 
@@ -80,11 +88,11 @@ const InsightsHeader = () => {
                     <SelectContent>
                         <SelectGroup>
                             <SelectLabel>Sort by</SelectLabel>
-                            <SelectItem value="match">Sort by match</SelectItem>
-                            <SelectItem value="rating">Sort by rating</SelectItem>
-                            <SelectItem value="assess">Sort by assess avg.</SelectItem>
-                            <SelectItem value="applied_on">Sort by applied on</SelectItem>
-                            <SelectItem value="updated_on">Sort by updated on</SelectItem>
+                            <SelectItem value="match:desc">Sort by match</SelectItem>
+                            <SelectItem value="rating:desc">Sort by rating</SelectItem>
+                            <SelectItem value="assessmentAvg:desc">Sort by assess avg.</SelectItem>
+                            <SelectItem value="applied_on:asc">Sort by applied on</SelectItem>
+                            <SelectItem value="updated_on:asc">Sort by updated on</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
@@ -121,9 +129,9 @@ const InsightsHeader = () => {
                         <SelectGroup>
                             <SelectLabel>Rating</SelectLabel>
                             <SelectItem value="all">Rating: All</SelectItem>
-                            <SelectItem value="0-5">Rating: 0-5</SelectItem>
-                            <SelectItem value="5-8">Rating: 5-8</SelectItem>
-                            <SelectItem value="8-10">Rating: 8-10</SelectItem>
+                            <SelectItem value="0-3">Rating: 0-3</SelectItem>
+                            <SelectItem value="3-4">Rating: 3-4</SelectItem>
+                            <SelectItem value="4-5">Rating: 4-5</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>

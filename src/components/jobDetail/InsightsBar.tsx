@@ -1,12 +1,12 @@
 import pipeline from '@/data/pipeline';
 import useCountApplicationsByPhases from '@/hooks/useCountApplicationsByPhases';
 import classNames from 'classnames';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const InsightsBar = () => {
-    const [selected, setSelected] = useState('Applied');
     const { id } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const { data: count } = useCountApplicationsByPhases({
         job: id,
@@ -16,15 +16,27 @@ const InsightsBar = () => {
         return count?.find((c) => c._id === phase)?.count ?? 0;
     };
 
+    useEffect(() => {
+        const search = new URLSearchParams(window.location.search);
+        if (!search.get('phase')) {
+            setSearchParams({ ...Object.fromEntries(search), phase: 'applied' });
+        }
+    }, []);
+
+    const handleClick = (phase: string) => () => {
+        const search = new URLSearchParams(window.location.search);
+        setSearchParams({ ...Object.fromEntries(search), phase });
+    };
+
     return (
         <div className="grid grid-cols-7 rounded-xl border bg-white p-2">
             {pipeline.map((stage, index) => (
                 <button
                     key={index}
-                    onClick={() => setSelected(stage.title)}
+                    onClick={handleClick(stage.value)}
                     className={classNames(
                         'flex flex-col items-center gap-y-2 rounded-lg p-8 transition',
-                        selected === stage.title && 'bg-pale-400',
+                        searchParams.get('phase') === stage.value && 'bg-pale-400',
                     )}
                 >
                     <p className="font-mono text-sm font-semibold uppercase">{stage.title}</p>
