@@ -13,6 +13,7 @@ import { TbHomePlus } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import { Link, useParams } from 'react-router-dom';
 import useListOrganizations from '@/hooks/useListOrganizations';
+import useSelfMemberships from '@/hooks/useSelfMemberships';
 
 type UserPopoverProps = {
     collapsed: boolean;
@@ -21,9 +22,10 @@ type UserPopoverProps = {
 
 const UserPopover = ({ collapsed, isAdmin }: UserPopoverProps) => {
     const { data: user } = useSelfProfileQuery();
-    const { data: organizations } = useListOrganizations();
+    const { data: memberships } = useSelfMemberships();
     const { domain } = useParams();
-    const org = organizations?.results.find((org) => org.domain === domain);
+    const organizations = memberships?.data.map((item) => item.org);
+    const org = organizations?.find((org) => org.domain === domain);
 
     return (
         <DropdownMenu>
@@ -67,7 +69,7 @@ const UserPopover = ({ collapsed, isAdmin }: UserPopoverProps) => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Organizations</DropdownMenuLabel>
-                {organizations?.results.map((organization) => (
+                {organizations?.map((organization) => (
                     <DropdownMenuItem className="p-0" key={organization.id}>
                         <Link
                             to={`/app/organization/${organization.domain}`}
@@ -84,7 +86,7 @@ const UserPopover = ({ collapsed, isAdmin }: UserPopoverProps) => {
                         </Link>
                     </DropdownMenuItem>
                 ))}
-                {organizations?.results.length === 0 && (
+                {organizations?.length === 0 && (
                     <p className="px-2 text-left text-sm text-text/60">You have no organizations.</p>
                 )}
                 <DropdownMenuSeparator />
