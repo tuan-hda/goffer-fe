@@ -11,7 +11,12 @@ import {
     DialogTrigger,
 } from '../ui/dialog';
 
-const RemoveButton = () => {
+interface Props {
+    onRemove?: () => void;
+}
+const RemoveButton = ({ onRemove }: Props) => {
+    const handleRemove = () => onRemove && onRemove();
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -28,7 +33,9 @@ const RemoveButton = () => {
                     <DialogClose asChild>
                         <Button variant="outline">Cancel</Button>
                     </DialogClose>
-                    <Button variant="destructive">Remove</Button>
+                    <Button onClick={handleRemove} variant="destructive">
+                        Remove
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
