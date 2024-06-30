@@ -37,6 +37,17 @@ type ApplicantProps = {
 };
 
 const Applicant = ({ data }: ApplicantProps) => {
+    const getEmojiUrl = () => {
+        const score = data.match;
+        if (!score || score <= 5) {
+            return '/emoji/crying.png';
+        }
+        if (score <= 7) {
+            return '/emoji/neutral.png';
+        }
+        return '/emoji/happy.png';
+    };
+
     return (
         <div className="flex-1">
             <div className="flex items-start gap-5">
@@ -102,13 +113,18 @@ const Applicant = ({ data }: ApplicantProps) => {
                                 <DialogTrigger>
                                     <Badge>Match score: {data.match}</Badge>
                                 </DialogTrigger>
-                                <DialogContent>
+                                <DialogContent className="max-w-[560px] rounded-2xl p-8">
                                     <DialogHeader>
                                         <DialogTitle>Match score: {data.match}</DialogTitle>
                                     </DialogHeader>
-                                    <div>
-                                        <p className="font-medium underline">Reason for this score:</p>
-                                        <p className="mt-2">{data.reason}</p>
+                                    <div className="flex flex-row items-center gap-4">
+                                        <div>
+                                            <p className="font-medium underline">Reason for this score:</p>
+                                            <p className="mt-2">{data.reason}</p>
+                                        </div>
+                                        <div>
+                                            <img src={getEmojiUrl()} alt="Emoji" />
+                                        </div>
                                     </div>
                                 </DialogContent>
                             </Dialog>

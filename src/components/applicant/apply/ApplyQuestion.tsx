@@ -21,10 +21,7 @@ const ApplyQuestion = ({ order, total, question }: Props) => {
                         Question {order} of {total}
                     </p>
                 </div>
-                <p className="font my-2 text-base text-text">
-                    {question.content} Tell us a time you had to deal with a difficult customer. What was the situation
-                    and how did you handle it?
-                </p>
+                <p className="font my-2 text-base text-text">{question.content}</p>
                 {typeof question.description === 'string' && (
                     <p className="text-sm font-light text-default-400">{question.description}</p>
                 )}
