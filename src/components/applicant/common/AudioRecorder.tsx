@@ -1,5 +1,5 @@
 import { Button, Progress } from '@nextui-org/react';
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { Dispatch, ReactNode, SetStateAction, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFilled } from 'react-icons/tb';
 import { LiaUndoAltSolid } from 'react-icons/lia';
 import moment from 'moment';
@@ -23,7 +23,7 @@ const formatTime = (x: number) => {
     const d = moment.duration(x, 'seconds');
     const minutes = Math.floor(d.asMinutes());
     const seconds = Math.floor(d.asSeconds()) % 60;
-    return `${minutes < 10 ? minutes : `0${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
+    return `${minutes < 10 ? minutes : `${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 
 export const uploadAudio = async (blobUrl: string) => {
@@ -58,12 +58,13 @@ const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonP
 );
 
 interface Props {
-    audio?: Answer;
+    audio?: AnswerResponse;
     question: Question;
     mock?: boolean;
+    outerSetLeftTime?: Dispatch<SetStateAction<number>>;
 }
 
-const AudioRecorder = ({ audio, question, mock }: Props) => {
+const AudioRecorder = ({ audio, question, mock, outerSetLeftTime }: Props) => {
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
@@ -76,7 +77,7 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
     const frameRef = useRef<number | null>(null);
 
     const { phase, setAnswer, setLoading } = useApplyStore();
-    const constraint = question.constraint ?? 180;
+    // const constraint = question.constraint ?? 180;
 
     useEffect(() => {
         if (mock) {
@@ -155,11 +156,11 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
                 setLeftTime((prevDuration) => prevDuration + 1);
             }, 1000);
             // Set a timer to stop recording after 3 minutes (180000 milliseconds)
-            setTimeout(() => {
-                if (mediaRecorderInstance.state !== 'inactive') {
-                    mediaRecorderInstance.stop();
-                }
-            }, constraint * 1000);
+            // setTimeout(() => { // Why do we need this?
+            //     if (mediaRecorderInstance.state !== 'inactive') {
+            //         mediaRecorderInstance.stop();
+            //     }
+            // }, constraint * 1000);
 
             mediaRecorderInstance.onstop = () => {
                 // Dừng mọi tracks của stream để không còn sử dụng microphone nữa.
@@ -251,7 +252,10 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
                 audio.pause();
             } else {
                 audio.play();
-                audio.ontimeupdate = () => setLeftTime(audio.currentTime);
+                audio.ontimeupdate = () => {
+                    setLeftTime(audio.currentTime);
+                    outerSetLeftTime && outerSetLeftTime(audio.currentTime);
+                };
             }
             setIsPlaying(!isPlaying);
         }
@@ -308,7 +312,7 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
 
                 <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
 
-                <p>{formatTime(audioURL ? rightTime : constraint)}</p>
+                <p>{formatTime(audioURL ? rightTime : 600)}</p>
                 <IconButton
                     ariaLabel="Reset"
                     onPress={handleReset}
@@ -328,4 +332,10 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
     );
 };
 
-export default AudioRecorder;
+export default memo(
+    AudioRecorder,
+    (prevProps, nextProps) =>
+        prevProps.audio?.url === nextProps.audio?.url &&
+        prevProps.mock === nextProps.mock &&
+        prevProps.question.id === nextProps.question.id,
+);

@@ -19,6 +19,8 @@ import { toggleSavedJob } from '@/services/interaction.service';
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { toast } from 'sonner';
 import { interactWithItemService } from '@/services/recommender.service';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import moment from 'moment';
 
 type JobHeaderProps = {
     job: Job;
@@ -27,6 +29,7 @@ type JobHeaderProps = {
 const JobHeader = ({ job }: JobHeaderProps) => {
     const navigate = useNavigate();
     const isLoggedIn = !!useAuthStore((state) => state.access);
+    const { data: self } = useSelfProfileQuery();
     const { refetch } = useGetOrganizationJob(job.id);
 
     const onBookmark = async (e: any, id: string) => {
@@ -86,10 +89,14 @@ const JobHeader = ({ job }: JobHeaderProps) => {
             <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
 
             <div className="flex h-fit w-fit items-center gap-4 overflow-hidden">
-                <Image src={job?.owner?.avatar} className="h-10 w-10 rounded-2xl" />
-                <p className="font-semibold">{job.owner?.name}</p>
+                <Image src={self?.avatar} className="h-10 w-10 rounded-2xl" />
+                <div>
+                    <p className="font-light text-gray-500">You are logged in as</p>
+                    <p className="font-semibold">{self?.name}</p>
+                </div>
+
                 <div className="mx-2 h-6 border-r" />
-                <p className="text-[13px] font-light text-gray-500">{formatUTCDate(job.createdAt)}</p>
+                <p className="text-[13px] font-light text-gray-500">Created {moment(job.createdAt).fromNow()}</p>
             </div>
 
             <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
@@ -131,7 +138,7 @@ const JobHeader = ({ job }: JobHeaderProps) => {
             </div>
             <div className="mt-6">
                 <p className="mb-1 text-[13px] text-gray-500">Skills & Tools</p>
-                <div className="space-x-2">
+                <div className="flex flex-wrap gap-2">
                     {job.skills.map((skill) => (
                         <Badge className="text-sm font-normal" variant="outline">
                             {skill}

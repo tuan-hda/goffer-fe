@@ -6,6 +6,7 @@ const AnalyzePanel = () => {
     return (
         <div className="flex h-[calc(100vh-58px)] flex-1 flex-col overflow-y-auto p-6">
             <div className="mx-auto max-w-[680px] flex-1 space-y-7">
+                <h1 className="text-4xl font-medium">Review result and suggestions</h1>
                 <OverallEvaluation />
 
                 <Summary />

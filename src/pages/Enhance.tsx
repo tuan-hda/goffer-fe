@@ -7,7 +7,8 @@ const Enhance = () => {
         <div className="relative flex h-screen flex-col px-6 pt-4 text-sm">
             <Breadcrumbs className="mt-[5px]">
                 <BreadcrumbItem>
-                    <MdOutlineAutoGraph className="text-lg" /> Enhance
+                    <MdOutlineAutoGraph className="text-lg" />{' '}
+                    <span className="ml-1 text-base">Review and enhance your resume</span>
                 </BreadcrumbItem>
             </Breadcrumbs>
             <div className="-mx-6 mt-4 flex flex-1 border-t">

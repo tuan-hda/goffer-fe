@@ -93,7 +93,7 @@ const SessionTracker = () => {
                         key={i}
                         className={classNames(
                             'flex items-center justify-center rounded-xl border p-3',
-                            session?.answers.find((a) => a.question === q.id) && 'bg-slate-200',
+                            session?.answers.find((a) => a.question.id === q.id) && 'bg-slate-200',
                         )}
                     >
                         {i + 1}
