@@ -36,7 +36,7 @@ const QuestionList = () => {
                         <p className="mt-[6px] text-base font-medium text-black">{question.content}</p>
                         <RadioGroup
                             onValueChange={submitAnswer(question.id)}
-                            value={session?.answers.find((a) => a.question === question.id)?.content}
+                            value={session?.answers.find((a) => a.question.id === question.id)?.content}
                             className="space-y-4 pt-5 text-text"
                         >
                             {question.choices?.map((choice, index) => {

@@ -19,7 +19,7 @@ const ProjectList = ({ projects: outerProjects }: Props) => {
         <div className="space-y-8">
             {projects.map((project, index) => (
                 <Fragment key={index}>
-                    <Project key={index} info={project} />
+                    <Project key={index} info={project} image={project.cover} />
                     {index < projects.length - 1 && <div className="border-t"></div>}
                 </Fragment>
             ))}

@@ -1,5 +1,5 @@
 import { Button, Progress } from '@nextui-org/react';
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { Dispatch, ReactNode, SetStateAction, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { TbMicrophone, TbPlayerPauseFilled, TbPlayerPlayFilled, TbPlayerStopFilled } from 'react-icons/tb';
 import { LiaUndoAltSolid } from 'react-icons/lia';
 import moment from 'moment';
@@ -58,12 +58,13 @@ const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonP
 );
 
 interface Props {
-    audio?: Answer;
+    audio?: AnswerResponse;
     question: Question;
     mock?: boolean;
+    outerSetLeftTime?: Dispatch<SetStateAction<number>>;
 }
 
-const AudioRecorder = ({ audio, question, mock }: Props) => {
+const AudioRecorder = ({ audio, question, mock, outerSetLeftTime }: Props) => {
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
@@ -251,7 +252,10 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
                 audio.pause();
             } else {
                 audio.play();
-                audio.ontimeupdate = () => setLeftTime(audio.currentTime);
+                audio.ontimeupdate = () => {
+                    setLeftTime(audio.currentTime);
+                    outerSetLeftTime && outerSetLeftTime(audio.currentTime);
+                };
             }
             setIsPlaying(!isPlaying);
         }
@@ -328,4 +332,10 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
     );
 };
 
-export default AudioRecorder;
+export default memo(
+    AudioRecorder,
+    (prevProps, nextProps) =>
+        prevProps.audio?.url === nextProps.audio?.url &&
+        prevProps.mock === nextProps.mock &&
+        prevProps.question.id === nextProps.question.id,
+);

@@ -47,16 +47,18 @@ const AssessmentList = ({ isGlobal }: AssessmentListProps) => {
     };
 
     return (
-        <div className="mt-6 grid grid-cols-3 gap-6">
-            {assessmentList.map((assessment) => (
-                <AssessmentOrgItem
-                    onPick={handlePick}
-                    picked={assessments.findIndex((a) => a.id === assessment.id) !== -1}
-                    mode="pick"
-                    key={assessment.id}
-                    assessment={assessment}
-                />
-            ))}
+        <div>
+            <div className="mt-6 grid grid-cols-3 gap-6">
+                {assessmentList.map((assessment) => (
+                    <AssessmentOrgItem
+                        onPick={handlePick}
+                        picked={assessments.findIndex((a) => a.id === assessment.id) !== -1}
+                        mode="pick"
+                        key={assessment.id}
+                        assessment={assessment}
+                    />
+                ))}
+            </div>
             <div className="mt-10 flex w-full flex-col justify-center">
                 {isFetching && <p className="text-center">Loading...</p>}
                 {!isFetching && hasNextPage && (

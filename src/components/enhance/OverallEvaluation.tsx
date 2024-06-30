@@ -2,10 +2,8 @@ import { CSSProperties } from 'react';
 
 const OverallEvaluation = () => {
     return (
-        <div className="rounded-xl pb-4 shadow-small">
-            <div className="flex h-12 items-center rounded-t-xl bg-[#333] px-6 font-semibold text-white">
-                Evaluation
-            </div>
+        <div className="rounded-2xl pb-4 shadow-small">
+            <div className="flex h-12 items-center px-6 py-3 text-xl font-semibold">Evaluation</div>
             <div className="mb-3 mt-7 flex flex-col items-center px-6">
                 <div
                     className="circular-border flex h-36 w-36 overflow-hidden rounded-full p-3"
