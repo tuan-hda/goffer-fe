@@ -22,7 +22,6 @@ const VacancyList = () => {
     };
 
     const jobs = data?.pages.flatMap((page) => page.results) || [];
-    console.log('🚀 ~ file: VacancyList.tsx:25 ~ VacancyList ~ data:', data);
 
     return (
         <>

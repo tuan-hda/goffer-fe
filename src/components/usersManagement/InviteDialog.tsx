@@ -8,6 +8,7 @@ import { addMemberService } from '@/services/membership.service';
 import { toast } from 'sonner';
 import { useRef } from 'react';
 import useInvitedMember from '@/hooks/useInvitedMember';
+import catchAsync from '@/utils/catchAsync';
 
 const InviteDialog = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -16,18 +17,19 @@ const InviteDialog = () => {
 
     const inviteNewMember = async (email?: string) => {
         if (!org?.id || !email) return;
-        addMemberService({ email, org: org.id })
-            .then(async (membership) => {
+        catchAsync(
+            async () => {
+                const membership = await addMemberService({ email, org: org.id });
                 if (membership) {
                     toast.success('Invitation sent successfully');
                     if (inputRef.current) {
                         inputRef.current.value = '';
                         inputRef.current.focus();
                     }
-                    await refetch();
                 }
-            })
-            .catch((error) => toast.error(`Failed to send invitation: ${(error as Error)?.message}`));
+            },
+            () => refetch(),
+        );
     };
     const handleKeyDown = async (event: any) => {
         if (event.key === 'Enter') {
@@ -68,7 +70,7 @@ const InviteDialog = () => {
                                 .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
                                 .slice(0, 3)
                                 .map((item) => (
-                                    <div className="flex justify-between">
+                                    <div key={item.id} className="flex justify-between">
                                         <p>{item.user.email}</p>
                                         {item.status === 'sent' ? (
                                             <p>Sent</p>
