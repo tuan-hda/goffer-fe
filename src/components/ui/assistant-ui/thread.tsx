@@ -9,8 +9,8 @@ import { HiMiniPaperAirplane } from 'react-icons/hi2';
 
 export const Thread: FC = () => {
     return (
-        <ThreadPrimitive.Root className="flex h-full flex-col items-center pb-3">
-            <ThreadPrimitive.Viewport className="flex w-full flex-grow flex-col items-center overflow-y-scroll scroll-smooth px-4 pt-12">
+        <ThreadPrimitive.Root className="flex h-full max-h-full flex-col items-center pb-3">
+            <ThreadPrimitive.Viewport className="flex max-h-[500px] w-full flex-grow flex-col items-center overflow-y-auto scroll-smooth px-4 pt-12">
                 <ThreadPrimitive.Empty>
                     <ThreadEmpty />
                 </ThreadPrimitive.Empty>
@@ -34,7 +34,7 @@ const ThreadEmpty: FC = () => {
             <Avatar>
                 <AvatarFallback>C</AvatarFallback>
             </Avatar>
-            <p className="my-4 text-xl">How can I help you today?</p>
+            <p className="my-4 text-xl">I'm your AI assistant. Ask me anything about hiring and Goffer.</p>
         </div>
     );
 };

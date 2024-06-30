@@ -39,7 +39,7 @@ const AskAI = ({ isOpen, onClose }: AskAIProps) => {
                     Goffer Copilot
                     <TbSparkles className="text-3xl" />
                 </div>
-                <div className="h-[600px]">
+                <div className="max-h-[600px] pt-6">
                     <Thread />
                 </div>
             </div>

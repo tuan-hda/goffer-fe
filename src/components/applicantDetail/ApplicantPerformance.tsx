@@ -1,20 +1,19 @@
+import useCurrApplication from '@/hooks/useCurrApplication';
 import ApplicantResponse from './ApplicantResponse';
+import ApplicantAssessments from './ApplicantAssessments';
+import useListTakingAssessments from '@/hooks/useListTakingAssessments';
+import useCurrOrganizationJob from '@/hooks/useCurrOrganizationJob';
 
 const ApplicantPerformance = () => {
+    const { data } = useCurrApplication();
+
     return (
         <div className="mt-14">
             <p className="text-3xl">Applicant's responses</p>
             <div className="mt-4 space-y-8">
-                <ApplicantResponse />
-                <ApplicantResponse />
-                <ApplicantResponse />
+                {data?.answers?.map((answer, index) => <ApplicantResponse key={index} answer={answer} />)}
             </div>
-
-            <p className="mt-16 text-3xl">Assessment average: 80%</p>
-            <p className="mt-4 text-base font-medium">Assessment 1</p>
-            <div className="mt-4 flex items-center justify-center rounded-2xl bg-gray-50 px-10 py-16">
-                <p>Applicant have not taken assessment 1 yet.</p>
-            </div>
+            <ApplicantAssessments />
         </div>
     );
 };
