@@ -26,5 +26,9 @@ export const deleteMembershipService = async (id: string) => {
 };
 
 export const updateMembershipService = async (id: string, data: EditMembership) => {
-    return await baseAxios.patch(`/memberships/${id}`, data);
+    return await baseAxios.patch<Membership>(`/memberships/${id}`, data);
+};
+
+export const getSelfMemberships = async () => {
+    return await baseAxios.get<Membership[]>(`/memberships/self`);
 };

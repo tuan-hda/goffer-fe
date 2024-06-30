@@ -22,9 +22,7 @@ const MemberList = () => {
                 await updateMembershipService(id, body);
                 toast.success('Team member updated successfully!');
             },
-            () => {
-                refetch();
-            },
+            () => refetch(),
         );
     };
 
@@ -34,9 +32,7 @@ const MemberList = () => {
                 await deleteMembershipService(id);
                 toast.success('Team member removed successfully!');
             },
-            () => {
-                refetch();
-            },
+            () => refetch(),
         );
     };
 
