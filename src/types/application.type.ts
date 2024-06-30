@@ -47,11 +47,11 @@ export type Apply = Omit<NewApply, 'job' | 'profilePicture' | 'resume'> & {
 };
 
 export type EditApply = Partial<NewApply> & {
-    id: string;
     phase?: string;
 };
 
 export type ApplyResponse = Omit<EditApply, 'job' | 'applicant'> & {
+    id: string;
     job: JobResponse;
     applicant: User;
 };

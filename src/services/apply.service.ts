@@ -23,7 +23,8 @@ export const getApplyJob = async (jobId: string) => {
     return (await baseAxios.get<ApplyResponse>(`/apply/job/${jobId}`)).data;
 };
 
-export const updateApplyService = async (data: EditApply) => (await baseAxios.patch<Apply>('/apply', data)).data;
+export const updateApplyService = async (id: string, data: EditApply) =>
+    (await baseAxios.patch<Apply>(`/apply/${id}`, data)).data;
 
 export const countApplicationsByPhasesService = async (params?: Partial<Record<keyof Apply, unknown>>) => {
     return (

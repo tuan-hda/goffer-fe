@@ -42,7 +42,7 @@ const Application = () => {
             if (step >= 1 && step <= totalSteps) {
                 setStepNum(step);
                 if (step === totalSteps && data && data.phase === 'init')
-                    updateApplyService({ id: data.id, phase: 'applied' });
+                    updateApplyService(data.id, { phase: 'applied' });
             } else {
                 setStepNum(0);
                 navigate('#', { replace: true });
@@ -80,7 +80,7 @@ const Application = () => {
     }, [data, form]);
 
     async function onSubmit(values: NewApply) {
-        if (data?.id && data.phase === 'init') await updateApplyService({ ...values, id: data.id });
+        if (data?.id && data.phase === 'init') await updateApplyService(data.id, values);
         else if (data?.id === undefined && job?.id) await submitApplicationService({ ...values, job: job.id });
 
         await refetch();
