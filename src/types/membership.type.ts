@@ -19,3 +19,9 @@ export type Membership = Omit<NewMembership, 'email' | 'role' | 'status' | 'org'
     createdAt: string;
     updatedAt: string;
 };
+
+export type EditMembership = {
+    role?: string;
+    status?: string;
+    title?: string;
+};

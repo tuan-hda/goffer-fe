@@ -1,4 +1,4 @@
-import { Membership, NewMembership } from '@/types/membership.type';
+import { EditMembership, Membership, NewMembership } from '@/types/membership.type';
 import { baseAxios } from './base';
 
 export const addMemberService = async (data: NewMembership) => {
@@ -19,4 +19,12 @@ export const acceptInvitation = async (token: string) => {
 
 export const rejectInvitation = async (token: string) => {
     return (await baseAxios.post<Membership>(`/memberships/reject`, { token })).data;
+};
+
+export const deleteMembershipService = async (id: string) => {
+    return await baseAxios.delete(`/memberships/${id}`);
+};
+
+export const updateMembershipService = async (id: string, data: EditMembership) => {
+    return await baseAxios.patch(`/memberships/${id}`, data);
 };
