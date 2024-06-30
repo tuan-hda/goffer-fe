@@ -3,6 +3,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { formSchema } from '@/utils/application';
 import { JobResponse } from './job.type';
 import { User } from './user.type';
+import { Answer } from './answer.type';
 
 export type StringSchemaFields = {
     [P in keyof z.infer<typeof formSchema>]: z.infer<typeof formSchema>[P] extends string | undefined ? P : never;
@@ -44,6 +45,7 @@ export type Apply = Omit<NewApply, 'job' | 'profilePicture' | 'resume'> & {
     rating?: number;
     assessmentAvg?: number;
     reason?: string;
+    answers?: Answer[];
 };
 
 export type EditApply = Partial<NewApply> & {

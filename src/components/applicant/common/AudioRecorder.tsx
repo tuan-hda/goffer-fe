@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { uploadFileService } from '@/services/file.service';
 import { isAxiosError } from 'axios';
 import { toast } from 'sonner';
-import { AnswerResponse } from '@/types/answer.type';
+import { Answer, AnswerResponse } from '@/types/answer.type';
 import { Question } from '@/types/question.type';
 import useApplyStore from '@/stores/applyStore';
 
@@ -58,7 +58,7 @@ const IconButton = ({ ariaLabel, color, onPress, Icon, isDisabled }: IconButtonP
 );
 
 interface Props {
-    audio?: AnswerResponse;
+    audio?: Answer;
     question: Question;
     mock?: boolean;
 }
@@ -98,7 +98,7 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
         if (!mock && audioInstall && audio) {
             audioInstall.src = audio.url;
             setAudioURL(audio.url);
-            setRightTime(audio.duration);
+            setRightTime(audio.duration ? audio.duration : 0);
             audioInstall.addEventListener('error', handleError);
         } else if (!mock) {
             setAudioURL(undefined);
@@ -322,7 +322,7 @@ const AudioRecorder = ({ audio, question, mock }: Props) => {
                     !isRecording && 0 < rightTime && rightTime < 20 && 'text-danger',
                 )}
             >
-                Recording must be at least 20 seconds long.
+                Recording must be at least {question.constraint} seconds long.
             </p>
         </div>
     );

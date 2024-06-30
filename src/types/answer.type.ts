@@ -17,10 +17,10 @@ import { Question } from './question.type';
 
 export type Answer = {
     id: string;
-    url?: string;
+    url: string;
     summary?: string;
     assessment?: string;
-    question: string;
+    question: Question;
     owner: User;
     duration?: number; // duration in seconds
     point?: number;
