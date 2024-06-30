@@ -1,4 +1,4 @@
-import { Evaluation, CreateEvaluation, UpdateEvaluation } from '@/types/evaluation.type';
+import { Evaluation, CreateEvaluation, UpdateEvaluation, ListEvaluationItem } from '@/types/evaluation.type';
 import { baseAxios } from './base';
 
 export const createEvaluationService = async (data: CreateEvaluation): Promise<Evaluation> => {
@@ -6,9 +6,10 @@ export const createEvaluationService = async (data: CreateEvaluation): Promise<E
     return response;
 };
 
-export const getEvaluationsService = async (params?: Record<string, unknown>): Promise<Evaluation[]> => {
-    const response = (await baseAxios.get<{ results: Evaluation[] }>('/evaluations', { params })).data;
-    return response.results;
+export const getEvaluationsService = async (
+    params?: Partial<Record<keyof ListEvaluationItem, unknown>>,
+): Promise<ListEvaluationItem[]> => {
+    return (await baseAxios.get<ListEvaluationItem[]>('/evaluations', { params })).data;
 };
 
 export const getEvaluationByIdService = async (evaluationId: string): Promise<Evaluation> => {

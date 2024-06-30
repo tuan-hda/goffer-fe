@@ -1,3 +1,5 @@
+import { User } from './user.type';
+
 export type Evaluation = {
     id: string;
     owner: string;
@@ -8,6 +10,10 @@ export type Evaluation = {
     timestamp: number;
     createdAt: string;
     updatedAt: string;
+};
+
+export type ListEvaluationItem = Omit<Evaluation, 'owner'> & {
+    owner: User;
 };
 
 export type CreateEvaluation = Omit<Evaluation, 'id' | 'createdAt' | 'updatedAt' | 'owner'>;

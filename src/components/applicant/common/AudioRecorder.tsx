@@ -23,7 +23,7 @@ const formatTime = (x: number) => {
     const d = moment.duration(x, 'seconds');
     const minutes = Math.floor(d.asMinutes());
     const seconds = Math.floor(d.asSeconds()) % 60;
-    return `${minutes < 10 ? minutes : `0${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
+    return `${minutes < 10 ? minutes : `${minutes}`}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 
 export const uploadAudio = async (blobUrl: string) => {
@@ -77,7 +77,7 @@ const AudioRecorder = ({ audio, question, mock, outerSetLeftTime }: Props) => {
     const frameRef = useRef<number | null>(null);
 
     const { phase, setAnswer, setLoading } = useApplyStore();
-    const constraint = question.constraint ?? 180;
+    // const constraint = question.constraint ?? 180;
 
     useEffect(() => {
         if (mock) {
@@ -156,11 +156,11 @@ const AudioRecorder = ({ audio, question, mock, outerSetLeftTime }: Props) => {
                 setLeftTime((prevDuration) => prevDuration + 1);
             }, 1000);
             // Set a timer to stop recording after 3 minutes (180000 milliseconds)
-            setTimeout(() => {
-                if (mediaRecorderInstance.state !== 'inactive') {
-                    mediaRecorderInstance.stop();
-                }
-            }, constraint * 1000);
+            // setTimeout(() => { // Why do we need this?
+            //     if (mediaRecorderInstance.state !== 'inactive') {
+            //         mediaRecorderInstance.stop();
+            //     }
+            // }, constraint * 1000);
 
             mediaRecorderInstance.onstop = () => {
                 // Dừng mọi tracks của stream để không còn sử dụng microphone nữa.
@@ -312,7 +312,7 @@ const AudioRecorder = ({ audio, question, mock, outerSetLeftTime }: Props) => {
 
                 <audio ref={audioRef} src={audioURL} onEnded={() => setIsPlaying(false)} className="hidden" controls />
 
-                <p>{formatTime(audioURL ? rightTime : constraint)}</p>
+                <p>{formatTime(audioURL ? rightTime : 600)}</p>
                 <IconButton
                     ariaLabel="Reset"
                     onPress={handleReset}

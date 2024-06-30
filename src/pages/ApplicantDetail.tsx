@@ -2,6 +2,7 @@ import { Applicant, ConnectedWorkspace } from '@/components/applicantDetail';
 import ApplicantPerformance from '@/components/applicantDetail/ApplicantPerformance';
 import { Button } from '@/components/ui/button';
 import useCurrApplication from '@/hooks/useCurrApplication';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { TbLoader } from 'react-icons/tb';
 
 // const candidateSampleData = {

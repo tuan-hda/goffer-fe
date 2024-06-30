@@ -84,11 +84,12 @@ const QuestionBehavioralForm = () => {
                             <SelectValue placeholder="Limit" />
                         </SelectTrigger>
                         <SelectContent>
+                            <SelectItem value="30">30 secs</SelectItem>
                             <SelectItem value="60">1 min</SelectItem>
-                            <SelectItem value="180">3 min</SelectItem>
-                            <SelectItem value="300">5 min</SelectItem>
-                            <SelectItem value="420">7 min</SelectItem>
-                            <SelectItem value="600">10 min</SelectItem>
+                            <SelectItem value="180">3 mins</SelectItem>
+                            <SelectItem value="300">5 mins</SelectItem>
+                            <SelectItem value="420">7 mins</SelectItem>
+                            <SelectItem value="600">10 mins</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
