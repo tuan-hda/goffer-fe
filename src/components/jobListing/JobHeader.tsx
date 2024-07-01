@@ -46,7 +46,8 @@ const JobHeader = ({ job }: JobHeaderProps) => {
     };
     const handleApply = () => {
         if (isLoggedIn) {
-            navigate(`/job/${job.id}/application`);
+            if (job.applied) navigate(`/app/job/${job.id}/pipeline`);
+            else navigate(`/job/${job.id}/application`);
         } else {
             navigate(`/auth/login?redirect=/job/${job.id}/application`);
         }
