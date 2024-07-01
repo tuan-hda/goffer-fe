@@ -1,6 +1,66 @@
 import { PortfolioConfiguration } from './portfolio.type';
 import { ProjectCreate } from './project.type';
 
+export type Suggestion = {
+    pros?: string[];
+    cons?: string[];
+};
+
+export type Enhance = {
+    score: number;
+    result: {
+        contact: Suggestion;
+        experiences: Suggestion;
+        educations: Suggestion;
+        skills: Suggestion;
+        summary: Suggestion;
+        format: Suggestion;
+    };
+    details: {
+        basic: {
+            first_name: string;
+            last_name: string;
+            email: string;
+            phone_number: string;
+            location: string;
+            portfolio_website_url: string;
+            linkedin_url: string;
+            github_url: string;
+            university: string;
+            graduation_year: string;
+            majors: string;
+        };
+        summary: string;
+        work_experiences: {
+            title: string;
+            company: string;
+            location: string;
+            duration: {
+                years: number;
+                months: number;
+            };
+            summary: string;
+            achievements: string;
+        }[];
+
+        educations: {
+            school: string;
+            degree: string;
+            field: string;
+            start: {
+                year: number;
+            };
+            end: {
+                year: number;
+            };
+        }[];
+        certifications: {
+            title: string;
+            provider: string;
+        }[];
+    };
+};
+
 export type User = {
     id: string;
     email: string;
@@ -30,6 +90,7 @@ export type User = {
     isPro?: boolean;
     portfolio?: PortfolioConfiguration;
     yoe?: number;
+    enhance?: Enhance;
 };
 
 export type SeparatedDomainUser = User & {

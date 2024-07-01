@@ -11,8 +11,7 @@ import { fileSizeToString } from '@/utils/file';
 import { Link } from 'react-router-dom';
 import Educations from './Educations';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
-import classNames from 'classnames';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import EnhanceButton from './EnhanceButton';
 
 const Basic = () => {
     const ref = useRef<HTMLButtonElement>(null);
@@ -97,40 +96,9 @@ const Basic = () => {
             </Editable>
 
             <div className="group">
-                <div className="mt-6 flex items-center gap-2">
-                    <p className="font-medium text-black">Resume</p>
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    asChild
-                                    size="sm"
-                                    variant="black"
-                                    className={classNames(
-                                        'ml-auto h-7 opacity-0 transition',
-                                        !self || !self.isPro || !self.resume
-                                            ? 'group-hover:opacity-40'
-                                            : 'group-hover:opacity-100',
-                                    )}
-                                >
-                                    {self?.isPro ? (
-                                        <Link to="/app/enhance">Enhance resume with AI ✨</Link>
-                                    ) : (
-                                        <div>Enhance resume with AI ✨</div>
-                                    )}
-                                </Button>
-                            </TooltipTrigger>
-                            {(!self || !self.isPro || !self.resume) && (
-                                <TooltipContent>
-                                    <p>
-                                        {(!self || !self.isPro) && 'Subscribe to Pro plan to unlock'}
-                                        {self?.isPro && !self.resume && 'Upload your resume to analyze'}
-                                    </p>
-                                </TooltipContent>
-                            )}
-                        </Tooltip>
-                    </TooltipProvider>
-
+                <div className="mb-2 mt-6 flex items-center gap-2">
+                    <p className="mr-auto font-medium text-black">Resume</p>
+                    {self && <EnhanceButton user={self} />}
                     <UploadPopover
                         onAttach={(data) =>
                             updateProfile({
