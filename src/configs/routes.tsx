@@ -71,6 +71,7 @@ const SubscribeResult = lazy(() => import('@/components/subscribe/SubscribeResul
 const PortfolioDisplayPage = lazy(() => import('@/pages/PortfolioDisplayPage'));
 const ProjectDetail = lazy(() => import('@/components/portfolio/ProjectDetail'));
 const Invitation = lazy(() => import('@/components/invitation/Invitation'));
+const Pipeline = lazy(() => import('@/components/pipeline/Pipeline'));
 const Test = lazy(() => import('@/pages/Test'));
 
 const routesConfig: RouteObject[] = [
@@ -207,6 +208,14 @@ const routesConfig: RouteObject[] = [
                                 element: (
                                     <Suspense fallback={<div>Loading...</div>}>
                                         <JobDiscover />
+                                    </Suspense>
+                                ),
+                            },
+                            {
+                                path: '/app/job/:id/pipeline',
+                                element: (
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <Pipeline />
                                     </Suspense>
                                 ),
                             },
