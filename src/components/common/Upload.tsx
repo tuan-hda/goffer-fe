@@ -73,7 +73,7 @@ const Upload = ({ fileUrl, showingImage, directUpload, onAttach, className, onDe
             try {
                 setLoading(true);
                 const uploadData = (await uploadFileService(innerFile)).data;
-                if (onAttach) {
+                if (onAttach && uploadData.file.url) {
                     await onAttach(uploadData.file.url);
                 }
 

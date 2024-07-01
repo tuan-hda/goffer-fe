@@ -2,8 +2,8 @@ import { TbSparkles } from 'react-icons/tb';
 
 const Summary = () => {
     return (
-        <div className="rounded-xl shadow-small">
-            <div className="flex h-12 items-center gap-2 rounded-t-xl bg-[#333] px-6 font-semibold text-white">
+        <div className="rounded-xl pt-2 shadow-small">
+            <div className="flex h-12 items-center gap-2 px-6 text-base font-semibold">
                 <p className="font-semibold">Summary</p>
                 <TbSparkles className="text-lg" />
             </div>
