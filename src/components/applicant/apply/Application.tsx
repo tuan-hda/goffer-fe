@@ -58,11 +58,11 @@ const Application = () => {
         name: data?.name || data?.applicant?.name,
         location: data?.location || data?.applicant?.location,
         email: data?.email || data?.applicant?.email,
-        phoneNumber: data?.phoneNumber,
-        role: data?.role,
+        phoneNumber: data?.phoneNumber || data?.applicant?.enhance?.details?.basic?.phone_number,
+        role: data?.role || data?.applicant?.enhance?.details?.basic?.majors,
         lastCompany: data?.lastCompany,
-        linkedIn: data?.linkedIn || data?.applicant?.refDoc,
-        personalWebsite: data?.personalWebsite,
+        linkedIn: data?.linkedIn || data?.applicant?.refDoc || data?.applicant?.enhance?.details?.basic?.linkedin_url,
+        personalWebsite: data?.personalWebsite || data?.applicant?.enhance?.details?.basic?.portfolio_website_url,
     };
 
     const form = useForm<NewApply>({
