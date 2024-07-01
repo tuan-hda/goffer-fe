@@ -16,6 +16,8 @@ import { PortfolioLayout } from '@/components/portfolio';
 import NewJobLayout from '@/layouts/NewJobLayout';
 import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
 
+import ForbidEditLayout from '@/layouts/ForbidEditLayout';
+
 const AboutUs = lazy(() => import('../pages/AboutUs'));
 const ContactUs = lazy(() => import('../pages/ContactUs'));
 const LandingPage = lazy(() => import('../pages/LandingPage'));
@@ -423,36 +425,46 @@ const routesConfig: RouteObject[] = [
                                 ),
                             },
                             {
-                                path: '/app/organization/:domain/job/:id/questions',
+                                path: '/app/organization/:domain/job/:id',
                                 element: (
                                     <Suspense fallback={<div>Loading...</div>}>
-                                        <Questions />
+                                        <ForbidEditLayout />
                                     </Suspense>
                                 ),
-                            },
-                            {
-                                path: '/app/organization/:domain/job/:id/custom-feedback',
-                                element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
-                                        <CustomFeedback />
-                                    </Suspense>
-                                ),
-                            },
-                            {
-                                path: '/app/organization/:domain/job/:id/custom-assessment',
-                                element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
-                                        <CustomAssessment />
-                                    </Suspense>
-                                ),
-                            },
-                            {
-                                path: '/app/organization/:domain/job/:id/finalize',
-                                element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
-                                        <Finalize />
-                                    </Suspense>
-                                ),
+                                children: [
+                                    {
+                                        path: '/app/organization/:domain/job/:id/questions',
+                                        element: (
+                                            <Suspense fallback={<div>Loading...</div>}>
+                                                <Questions />
+                                            </Suspense>
+                                        ),
+                                    },
+                                    {
+                                        path: '/app/organization/:domain/job/:id/custom-feedback',
+                                        element: (
+                                            <Suspense fallback={<div>Loading...</div>}>
+                                                <CustomFeedback />
+                                            </Suspense>
+                                        ),
+                                    },
+                                    {
+                                        path: '/app/organization/:domain/job/:id/custom-assessment',
+                                        element: (
+                                            <Suspense fallback={<div>Loading...</div>}>
+                                                <CustomAssessment />
+                                            </Suspense>
+                                        ),
+                                    },
+                                    {
+                                        path: '/app/organization/:domain/job/:id/finalize',
+                                        element: (
+                                            <Suspense fallback={<div>Loading...</div>}>
+                                                <Finalize />
+                                            </Suspense>
+                                        ),
+                                    },
+                                ],
                             },
                             {
                                 path: '/app/organization/:domain/job/:id/applicant/:applicationId',

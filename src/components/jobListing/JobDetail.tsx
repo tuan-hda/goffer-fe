@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import JobHeader from './JobHeader';
 import { TbLoader } from 'react-icons/tb';
 import { PlainPlate } from '../common';
+import { NotFound } from '@/pages';
 
 type JobDetailProps = {
     jobId?: string;
@@ -22,6 +23,14 @@ const JobDetail = ({ jobId }: JobDetailProps) => {
 
     if (!job) {
         return null;
+    }
+
+    if (job.status !== 'published') {
+        return (
+            <div className="absolute bottom-0 left-0 right-0 top-0">
+                <NotFound />;
+            </div>
+        );
     }
 
     return (

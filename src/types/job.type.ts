@@ -34,6 +34,7 @@ export type Job = Omit<NewJob, 'org'> & {
     hasFeedback?: boolean;
     assessments?: Assessment[];
     applied?: boolean;
+    isPublished?: boolean;
 };
 
 export type UpdateJobRequest = Omit<Job, 'questions' | 'assessments'> & {

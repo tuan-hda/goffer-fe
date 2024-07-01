@@ -121,7 +121,9 @@ const JobHeader = ({ job }: JobHeaderProps) => {
             <div className="mt-6 grid grid-cols-3">
                 <div>
                     <p className="text-[13px] text-gray-500">Open positions</p>
-                    <p className=" text-text">{job.slots} vacancies</p>
+                    <p className=" text-text">
+                        {job.slots} vancanc{job.slots === 1 ? 'y' : 'ies'}
+                    </p>
                 </div>
                 <div>
                     <p className="text-[13px] text-gray-500">Date line</p>

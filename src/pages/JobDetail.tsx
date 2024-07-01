@@ -20,19 +20,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Analytics from '@/components/jobDetail/Analytics';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import JobPanels from '@/components/jobDetail/JobPanels';
+import StatusButton from '@/components/jobDetail/StatusButton';
 
 const JobDetail = () => {
     const { id, domain } = useParams();
-    const { data: job, isLoading } = useGetOrganizationJob(id);
+    const { data: job, isLoading, refetch } = useGetOrganizationJob(id);
     const navigate = useNavigate();
 
     if (isLoading) {
@@ -52,13 +49,13 @@ const JobDetail = () => {
         <div className="w-full">
             <div className="flex items-center gap-4 text-3xl">
                 <h1>{job?.title}</h1>
-                <Dialog>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="-mr-2 ml-auto p-2">
-                            <TbDots className="text-base" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuItem asChild className="p-0">
+                {/* <Dialog> */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger className="-mr-2 ml-auto p-2">
+                        <TbDots className="text-base" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        {/* <DropdownMenuItem asChild className="p-0">
                                 <DialogTrigger asChild>
                                     <button
                                         onClick={(e) => e.stopPropagation()}
@@ -67,29 +64,30 @@ const JobDetail = () => {
                                         <TbSend className="mr-2 text-base" /> Send invite
                                     </button>
                                 </DialogTrigger>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <Link to={`preview`} className="flex items-center">
-                                    <TbEye className="mr-2 text-base" /> View preview
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <Link className="flex w-full items-center" to={`/app/organization/${domain}/${id}`}>
-                                    <TbPencil className="mr-2 text-base" /> Edit basic
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link
-                                    className="flex w-full items-center"
-                                    to={`/app/organization/${domain}/job/${id}/questions`}
-                                >
-                                    <TbScooter className="mr-2 text-base" /> Edit advanced
-                                </Link>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    <DialogContent className="!rounded-2xl">
+                            </DropdownMenuItem> */}
+                        <DropdownMenuItem asChild>
+                            <Link to={`preview`} className="flex items-center">
+                                <TbEye className="mr-2 text-base" /> View preview
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <Link className="flex w-full items-center" to={`/app/organization/${domain}/${id}`}>
+                                <TbPencil className="mr-2 text-base" /> Edit basic
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled={job.isPublished}>
+                            <Link
+                                className="flex w-full items-center"
+                                to={`/app/organization/${domain}/job/${id}/questions`}
+                            >
+                                <TbScooter className="mr-2 text-base" /> Edit advanced
+                            </Link>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                <StatusButton refetch={refetch} job={job} />
+                {/* <DialogContent className="!rounded-2xl">
                         <DialogHeader>
                             <DialogTitle>Invite this job for someone</DialogTitle>
                         </DialogHeader>
@@ -101,86 +99,8 @@ const JobDetail = () => {
                         <div className="flex min-h-[140px] items-center justify-center text-sm">
                             <p>You have not invited anyone yet.</p>
                         </div>
-                    </DialogContent>
-                </Dialog>
-
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button size="icon" variant="ghost">
-                                <TbShare className="text-lg" />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>Share link</TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button
-                            variant="outline"
-                            className="gap-2 border-primary/50 bg-primary/10 text-orange-600 shadow-none hover:bg-primary/20 hover:text-orange-600"
-                        >
-                            {job.status === 'published' && (
-                                <>
-                                    <TbGlobe />
-                                    <span>Published</span>
-                                </>
-                            )}
-                            {job.status === 'unpublished' && (
-                                <>
-                                    <TbEyeOff />
-                                    <span>Unpublished</span>
-                                </>
-                            )}
-                            {job.status === 'closed' && (
-                                <>
-                                    <TbArchive />
-                                    <span>Closed</span>
-                                </>
-                            )}
-                            {job.status === 'expired' && (
-                                <>
-                                    <TbClockCancel className="text-xl" />
-                                    <span>Expired</span>
-                                </>
-                            )}
-                            <TbChevronDown />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuItem className="gap-3">
-                            <TbGlobe className="text-xl" />
-                            <div className="min-w-0">
-                                <p className="font-semibold">Published</p>
-                                <p className="text-text/70">Job is open for applications.</p>
-                            </div>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="gap-3">
-                            <TbEyeOff className="text-xl" />
-                            <div className="min-w-0">
-                                <p className="font-semibold">Unpublished</p>
-                                <p className="text-text/70">Currently hidden, available after you finish all steps.</p>
-                            </div>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="gap-3">
-                            <TbArchive className="text-xl" />
-                            <div className="min-w-0">
-                                <p className="font-semibold">Closed</p>
-                                <p className="text-text/70">Applications closed; no new submissions accepted.</p>
-                            </div>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="gap-3">
-                            <TbClockCancel className="text-xl" />
-                            <div className="min-w-0">
-                                <p className="font-semibold">Expired</p>
-                                <p className="text-text/70">
-                                    Posting has expired; no longer accepting new applications.
-                                </p>
-                            </div>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                    </DialogContent> */}
+                {/* </Dialog> */}
             </div>
             <JobPanels />
         </div>
