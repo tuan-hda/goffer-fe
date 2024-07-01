@@ -2,26 +2,23 @@ import { Applicant, ConnectedWorkspace } from '@/components/applicantDetail';
 import ApplicantPerformance from '@/components/applicantDetail/ApplicantPerformance';
 import { Button } from '@/components/ui/button';
 import useCurrApplication from '@/hooks/useCurrApplication';
-import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import useRefetchInsights from '@/hooks/useRefetchInsights';
+import { updateApplyService } from '@/services/apply.service';
+import catchAsync from '@/utils/catchAsync';
 import { TbLoader } from 'react-icons/tb';
-
-// const candidateSampleData = {
-//     name: 'Jane Doe',
-//     avatarUrl: 'https://res.cloudinary.com/doxsstgkc/image/upload/v1714493760/goffer/rklmzhk6m6abekce57ha.jpg',
-//     jobTitle: 'Senior Frontend Developer',
-//     location: '1234 Maple Street, Anytown, Anystate',
-//     experience: '7 yoe: Acme Corp, Innovative Solutions, Tech Pioneers',
-//     tools: 'ReactJS, Redux, TypeScript, NodeJS, Express, MongoDB, Docker, AWS',
-//     description:
-//         'Passionate frontend developer with a knack for creating engaging user experiences. Skilled in a wide range of modern web technologies and tools, with a strong foundation in design principles and best practices. Committed to lifelong learning and staying at the cutting edge of technology.',
-//     match: 90,
-//     email: 'hdatdragon2@gmail.com',
-//     phone: '0123456789',
-//     isPro: true,
-// };
+import { toast } from 'sonner';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import pipeline from '@/data/pipeline';
 
 const ApplicantDetail = () => {
-    const { data, isLoading } = useCurrApplication();
+    const { data, isLoading, refetch } = useCurrApplication();
+    const { refetch: refetchInsights } = useRefetchInsights();
 
     if (isLoading)
         return (
@@ -32,19 +29,55 @@ const ApplicantDetail = () => {
 
     if (!data) return null;
 
+    const moveTo = (phase: string) => () =>
+        catchAsync(
+            async () => {
+                await updateApplyService(data.id, {
+                    phase,
+                });
+                await Promise.all([refetch()]);
+                toast.success('Moved successfully!');
+            },
+            () => {},
+        );
+
+    const reject = moveTo('rejected');
+
     return (
         <div className="flex flex-1 gap-8 text-sm text-text">
             <div className="flex-1">
-                <Applicant data={data} />
+                <Applicant data={data} refetch={refetch} />
                 <div className="mt-6">
                     <ApplicantPerformance />
                     <div className="mt-6 flex items-center gap-4">
-                        <Button variant="outline" className="w-full" size="lg">
-                            Reject
+                        <Button
+                            onClick={reject}
+                            disabled={data.phase === 'rejected'}
+                            variant="outline"
+                            className="w-full"
+                            size="lg"
+                        >
+                            {data.phase === 'rejected' ? 'Rejected' : 'Reject'}
                         </Button>
-                        <Button variant="black" className="w-full" size="lg">
-                            Move to
-                        </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="black" className="w-full" size="lg">
+                                    Move to
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Move to</DropdownMenuLabel>
+                                {pipeline.map((p) => (
+                                    <DropdownMenuItem
+                                        onClick={moveTo(p.value)}
+                                        key={p.value}
+                                        disabled={data.phase === p.value}
+                                    >
+                                        {p.title}
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </div>
             </div>

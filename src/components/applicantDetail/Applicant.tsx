@@ -23,20 +23,20 @@ import {
 } from '../ui/dropdown-menu';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 import { Apply } from '@/types/application.type';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import catchAsync from '@/utils/catchAsync';
+import { updateApplyService } from '@/services/apply.service';
+import { sentenceCase } from '@/utils/string';
+import pipeline from '@/data/pipeline';
+import useRefetchInsights from '@/hooks/useRefetchInsights';
+import { toast } from 'sonner';
 
 type ApplicantProps = {
     data: Apply;
+    refetch: (props?: any) => Promise<any>;
 };
 
-const Applicant = ({ data }: ApplicantProps) => {
+const Applicant = ({ data, refetch }: ApplicantProps) => {
     const getEmojiUrl = () => {
         const score = data.match;
         if (!score || score <= 5) {
@@ -47,6 +47,22 @@ const Applicant = ({ data }: ApplicantProps) => {
         }
         return '/emoji/happy.png';
     };
+
+    const { refetch: refetchInsights } = useRefetchInsights();
+
+    const moveTo = (phase: string) => () =>
+        catchAsync(
+            async () => {
+                await updateApplyService(data.id, {
+                    phase,
+                });
+                await Promise.all([refetch(), refetchInsights()]);
+                toast.success('Moved successfully!');
+            },
+            () => {},
+        );
+
+    const reject = moveTo('rejected');
 
     return (
         <div className="flex-1">
@@ -69,7 +85,9 @@ const Applicant = ({ data }: ApplicantProps) => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>More options</DropdownMenuLabel>
-                                <DropdownMenuItem>Reject candidate</DropdownMenuItem>
+                                <DropdownMenuItem disabled={data.phase === 'rejected'} onClick={reject}>
+                                    Reject candidate
+                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                         <Button variant="outline" size="icon">
@@ -78,17 +96,20 @@ const Applicant = ({ data }: ApplicantProps) => {
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="black" className="gap-2">
-                                    Applied <TbChevronDown />
+                                    {sentenceCase(data.phase)} <TbChevronDown />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Move to</DropdownMenuLabel>
-                                <DropdownMenuItem>Applied</DropdownMenuItem>
-                                <DropdownMenuItem>Shortlisted</DropdownMenuItem>
-                                <DropdownMenuItem>Phone call</DropdownMenuItem>
-                                <DropdownMenuItem>On-site</DropdownMenuItem>
-                                <DropdownMenuItem>Offer</DropdownMenuItem>
-                                <DropdownMenuItem>Hired</DropdownMenuItem>
+                                {pipeline.map((p) => (
+                                    <DropdownMenuItem
+                                        onClick={moveTo(p.value)}
+                                        key={p.value}
+                                        disabled={data.phase === p.value}
+                                    >
+                                        {p.title}
+                                    </DropdownMenuItem>
+                                ))}
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>

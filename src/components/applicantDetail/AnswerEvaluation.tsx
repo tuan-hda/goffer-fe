@@ -3,6 +3,7 @@ import { Badge } from '../ui/badge';
 import useListEvaluations from '@/hooks/useListEvaluations';
 import { Avatar } from '@nextui-org/react';
 import moment from 'moment';
+import emojis from '@/data/emojis';
 
 type BadgeProps = {
     answer?: Answer;
@@ -39,7 +40,7 @@ const AnswerEvaluation = ({ answer }: BadgeProps) => {
             {data?.map((evaluation, index) => (
                 <div key={index} className="relative flex items-center gap-4 text-sm">
                     <Avatar radius="md" size="sm" src={evaluation.owner?.avatar} />
-                    <p className="absolute -top-2 left-5 text-lg">🥰</p>
+                    <p className="absolute -top-2 left-5 text-lg">{emojis.at(evaluation.score - 1)}</p>
                     <p className="text-text/80">evaluated at {formatSeconds(evaluation.timestamp || 0)}</p>
                     <p className="ml-auto text-text/80">{moment(evaluation.updatedAt).fromNow()}</p>
                 </div>
