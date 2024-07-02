@@ -33,3 +33,7 @@ export const countApplicationsByPhasesService = async (params?: Partial<Record<k
         })
     ).data;
 };
+
+export const rejectAllService = async (jobId: string, phase: string) => {
+    return (await baseAxios.post(`/apply/reject-all/${jobId}`, { phase })).data;
+};

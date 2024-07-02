@@ -9,6 +9,7 @@ import { Pagination } from '@nextui-org/react';
 import { useMemo, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import InsightsHeader from './InsightsHeader';
+import RejectAll from './RejectAll';
 
 // type Candidate = {
 //     imageUrl: string;
@@ -49,6 +50,9 @@ const Insights = () => {
                 <div className="mt-6 text-sm">
                     <Card className="bg-white/100 shadow-none">
                         <InsightsHeader />
+                        <div className="mt-5 border-t" />
+                        <RejectAll jobId={id!} />
+                        <div className="mb-5 border-t" />
                         {list?.length === 0 ? (
                             <div className="flex flex-col items-center gap-4 p-6 text-sm">
                                 <img src="/states/empty1.avif" className="w-64" />
