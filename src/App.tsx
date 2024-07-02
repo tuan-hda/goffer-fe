@@ -13,9 +13,8 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useStreamStore from './stores/streamStore';
 import { RuntimeProvider } from './providers/RuntimeProvider';
-import ReactGA from 'react-ga4';
-
-const TRACKING_ID = 'G-JL36X64QB3';
+import { logEvent } from 'firebase/analytics';
+import { analytics } from './configs/firebase';
 
 function App() {
     const [isOpen, setOpen] = useState(false);
@@ -23,11 +22,10 @@ function App() {
     const initClient = useStreamStore((state) => state.initClient);
 
     useEffect(() => {
-        ReactGA.initialize(TRACKING_ID);
-        ReactGA.send({
-            hitType: 'pageview',
-            page: window.location.pathname,
-            title: 'Landing Page',
+        logEvent(analytics, 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: window.location.pathname,
         });
     }, []);
 
