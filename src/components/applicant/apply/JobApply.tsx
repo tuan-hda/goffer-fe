@@ -1,12 +1,27 @@
 import { JobDetail } from '@/components/jobListing';
 import useCurrOrganizationJob from '@/hooks/useCurrOrganizationJob';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { addViewService } from '@/services/log.service';
 import { useEffect } from 'react';
 
 const JobApply = () => {
     const { data: job } = useCurrOrganizationJob();
+    const { data: self } = useSelfProfileQuery();
 
     useEffect(() => {
         document.title = `${job?.title || 'Job Detail'} - Goffer`;
+    }, [job]);
+
+    useEffect(() => {
+        if (!job) return;
+
+        (async () => {
+            try {
+                await addViewService(self, job.id);
+            } catch (error) {
+                console.log('error create interaction', error);
+            }
+        })();
     }, [job]);
 
     return (

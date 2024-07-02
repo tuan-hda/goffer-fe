@@ -7,6 +7,7 @@ import { TbCheck, TbEye, TbForms } from 'react-icons/tb';
 import { Progress } from '../ui/progress';
 import useCountApplicationsByPhases from '@/hooks/useCountApplicationsByPhases';
 import { useParams } from 'react-router-dom';
+import useQueryLogs from '@/hooks/useQueryLogs';
 
 const Analytics = () => {
     const [width, setWidth] = useState({
@@ -20,8 +21,13 @@ const Analytics = () => {
     const { data } = useCountApplicationsByPhases({
         job: id,
     });
+    const { data: logs } = useQueryLogs({
+        type: 'view',
+        ref: id,
+    });
     const total = data?.reduce((acc, curr) => acc + curr.count, 0);
     const hired = data?.find((d) => d._id === 'hired')?.count || 0;
+    const views = logs?.length || 0;
 
     useEffect(() => {
         const handleResize = () => {
@@ -80,7 +86,7 @@ const Analytics = () => {
                             Views <TbEye className="text-lg" />
                         </CardTitle>
                     </CardHeader>
-                    <CardContent className="text-3xl">12</CardContent>
+                    <CardContent className="text-3xl">{views}</CardContent>
                 </Card>
                 <Card className="shadow-none">
                     <CardHeader className="pb-4">
