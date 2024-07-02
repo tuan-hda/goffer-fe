@@ -56,7 +56,7 @@ const StatusButton = ({ job, refetch }: StatusButtonProps) => {
                         className={classNames('gap-2 shadow-none', {
                             'border-primary/50 bg-primary/10 text-orange-500 hover:bg-primary/20 hover:text-orange-600':
                                 job.status === 'unpublished',
-                            'border-green-500 bg-green-50 text-green-500 hover:bg-green-100 hover:text-green-500':
+                            'border-blue-500 bg-blue-50 text-blue-500 hover:bg-blue-100 hover:text-blue-500':
                                 job.status === 'published',
                             'border-red-500 bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-500':
                                 job.status === 'closed',

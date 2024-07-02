@@ -1,16 +1,13 @@
 import { JobDetail } from '@/components/jobListing';
-import { analytics } from '@/configs/firebase';
-import { logEvent } from 'firebase/analytics';
+import useCurrOrganizationJob from '@/hooks/useCurrOrganizationJob';
 import { useEffect } from 'react';
 
 const JobApply = () => {
+    const { data: job } = useCurrOrganizationJob();
+
     useEffect(() => {
-        logEvent(analytics, 'page_view', {
-            page_title: document.title,
-            page_location: window.location.href,
-            page_path: window.location.pathname,
-        });
-    }, []);
+        document.title = `${job?.title || 'Job Detail'} - Goffer`;
+    }, [job]);
 
     return (
         <div className="mx-auto max-w-screen-md pb-10 pt-10">

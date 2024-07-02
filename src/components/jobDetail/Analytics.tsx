@@ -5,6 +5,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { DatePickerWithRange } from '../common';
 import { TbCheck, TbEye, TbForms } from 'react-icons/tb';
 import { Progress } from '../ui/progress';
+import useCountApplicationsByPhases from '@/hooks/useCountApplicationsByPhases';
+import { useParams } from 'react-router-dom';
 
 const Analytics = () => {
     const [width, setWidth] = useState({
@@ -13,6 +15,13 @@ const Analytics = () => {
     });
     const ref = useRef<HTMLDivElement>(null);
     const ref2 = useRef<HTMLDivElement>(null);
+
+    const { id } = useParams();
+    const { data } = useCountApplicationsByPhases({
+        job: id,
+    });
+    const total = data?.reduce((acc, curr) => acc + curr.count, 0);
+    const hired = data?.find((d) => d._id === 'hired')?.count || 0;
 
     useEffect(() => {
         const handleResize = () => {
@@ -57,7 +66,7 @@ const Analytics = () => {
                     <div className="w-full">
                         <Curve width={width.curve} height={Math.min(window.innerWidth - 625, 500)}>
                             <div className="mb-1 font-medium">
-                                <p className="text-base">Average rate</p>
+                                <p className="text-base">Average conversion rate</p>
                                 <p className="text-3xl font-normal">87%</p>
                             </div>
                         </Curve>
@@ -79,7 +88,7 @@ const Analytics = () => {
                             Applied <TbForms className="text-lg" />
                         </CardTitle>
                     </CardHeader>
-                    <CardContent className="text-3xl">12</CardContent>
+                    <CardContent className="text-3xl">{total}</CardContent>
                 </Card>
                 <Card className="shadow-none">
                     <CardHeader className="pb-4">
@@ -87,7 +96,7 @@ const Analytics = () => {
                             Hired <TbCheck className="text-lg" />
                         </CardTitle>
                     </CardHeader>
-                    <CardContent className="text-3xl">12</CardContent>
+                    <CardContent className="text-3xl">{hired}</CardContent>
                 </Card>
             </div>
 
