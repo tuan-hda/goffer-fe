@@ -29,11 +29,11 @@ const Resume = ({ jobId }: Props) => {
     }, [data]);
 
     return (
-        <div className="mt-8 flex flex-row gap-8">
+        <div className="mt-8 flex flex-row">
             <div className="flex h-fit flex-row">
                 <Avatar src={data?.profilePicture} className="h-[320px] w-[320px] rounded-3xl object-cover" />
 
-                <div className="mx-8 border-l-2 border-dashed border-gray-100" />
+                <div className="mx-12 border-l-2 border-dashed border-gray-100" />
             </div>
 
             <div className="flex-1">
@@ -77,7 +77,7 @@ const Resume = ({ jobId }: Props) => {
                     </div>
                 </div>
                 <>
-                    <p className="mb-5 mt-16 self-start text-xs font-light text-gray-500">RESUME</p>
+                    <p className="mb-5 mt-12 self-start text-xs font-light text-gray-500">RESUME</p>
                     <Link to={data?.resume!} target="_blank" className="mt-1 w-full">
                         <div className="flex w-full items-center gap-4 rounded-xl bg-[#F4F4F4] p-4">
                             <div className="flex items-center justify-center rounded-xl bg-white p-2">
