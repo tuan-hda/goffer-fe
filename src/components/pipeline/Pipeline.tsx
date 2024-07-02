@@ -5,6 +5,8 @@ import { Snippet, Tab, Tabs } from '@nextui-org/react';
 import { TbChartArcs, TbMessageChatbot, TbPaperclip, TbTimelineEvent } from 'react-icons/tb';
 import { JobDetail } from './detail';
 import Resume from './Resume';
+import { Interviews } from './interviews';
+import { PhaseDetail } from './phase';
 
 const Pipeline = () => {
     const { id } = useParams();
@@ -24,7 +26,9 @@ const Pipeline = () => {
                                 <TbTimelineEvent className="text-lg" /> Pipeline
                             </span>
                         }
-                    ></Tab>
+                    >
+                        <PhaseDetail />
+                    </Tab>
                     <Tab
                         key="profile"
                         title={
@@ -45,14 +49,18 @@ const Pipeline = () => {
                     >
                         <Resume jobId={data.job.id} />
                     </Tab>
-                    <Tab
-                        key="recommendations"
-                        title={
-                            <span className="flex items-center gap-2">
-                                <TbMessageChatbot className="text-lg" /> Interviews
-                            </span>
-                        }
-                    ></Tab>
+                    {data.answers.length > 0 && (
+                        <Tab
+                            key="recommendations"
+                            title={
+                                <span className="flex items-center gap-2">
+                                    <TbMessageChatbot className="text-lg" /> Interviews
+                                </span>
+                            }
+                        >
+                            <Interviews questions={data.job.questions} answers={data.answers} />
+                        </Tab>
+                    )}
                 </Tabs>
             </div>
         </div>

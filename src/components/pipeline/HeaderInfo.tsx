@@ -18,7 +18,7 @@ const HeaderInfo = ({ job }: Props) => {
         <div className="flex flex-row gap-8">
             <Avatar src={job.org?.logo} className="h-20 w-20 rounded-3xl object-cover" />
             <div className="space-y-4">
-                <h1 className="mr-auto font-serif text-4xl font-black text-black">{job.title}</h1>
+                <h1 className="mr-auto font-serif-2 text-4xl font-bold text-black">{job.title}</h1>
                 <p className="mt-7 flex items-center">
                     Created by
                     <span className="mx-2 flex text-black">

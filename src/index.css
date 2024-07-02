@@ -760,3 +760,10 @@ i.justify-align {
 .str-chat__list {
     background-color: transparent !important;
 }
+
+.arrow-div {
+    width: 200px;
+    height: 50px;
+    background-color: #f2c299;
+    clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%, 10% 50%);
+}

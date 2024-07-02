@@ -2,6 +2,7 @@ import { JobDetail } from '@/components/jobListing';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import useIndividualJobs from '@/hooks/useIndividualJobs';
 import useJobsRecommender from '@/hooks/useJobsRecommender';
 import { toggleSavedJob } from '@/services/interaction.service';
 import { interactWithItemService } from '@/services/recommender.service';
@@ -10,7 +11,8 @@ import classNames from 'classnames';
 import { TbBookmarks, TbCalendar, TbMapPin } from 'react-icons/tb';
 
 const VacancyList = () => {
-    const { data, refetch, isFetching, hasNextPage, fetchNextPage } = useJobsRecommender();
+    // const { data, refetch, isFetching, hasNextPage, fetchNextPage } = useJobsRecommender();
+    const { data, refetch } = useIndividualJobs();
 
     const onBookmark = async (e: any, id: string, isSaved?: boolean) => {
         e.stopPropagation();
@@ -21,7 +23,8 @@ const VacancyList = () => {
         await refetch();
     };
 
-    const jobs = data?.pages.flatMap((page) => page.results) || [];
+    // const jobs = data?.pages.flatMap((page) => page.results) || [];
+    const jobs = data?.results ?? [];
 
     return (
         <>
@@ -75,7 +78,7 @@ const VacancyList = () => {
                     </Sheet>
                 ))}
             </div>
-            <div className="mt-14 flex w-full flex-col justify-center">
+            {/* <div className="mt-14 flex w-full flex-col justify-center">
                 {isFetching && <p className="text-center">Loading...</p>}
                 {!isFetching && hasNextPage && (
                     <Button variant="outline" className="mx-auto" onClick={() => fetchNextPage()}>
@@ -83,7 +86,7 @@ const VacancyList = () => {
                     </Button>
                 )}
                 {!isFetching && !hasNextPage && <p className="text-center">You've reached the end of the list</p>}
-            </div>
+            </div> */}
         </>
     );
 };
