@@ -76,7 +76,7 @@ const JobDetail = () => {
                                 <TbPencil className="mr-2 text-base" /> Edit basic
                             </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem disabled={job.isPublished}>
+                        <DropdownMenuItem disabled={job.status === 'published'}>
                             <Link
                                 className="flex w-full items-center"
                                 to={`/app/organization/${domain}/job/${id}/questions`}

@@ -121,7 +121,7 @@ const StatusButton = ({ job, refetch }: StatusButtonProps) => {
                 <DialogHeader>
                     <DialogTitle>Publish this job?</DialogTitle>
                     <DialogDescription className="mt-1">
-                        Once published, your job will be visible to the public and open for applications. And you{' '}
+                        Once published, your job will be visible to the public and open for applications, and you{' '}
                         <strong className="text-black">cannot change your job advanced setup!</strong>
                     </DialogDescription>
                 </DialogHeader>

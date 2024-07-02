@@ -113,7 +113,7 @@ const OrgDetailLayout = ({ children }: OrgDetailLayoutProps) => {
 
     return (
         <div className="mt-5 flex gap-8">
-            {(maxStep < 5 || (matches && matches.length > 0)) && !data.isPublished && (
+            {(maxStep < 5 || (matches && matches.length > 0)) && data.status !== 'published' && (
                 <div className="sticky top-8 h-fit max-w-[240px] flex-shrink-0">
                     <Card className="border bg-white/100 text-sm shadow-none">
                         <CardHeader>
