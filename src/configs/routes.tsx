@@ -16,8 +16,7 @@ import { PortfolioLayout } from '@/components/portfolio';
 import NewJobLayout from '@/layouts/NewJobLayout';
 import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
 
-import ForbidEditLayout from '@/layouts/ForbidEditLayout';
-
+const ForbidEditLayout = lazy(() => import('@/layouts/ForbidEditLayout'));
 const AboutUs = lazy(() => import('../pages/AboutUs'));
 const ContactUs = lazy(() => import('../pages/ContactUs'));
 const LandingPage = lazy(() => import('../pages/LandingPage'));
