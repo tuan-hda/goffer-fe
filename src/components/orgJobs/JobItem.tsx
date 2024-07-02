@@ -113,7 +113,6 @@ const JobItem = ({ data }: JobItemProps) => {
                             'bg-gray-100 text-gray-600': data.status === 'unpublished',
                             'bg-blue-100 text-blue-500': data.status === 'published',
                             'bg-red-100 text-red-500': data.status === 'closed',
-                            'bg-primary/20 text-primary': data.status === 'expired',
                         },
                         'rounded-lg font-normal shadow-none',
                     )}

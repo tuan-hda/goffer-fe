@@ -8,7 +8,7 @@ const ForbidEditLayout = () => {
         return null;
     }
 
-    if (job && job.isPublished) {
+    if (job && job.status === 'published') {
         return (
             <div className="flex min-h-[300px] w-full flex-col items-center justify-center gap-6">
                 <div className="bg-image-doodles h-[200px] w-full opacity-40"></div>

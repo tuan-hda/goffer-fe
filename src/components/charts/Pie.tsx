@@ -17,9 +17,9 @@ type PieData = {
 };
 
 const data: PieData[] = [
-    { symbol: 'A', value: 10, color: '#f6c431' },
-    { symbol: 'B', value: 5, color: '#12ccba' },
-    { symbol: 'C', value: 25, color: '#cc12ba' },
+    { symbol: 'A', value: 10, color: '#C8A8DA' },
+    { symbol: 'B', value: 5, color: '#EDB5D2' },
+    { symbol: 'C', value: 25, color: '#FFE6C1' },
 ];
 
 const PieChart = ({ width, height }: PieProps) => {

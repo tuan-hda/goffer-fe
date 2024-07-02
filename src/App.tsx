@@ -13,11 +13,21 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useStreamStore from './stores/streamStore';
 import { RuntimeProvider } from './providers/RuntimeProvider';
+import { logEvent } from 'firebase/analytics';
+import { analytics } from './configs/firebase';
 
 function App() {
     const [isOpen, setOpen] = useState(false);
     const routes = useRoutes(routesConfig);
     const initClient = useStreamStore((state) => state.initClient);
+
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        });
+    }, []);
 
     useEffect(() => {
         initClient();

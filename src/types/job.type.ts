@@ -22,7 +22,7 @@ export type NewJob = {
 
 export type Job = Omit<NewJob, 'org'> & {
     id: string;
-    status: string;
+    status: 'published' | 'unpublished' | 'closed';
     owner?: User;
     createdAt: string;
     updatedAt: string;
