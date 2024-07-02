@@ -13,11 +13,23 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useStreamStore from './stores/streamStore';
 import { RuntimeProvider } from './providers/RuntimeProvider';
+import ReactGA from 'react-ga4';
+
+const TRACKING_ID = 'G-JL36X64QB3';
 
 function App() {
     const [isOpen, setOpen] = useState(false);
     const routes = useRoutes(routesConfig);
     const initClient = useStreamStore((state) => state.initClient);
+
+    useEffect(() => {
+        ReactGA.initialize(TRACKING_ID);
+        ReactGA.send({
+            hitType: 'pageview',
+            page: window.location.pathname,
+            title: 'Landing Page',
+        });
+    }, []);
 
     useEffect(() => {
         initClient();
