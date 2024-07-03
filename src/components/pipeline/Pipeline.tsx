@@ -27,7 +27,7 @@ const Pipeline = () => {
                             </span>
                         }
                     >
-                        <PhaseDetail />
+                        <PhaseDetail applicationId={data.id} />
                     </Tab>
                     <Tab
                         key="profile"
