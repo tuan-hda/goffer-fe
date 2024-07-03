@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { PieChart } from '../charts';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { TbCheck, TbEye, TbForms } from 'react-icons/tb';
@@ -7,6 +7,7 @@ import useCountApplicationsByPhases from '@/hooks/useCountApplicationsByPhases';
 import { useParams } from 'react-router-dom';
 import useQueryLogs from '@/hooks/useQueryLogs';
 import AnalyticsConversionRate from './AnalyticsConversionRate';
+import useGetSubmitTime from '@/hooks/useGetSubmitTime';
 
 const Analytics = () => {
     const ref2 = useRef<HTMLDivElement>(null);
@@ -24,6 +25,7 @@ const Analytics = () => {
     }, []);
 
     const { id } = useParams();
+    const { data: submitData } = useGetSubmitTime(id);
     const { data } = useCountApplicationsByPhases({
         job: id,
     });
@@ -67,7 +69,7 @@ const Analytics = () => {
                 </Card>
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-6">
+            {/* <div className="mt-6 grid grid-cols-2 gap-6">
                 <Card ref={ref2} className="shadow-none">
                     <CardHeader className="pb-4">
                         <CardTitle className="flex items-center gap-2">Sources breakdown</CardTitle>
@@ -96,7 +98,7 @@ const Analytics = () => {
                         </div>
                     </CardContent>
                 </Card>
-            </div>
+            </div> */}
 
             <div className="mt-6 grid grid-cols-2 gap-6">
                 <Card ref={ref2} className="shadow-none">
@@ -104,7 +106,7 @@ const Analytics = () => {
                         <CardTitle className="flex items-center gap-2">Average time to submit</CardTitle>
                     </CardHeader>
                     <CardContent className="text-3xl">
-                        <p>48 seconds</p>
+                        <p>{submitData?.average} seconds</p>
                         <p className="mt-2 text-sm text-text">
                             The average time for candidate to successfully submit is 48 seconds.
                         </p>
@@ -115,14 +117,13 @@ const Analytics = () => {
                         <CardTitle className="flex items-center gap-2">Submit time by question</CardTitle>
                     </CardHeader>
                     <CardContent className="flex items-center justify-center text-sm">
-                        <div className="w-full">
-                            <p>Lorem ipsum time by question time by question time by question</p>
-                            <p className="font-semibold">58s</p>
-
-                            <p className="mt-3">
-                                Lorem ipsum time by question time by question by question by question time by question
-                            </p>
-                            <p className="font-semibold">58s</p>
+                        <div className="w-full space-y-3">
+                            {submitData?.questions?.map((q) => (
+                                <div key={q._id}>
+                                    <p>{q.question.content}</p>
+                                    <p className="font-semibold">{q.average}s</p>
+                                </div>
+                            ))}
                         </div>
                     </CardContent>
                 </Card>

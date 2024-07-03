@@ -3,7 +3,7 @@ import FormFieldItem from './FormFieldItem';
 import ProgressFooter from '../common/ProgressFooter';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ApplyQuestion from './ApplyQuestion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NewApply } from '@/types/application.type';
 import { formFields, formSchema } from '@/utils/application';
 import { useForm } from 'react-hook-form';
@@ -18,6 +18,7 @@ import { uploadAudio } from '../common/AudioRecorder';
 import { submitApplyAudioAnswerService } from '@/services/answer.service';
 import ApplySuccess from './ApplySuccess';
 import useApplyStore from '@/stores/applyStore';
+import moment, { Moment } from 'moment';
 
 const Application = () => {
     const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Application = () => {
     const { id } = useParams();
     const { data, isLoading, refetch } = useApplyJob(id || '');
     const { answer, loading, setPhase } = useApplyStore();
+    const lastTime = useRef<Moment | null>(null);
 
     const [stepNum, setStepNum] = useState(0);
     const [avatarLoading, setLAvatarLoading] = useState(false);
@@ -93,27 +95,46 @@ const Application = () => {
     const handleNextStep = async () => {
         setUploading(true);
 
-        if (stepNum === 0) await form.handleSubmit(onSubmit)();
-        else if (stepNum < totalSteps) {
-            if (answer && answer.duration >= 20 && data?.phase === 'init') {
-                const audio = await uploadAudio(answer.url);
-
-                if (audio)
-                    await submitApplyAudioAnswerService({
-                        url: audio.file.url,
-                        question: answer.question,
-                        duration: answer.duration,
-                        apply: data?.id,
-                    });
+        try {
+            if (data?.id) {
+                await updateApplyService(data?.id, {
+                    timeToSubmit: moment().toDate(),
+                });
             }
-            if (stepNum < totalSteps) {
-                navigate(`#step-${stepNum + 1}`);
-            }
-        } else {
-            console.log('Apply success');
+        } catch (error) {
+            console.error(error);
         }
 
-        setUploading(false);
+        try {
+            if (stepNum === 0) {
+                await form.handleSubmit(onSubmit)();
+                lastTime.current = moment();
+            } else if (stepNum < totalSteps) {
+                if (answer && answer.duration >= 20 && data?.phase === 'init') {
+                    const audio = await uploadAudio(answer.url);
+
+                    if (audio)
+                        await submitApplyAudioAnswerService({
+                            url: audio.file.url,
+                            question: answer.question,
+                            duration: answer.duration,
+                            apply: data?.id,
+                            submitSeconds: moment().diff(lastTime.current || moment(), 'seconds'),
+                        });
+
+                    lastTime.current = moment();
+                }
+                if (stepNum < totalSteps) {
+                    navigate(`#step-${stepNum + 1}`);
+                }
+            } else {
+                console.log('Apply success');
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setUploading(false);
+        }
     };
 
     return isLoading ? (
