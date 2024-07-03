@@ -46,10 +46,12 @@ export type Apply = Omit<NewApply, 'job' | 'profilePicture' | 'resume'> & {
     assessmentAvg?: number;
     reason?: string;
     answers?: Answer[];
+    timeToSubmit?: Date;
 };
 
 export type EditApply = Partial<NewApply> & {
     phase?: string;
+    timeToSubmit?: Date;
 };
 
 export type ApplyResponse = Omit<EditApply, 'job' | 'applicant'> & {
