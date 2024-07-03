@@ -92,10 +92,6 @@ const JobItem = ({ data }: JobItemProps) => {
                         </p>
                     </div>
                 </div>
-                <div className="mt-2 flex items-center">
-                    <TbUser className="flex-shrink-0" />
-                    <p className="ml-2 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">3/{data.slots} slots</p>
-                </div>
 
                 <p className="mt-7 flex items-center">
                     Created by
@@ -121,11 +117,9 @@ const JobItem = ({ data }: JobItemProps) => {
                     {data.status[0].toUpperCase() + data.status.slice(1)}
                 </Badge>
 
-                <button className="ml-auto text-gray-400">Applicants (0)</button>
-
                 <Dialog>
                     <DropdownMenu>
-                        <DropdownMenuTrigger className="ml-3 rounded-xl p-2">
+                        <DropdownMenuTrigger className="ml-auto rounded-xl p-2">
                             <TbDots />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent onClick={(e) => e.stopPropagation()}>

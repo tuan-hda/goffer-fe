@@ -10,6 +10,7 @@ import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import { formatUTCDate } from '@/utils/time';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
+import useCountApplicationsByPhases from '@/hooks/useCountApplicationsByPhases';
 
 const Overview = () => {
     const { id } = useParams();
@@ -33,6 +34,10 @@ const Overview = () => {
         toast.success('Link copied to clipboard');
     };
 
+    const { data: count } = useCountApplicationsByPhases({
+        job: id,
+    });
+
     return (
         <div className="flex w-full items-start gap-6 text-sm">
             <div className="w-full max-w-[320px] flex-shrink-0">
@@ -41,7 +46,9 @@ const Overview = () => {
                     <p className="text-sm">Slots</p>
                     <div className="mt-1 flex items-center gap-2">
                         <TbUser className="text-base" />
-                        <span>0/{job.slots}</span>
+                        <span>
+                            {count?.find((c) => c._id === 'hired')?.count || 0}/{job.slots}
+                        </span>
                     </div>
                     <p className="mt-5 text-sm">Salary from</p>
                     <div className="mt-1 flex items-center gap-2">

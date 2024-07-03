@@ -85,7 +85,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <LandingPage />
                             </Suspense>
                         ),
@@ -93,7 +93,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: 'who-are-we',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <WhoAreWe />
                             </Suspense>
                         ),
@@ -101,7 +101,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: 'features',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Feature />
                             </Suspense>
                         ),
@@ -109,7 +109,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: 'trusted-by',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <TrustedBy />
                             </Suspense>
                         ),
@@ -117,7 +117,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: 'pricing',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Pricing />
                             </Suspense>
                         ),
@@ -127,7 +127,7 @@ const routesConfig: RouteObject[] = [
             {
                 path: '/about-us',
                 element: (
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div></div>}>
                         <AboutUs />
                     </Suspense>
                 ),
@@ -135,7 +135,7 @@ const routesConfig: RouteObject[] = [
             {
                 path: '/contact',
                 element: (
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div></div>}>
                         <ContactUs />
                     </Suspense>
                 ),
@@ -147,7 +147,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: 'sign-up',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <SignUp />
                             </Suspense>
                         ),
@@ -155,7 +155,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: 'login',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Login />
                             </Suspense>
                         ),
@@ -163,7 +163,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: 'forgot-password',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <ForgotPassword />
                             </Suspense>
                         ),
@@ -171,7 +171,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: 'reset-password',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <ResetPassword />
                             </Suspense>
                         ),
@@ -189,7 +189,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/discover',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <Discover />
                                     </Suspense>
                                 ),
@@ -197,7 +197,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/company/:domain',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <OrgDetail />
                                     </Suspense>
                                 ),
@@ -205,7 +205,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/jobs',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <JobDiscover />
                                     </Suspense>
                                 ),
@@ -213,7 +213,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/job/:id/pipeline',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <Pipeline />
                                     </Suspense>
                                 ),
@@ -227,7 +227,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 index: true,
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <Dashboard />
                                     </Suspense>
                                 ),
@@ -235,7 +235,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: 'reports',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <Reports />
                                     </Suspense>
                                 ),
@@ -243,7 +243,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: 'users',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <UsersManagement />
                                     </Suspense>
                                 ),
@@ -253,7 +253,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/profile',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Profile />
                             </Suspense>
                         ),
@@ -261,7 +261,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/portfolio',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Portfolio />
                             </Suspense>
                         ),
@@ -269,7 +269,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/messages',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Messages />
                             </Suspense>
                         ),
@@ -277,7 +277,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/enhance',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Enhance />
                             </Suspense>
                         ),
@@ -285,7 +285,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/settings',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Settings />
                             </Suspense>
                         ),
@@ -293,7 +293,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/notifications',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Notifications />
                             </Suspense>
                         ),
@@ -301,7 +301,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <OrgJobs />
                             </Suspense>
                         ),
@@ -309,7 +309,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/settings',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <OrgSettings />
                             </Suspense>
                         ),
@@ -317,7 +317,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/notifications',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Notifications />
                             </Suspense>
                         ),
@@ -325,7 +325,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/team',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Team />
                             </Suspense>
                         ),
@@ -333,7 +333,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/assessment',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <AssessmentOrgLayout />
                             </Suspense>
                         ),
@@ -341,7 +341,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 index: true,
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <AssessmentOrg />
                                     </Suspense>
                                 ),
@@ -349,7 +349,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/organization/:domain/assessment/builder',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <AssessmentCreate />
                                     </Suspense>
                                 ),
@@ -357,7 +357,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/organization/:domain/assessment/:id',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <AssessmentCreate />
                                     </Suspense>
                                 ),
@@ -365,7 +365,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/organization/:domain/assessment/:id/results',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <AssessmentResult />
                                     </Suspense>
                                 ),
@@ -375,7 +375,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/bank',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <QuestionBank />
                             </Suspense>
                         ),
@@ -383,7 +383,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/bank/:id',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <QuestionBuilder />
                             </Suspense>
                         ),
@@ -391,7 +391,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/bank/builder/:type',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <QuestionBuilder />
                             </Suspense>
                         ),
@@ -399,7 +399,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/messages',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Messages />
                             </Suspense>
                         ),
@@ -407,7 +407,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/job/:id',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <OrgLayout>
                                     <OrgDetailLayout>
                                         <Outlet />
@@ -419,7 +419,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/organization/:domain/job/:id',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <JobDetail />
                                     </Suspense>
                                 ),
@@ -427,7 +427,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/organization/:domain/job/:id/preview',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <PreviewJob />
                                     </Suspense>
                                 ),
@@ -435,7 +435,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/organization/:domain/job/:id',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <ForbidEditLayout />
                                     </Suspense>
                                 ),
@@ -443,7 +443,7 @@ const routesConfig: RouteObject[] = [
                                     {
                                         path: '/app/organization/:domain/job/:id/questions',
                                         element: (
-                                            <Suspense fallback={<div>Loading...</div>}>
+                                            <Suspense fallback={<div></div>}>
                                                 <Questions />
                                             </Suspense>
                                         ),
@@ -451,7 +451,7 @@ const routesConfig: RouteObject[] = [
                                     {
                                         path: '/app/organization/:domain/job/:id/custom-feedback',
                                         element: (
-                                            <Suspense fallback={<div>Loading...</div>}>
+                                            <Suspense fallback={<div></div>}>
                                                 <CustomFeedback />
                                             </Suspense>
                                         ),
@@ -459,7 +459,7 @@ const routesConfig: RouteObject[] = [
                                     {
                                         path: '/app/organization/:domain/job/:id/custom-assessment',
                                         element: (
-                                            <Suspense fallback={<div>Loading...</div>}>
+                                            <Suspense fallback={<div></div>}>
                                                 <CustomAssessment />
                                             </Suspense>
                                         ),
@@ -467,7 +467,7 @@ const routesConfig: RouteObject[] = [
                                     {
                                         path: '/app/organization/:domain/job/:id/finalize',
                                         element: (
-                                            <Suspense fallback={<div>Loading...</div>}>
+                                            <Suspense fallback={<div></div>}>
                                                 <Finalize />
                                             </Suspense>
                                         ),
@@ -477,7 +477,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: '/app/organization/:domain/job/:id/applicant/:applicationId',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <ApplicantDetail />
                                     </Suspense>
                                 ),
@@ -489,7 +489,7 @@ const routesConfig: RouteObject[] = [
             {
                 path: '/organization/new',
                 element: (
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div></div>}>
                         <NewOrganization />
                     </Suspense>
                 ),
@@ -497,7 +497,7 @@ const routesConfig: RouteObject[] = [
             {
                 path: '/app/organization/:domain',
                 element: (
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div></div>}>
                         <NewJobLayout />
                     </Suspense>
                 ),
@@ -505,7 +505,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/new',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <NewJob />
                             </Suspense>
                         ),
@@ -513,7 +513,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/app/organization/:domain/:id',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <NewJob />
                             </Suspense>
                         ),
@@ -523,7 +523,7 @@ const routesConfig: RouteObject[] = [
             {
                 path: '/project/new',
                 element: (
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div></div>}>
                         <NewProject />
                     </Suspense>
                 ),
@@ -531,7 +531,7 @@ const routesConfig: RouteObject[] = [
             {
                 path: '/project/:projectId',
                 element: (
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div></div>}>
                         <ProjectDetailPage />
                     </Suspense>
                 ),
@@ -539,7 +539,7 @@ const routesConfig: RouteObject[] = [
             {
                 path: '/project/:projectId/edit',
                 element: (
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div></div>}>
                         <NewProject />
                     </Suspense>
                 ),
@@ -554,7 +554,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 index: true,
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <JobApply />
                                     </Suspense>
                                 ),
@@ -562,7 +562,7 @@ const routesConfig: RouteObject[] = [
                             {
                                 path: 'application',
                                 element: (
-                                    <Suspense fallback={<div>Loading...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <Application />
                                     </Suspense>
                                 ),
@@ -574,7 +574,7 @@ const routesConfig: RouteObject[] = [
             {
                 path: '/subscribe',
                 element: (
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div></div>}>
                         <SubscribeResult />
                     </Suspense>
                 ),
@@ -586,7 +586,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/assessment/:assessmentId',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Assessment />
                             </Suspense>
                         ),
@@ -594,7 +594,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/assessment/:assessmentId/:type',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <AssessmentSession />
                             </Suspense>
                         ),
@@ -602,7 +602,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: '/assessment/:assessmentId/success',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <AssessmentSuccess />
                             </Suspense>
                         ),
@@ -616,7 +616,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: ':portfolioDomain',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <PortfolioDisplayPage />
                             </Suspense>
                         ),
@@ -624,7 +624,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: ':portfolioDomain/:projectId',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <ProjectDetail />
                             </Suspense>
                         ),
@@ -638,7 +638,7 @@ const routesConfig: RouteObject[] = [
                     {
                         path: ':id',
                         element: (
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <Invitation />
                             </Suspense>
                         ),
@@ -650,7 +650,7 @@ const routesConfig: RouteObject[] = [
     {
         path: '/get-started',
         element: (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div></div>}>
                 <GetStarted />
             </Suspense>
         ),
@@ -658,7 +658,7 @@ const routesConfig: RouteObject[] = [
     {
         path: '/test',
         element: (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div></div>}>
                 <Test />
             </Suspense>
         ),
@@ -666,7 +666,7 @@ const routesConfig: RouteObject[] = [
     {
         path: '*',
         element: (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div></div>}>
                 <NotFound />
             </Suspense>
         ),
