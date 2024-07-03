@@ -13,7 +13,7 @@ const Traffic = () => {
             }}
             className="col-span-9 -mx-0.5 overflow-hidden px-0.5"
         >
-            <Curve width={width + 50} height={Math.round(width / 2)}>
+            {/* <Curve width={width + 50} height={Math.round(width / 2)}>
                 <div className="mb-4 flex items-center justify-between">
                     <div className="font-medium">
                         <p className="text-base">Traffic</p>
@@ -33,7 +33,7 @@ const Traffic = () => {
                         </TooltipProvider>
                     </div>
                 </div>
-            </Curve>
+            </Curve> */}
         </div>
     );
 };

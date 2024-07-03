@@ -1,21 +1,27 @@
 import { useEffect, useRef, useState } from 'react';
-import { Curve, PieChart } from '../charts';
+import { PieChart } from '../charts';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { DatePickerWithRange } from '../common';
 import { TbCheck, TbEye, TbForms } from 'react-icons/tb';
 import { Progress } from '../ui/progress';
 import useCountApplicationsByPhases from '@/hooks/useCountApplicationsByPhases';
 import { useParams } from 'react-router-dom';
 import useQueryLogs from '@/hooks/useQueryLogs';
+import AnalyticsConversionRate from './AnalyticsConversionRate';
 
 const Analytics = () => {
-    const [width, setWidth] = useState({
-        curve: 0,
-        pie: 0,
-    });
-    const ref = useRef<HTMLDivElement>(null);
     const ref2 = useRef<HTMLDivElement>(null);
+    const [width, setWidth] = useState(0);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (ref2.current) {
+                setWidth(() => ref2.current!.offsetWidth - 32);
+            }
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const { id } = useParams();
     const { data } = useCountApplicationsByPhases({
@@ -29,56 +35,11 @@ const Analytics = () => {
     const hired = data?.find((d) => d._id === 'hired')?.count || 0;
     const views = logs?.length || 0;
 
-    useEffect(() => {
-        const handleResize = () => {
-            if (ref.current && ref2.current) {
-                setWidth(() => ({
-                    pie: ref2.current!.offsetWidth - 32,
-                    curve: ref.current!.offsetWidth - 32,
-                }));
-            }
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
     return (
         <div>
             <h2 className="mb-4 text-xl text-black">Conversion rate</h2>
-            <div className="mb-4 flex items-center gap-4">
-                <div>
-                    <p className="mb-1 text-sm">Time range</p>
-                    <DatePickerWithRange />
-                </div>
 
-                <div>
-                    <p className="mb-1 text-sm">Granularity</p>
-                    <Select>
-                        <SelectTrigger className="w-[180px] bg-white">
-                            <SelectValue placeholder="Select interval" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="day">Day</SelectItem>
-                            <SelectItem value="month">Month</SelectItem>
-                            <SelectItem value="quarter">Quarter</SelectItem>
-                            <SelectItem value="year">Year</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-            </div>
-            <Card ref={ref} className="px-2 py-6 shadow-none">
-                <CardContent>
-                    <div className="w-full">
-                        <Curve width={width.curve} height={Math.min(window.innerWidth - 625, 500)}>
-                            <div className="mb-1 font-medium">
-                                <p className="text-base">Average conversion rate</p>
-                                <p className="text-3xl font-normal">87%</p>
-                            </div>
-                        </Curve>
-                    </div>
-                </CardContent>
-            </Card>
+            <AnalyticsConversionRate />
             <div className="mt-6 grid grid-cols-3 gap-6">
                 <Card className="shadow-none">
                     <CardHeader className="pb-4">
@@ -112,7 +73,7 @@ const Analytics = () => {
                         <CardTitle className="flex items-center gap-2">Sources breakdown</CardTitle>
                     </CardHeader>
                     <CardContent className="flex items-center justify-center text-3xl">
-                        <PieChart width={Math.min(width.pie, 300)} height={300} />
+                        <PieChart width={Math.min(width, 300)} height={300} />
                     </CardContent>
                 </Card>
                 <Card ref={ref2} className="shadow-none">
