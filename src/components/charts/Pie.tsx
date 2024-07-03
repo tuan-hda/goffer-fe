@@ -1,7 +1,6 @@
 import { Group } from '@visx/group';
 import Pie from '@visx/shape/lib/shapes/Pie';
 import Text from '@visx/text/lib/Text';
-import classNames from 'classnames';
 import { useState } from 'react';
 
 export type PieProps = {

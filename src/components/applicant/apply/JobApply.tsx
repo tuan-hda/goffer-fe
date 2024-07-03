@@ -1,16 +1,28 @@
 import { JobDetail } from '@/components/jobListing';
-import { analytics } from '@/configs/firebase';
-import { logEvent } from 'firebase/analytics';
+import useCurrOrganizationJob from '@/hooks/useCurrOrganizationJob';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { addViewService } from '@/services/log.service';
 import { useEffect } from 'react';
 
 const JobApply = () => {
+    const { data: job } = useCurrOrganizationJob();
+    const { data: self } = useSelfProfileQuery();
+
     useEffect(() => {
-        logEvent(analytics, 'page_view', {
-            page_title: document.title,
-            page_location: window.location.href,
-            page_path: window.location.pathname,
-        });
-    }, []);
+        document.title = `${job?.title || 'Job Detail'} - Goffer`;
+    }, [job]);
+
+    useEffect(() => {
+        if (!job) return;
+
+        (async () => {
+            try {
+                await addViewService(self, job.id);
+            } catch (error) {
+                console.log('error create interaction', error);
+            }
+        })();
+    }, [job]);
 
     return (
         <div className="mx-auto max-w-screen-md pb-10 pt-10">
