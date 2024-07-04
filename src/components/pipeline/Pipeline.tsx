@@ -2,11 +2,12 @@ import useApplyJob from '@/hooks/useApplyJob';
 import { useParams } from 'react-router-dom';
 import HeaderInfo from './HeaderInfo';
 import { Snippet, Tab, Tabs } from '@nextui-org/react';
-import { TbChartArcs, TbMessageChatbot, TbPaperclip, TbTimelineEvent } from 'react-icons/tb';
+import { TbChartArcs, TbMessageChatbot, TbPaperclip, TbTimelineEvent, TbWritingSign } from 'react-icons/tb';
 import { JobDetail } from './detail';
 import Resume from './Resume';
 import { Interviews } from './interviews';
 import { PhaseDetail } from './phase';
+import Assessments from './Assessments';
 
 const Pipeline = () => {
     const { id } = useParams();
@@ -20,7 +21,7 @@ const Pipeline = () => {
             <div className="mt-10 h-full min-w-1 flex-1">
                 <Tabs variant="underlined" size="lg">
                     <Tab
-                        key="projects"
+                        key="pipeline"
                         title={
                             <span className="flex items-center gap-2">
                                 <TbTimelineEvent className="text-lg" /> Pipeline
@@ -30,7 +31,7 @@ const Pipeline = () => {
                         <PhaseDetail applicationId={data.id} />
                     </Tab>
                     <Tab
-                        key="profile"
+                        key="details"
                         title={
                             <span className="flex items-center gap-2">
                                 <TbChartArcs className="text-lg" /> Details
@@ -40,7 +41,7 @@ const Pipeline = () => {
                         <JobDetail jobId={data.job.id} />
                     </Tab>
                     <Tab
-                        key="experience"
+                        key="resume"
                         title={
                             <span className="flex items-center gap-2">
                                 <TbPaperclip className="text-lg" /> Resume
@@ -51,7 +52,7 @@ const Pipeline = () => {
                     </Tab>
                     {data.answers.length > 0 && (
                         <Tab
-                            key="recommendations"
+                            key="interviews"
                             title={
                                 <span className="flex items-center gap-2">
                                     <TbMessageChatbot className="text-lg" /> Interviews
@@ -59,6 +60,18 @@ const Pipeline = () => {
                             }
                         >
                             <Interviews questions={data.job.questions} answers={data.answers} />
+                        </Tab>
+                    )}
+                    {data.job.assessments.length > 0 && (
+                        <Tab
+                            key="assessments"
+                            title={
+                                <span className="flex items-center gap-2">
+                                    <TbWritingSign className="text-lg" /> Assessments
+                                </span>
+                            }
+                        >
+                            <Assessments assessments={data.job.assessments} />
                         </Tab>
                     )}
                 </Tabs>
