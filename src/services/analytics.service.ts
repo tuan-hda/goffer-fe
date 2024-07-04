@@ -1,4 +1,4 @@
-import { AnalyticsGranularity, ConversionRate } from '@/types/analytics.type';
+import { AnalyticsGranularity, ConversionRate, SubmitTimeData } from '@/types/analytics.type';
 import { baseAxios } from './base';
 import moment from 'moment';
 
@@ -18,4 +18,8 @@ export const getConversionRateService = async (
             },
         })
     ).data;
+};
+
+export const getSubmitTimeDataService = async (job: string) => {
+    return (await baseAxios.get<SubmitTimeData>(`/analytics/submit-time`, { params: { job } })).data;
 };
