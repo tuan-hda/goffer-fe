@@ -17,9 +17,9 @@ const Interviews = ({ questions, answers }: Props) => {
             <div className="h-[calc(100vh-260px)] w-[400px] overflow-y-scroll pr-8">
                 {questions.map((question, index) => (
                     <div className="border-b-1 !border-b-gray-200/70 py-2 ">
-                        <div
+                        <button
                             className={classNames(
-                                'rounded-xl p-3 hover:bg-beige/20',
+                                'flex w-full flex-col justify-start rounded-xl p-3 hover:bg-beige/20',
                                 question.id === selected.id && 'bg-beige/40',
                             )}
                             onClick={() => setSelected(question)}
@@ -31,7 +31,7 @@ const Interviews = ({ questions, answers }: Props) => {
                                 </div>
                                 <p className="mx-4 w-full truncate text-xs text-gray-600">{question.content}</p>
                             </div>
-                        </div>
+                        </button>
                     </div>
                 ))}
             </div>
