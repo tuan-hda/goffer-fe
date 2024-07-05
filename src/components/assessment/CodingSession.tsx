@@ -13,7 +13,7 @@ const CodingSession = () => {
         <div className="flex h-screen flex-col overflow-hidden bg-[#20221E] text-sm text-[#eee]">
             <Header />
             <Sidebar />
-            <div className="ml-16 flex flex-1 gap-2">
+            <div className="ml-16 flex min-h-0 flex-1 gap-2">
                 <Card className="mb-2 flex-1 border-[#606060] bg-[#262626]">
                     <CardHeader className="rounded-t-xl bg-[#333] px-4 pb-2 pt-2 font-medium text-white">
                         <div className="flex items-center gap-2">

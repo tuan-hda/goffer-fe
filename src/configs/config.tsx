@@ -6,4 +6,5 @@ export default {
     STRIPE_PUBLISHABLE_KEY: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
     STREAM_KEY: import.meta.env.VITE_STREAM_KEY || 'nr6fjqx6h2cz',
     STREAM_APP_ID: import.meta.env.VITE_STREAM_APP_ID,
+    RAPID_API_KEY: import.meta.env.VITE_RAPID_API_KEY,
 };

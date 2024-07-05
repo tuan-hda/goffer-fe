@@ -19,9 +19,9 @@ const Assessment = () => {
         );
     }
 
-    if (!data) {
-        return <NotFound />;
-    }
+    // if (!data) {
+    //     return <NotFound />;
+    // }
 
     return (
         <div className="relative flex min-h-screen flex-col text-sm">

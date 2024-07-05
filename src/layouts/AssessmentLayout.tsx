@@ -10,26 +10,26 @@ const AssessmentLayout = () => {
     const location = useLocation();
     const { assessmentId } = useParams();
 
-    useEffect(() => {
-        if (!isLoading) {
-            if (session) {
-                if (
-                    location.pathname !== `/assessment/${assessmentId}/success` &&
-                    (remainTime(session.endingAt) <= 0 || session.status === 'closed')
-                ) {
-                    navigate(`/assessment/${assessmentId}/success`);
-                } else if (
-                    location.pathname !== `/assessment/${assessmentId}/session` &&
-                    remainTime(session.endingAt) > 0 &&
-                    session.status !== 'closed'
-                ) {
-                    navigate(`/assessment/${assessmentId}/session`);
-                }
-            } else {
-                if (location.pathname !== `/assessment/${assessmentId}`) navigate(`/assessment/${assessmentId}`);
-            }
-        }
-    }, [session, location, isLoading, assessmentId, navigate]);
+    // useEffect(() => {
+    //     if (!isLoading) {
+    //         if (session) {
+    //             if (
+    //                 location.pathname !== `/assessment/${assessmentId}/success` &&
+    //                 (remainTime(session.endingAt) <= 0 || session.status === 'closed')
+    //             ) {
+    //                 navigate(`/assessment/${assessmentId}/success`);
+    //             } else if (
+    //                 location.pathname !== `/assessment/${assessmentId}/session` &&
+    //                 remainTime(session.endingAt) > 0 &&
+    //                 session.status !== 'closed'
+    //             ) {
+    //                 navigate(`/assessment/${assessmentId}/session`);
+    //             }
+    //         } else {
+    //             if (location.pathname !== `/assessment/${assessmentId}`) navigate(`/assessment/${assessmentId}`);
+    //         }
+    //     }
+    // }, [session, location, isLoading, assessmentId, navigate]);
 
     return (
         <AuthRequiredLayout>
