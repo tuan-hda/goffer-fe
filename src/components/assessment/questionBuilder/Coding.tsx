@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import catchAsync from '@/utils/catchAsync';
 import { createQuestionService, updateQuestionService } from '@/services/question.service';
 import { NewQuestion, Question } from '@/types/question.type';
+import { toast } from 'sonner';
 
 const Coding = () => {
     const setQuestion = useNewQuestionStore((state) => state.setQuestion('coding'));
@@ -36,6 +37,22 @@ const Coding = () => {
         }
     }, [location]);
 
+    const isLinesValid = (lines: string, numberOfLines: number) => {
+        return lines.split('\n').length % numberOfLines === 0;
+    };
+
+    const isInputOutputMatch = (
+        input: string,
+        output: string,
+        numberOfInputLines: number,
+        numberOfOutputLines: number,
+    ) => {
+        return (
+            Math.floor(input.split('\n').length / (numberOfInputLines || 1)) ===
+            Math.floor(output.split('\n').length / (numberOfOutputLines || 1))
+        );
+    };
+
     const create = () =>
         catchAsync(
             async () => {
@@ -47,6 +64,57 @@ const Coding = () => {
                     type: 'coding',
                     description: JSON.stringify(processedQuestion.description),
                 };
+
+                if (!questionBody.exampleInput) {
+                    return toast.error('Example input is required');
+                }
+                if (!questionBody.exampleOutput) {
+                    return toast.error('Example output is required');
+                }
+                if (!questionBody.numberOfTestCaseLines) {
+                    return toast.error('Number of test case lines is required');
+                }
+                if (!questionBody.numberOfOutputLines) {
+                    return toast.error('Number of output lines is required');
+                }
+                if (!questionBody.gradingInput) {
+                    return toast.error('Grading input is required');
+                }
+                if (!questionBody.gradingOutput) {
+                    return toast.error('Grading output is required');
+                }
+                if (!isLinesValid(questionBody.exampleInput, questionBody.numberOfTestCaseLines)) {
+                    return toast.error('Example input lines must be a multiple of number of test case lines');
+                }
+                if (!isLinesValid(questionBody.exampleOutput, questionBody.numberOfOutputLines)) {
+                    return toast.error('Example output lines must be a multiple of number of test case lines');
+                }
+                if (!isLinesValid(questionBody.gradingInput, questionBody.numberOfTestCaseLines)) {
+                    return toast.error('Grading input lines must be a multiple of number of output lines');
+                }
+                if (!isLinesValid(questionBody.gradingOutput, questionBody.numberOfOutputLines)) {
+                    return toast.error('Grading output lines must be a multiple of number of output lines');
+                }
+                if (
+                    !isInputOutputMatch(
+                        questionBody.exampleInput,
+                        questionBody.exampleOutput,
+                        questionBody.numberOfTestCaseLines,
+                        questionBody.numberOfOutputLines,
+                    )
+                ) {
+                    return toast.error('Number of example test cases must match');
+                }
+                if (
+                    !isInputOutputMatch(
+                        questionBody.gradingInput,
+                        questionBody.gradingOutput,
+                        questionBody.numberOfTestCaseLines,
+                        questionBody.numberOfOutputLines,
+                    )
+                ) {
+                    return toast.error('Number of grading test cases must match');
+                }
 
                 const res = await createQuestionService(questionBody);
                 await refetchList();
