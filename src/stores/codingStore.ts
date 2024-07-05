@@ -10,7 +10,7 @@ type State = {
     };
     input: string;
     currentTab: 'input' | 'output';
-    result?: SubmissionResponse;
+    results?: SubmissionResponse[];
 };
 
 type Actions = {
@@ -18,7 +18,7 @@ type Actions = {
     setConfig: (value: State['config']) => void;
     setInput: (value: string) => void;
     setCurrentTab: (value: State['currentTab']) => void;
-    setResult: (value: SubmissionResponse) => void;
+    setResults: (value: SubmissionResponse[]) => void;
 };
 
 const useCodingStore = create<State & Actions>()(
@@ -50,9 +50,9 @@ const useCodingStore = create<State & Actions>()(
                 state.currentTab = value;
             });
         },
-        setResult(value) {
+        setResults(value) {
             set((state) => {
-                state.result = value;
+                state.results = value;
             });
         },
     })),

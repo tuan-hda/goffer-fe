@@ -2,7 +2,7 @@ export interface SubmissionResponse {
     source_code: string;
     language_id: number;
     stdin?: string;
-    expected_output?: null;
+    expected_output?: string;
     time: string;
     stdout: string;
     status_id: number;
