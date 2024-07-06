@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from '../ui/card';
 import { TbBorderOuter, TbChevronDown, TbCode, TbInputCheck } from 'react-icons/tb';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { languageOptions } from '@/configs/languageOptions';
 import MirrorEditor from './MirrorEditor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
@@ -10,25 +10,26 @@ import classNames from 'classnames';
 import useCodingStore from '@/stores/codingStore';
 import { shallow } from 'zustand/shallow';
 import CodingOutput from './CodingOutput';
+import useCurrentTakingCodingQuestion from '@/hooks/useCurrentTakingCodingQuestion';
+import useCurrPublicAssessment from '@/hooks/useCurrPublicAssessment';
 
 const CodingPanel = () => {
     const ref = useRef<HTMLDivElement>(null);
     const [height, setHeight] = useState(200);
 
-    const [input, setCode, config, setConfig, setInput, currentTab, setCurrentTab] = useCodingStore(
+    const [input, submissions, setSubmissions, setInput, currentTab, setCurrentTab] = useCodingStore(
         (state) => [
             state.input,
-            state.setCode,
-            state.config,
-            state.setConfig,
+            state.submissions,
+            state.setSubmissions,
             state.setInput,
             state.currentTab,
             state.setCurrentTab,
         ],
         shallow,
     );
-
-    const [collapsed, setCollapsed] = useState(false);
+    const { data: currentAssessment } = useCurrPublicAssessment();
+    const { data: currentQuestion } = useCurrentTakingCodingQuestion();
 
     useEffect(() => {
         const handleResize = () => {
@@ -41,18 +42,35 @@ const CodingPanel = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [collapsed]);
+    }, []);
 
     const handleLanguageChange = (lan: string) => {
-        setConfig({
-            lang: languageOptions.find((l) => l.value === lan) || languageOptions[0],
+        if (!currentQuestion) return;
+        setSubmissions((prev) => {
+            return {
+                ...prev,
+                [currentQuestion.id]: {
+                    ...prev[currentQuestion.id],
+                    lang: languageOptions.find((l) => l.value === lan),
+                },
+            };
         });
     };
 
-    const toggleCollapse = () => {
-        setHeight(200);
-        setCollapsed((prev) => !prev);
+    const setCode = (code: string) => {
+        if (!currentQuestion) return;
+        setSubmissions((prev) => {
+            return {
+                ...prev,
+                [currentQuestion.id]: {
+                    ...prev[currentQuestion.id],
+                    code,
+                },
+            };
+        });
     };
+
+    if (!currentQuestion) return null;
 
     return (
         <div className="flex flex-1 flex-col">
@@ -62,7 +80,7 @@ const CodingPanel = () => {
                     <div className="flex items-center gap-2">
                         <TbCode /> Code
                     </div>
-                    <Select value={config.lang.value} onValueChange={handleLanguageChange}>
+                    <Select value={submissions[currentQuestion.id]?.lang?.value} onValueChange={handleLanguageChange}>
                         <SelectTrigger className="!mt-0 -mr-2 h-6 w-[200px] rounded-lg border-white/40 text-xs">
                             <SelectValue placeholder="Select a language" />
                         </SelectTrigger>
@@ -80,15 +98,20 @@ const CodingPanel = () => {
                 </CardHeader>
                 <CardContent className="flex flex-1 flex-col p-0 px-0">
                     <div ref={ref} className="flex-1">
-                        <MirrorEditor setOuterValue={setCode} lang={config.lang} height={height} />
+                        <MirrorEditor
+                            key={currentQuestion.id}
+                            outerValue={submissions[currentQuestion.id]?.code}
+                            setOuterValue={setCode}
+                            lang={submissions[currentQuestion.id]?.lang || languageOptions[0]}
+                            height={height}
+                        />
                     </div>
                 </CardContent>
             </Card>
             {/* Input output */}
             <Card
                 className={classNames(
-                    'mb-2 mr-2 flex h-0 flex-col border-[#606060] bg-[#262626] p-0 transition',
-                    !collapsed && 'flex-[2]',
+                    'mb-2 mr-2 flex h-0 flex-[2] flex-col border-[#606060] bg-[#262626] p-0 transition',
                 )}
             >
                 <Tabs
@@ -98,12 +121,7 @@ const CodingPanel = () => {
                     className="relative flex h-0 flex-1 flex-col"
                 >
                     {/* Input output header */}
-                    <div
-                        className={classNames(
-                            'flex rounded-t-xl bg-[#333]',
-                            !collapsed ? 'rounded-b-none' : 'rounded-b-xl',
-                        )}
-                    >
+                    <div className={classNames('flex rounded-t-xl bg-[#333]')}>
                         <TabsList className="flex-1 justify-start bg-[#333]">
                             <TabsTrigger
                                 value="input"
@@ -120,15 +138,6 @@ const CodingPanel = () => {
                                 Test output
                             </TabsTrigger>
                         </TabsList>
-
-                        <button
-                            onClick={toggleCollapse}
-                            className="ml-auto mr-2 mt-1 flex h-7 w-7 items-center justify-center rounded-xl transition hover:bg-white/10"
-                        >
-                            <TbChevronDown
-                                className={classNames('transition', collapsed ? 'rotate-180' : 'rotate-0')}
-                            />
-                        </button>
                     </div>
 
                     <div

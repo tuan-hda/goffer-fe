@@ -5,18 +5,20 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 type State = {
-    code: string;
-    config: {
-        lang: CodingLanguage;
-    };
+    submissions: Record<
+        string,
+        {
+            code?: string;
+            lang?: CodingLanguage;
+        }
+    >;
     input: string;
     currentTab: 'input' | 'output';
     results?: SubmissionResponse[];
 };
 
 type Actions = {
-    setCode: (code: string) => void;
-    setConfig: (value: State['config']) => void;
+    setSubmissions: (value: State['submissions'] | ((value: State['submissions']) => State['submissions'])) => void;
     setInput: (value: string) => void;
     setCurrentTab: (value: State['currentTab']) => void;
     setResults: (value: SubmissionResponse[]) => void;
@@ -24,26 +26,18 @@ type Actions = {
 
 const useCodingStore = create<State & Actions>()(
     immer((set) => ({
-        code: '',
+        submissions: {},
         result: undefined,
         currentTab: 'input',
-        config: {
-            lang: languageOptions[0],
-        },
         input: '',
         setInput(value) {
             set((state) => {
                 state.input = value;
             });
         },
-        setCode(code) {
+        setSubmissions(value) {
             set((state) => {
-                state.code = code;
-            });
-        },
-        setConfig(config) {
-            set((state) => {
-                state.config = config;
+                state.submissions = typeof value === 'function' ? value(useCodingStore.getState().submissions) : value;
             });
         },
         setCurrentTab(value) {

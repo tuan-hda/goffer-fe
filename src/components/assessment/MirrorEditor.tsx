@@ -1,7 +1,7 @@
 import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import createTheme from '@uiw/codemirror-themes';
 import { tags as t } from '@lezer/highlight';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { EditorView } from '@codemirror/view';
 import { TbCircleFilled, TbRestore } from 'react-icons/tb';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
@@ -54,18 +54,19 @@ const myTheme = createTheme({
     ],
 });
 
-export default function MirrorEditor({ height, lang, setOuterValue, outerValue, isCode = true }: Props) {
+function MirrorEditor({ height, lang, setOuterValue, outerValue, isCode = true }: Props) {
     const [pos, setPos] = useState({ line: 0, col: 0 });
     const [tabSize, setTabSize] = useState(4);
     const ref = useRef<ReactCodeMirrorRef>(null);
     const editorHeight = useMemo(() => height - 57, [height]);
     const innerState = useState('');
-    const value = useMemo(() => {
-        return outerValue ?? innerState[0];
-    }, [innerState, outerValue]);
-    const setValue = useMemo(() => {
-        return setOuterValue ?? innerState[1];
-    }, [innerState, setOuterValue]);
+
+    const value = outerValue ?? innerState[0];
+    const setValue = setOuterValue ?? innerState[1];
+
+    // useEffect(() => {
+    //     setValue('');
+    // }, [setValue]);
 
     const mirror = useMemo(() => {
         return (
@@ -73,10 +74,7 @@ export default function MirrorEditor({ height, lang, setOuterValue, outerValue, 
                 ref={ref}
                 theme={myTheme}
                 value={value}
-                onChange={(value) => {
-                    setValue(value);
-                    setOuterValue?.(value);
-                }}
+                onChange={setValue}
                 basicSetup={{
                     tabSize,
                 }}
@@ -105,9 +103,9 @@ export default function MirrorEditor({ height, lang, setOuterValue, outerValue, 
         }
     };
 
-    useEffect(() => {
-        if (isCode) format();
-    }, [tabSize, isCode]);
+    // useEffect(() => {
+    //     if (isCode) format();
+    // }, [tabSize, isCode]);
 
     return (
         <div className="relative" style={{ height: `${height}px` }}>
@@ -162,3 +160,13 @@ export default function MirrorEditor({ height, lang, setOuterValue, outerValue, 
         </div>
     );
 }
+
+export default memo(
+    MirrorEditor,
+    (prev, next) =>
+        prev.outerValue === next.outerValue &&
+        prev.lang === next.lang &&
+        prev.height === next.height &&
+        prev.isCode === next.isCode &&
+        prev.setOuterValue === next.setOuterValue,
+);

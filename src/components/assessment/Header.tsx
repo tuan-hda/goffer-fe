@@ -1,7 +1,7 @@
 import { TbLoader, TbTestPipe, TbTriangleFilled, TbUpload } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import catchAsync from '@/utils/catchAsync';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { getBatchSubmissionsService, submitBatchService, submitService } from '@/services/coding.service';
 import useCodingStore from '@/stores/codingStore';
 import { shallow } from 'zustand/shallow';
@@ -13,6 +13,8 @@ import _ from 'lodash';
 import { isAxiosError } from 'axios';
 import { toast } from 'sonner';
 import CodingSubmitAll from './CodingSubmitAll';
+import CodingSubmit from './CodingSubmit';
+import { languageOptions } from '@/configs/languageOptions';
 
 const Header = () => {
     const { data: assessment } = useCurrPublicAssessment();
@@ -20,10 +22,16 @@ const Header = () => {
 
     const [loading, setLoading] = useState(false);
     const [runAllLoading, setRunAllLoading] = useState(false);
-    const [code, config, input, setCurrentTab, setResults] = useCodingStore(
-        (state) => [state.code, state.config, state.input, state.setCurrentTab, state.setResults],
+    const [submissions, input, setCurrentTab, setResults] = useCodingStore(
+        (state) => [state.submissions, state.input, state.setCurrentTab, state.setResults],
         shallow,
     );
+
+    const currentWork = useMemo(() => {
+        if (currentQuestion) {
+            return submissions[currentQuestion.id];
+        }
+    }, [submissions, currentQuestion]);
 
     if (!currentQuestion) return null;
 
@@ -31,8 +39,8 @@ const Header = () => {
         try {
             setLoading(true);
             const body: Partial<SubmissionResponse> = {};
-            body.language_id = config.lang.id;
-            body.source_code = encodeBase64(code);
+            body.language_id = currentWork?.lang?.id || languageOptions[0].id;
+            body.source_code = encodeBase64(currentWork?.code || '');
             body.stdin = encodeBase64(input);
 
             const response = await submitService(body);
@@ -62,8 +70,8 @@ const Header = () => {
             );
 
             const body: Partial<SubmissionResponse> = {};
-            body.language_id = config.lang.id;
-            body.source_code = encodeBase64(code);
+            body.language_id = currentWork?.lang?.id || languageOptions[0].id;
+            body.source_code = encodeBase64(currentWork?.code || '');
 
             const submissions: Partial<SubmissionResponse>[] = stdins.map((item, index) => ({
                 ...body,
@@ -134,10 +142,7 @@ const Header = () => {
                     )}
                     Run all test cases
                 </Button>
-                <Button className="gap-2" variant="black">
-                    <TbUpload className="text-[15px]" />
-                    Submit
-                </Button>
+                <CodingSubmit />
                 <CodingSubmitAll />
             </div>
             {/* <div className="ml-auto flex max-w-[400px] flex-1 justify-end"></div> */}

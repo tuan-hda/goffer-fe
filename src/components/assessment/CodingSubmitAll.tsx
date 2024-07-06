@@ -12,15 +12,21 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import { TbLoader, TbUpload } from 'react-icons/tb';
 import catchAsync from '@/utils/catchAsync';
+import { submitAllService } from '@/services/takeAssessment.service';
+import useCurrTakingAssessment from '@/hooks/useCurrTakingAssessment';
 
 const CodingSubmitAll = () => {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const { data: taking, refetch } = useCurrTakingAssessment();
 
     const submitAll = () =>
         catchAsync(
             async () => {
+                if (!taking) return;
                 setLoading(true);
+                await submitAllService(taking.id);
+                await refetch();
                 setOpen(false);
             },
             () => {
