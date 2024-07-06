@@ -15,9 +15,9 @@ const CodingPanel = () => {
     const ref = useRef<HTMLDivElement>(null);
     const [height, setHeight] = useState(200);
 
-    const [code, setCode, config, setConfig, setInput, currentTab, setCurrentTab] = useCodingStore(
+    const [input, setCode, config, setConfig, setInput, currentTab, setCurrentTab] = useCodingStore(
         (state) => [
-            state.code,
+            state.input,
             state.setCode,
             state.config,
             state.setConfig,
@@ -137,15 +137,20 @@ const CodingPanel = () => {
                             // collapsed ? 'pointer-events-none h-0 opacity-0' : 'pointer-events-auto opacity-100',
                         )}
                     >
+                        {/* Input */}
                         <TabsContent value="input" className="p-0">
                             <div className="-mt-2 flex-1">
                                 <MirrorEditor
                                     setOuterValue={setInput}
+                                    outerValue={input}
                                     height={((height + 100) / 3) * 2 - 80}
                                     lang="plain"
+                                    isCode={false}
                                 />
                             </div>
                         </TabsContent>
+
+                        {/* Output */}
                         <TabsContent value="output" className="h-[90%] p-0">
                             <CodingOutput />
                         </TabsContent>

@@ -19,9 +19,9 @@ const Assessment = () => {
         );
     }
 
-    // if (!data) {
-    //     return <NotFound />;
-    // }
+    if (!data) {
+        return <NotFound />;
+    }
 
     return (
         <div className="relative flex min-h-screen flex-col text-sm">
@@ -45,7 +45,7 @@ const Assessment = () => {
                 <div className="mb-5 mt-7 border-t-2 border-dashed border-gray-100" />
 
                 <div>
-                    <p className="text-justify text-text">{data.description}</p>
+                    <p className="text-justify text-text">{data?.description}</p>
                 </div>
 
                 <div className="bg-image-doodles -mb-10 mt-10 flex-1 opacity-50"></div>

@@ -56,6 +56,7 @@ const AssessmentBuilderBasic = () => {
                     fileUrl={assessment.image}
                     onAttach={(url) => {
                         setAssessment((state) => ({ ...state, image: url }));
+                        console.log('url');
                     }}
                     onDelete={() => {
                         setAssessment((state) => ({ ...state, image: '' }));

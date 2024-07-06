@@ -1,5 +1,6 @@
 import { languageOptions } from '@/configs/languageOptions';
 import { CodingLanguage, SubmissionResponse } from '@/types/coding.type';
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -57,5 +58,9 @@ const useCodingStore = create<State & Actions>()(
         },
     })),
 );
+
+if (process.env.NODE_ENV === 'development') {
+    mountStoreDevtool('CodingStore', useCodingStore);
+}
 
 export default useCodingStore;
