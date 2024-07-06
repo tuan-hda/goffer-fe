@@ -8,10 +8,12 @@ import Resume from './Resume';
 import { Interviews } from './interviews';
 import { PhaseDetail } from './phase';
 import Assessments from './Assessments';
+import { Key, useState } from 'react';
 
 const Pipeline = () => {
     const { id } = useParams();
     const { data } = useApplyJob(id || '');
+    const [selected, setSelected] = useState<string | number>('pipeline');
 
     return !data ? (
         <Snippet />
@@ -19,7 +21,7 @@ const Pipeline = () => {
         <div className="min-h-screen w-full bg-pale px-6 py-5 text-text">
             <HeaderInfo job={data.job} />
             <div className="mt-10 h-full min-w-1 flex-1">
-                <Tabs variant="underlined" size="lg">
+                <Tabs selectedKey={selected} onSelectionChange={setSelected} variant="underlined" size="lg">
                     <Tab
                         key="pipeline"
                         title={
@@ -28,7 +30,7 @@ const Pipeline = () => {
                             </span>
                         }
                     >
-                        <PhaseDetail applicationId={data.id} />
+                        <PhaseDetail onSelected={setSelected} applicationId={data.id} />
                     </Tab>
                     <Tab
                         key="details"
