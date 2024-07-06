@@ -1,17 +1,18 @@
 import { TbInfoCircle, TbMessageCircle2 } from 'react-icons/tb';
 import AudioRecorder from '../common/AudioRecorder';
 import { Question } from '@/types/question.type';
-import useUserAnswer from '@/hooks/useUserAnswer';
+import useApplyAnswer from '@/hooks/useUserAnswer';
 
 interface Props {
     order: number;
     total: number;
     question?: Question;
+    applicationId?: string;
 }
 
-const ApplyQuestion = ({ order, total, question }: Props) => {
+const ApplyQuestion = ({ order, total, question, applicationId }: Props) => {
     if (!question) return;
-    const { data: answer } = useUserAnswer(question.id);
+    const { data: answer } = useApplyAnswer(question.id, applicationId);
 
     return (
         <div className="flex flex-col gap-9 text-text">

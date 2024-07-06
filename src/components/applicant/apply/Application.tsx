@@ -190,7 +190,12 @@ const Application = () => {
                     ) : stepNum === totalSteps ? (
                         <ApplySuccess />
                     ) : (
-                        <ApplyQuestion total={totalSteps - 1} order={stepNum} question={job?.questions[stepNum - 1]} />
+                        <ApplyQuestion
+                            total={totalSteps - 1}
+                            order={stepNum}
+                            question={job?.questions[stepNum - 1]}
+                            applicationId={data?.id}
+                        />
                     )}
                 </div>
 

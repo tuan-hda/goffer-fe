@@ -1,12 +1,12 @@
 import AudioRecorder from '@/components/applicant/common/AudioRecorder';
-import useUserAnswer from '@/hooks/useUserAnswer';
+import useApplyAnswer from '@/hooks/useUserAnswer';
 import { Question } from '@/types/question.type';
 
 interface Props {
     question: Question;
 }
 const DetailPanel = ({ question }: Props) => {
-    const { data: answer } = useUserAnswer(question.id);
+    const { data: answer } = useApplyAnswer(question.id);
 
     return (
         <div className="ml-8 w-full overflow-hidden rounded-xl border-none p-10 shadow-medium">
