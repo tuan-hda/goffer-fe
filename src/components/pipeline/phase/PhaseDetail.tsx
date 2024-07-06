@@ -8,8 +8,9 @@ import { Button } from '@/components/ui/button';
 
 interface Props {
     applicationId: string;
+    onSelected?: (_: string | number) => void;
 }
-const PhaseDetail = ({ applicationId }: Props) => {
+const PhaseDetail = ({ applicationId, onSelected }: Props) => {
     const { data } = useApplicationById(applicationId);
     const { data: org } = useGetOrganization(data?.job.org as unknown as string);
     return (
@@ -30,15 +31,18 @@ const PhaseDetail = ({ applicationId }: Props) => {
                             instructions
                         </p>
                         {data.job.assessments.length > 0 && (
-                            <Link to="/" className="text-center font-serif-2 text-xl text-text underline">
-                                <div className="flex items-center gap-2">
-                                    <TbPencilMinus size={24} /> Please complete the
-                                    <Button variant="outline" className="uppercase">
-                                        assessment test
-                                    </Button>
-                                    to help us better understand your skills and experience
-                                </div>
-                            </Link>
+                            <span className="flex items-center gap-2 text-nowrap text-center font-serif-2 text-xl text-text">
+                                <TbPencilMinus size={24} /> Please complete the
+                                <Button
+                                    onClick={() => onSelected && onSelected('assessments')}
+                                    variant="outline"
+                                    className="font-medium uppercase hover:text-primary"
+                                    size="sm"
+                                >
+                                    assessment test
+                                </Button>
+                                to help us better understand your skills and experience
+                            </span>
                         )}
                     </>
                 )}

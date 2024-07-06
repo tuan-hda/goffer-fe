@@ -1,8 +1,11 @@
 import { Button } from '@/components/ui/button';
+import useCurrPublicAssessment from '@/hooks/useCurrPublicAssessment';
 import { Image } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 
 const AssessmentSuccess = () => {
+    const { data, isLoading } = useCurrPublicAssessment();
+
     return (
         <div className="relative flex h-screen w-screen flex-col text-sm">
             <img src="/diamond.png" alt="bloom" className="fixed left-[16vw] top-[4vh] w-[35vw] opacity-50" />
@@ -20,8 +23,8 @@ const AssessmentSuccess = () => {
                             Thank you for spending time taking the assessment. We will inform you through email about
                             the result.
                         </p>
-                        <Button variant="outline" className="mt-2">
-                            <Link to="/app">Go Home</Link>
+                        <Button asChild variant="outline" className="mt-2">
+                            <Link to={`/app/job/${data?.job?.id}/pipeline`}>Go to your application</Link>
                         </Button>
                     </div>
                 </div>
