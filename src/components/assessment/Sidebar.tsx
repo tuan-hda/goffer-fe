@@ -21,7 +21,6 @@ const Sidebar = () => {
     useEffect(() => {
         const endingAt = taking?.endingAt || new Date();
         const left = moment(endingAt).diff(moment(), 'seconds');
-        console.log('left', left);
         setCountDown(Math.max(left, 0));
 
         const interval = setInterval(() => {
@@ -39,6 +38,18 @@ const Sidebar = () => {
             clearInterval(interval);
         };
     }, [taking]);
+
+    const getColorClassName = (index: number) => {
+        const isSubmitted = taking?.answers.some(
+            (a) => a.question.id === Array.from(assessment?.questions.values() || []).at(index)?.id,
+        );
+        if (currentIndex === index) {
+            if (isSubmitted) return 'bg-green-700 text-white';
+            return 'bg-white text-[#333]';
+        }
+        if (isSubmitted) return 'bg-green-500 text-white';
+        return 'bg-[#000] text-white';
+    };
 
     return (
         <div className="fixed left-0 top-10 flex h-[calc(100vh-48px)] w-12 flex-col justify-between gap-0">
@@ -64,7 +75,7 @@ const Sidebar = () => {
                                 key={i}
                                 className={classNames(
                                     'flex aspect-square w-full items-center justify-center font-mono',
-                                    currentIndex !== i ? 'bg-[#000] text-white' : 'bg-white text-[#333]',
+                                    getColorClassName(i),
                                 )}
                             >
                                 {i + 1}
