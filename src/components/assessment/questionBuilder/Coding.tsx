@@ -83,6 +83,12 @@ const Coding = () => {
                 if (!questionBody.gradingOutput) {
                     return toast.error('Grading output is required');
                 }
+
+                questionBody.exampleInput = questionBody.exampleInput.trim();
+                questionBody.exampleOutput = questionBody.exampleOutput.trim();
+                questionBody.gradingInput = questionBody.gradingInput.trim();
+                questionBody.gradingOutput = questionBody.gradingOutput.trim();
+
                 if (!isLinesValid(questionBody.exampleInput, questionBody.numberOfTestCaseLines)) {
                     return toast.error('Example input lines must be a multiple of number of test case lines');
                 }

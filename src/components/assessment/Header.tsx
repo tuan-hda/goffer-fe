@@ -9,6 +9,10 @@ import { encodeBase64 } from 'stream-chat';
 import { SubmissionResponse } from '@/types/coding.type';
 import useCurrPublicAssessment from '@/hooks/useCurrPublicAssessment';
 import useCurrentTakingCodingQuestion from '@/hooks/useCurrentTakingCodingQuestion';
+import _ from 'lodash';
+import { isAxiosError } from 'axios';
+import { toast } from 'sonner';
+import CodingSubmitAll from './CodingSubmitAll';
 
 const Header = () => {
     const { data: assessment } = useCurrPublicAssessment();
@@ -23,76 +27,92 @@ const Header = () => {
 
     if (!currentQuestion) return null;
 
-    const runCode = () =>
-        catchAsync(
-            async () => {
-                setLoading(true);
-                const body: Partial<SubmissionResponse> = {};
-                body.language_id = config.lang.id;
-                body.source_code = encodeBase64(code);
-                body.stdin = encodeBase64(input);
+    const runCode = async () => {
+        try {
+            setLoading(true);
+            const body: Partial<SubmissionResponse> = {};
+            body.language_id = config.lang.id;
+            body.source_code = encodeBase64(code);
+            body.stdin = encodeBase64(input);
 
-                const response = await submitService(body);
-                setCurrentTab('output');
-                setResults([response]);
-            },
-            () => {
-                setLoading(false);
-            },
-        );
+            const response = await submitService(body);
+            setCurrentTab('output');
+            setResults([response]);
+        } catch (error) {
+            if (isAxiosError(error)) {
+                if (error.response?.status === 422) {
+                    return toast.error('Empty code or input');
+                }
+                return toast.error(error.response?.data?.message || 'Something went wrong');
+            }
+            toast.error('Something went wrong');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const runAllTestCases = () =>
-        catchAsync(
-            async () => {
-                setRunAllLoading(true);
-                const stdins = currentQuestion.exampleInput?.split('\n') || [];
-                const expected_outputs = currentQuestion.exampleOutput?.split('\n') || [];
+    const runAllTestCases = async () => {
+        try {
+            setRunAllLoading(true);
+            const inLines = currentQuestion.exampleInput?.split('\n') || [];
+            const outLines = currentQuestion.exampleOutput?.split('\n') || [];
+            const stdins = _.chunk(inLines, currentQuestion.numberOfTestCaseLines).map((arr) => arr.join('\n'));
+            const expected_outputs = _.chunk(outLines, currentQuestion.numberOfOutputLines).map((arr) =>
+                arr.join('\n'),
+            );
 
-                const body: Partial<SubmissionResponse> = {};
-                body.language_id = config.lang.id;
-                body.source_code = encodeBase64(code);
+            const body: Partial<SubmissionResponse> = {};
+            body.language_id = config.lang.id;
+            body.source_code = encodeBase64(code);
 
-                const submissions: Partial<SubmissionResponse>[] = stdins.map((item, index) => ({
-                    ...body,
-                    stdin: encodeBase64(item),
-                    expected_output: encodeBase64(expected_outputs[index]),
-                }));
+            const submissions: Partial<SubmissionResponse>[] = stdins.map((item, index) => ({
+                ...body,
+                stdin: encodeBase64(item),
+                expected_output: encodeBase64(expected_outputs[index]),
+            }));
 
-                // console.log('submissions', submissions);
-                const response = await submitBatchService(submissions);
-                const tokens = response.map((item) => item.token);
-                const results = await new Promise((resolve, reject) => {
-                    let timeout: NodeJS.Timeout | null = null;
-                    timeout = setTimeout(async () => {
-                        try {
-                            const res = await getBatchSubmissionsService(tokens);
-                            if (!('submissions' in res)) {
+            // console.log('submissions', submissions);
+            const response = await submitBatchService(submissions);
+            const tokens = response.map((item) => item.token);
+            const results = await new Promise((resolve, reject) => {
+                let timeout: NodeJS.Timeout | null = null;
+                timeout = setTimeout(async () => {
+                    try {
+                        const res = await getBatchSubmissionsService(tokens);
+                        if (!('submissions' in res)) {
+                            return;
+                        }
+                        for (const submission of res.submissions) {
+                            if (!('stdout' in submission)) {
                                 return;
                             }
-                            for (const submission of res.submissions) {
-                                if (!('stdout' in submission)) {
-                                    return;
-                                }
-                            }
-                            resolve(res.submissions);
-                            if (timeout) {
-                                clearTimeout(timeout);
-                            }
-                        } catch (error) {
-                            reject(error);
-                            if (timeout) {
-                                clearTimeout(timeout);
-                            }
                         }
-                    }, 5000);
-                });
-                setCurrentTab('output');
-                setResults(results as SubmissionResponse[]);
-            },
-            () => {
-                setRunAllLoading(false);
-            },
-        );
+                        resolve(res.submissions);
+                        if (timeout) {
+                            clearTimeout(timeout);
+                        }
+                    } catch (error) {
+                        reject(error);
+                        if (timeout) {
+                            clearTimeout(timeout);
+                        }
+                    }
+                }, 5000);
+            });
+            setCurrentTab('output');
+            setResults(results as SubmissionResponse[]);
+        } catch (error) {
+            if (isAxiosError(error)) {
+                if (error.response?.status === 422) {
+                    return toast.error('Empty code or input');
+                }
+                return toast.error(error.response?.data?.message || 'Something went wrong');
+            }
+            toast.error('Something went wrong');
+        } finally {
+            setRunAllLoading(false);
+        }
+    };
 
     return (
         <div className="ml-14 flex h-12 items-center gap-2 px-2">
@@ -114,10 +134,11 @@ const Header = () => {
                     )}
                     Run all test cases
                 </Button>
-                <Button className="gap-2 text-black" variant="outline">
+                <Button className="gap-2" variant="black">
                     <TbUpload className="text-[15px]" />
                     Submit
                 </Button>
+                <CodingSubmitAll />
             </div>
             {/* <div className="ml-auto flex max-w-[400px] flex-1 justify-end"></div> */}
         </div>

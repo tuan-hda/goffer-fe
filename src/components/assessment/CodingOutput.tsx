@@ -80,7 +80,7 @@ const CodingOutput = () => {
 
                             {/* Time */}
                             <p className="text-[13px] text-white/50">
-                                Runtime {result.time}s • Memory {result.memory}KB • on{' '}
+                                Runtime {Number(result.time || 0) * 1000}ms • Memory {result.memory}KB • on{' '}
                                 {moment(result.created_at).format('hh:mm - MMM D YYYY')}
                             </p>
                         </div>
