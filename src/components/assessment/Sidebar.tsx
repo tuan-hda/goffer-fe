@@ -6,41 +6,38 @@ import useCurrPublicAssessment from '@/hooks/useCurrPublicAssessment';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useCurrTakingAssessment from '@/hooks/useCurrTakingAssessment';
-import moment from 'moment';
-import { toast } from 'sonner';
+import { remainTime } from '@/utils/time';
+import { submitAllService } from '@/services/takeAssessment.service';
 
 const Sidebar = () => {
     const { data: user } = useSelfProfileQuery();
     const { data: assessment } = useCurrPublicAssessment();
-    const { data: taking } = useCurrTakingAssessment();
+    const { data: session, refetch } = useCurrTakingAssessment();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [countDown, setCountDown] = useState(0);
+    const [remain, setRemain] = useState(0);
 
     const currentIndex = Number(searchParams.get('q') || 0);
 
     useEffect(() => {
-        const endingAt = taking?.endingAt || new Date();
-        const left = moment(endingAt).diff(moment(), 'seconds');
-        setCountDown(Math.max(left, 0));
-
-        const interval = setInterval(() => {
-            setCountDown((prev) => {
-                if (prev <= 0) {
+        if (session) {
+            const interval = setInterval(async () => {
+                if (remainTime(session?.endingAt) <= 0) {
                     clearInterval(interval);
-                    toast.success('Time is up');
-                    return 0;
+                    try {
+                        await submitAllService(session?.id!);
+                        await refetch();
+                    } catch (error) {
+                        //
+                    }
                 }
-                return prev - 1;
-            });
-        }, 1000);
-
-        return () => {
-            clearInterval(interval);
-        };
-    }, [taking]);
+                setRemain(Math.round(remainTime(session?.endingAt) / 1000));
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [session]);
 
     const getColorClassName = (index: number) => {
-        const isSubmitted = taking?.answers.some(
+        const isSubmitted = session?.answers.some(
             (a) => a.question.id === Array.from(assessment?.questions.values() || []).at(index)?.id,
         );
         if (currentIndex === index) {
@@ -93,10 +90,8 @@ const Sidebar = () => {
             <div className="ml-2 flex w-full justify-end">
                 <div className="flex w-full flex-col items-center gap-0 rounded-xl bg-black p-3 text-center">
                     <TbHourglassHigh className="text-lg" />
-                    <p className="mt-2 font-mono text-lg font-semibold text-white">
-                        {Math.floor((countDown || 0) / 60)}
-                    </p>
-                    <p className="font-mono text-lg font-semibold text-white">{Math.floor((countDown || 0) % 60)}</p>
+                    <p className="mt-2 font-mono text-lg font-semibold text-white">{Math.floor((remain || 0) / 60)}</p>
+                    <p className="font-mono text-lg font-semibold text-white">{Math.floor((remain || 0) % 60)}</p>
                 </div>
             </div>
         </div>

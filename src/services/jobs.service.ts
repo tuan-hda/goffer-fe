@@ -59,10 +59,12 @@ export const updateJobService = async (
     };
 
     const questions = Array.from(dataQuestions?.values() || []).map((question) => question.id);
-    const assessments = Array.from(dataAssessments?.values() || []).map((assessment) => assessment.id);
+    const assessments = dataAssessments
+        ? Array.from(dataAssessments.values()).map((assessment) => assessment.id)
+        : null;
 
     if (questions.length > 0) finalData.questions = questions;
-    finalData.assessments = assessments;
+    if (assessments) finalData.assessments = assessments;
 
     delete finalData.org;
     delete finalData.owner;
