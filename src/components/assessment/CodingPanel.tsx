@@ -7,11 +7,26 @@ import { languageOptions } from '@/configs/languageOptions';
 import MirrorEditor from './MirrorEditor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import classNames from 'classnames';
+import useCodingStore from '@/stores/codingStore';
+import { shallow } from 'zustand/shallow';
+import CodingOutput from './CodingOutput';
 
 const CodingPanel = () => {
     const ref = useRef<HTMLDivElement>(null);
-    const [lang, setLang] = useState<(typeof languageOptions)[0]>(languageOptions[0]);
     const [height, setHeight] = useState(200);
+
+    const [input, setCode, config, setConfig, setInput, currentTab, setCurrentTab] = useCodingStore(
+        (state) => [
+            state.input,
+            state.setCode,
+            state.config,
+            state.setConfig,
+            state.setInput,
+            state.currentTab,
+            state.setCurrentTab,
+        ],
+        shallow,
+    );
 
     const [collapsed, setCollapsed] = useState(false);
 
@@ -29,7 +44,9 @@ const CodingPanel = () => {
     }, [collapsed]);
 
     const handleLanguageChange = (lan: string) => {
-        setLang(languageOptions.find((lang) => lang.value === lan) || languageOptions[0]);
+        setConfig({
+            lang: languageOptions.find((l) => l.value === lan) || languageOptions[0],
+        });
     };
 
     const toggleCollapse = () => {
@@ -39,12 +56,13 @@ const CodingPanel = () => {
 
     return (
         <div className="flex flex-1 flex-col">
+            {/* Coding */}
             <Card className="mb-2 mr-2 flex flex-[3] flex-col border-[#606060] bg-[#262626] transition">
                 <CardHeader className="flex !h-9 flex-row items-center  justify-between rounded-t-xl bg-[#333] px-4 py-0 font-medium text-white">
                     <div className="flex items-center gap-2">
                         <TbCode /> Code
                     </div>
-                    <Select value={lang.value} onValueChange={handleLanguageChange}>
+                    <Select value={config.lang.value} onValueChange={handleLanguageChange}>
                         <SelectTrigger className="!mt-0 -mr-2 h-6 w-[200px] rounded-lg border-white/40 text-xs">
                             <SelectValue placeholder="Select a language" />
                         </SelectTrigger>
@@ -62,17 +80,24 @@ const CodingPanel = () => {
                 </CardHeader>
                 <CardContent className="flex flex-1 flex-col p-0 px-0">
                     <div ref={ref} className="flex-1">
-                        <MirrorEditor lang={lang} height={height} />
+                        <MirrorEditor setOuterValue={setCode} lang={config.lang} height={height} />
                     </div>
                 </CardContent>
             </Card>
+            {/* Input output */}
             <Card
                 className={classNames(
-                    'mb-2 mr-2 border-[#606060] bg-[#262626] p-0 transition',
+                    'mb-2 mr-2 flex h-0 flex-col border-[#606060] bg-[#262626] p-0 transition',
                     !collapsed && 'flex-[2]',
                 )}
             >
-                <Tabs defaultValue="input" className="relative flex h-full flex-col">
+                <Tabs
+                    value={currentTab}
+                    onValueChange={(value) => setCurrentTab(value as 'input' | 'output')}
+                    defaultValue="input"
+                    className="relative flex h-0 flex-1 flex-col"
+                >
+                    {/* Input output header */}
                     <div
                         className={classNames(
                             'flex rounded-t-xl bg-[#333]',
@@ -105,24 +130,29 @@ const CodingPanel = () => {
                             />
                         </button>
                     </div>
+
                     <div
                         className={classNames(
-                            'transition',
-                            collapsed ? 'pointer-events-none h-0 opacity-0' : 'pointer-events-auto opacity-100',
+                            'h-0 flex-1 overflow-y-auto transition',
+                            // collapsed ? 'pointer-events-none h-0 opacity-0' : 'pointer-events-auto opacity-100',
                         )}
                     >
+                        {/* Input */}
                         <TabsContent value="input" className="p-0">
                             <div className="-mt-2 flex-1">
-                                <MirrorEditor height={((height + 100) / 3) * 2 - 80} lang="plain" />
+                                <MirrorEditor
+                                    setOuterValue={setInput}
+                                    outerValue={input}
+                                    height={((height + 100) / 3) * 2 - 80}
+                                    lang="plain"
+                                    isCode={false}
+                                />
                             </div>
                         </TabsContent>
-                        <TabsContent value="output" className="p-0">
-                            <div className="px-6 py-1">
-                                <div className="flex items-center gap-4">
-                                    <p className="font-mono text-lg font-bold text-green-600">Accepted</p>
-                                    <p className="text-[13px] text-white/50">Runtime 45ms • on 19:03 - May 5 2024</p>
-                                </div>
-                            </div>
+
+                        {/* Output */}
+                        <TabsContent value="output" className="h-[90%] p-0">
+                            <CodingOutput />
                         </TabsContent>
                     </div>
                 </Tabs>

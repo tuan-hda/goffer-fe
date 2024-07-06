@@ -1,13 +1,13 @@
 export interface SubmissionResponse {
     source_code: string;
     language_id: number;
-    stdin?: null;
-    expected_output?: null;
+    stdin?: string;
+    expected_output?: string;
+    time: string;
     stdout: string;
     status_id: number;
     created_at: string;
     finished_at: string;
-    time: string;
     memory: number;
     stderr?: null;
     token: string;
@@ -34,7 +34,7 @@ export interface SubmissionResponse {
     enable_network: boolean;
     status: Status;
     language: Language;
-    executed_time: Date;
+    post_execution_filesystem?: string;
 }
 
 export interface Status {
@@ -45,3 +45,13 @@ export interface Language {
     id: number;
     name: string;
 }
+
+export type CodingLanguage = {
+    id: number;
+    name: string;
+    label: string;
+    value: string;
+    suffix: string;
+    extension: any;
+    icon: JSX.Element;
+};

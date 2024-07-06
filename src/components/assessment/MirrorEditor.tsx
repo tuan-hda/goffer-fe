@@ -16,6 +16,9 @@ const goLang = ``;
 type Props = {
     height: number;
     lang: (typeof languageOptions)[0] | string;
+    setOuterValue?: (value: string) => void;
+    outerValue?: string;
+    isCode?: boolean;
 };
 
 const myTheme = createTheme({
@@ -28,7 +31,7 @@ const myTheme = createTheme({
         selection: '#003E81', // Dark blue selection color
         selectionMatch: '#000',
         fontFamily: 'Geist Mono Variable',
-        fontSize: '13px',
+        fontSize: '14px',
         lineHighlight: '#ffffff11', // Slightly lighter line highlight
         gutterBackground: '#262626', // Matches the main background
         gutterForeground: '#858585', // Lighter gutter for visibility
@@ -51,12 +54,18 @@ const myTheme = createTheme({
     ],
 });
 
-export default function MirrorEditor({ height, lang }: Props) {
+export default function MirrorEditor({ height, lang, setOuterValue, outerValue, isCode = true }: Props) {
     const [pos, setPos] = useState({ line: 0, col: 0 });
     const [tabSize, setTabSize] = useState(4);
     const ref = useRef<ReactCodeMirrorRef>(null);
     const editorHeight = useMemo(() => height - 57, [height]);
-    const [value, setValue] = useState(goLang);
+    const innerState = useState('');
+    const value = useMemo(() => {
+        return outerValue ?? innerState[0];
+    }, [innerState, outerValue]);
+    const setValue = useMemo(() => {
+        return setOuterValue ?? innerState[1];
+    }, [innerState, setOuterValue]);
 
     const mirror = useMemo(() => {
         return (
@@ -66,6 +75,7 @@ export default function MirrorEditor({ height, lang }: Props) {
                 value={value}
                 onChange={(value) => {
                     setValue(value);
+                    setOuterValue?.(value);
                 }}
                 basicSetup={{
                     tabSize,
@@ -82,10 +92,6 @@ export default function MirrorEditor({ height, lang }: Props) {
         );
     }, [editorHeight, tabSize, value]);
 
-    useEffect(() => {
-        format();
-    }, [tabSize]);
-
     const format = async () => {
         try {
             const newValue = await prettier.format(value, {
@@ -98,6 +104,10 @@ export default function MirrorEditor({ height, lang }: Props) {
             // Do nothing
         }
     };
+
+    useEffect(() => {
+        if (isCode) format();
+    }, [tabSize, isCode]);
 
     return (
         <div className="relative" style={{ height: `${height}px` }}>

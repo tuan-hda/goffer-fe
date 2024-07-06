@@ -14,6 +14,7 @@ const mapDataToRequestAssessment = ({ questions, ...assessment }: NewAssessment 
         order: assessment.order || -1,
         status: assessment.status,
         type: assessment.type,
+        image: assessment.image,
     };
     innerAssessment.questions = Array.from(questions?.values() || []).map((q) => q.id);
     return innerAssessment;
