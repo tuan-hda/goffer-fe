@@ -85,11 +85,7 @@ const AssessmentBuilderHeader = () => {
 
                         {data.job && (
                             <Button variant="ghost" size="icon" asChild>
-                                <Link
-                                    className="flex"
-                                    to={`/app/organization/${domain}/job/${data.job.id}/results`}
-                                    target="_blank"
-                                >
+                                <Link className="flex" to={`/app/organization/${domain}/assessment/${data.id}/results`}>
                                     <TbReport className="text-lg" />
                                 </Link>
                             </Button>

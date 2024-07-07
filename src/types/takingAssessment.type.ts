@@ -14,6 +14,7 @@ export type TakeAssessment = {
     createdAt: string; // ISO date string
     updatedAt: string; // ISO date string
     score?: number;
+    point?: number;
 };
 
 export type NewTakeAssessment = Omit<TakeAssessment, 'id' | 'createdAt' | 'updatedAt'>;

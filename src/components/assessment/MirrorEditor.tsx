@@ -110,7 +110,7 @@ function MirrorEditor({ height, lang, setOuterValue, outerValue, isCode = true }
     return (
         <div className="relative" style={{ height: `${height}px` }}>
             {typeof lang !== 'string' && (
-                <div className="flex h-8 w-full items-center gap-2 border-b border-white/10 px-4">
+                <div className="flex h-8 w-full items-center gap-2 border-b border-white/10 px-4 text-white">
                     {lang.icon} <span>main.{lang.suffix}</span>
                     <TooltipProvider>
                         <Tooltip>

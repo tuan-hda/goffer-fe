@@ -1,5 +1,7 @@
+import AssessmentResultDetailContent from '@/components/assessment/assessmentResult/AssessmentResultDetailContent';
 import AssessmentResultHeader from '@/components/assessment/assessmentResult/AssessmentResultHeader';
 import AssessmentResultList from '@/components/assessment/assessmentResult/AssessmentResultList';
+import useCurrTakingWithId from '@/hooks/useCurrTakingWithId';
 import useGetCurrAssessment from '@/hooks/useGetCurrAssessment';
 import useNewAssessmentStore, { initialData } from '@/stores/newAssessmentStore';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
@@ -7,13 +9,14 @@ import { useEffect } from 'react';
 import { TbAtom, TbFlower, TbReport } from 'react-icons/tb';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-const AssessmentResults = () => {
+const AssessmentResultDetail = () => {
     const navigate = useNavigate();
     const { domain } = useParams();
     const location = useLocation();
     const setAssessment = useNewAssessmentStore((state) => state.setAssessment);
 
     const { data } = useGetCurrAssessment();
+    const { data: currTaking } = useCurrTakingWithId();
 
     useEffect(() => {
         if (data) {
@@ -41,16 +44,16 @@ const AssessmentResults = () => {
                         {data.title}
                     </BreadcrumbItem>
                 )}
-                <BreadcrumbItem>
+                <BreadcrumbItem onClick={() => navigate(`/app/organization/${domain}/assessment/${data?.id}/results`)}>
                     <TbReport className="text-lg" /> Results
                 </BreadcrumbItem>
+                <BreadcrumbItem>{currTaking?.user.name}</BreadcrumbItem>
             </Breadcrumbs>
             <div className="pt-5">
-                <AssessmentResultHeader />
-                <AssessmentResultList />
+                <AssessmentResultDetailContent />
             </div>
         </div>
     );
 };
 
-export default AssessmentResults;
+export default AssessmentResultDetail;

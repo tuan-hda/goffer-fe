@@ -3,6 +3,10 @@ import { baseAxios } from './base';
 import { ListQueryOptions } from '@/types/common.type';
 import { List } from '@/types/list.type';
 
+export const getAllTakingsService = async (assessmentId: string) => {
+    return (await baseAxios.get<TakeAssessment[]>(`/assessments/taking/by-assessment/${assessmentId}`)).data;
+};
+
 export const createTakeAssessmentSessionService = async (assessmentId: string) => {
     return (
         await baseAxios.post('/assessments/starting', {
@@ -41,4 +45,8 @@ export const listTakingAssessmentsService = async (
     params?: Partial<Record<keyof (TakeAssessment & ListQueryOptions), unknown>>,
 ) => {
     return (await baseAxios.get<TakeAssessment[]>('/assessments/taking', { params })).data;
+};
+
+export const getTakingAssessmentService = async (takingId: string) => {
+    return (await baseAxios.get<TakeAssessment>(`/assessments/taking/${takingId}`)).data;
 };
