@@ -1,19 +1,38 @@
 import { formatUTCDate } from '@/utils/time';
 import { Avatar } from '@nextui-org/react';
 import { TbLoaderQuarter, TbPlanet } from 'react-icons/tb';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { useState } from 'react';
 import { JobResponse } from '@/types/job.type';
+import { useChatContext } from 'stream-chat-react';
 
 interface Props {
     job: JobResponse;
 }
 
 const HeaderInfo = ({ job }: Props) => {
-    const [chatLoading, setChatLoading] = useState(false);
-    const getInTouch = async () => {};
+    const navigate = useNavigate();
 
+    const [chatLoading, setChatLoading] = useState(false);
+    const { client, setActiveChannel } = useChatContext();
+
+    const getInTouch = async () => {
+        const owner = job.owner;
+        if (!owner) return;
+        if (client.userID) {
+            setChatLoading(true);
+            await client.upsertUser({ id: owner.id, name: owner.name, image: owner.avatar });
+
+            const channel = client.channel('messaging', {
+                members: [client.userID, owner.id],
+            });
+            await channel.create();
+            setActiveChannel?.(channel);
+            navigate('/app/messages');
+            setChatLoading(false);
+        }
+    };
     return (
         <div className="flex flex-row gap-8">
             <Avatar src={job.org?.logo} className="h-20 w-20 rounded-3xl object-cover" />
