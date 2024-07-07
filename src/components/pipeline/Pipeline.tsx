@@ -64,7 +64,7 @@ const Pipeline = () => {
                             <Interviews questions={data.job.questions} answers={data.answers} />
                         </Tab>
                     )}
-                    {data.job.assessments.length > 0 && (
+                    {data.phase !== 'applied' && data.job.assessments.length > 0 && (
                         <Tab
                             key="assessments"
                             title={

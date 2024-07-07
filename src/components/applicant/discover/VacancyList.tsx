@@ -11,8 +11,8 @@ import classNames from 'classnames';
 import { TbBookmarks, TbCalendar, TbMapPin } from 'react-icons/tb';
 
 const VacancyList = () => {
-    // const { data, refetch, isFetching, hasNextPage, fetchNextPage } = useJobsRecommender();
-    const { data, refetch } = useIndividualJobs();
+    const { data, refetch, isFetching, hasNextPage, fetchNextPage } = useJobsRecommender();
+    // const { data, refetch } = useIndividualJobs();
 
     const onBookmark = async (e: any, id: string, isSaved?: boolean) => {
         e.stopPropagation();
@@ -23,8 +23,8 @@ const VacancyList = () => {
         await refetch();
     };
 
-    // const jobs = data?.pages.flatMap((page) => page.results) || [];
-    const jobs = data?.results ?? [];
+    const jobs = data?.pages.flatMap((page) => page.results) || [];
+    // const jobs = data?.results ?? [];
 
     return (
         <>

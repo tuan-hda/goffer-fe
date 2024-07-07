@@ -23,7 +23,7 @@ const Progress = ({ phase }: Props) => {
                                 className={classNames(
                                     'flex flex-1 flex-col items-center gap-y-2 rounded-lg p-8 transition',
                                     index < current && 'bg-pale-400/30',
-                                    index === current && '!bg-pale-400',
+                                    index === current && '!bg-black text-white',
                                     index > current && '!bg-gray-100',
                                 )}
                             >

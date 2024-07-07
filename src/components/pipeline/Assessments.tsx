@@ -4,6 +4,7 @@ import moment from 'moment';
 import React from 'react';
 import { TbArrowRight, TbClock } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
+import AssessmentItem from './phase/AssessmentItem';
 interface Props {
     assessments?: Assessment[];
 }
@@ -21,30 +22,7 @@ const Assessments = ({ assessments }: Props) => {
                 This is to ensure we have a comprehensive understanding of your skills and qualifications.
             </p>
             <div className="mt-8 flex flex-row gap-x-8">
-                <div className="w-2/3">
-                    {assessments?.map((item) => (
-                        <Card
-                            isPressable
-                            onPress={() => navigate(`/assessment/${item.id}`)}
-                            className="flex w-full flex-row rounded-large border p-4 shadow-sm"
-                        >
-                            <Image
-                                src={item.image}
-                                classNames={{
-                                    wrapper: 'h-[80px] aspect-video',
-                                }}
-                            />
-                            <div className="ml-8 w-full">
-                                <p className="text-start font-semibold text-text">{item.title}</p>
-                                <div className="mt-4 flex w-full items-center text-gray-500">
-                                    <TbClock />
-                                    <p className="ml-1">{moment(item.due).format('ll')}</p>
-                                    <TbArrowRight size={24} className="ml-auto mr-4 w-20 rounded-large border" />
-                                </div>
-                            </div>
-                        </Card>
-                    ))}
-                </div>
+                <div className="w-2/3 space-y-6">{assessments?.map((item) => <AssessmentItem item={item} />)}</div>
                 <div className="relative flex h-[240px] w-1/2 items-center justify-between justify-self-end overflow-hidden rounded-large py-4 font-serif text-3xl font-medium">
                     <div className="absolute -bottom-4 -right-10 h-full">
                         <div className="bg-image-doodles flex-1 rounded-xl opacity-50" />
