@@ -110,7 +110,11 @@ const Application = () => {
                 await form.handleSubmit(onSubmit)();
                 lastTime.current = moment();
             } else if (stepNum < totalSteps) {
-                if (answer && answer.duration >= 20 && data?.phase === 'init') {
+                if (
+                    answer &&
+                    answer.duration >= (job?.questions[stepNum - 1].constraint ?? 20) &&
+                    data?.phase === 'init'
+                ) {
                     const audio = await uploadAudio(answer.url);
 
                     if (audio)
@@ -136,6 +140,9 @@ const Application = () => {
             setUploading(false);
         }
     };
+
+    const isDisabled = () =>
+        stepNum !== 0 && ((answer?.duration ?? 0) < (job?.questions[stepNum - 1].constraint ?? 20) || loading);
 
     return isLoading ? (
         <div className="m-auto h-full w-full">
@@ -221,7 +228,7 @@ const Application = () => {
                             size="lg"
                             variant="black"
                             onClick={handleNextStep}
-                            disabled={stepNum !== 0 && ((answer?.duration ?? 0) < 20 || loading)}
+                            disabled={isDisabled()}
                         >
                             {uploading ? <TbLoaderQuarter className="h-4 w-4 animate-spin" /> : 'Next'}
                             {/* {endContent} */}

@@ -4,9 +4,10 @@ import { Question } from '@/types/question.type';
 
 interface Props {
     question: Question;
+    applicationId?: string;
 }
-const DetailPanel = ({ question }: Props) => {
-    const { data: answer } = useApplyAnswer(question.id);
+const DetailPanel = ({ question, applicationId }: Props) => {
+    const { data: answer } = useApplyAnswer(question.id, applicationId);
 
     return (
         <div className="ml-8 w-full overflow-hidden rounded-xl border-none p-10 shadow-medium">

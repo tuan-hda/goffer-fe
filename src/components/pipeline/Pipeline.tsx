@@ -61,7 +61,7 @@ const Pipeline = () => {
                                 </span>
                             }
                         >
-                            <Interviews questions={data.job.questions} answers={data.answers} />
+                            <Interviews questions={data.job.questions} applicationId={data.id} />
                         </Tab>
                     )}
                     {data.job.assessments.length > 0 && (

@@ -7,10 +7,10 @@ import DetailPanel from './DetailPanel';
 
 interface Props {
     questions: Question[];
-    answers: Answer[];
+    applicationId?: string;
 }
 
-const Interviews = ({ questions, answers }: Props) => {
+const Interviews = ({ questions, applicationId }: Props) => {
     const [selected, setSelected] = useState(questions[0]);
     return (
         <div className="mt-8 flex flex-row">
@@ -35,7 +35,7 @@ const Interviews = ({ questions, answers }: Props) => {
                     </div>
                 ))}
             </div>
-            <DetailPanel question={selected} />
+            <DetailPanel question={selected} applicationId={applicationId} />
         </div>
     );
 };
