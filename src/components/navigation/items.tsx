@@ -1,5 +1,6 @@
 import { PiBank } from 'react-icons/pi';
 import {
+    TbApple,
     TbAtom,
     TbBaguette,
     TbBell,
@@ -68,6 +69,14 @@ export const items: (
             startContent: <TbBell className="text-xl" />,
             path: '/app/notifications',
             endContent: hasNewNotification && <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
+        },
+    },
+    {
+        type: 'link',
+        element: {
+            path: '/app/my-applications',
+            startContent: <TbApple className="text-xl" />,
+            content: 'My applications',
         },
     },
     {

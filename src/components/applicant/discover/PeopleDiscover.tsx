@@ -9,18 +9,18 @@ import { User } from '@/types/user.type';
 import { Button } from '@/components/ui/button';
 
 const PeopleDiscover = () => {
-    // const { data, refetch, isFetching, hasNextPage, fetchNextPage } = useUsersRecommender();
-    // const [searchParams] = useSearchParams();
+    const { data, refetch, isFetching, hasNextPage, fetchNextPage } = useUsersRecommender();
+    const [searchParams] = useSearchParams();
 
-    // const users = useMemo(() => {
-    //     if (!data) return [];
-    //     return data.pages.reduce((acc: User[], page) => {
-    //         return [...acc, ...page.results];
-    //     }, []);
-    // }, [data]);
+    const users = useMemo(() => {
+        if (!data) return [];
+        return data.pages.reduce((acc: User[], page) => {
+            return [...acc, ...page.results];
+        }, []);
+    }, [data]);
 
-    const { data, refetch } = useListPeople();
-    const users = data?.results ?? [];
+    // const { data, refetch } = useListPeople();
+    // const users = data?.results ?? [];
     return (
         <>
             <div className="mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
