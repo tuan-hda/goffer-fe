@@ -15,7 +15,6 @@ import {
 import { PortfolioLayout } from '@/components/portfolio';
 import NewJobLayout from '@/layouts/NewJobLayout';
 import AssessmentOrgLayout from '@/layouts/AssessmentOrgLayout';
-
 const ForbidEditLayout = lazy(() => import('@/layouts/ForbidEditLayout'));
 const AboutUs = lazy(() => import('../pages/AboutUs'));
 const ContactUs = lazy(() => import('../pages/ContactUs'));
@@ -71,6 +70,7 @@ const PortfolioDisplayPage = lazy(() => import('@/pages/PortfolioDisplayPage'));
 const ProjectDetail = lazy(() => import('@/components/portfolio/ProjectDetail'));
 const Invitation = lazy(() => import('@/components/invitation/Invitation'));
 const Pipeline = lazy(() => import('@/components/pipeline/Pipeline'));
+const AssessmentResultDetail = lazy(() => import('@/pages/AssessmentResultDetail'));
 const Test = lazy(() => import('@/pages/Test'));
 
 const routesConfig: RouteObject[] = [
@@ -367,6 +367,14 @@ const routesConfig: RouteObject[] = [
                                 element: (
                                     <Suspense fallback={<div></div>}>
                                         <AssessmentResult />
+                                    </Suspense>
+                                ),
+                            },
+                            {
+                                path: '/app/organization/:domain/assessment/:id/results/:takingId',
+                                element: (
+                                    <Suspense fallback={<div></div>}>
+                                        <AssessmentResultDetail />
                                     </Suspense>
                                 ),
                             },
