@@ -26,7 +26,7 @@ const Assessments = ({ assessments }: Props) => {
                         <Card
                             isPressable
                             onPress={() => navigate(`/assessment/${item.id}`)}
-                            className="flex w-full flex-row rounded-large border p-4 shadow-sm"
+                            className="mb-4 flex w-full flex-row rounded-large border p-4 shadow-sm"
                         >
                             <Image
                                 src={item.image}
@@ -45,11 +45,7 @@ const Assessments = ({ assessments }: Props) => {
                         </Card>
                     ))}
                 </div>
-                <div className="relative flex h-[240px] w-1/2 items-center justify-between justify-self-end overflow-hidden rounded-large py-4 font-serif text-3xl font-medium">
-                    <div className="absolute -bottom-4 -right-10 h-full">
-                        <div className="bg-image-doodles flex-1 rounded-xl opacity-50" />
-                    </div>
-                </div>
+                <div className="bg-image-doodles aspect-video max-h-60 flex-1 rounded-xl opacity-50" />
             </div>
         </div>
     );
