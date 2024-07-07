@@ -1,10 +1,10 @@
 import { getUserAnswerFromQuestionService } from '@/services/answer.service';
 import { useQuery } from '@tanstack/react-query';
 
-const useUserAnswer = (questionId: string) => {
+const useUserAnswer = (questionId: string, id: string) => {
     return useQuery({
-        queryKey: ['getUserAnswer', questionId],
-        queryFn: () => getUserAnswerFromQuestionService(questionId),
+        queryKey: ['getUserAnswer', questionId, id],
+        queryFn: () => getUserAnswerFromQuestionService(questionId, id),
         enabled: !!questionId,
     });
 };

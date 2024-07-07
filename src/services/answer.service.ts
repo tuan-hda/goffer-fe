@@ -11,6 +11,6 @@ export const submitApplyAudioAnswerService = async (data: NewAnswer) => {
     return (await baseAxios.post<AnswerResponse>('/answers/audio', data)).data;
 };
 
-export const getUserAnswerFromQuestionService = async (questionId: string) => {
-    return (await baseAxios.get<AnswerResponse>(`/answers/question/${questionId}`)).data;
+export const getUserAnswerFromQuestionService = async (questionId: string, ref: string) => {
+    return (await baseAxios.get<AnswerResponse>(`/answers/question/${questionId}/${ref}`)).data;
 };

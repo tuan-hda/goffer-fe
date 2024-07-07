@@ -4,6 +4,7 @@ export type NewAnswer = {
     duration: number;
     apply?: string;
     submitSeconds?: number;
+    ref: string;
 };
 
 export type AnswerResponse = Omit<NewAnswer, 'apply'> & {

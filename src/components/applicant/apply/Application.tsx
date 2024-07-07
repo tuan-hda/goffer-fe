@@ -119,6 +119,7 @@ const Application = () => {
                             question: answer.question,
                             duration: answer.duration,
                             apply: data?.id,
+                            ref: id!,
                             submitSeconds: moment().diff(lastTime.current || moment(), 'seconds'),
                         });
 
