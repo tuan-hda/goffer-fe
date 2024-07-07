@@ -237,14 +237,6 @@ const routesConfig: RouteObject[] = [
                                 index: true,
                                 element: (
                                     <Suspense fallback={<div></div>}>
-                                        <Dashboard />
-                                    </Suspense>
-                                ),
-                            },
-                            {
-                                path: 'reports',
-                                element: (
-                                    <Suspense fallback={<div></div>}>
                                         <Reports />
                                     </Suspense>
                                 ),
