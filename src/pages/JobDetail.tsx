@@ -26,8 +26,18 @@ import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 
 import JobPanels from '@/components/jobDetail/JobPanels';
 import StatusButton from '@/components/jobDetail/StatusButton';
+import { useEffect } from 'react';
+import { logEvent } from 'firebase/analytics';
+import { analytics } from '@/configs/firebase';
 
 const JobDetail = () => {
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
+
     const { id, domain } = useParams();
     const { data: job, isLoading, refetch } = useGetOrganizationJob(id);
     const navigate = useNavigate();

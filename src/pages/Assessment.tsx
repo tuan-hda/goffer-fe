@@ -6,10 +6,20 @@ import NotFound from './NotFound';
 import PublicAssessmentHeader from '@/components/assessment/publicAssessment/PublicAssessmentHeader';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import PublicAssessmentAdditionalInfo from '@/components/assessment/publicAssessment/PublicAssessmentAdditionalInfo';
+import { useEffect } from 'react';
+import { logEvent } from 'firebase/analytics';
+import { analytics } from '@/configs/firebase';
 
 const Assessment = () => {
     const { data, isLoading } = useCurrPublicAssessment();
     const { data: self } = useSelfProfileQuery();
+
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
 
     if (isLoading) {
         return (

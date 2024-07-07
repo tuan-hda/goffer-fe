@@ -3,8 +3,17 @@ import { useMotionValue, useTransform, motion, useAnimation } from 'framer-motio
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSpring } from 'use-spring';
 import { fadeInPropsFn, zoomInPropsFn } from '../utils/animation';
+import { logEvent } from 'firebase/analytics';
+import { analytics } from '@/configs/firebase';
 
 const LandingPage = () => {
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
+
     const [floatY, setFloatY] = useState(0);
     const floatYRef = useRef(0);
     const direction = useRef(1);

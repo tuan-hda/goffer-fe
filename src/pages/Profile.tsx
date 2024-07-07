@@ -1,9 +1,19 @@
 import { LeftPanel, RightPanel } from '@/components/profile';
+import { analytics } from '@/configs/firebase';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
+import { logEvent } from 'firebase/analytics';
+import { useEffect } from 'react';
 import { TbLoader, TbUser } from 'react-icons/tb';
 
 const Profile = () => {
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
+
     const { isLoading } = useSelfProfileQuery();
 
     if (isLoading) {

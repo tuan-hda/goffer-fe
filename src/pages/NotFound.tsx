@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 
 const NotFound = () => {
+    
     const { data: user } = useSelfProfileQuery();
 
     return (

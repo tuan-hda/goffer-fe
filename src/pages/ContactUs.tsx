@@ -1,8 +1,18 @@
+import { analytics } from '@/configs/firebase';
 import { Button } from '@nextui-org/react';
+import { logEvent } from 'firebase/analytics';
+import { useEffect } from 'react';
 import { TbChevronLeft, TbMail, TbNumber, TbSocial } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
 const ContactUs = () => {
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
+
     return (
         <div className="flex w-full p-14">
             <div className="m-auto w-full max-w-[600px]">

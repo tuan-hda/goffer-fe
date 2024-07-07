@@ -8,8 +8,17 @@ import { Link } from 'react-router-dom';
 import AuthTwoSection from '@/layouts/AuthTwoSection';
 import { forgotPasswordService } from '@/services/auth.service';
 import { validateEmail } from '@/utils/regex';
+import { logEvent } from 'firebase/analytics';
+import { analytics } from '@/configs/firebase';
 
 const ForgotPassword = () => {
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
+
     const [email, setEmail] = useState('');
     const [isValidEmail, setValidEmail] = useState(false);
     const [loading, setLoading] = useState(false);

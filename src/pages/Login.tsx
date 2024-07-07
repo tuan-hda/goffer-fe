@@ -7,8 +7,17 @@ import { toast } from 'sonner';
 import useAuthStore from '@/stores/authStore';
 import { LoginForm } from '@/components/auth';
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { logEvent } from 'firebase/analytics';
+import { analytics } from '@/configs/firebase';
 
 const Login = () => {
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
+    
     const { setAccess } = useAuthStore();
     const { refetch } = useSelfProfileQuery();
 

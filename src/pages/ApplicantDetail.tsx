@@ -15,10 +15,20 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import pipeline from '@/data/pipeline';
+import { logEvent } from 'firebase/analytics';
+import { useEffect } from 'react';
+import { analytics } from '@/configs/firebase';
 
 const ApplicantDetail = () => {
     const { data, isLoading, refetch } = useCurrApplication();
     const { refetch: refetchInsights } = useRefetchInsights();
+
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
 
     if (isLoading)
         return (

@@ -8,17 +8,26 @@ import {
     AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { analytics } from '@/configs/firebase';
 import useCreateQuestionBehavioral from '@/hooks/useCreateQuestionBehavioral';
 import useGetOrganizationJob from '@/hooks/useGetOrganizationJob';
 import useListOrgQuestions from '@/hooks/useListOrgQuestions';
 import useNewAssessmentStore from '@/stores/newAssessmentStore';
 import { Image } from '@nextui-org/react';
+import { logEvent } from 'firebase/analytics';
 import { useEffect, useState } from 'react';
 import { TbLoader } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
 
 const Questions = () => {
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
+
     const { create, loading } = useCreateQuestionBehavioral(true);
     const [open, setOpen] = useState(false);
     const { list: mcq } = useListOrgQuestions({ type: 'behavioral', populate: 'author' });

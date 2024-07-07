@@ -5,8 +5,18 @@ import { CopilotInsights, OverviewStats, Traffic } from '@/components/admin';
 import { DeeperStats } from '@/components/admin/DeeperStats';
 import UserHistory from '@/components/admin/UserHistory';
 import RevenueHistory from '@/components/admin/RevenueHistory';
+import { useEffect } from 'react';
+import { logEvent } from 'firebase/analytics';
+import { analytics } from '@/configs/firebase';
 
 const Dashboard = () => {
+    useEffect(() => {
+        logEvent(analytics, 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+        })
+    },[])
+
     const { data: user } = useSelfProfileQuery();
 
     return (
