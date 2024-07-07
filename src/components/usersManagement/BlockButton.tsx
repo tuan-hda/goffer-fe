@@ -1,4 +1,4 @@
-import { TbForbid } from 'react-icons/tb';
+import { TbForbid, TbLoader } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import {
     Dialog,
@@ -14,12 +14,40 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { useState } from 'react';
 import { Textarea } from '../ui/textarea';
+import catchAsync from '@/utils/catchAsync';
+import { toast } from 'sonner';
+import { blockUserService } from '@/services/users.service';
 
-const BlockButton = () => {
+type BlockButtonProps = {
+    userId: string;
+    onBlock?: () => void;
+};
+
+const BlockButton = ({ userId, onBlock }: BlockButtonProps) => {
     const [reason, setReason] = useState<string>('');
+    const [customReason, setCustomReason] = useState<string>('');
+    const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const block = () =>
+        catchAsync(
+            async () => {
+                setLoading(true);
+
+                if (!reason || (reason === 'Other' && !customReason)) {
+                    return toast.error('Please select a reason.');
+                }
+                await blockUserService(userId, reason === 'Other' ? customReason : reason);
+                onBlock && onBlock();
+                setOpen(false);
+            },
+            () => {
+                setLoading(false);
+            },
+        );
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button size="icon" variant="ghost">
                     <TbForbid className="text-lg" />
@@ -52,15 +80,23 @@ const BlockButton = () => {
                 {reason === 'Other' && (
                     <Label>
                         <p>Explain why you block this user</p>
-                        <Textarea className="mt-2" placeholder="Your reason here..." />
+                        <Textarea
+                            value={customReason}
+                            onChange={(e) => setCustomReason(e.target.value)}
+                            className="mt-2"
+                            placeholder="Your reason here..."
+                        />
                     </Label>
                 )}
 
                 <DialogFooter>
-                    <DialogClose asChild>
+                    <DialogClose disabled={loading} asChild>
                         <Button variant="outline">Cancel</Button>
                     </DialogClose>
-                    <Button variant="destructive">Block</Button>
+                    <Button disabled={loading} onClick={block} variant="destructive">
+                        {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
+                        Block
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

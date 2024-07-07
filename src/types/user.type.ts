@@ -91,6 +91,10 @@ export type User = {
     portfolio?: PortfolioConfiguration;
     yoe?: number;
     enhance?: Enhance;
+    createdAt?: string;
+    updatedAt?: string;
+    reason?: string;
+    blockedAt?: string;
 };
 
 export type SeparatedDomainUser = User & {

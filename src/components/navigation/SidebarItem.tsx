@@ -10,6 +10,7 @@ type SidebarItemProps = {
     onClick?: () => void;
     isAdmin?: boolean;
     isEndContent?: boolean;
+    target?: string;
 };
 
 const SidebarItem = ({
@@ -20,6 +21,7 @@ const SidebarItem = ({
     isMatched,
     isAdmin = false,
     isEndContent = true,
+    target,
 }: SidebarItemProps) => {
     return item.type === 'button' ? (
         <button
@@ -43,6 +45,7 @@ const SidebarItem = ({
         </button>
     ) : (
         <Link
+            target={target}
             to={item.element.path}
             className={classNames(
                 'relative flex w-full items-center justify-start gap-[18px] rounded-xl py-2 pl-[9px] pr-2 transition',

@@ -1,4 +1,5 @@
 import { CreateUserDialog, MemberList } from '@/components/usersManagement';
+import AdminUserList from '@/components/usersManagement/AdminUserList';
 import BlockList from '@/components/usersManagement/BlockList';
 import { BreadcrumbItem, Breadcrumbs, Image } from '@nextui-org/react';
 import { TbUserPlus, TbUsers } from 'react-icons/tb';
@@ -18,11 +19,10 @@ const UsersManagement = () => {
                     <p className="mt-2">20 users.</p>
                 </div>
                 <div className="flex-1">
-                    <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-dashed border-[#EBEBEE] px-20 py-10">
+                    <div className="relative flex h-40 flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-dashed border-[#EBEBEE] px-20 py-10">
                         <div className="rounded-full bg-gray-200/80 p-2">
-                            <TbUserPlus />
+                            Your users in your system are displayed here.
                         </div>
-                        <CreateUserDialog />
                         <div className="absolute -right-14 top-10 z-0">
                             <Image
                                 src="/flower.png"
@@ -33,8 +33,8 @@ const UsersManagement = () => {
                         </div>
                     </div>
 
-                    <div className="mt-6 rounded-xl border">
-                        <MemberList />
+                    <div className="mt-6">
+                        <AdminUserList />
                     </div>
                 </div>
             </div>
@@ -48,9 +48,7 @@ const UsersManagement = () => {
                     <p className="mt-2">15 blocked users.</p>
                 </div>
                 <div className="flex-1">
-                    <div className="rounded-xl border">
-                        <BlockList />
-                    </div>
+                    <BlockList />
                 </div>
             </div>
         </div>

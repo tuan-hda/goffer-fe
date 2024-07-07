@@ -32,7 +32,7 @@ export const googleProfileService = async (accessToken: string) => {
 
 export const updateUserService = (user: UpdateUser) => baseAxios.put('/users/self', user);
 
-export const listPeopleService = async (query?: Partial<Record<keyof SeparatedDomainUser, string>>) => {
+export const listPeopleService = async (query?: Partial<Record<keyof SeparatedDomainUser, unknown>>) => {
     return (
         await baseAxios.get<List<User>>('/users', {
             params: query,
@@ -45,3 +45,23 @@ export const getUserInfo = async (id: string) => {
 };
 
 export const subscribeProService = async () => (await baseAxios.post('/users/subscribe-pro')).data;
+
+export const updateUserRoleService = async (userId: string, role: 'admin' | 'user') => {
+    return (
+        await baseAxios.patch(`/users/${userId}`, {
+            role,
+        })
+    ).data;
+};
+
+export const blockUserService = async (userId: string, reason: string) => {
+    return (
+        await baseAxios.post(`/users/${userId}/block`, {
+            reason,
+        })
+    ).data;
+};
+
+export const unblockUserService = async (userId: string) => {
+    return (await baseAxios.delete(`/users/${userId}/block`)).data;
+};

@@ -77,8 +77,10 @@ const AdminMenu = ({ collapsed, sideBarPinned, togglePinned }: AdminMenuProps) =
                                     content: item.title,
                                     path: item.path,
                                     startContent: item.startIcon,
+                                    endContent: item.endIcon,
                                 },
                             }}
+                            target={item.target}
                             isMatched={isMatch(item.path)}
                         />
                     ))}
