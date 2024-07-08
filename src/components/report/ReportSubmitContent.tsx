@@ -14,6 +14,9 @@ import Bowser from 'bowser';
 import { toast } from 'sonner';
 import { Input } from '../ui/input';
 import catchAsync from '@/utils/catchAsync';
+import { createReportService } from '@/services/reports.service';
+import { TbLoader } from 'react-icons/tb';
+import { uploadFileService } from '@/services/file.service';
 
 type ReportSubmitProps = {
     img: string;
@@ -22,6 +25,7 @@ type ReportSubmitProps = {
 
 const ReportSubmitContent = ({ img, setImg }: ReportSubmitProps) => {
     const ref = useRef<HTMLButtonElement>(null);
+
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState({
         title: '',
@@ -40,19 +44,25 @@ const ReportSubmitContent = ({ img, setImg }: ReportSubmitProps) => {
         catchAsync(
             async () => {
                 setLoading(true);
-                console.log(window.location.href);
-                console.log(ReportSubmitContent.name);
+
                 const browser = Bowser.getParser(window.navigator.userAgent);
-                console.log(browser.getBrowserName());
-                console.log(browser.getBrowserVersion());
-                console.log(browser.getOSVersion());
-                console.log(window.innerHeight);
-                console.log(window.innerWidth);
-                // createReportService({
-                // ...data,
-                // image: img})
-                // ref.current?.click();
-                // toast.success('Report submitted successfully');
+                const response = await fetch(img);
+                const blob = await response.blob();
+                const file = new File([blob], img.split('/').pop() || '');
+                const uploadedImg = (await uploadFileService(file)).data;
+                await createReportService({
+                    ...data,
+                    image: uploadedImg.file.url,
+                    relatedPath: window.location.href,
+                    environment: {
+                        os: browser.getOSName(),
+                        browserName: browser.getBrowserName(),
+                        browserVersion: browser.getBrowserVersion(),
+                        canvasSize: `${window.innerWidth}x${window.innerHeight}`,
+                    },
+                });
+                ref.current?.click();
+                toast.success('Report submitted successfully');
             },
             () => {
                 setLoading(false);
@@ -95,7 +105,8 @@ const ReportSubmitContent = ({ img, setImg }: ReportSubmitProps) => {
 
             <AlertDialogFooter>
                 <AlertDialogCancel ref={ref}>Cancel</AlertDialogCancel>
-                <Button onClick={submit} variant="black">
+                <Button disabled={loading} onClick={submit} variant="black">
+                    {loading && <TbLoader className="mr-2 animate-spin text-xl" />}
                     Submit report
                 </Button>
             </AlertDialogFooter>

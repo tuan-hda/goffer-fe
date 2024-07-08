@@ -117,6 +117,7 @@ const AudioRecorder = ({ audio, question, mock, outerSetLeftTime }: Props) => {
                 url: audioURL,
                 duration: rightTime,
                 question: question.id,
+                ref: audio?.ref || '',
             });
         }
     }, [audioURL]);
