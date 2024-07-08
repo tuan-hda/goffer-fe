@@ -7,10 +7,10 @@ export const summarizeAnswerService = (audioUrl: string) => {
     }>('/answers/summarize/audio', { audioUrl });
 };
 
-export const submitApplyAudioAnswerService = async (data: NewAnswer) => {
+export const submitAudioAnswer = async (data: NewAnswer) => {
     return (await baseAxios.post<AnswerResponse>('/answers/audio', data)).data;
 };
 
-export const getUserAnswerFromQuestionService = async (questionId: string, ref: string) => {
+export const getApplyAnswer = async (questionId: string, ref: string) => {
     return (await baseAxios.get<AnswerResponse>(`/answers/question/${questionId}/${ref}`)).data;
 };

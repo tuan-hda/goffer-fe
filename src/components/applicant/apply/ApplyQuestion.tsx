@@ -1,8 +1,8 @@
-import { TbInfoCircle, TbMessageCircle2 } from 'react-icons/tb';
+import { TbMessageCircle2 } from 'react-icons/tb';
 import AudioRecorder from '../common/AudioRecorder';
 import { Question } from '@/types/question.type';
-import useUserAnswer from '@/hooks/useUserAnswer';
 import { useParams } from 'react-router-dom';
+import useApplyAnswer from '@/hooks/useApplyAnswer';
 
 interface Props {
     order: number;
@@ -13,7 +13,7 @@ interface Props {
 const ApplyQuestion = ({ order, total, question }: Props) => {
     const { id } = useParams();
     if (!question) return;
-    const { data: answer } = useUserAnswer(question.id, id!);
+    const { data: answer } = useApplyAnswer(question.id, id!);
 
     return (
         <div className="flex flex-col gap-9 text-text">

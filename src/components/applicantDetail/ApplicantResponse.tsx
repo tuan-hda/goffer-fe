@@ -87,6 +87,7 @@ const ApplicantResponse = ({ answer, jobId, applicantId }: ApplicantResponseProp
                             owner: answer.owner.id,
                             question: answer.question.id,
                             url: answer.url,
+                            ref: answer.ref,
                         }}
                         question={answer.question}
                     />

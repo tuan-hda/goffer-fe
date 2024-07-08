@@ -1,5 +1,5 @@
 import AudioRecorder from '@/components/applicant/common/AudioRecorder';
-import useUserAnswer from '@/hooks/useUserAnswer';
+import useApplyAnswer from '@/hooks/useApplyAnswer';
 import { Question } from '@/types/question.type';
 import { useParams } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ interface Props {
 }
 const DetailPanel = ({ question }: Props) => {
     const { id } = useParams();
-    const { data: answer } = useUserAnswer(question.id, id!);
+    const { data: answer } = useApplyAnswer(question.id, id!);
 
     return (
         <div className="ml-8 w-full overflow-hidden rounded-xl border-none p-10 shadow-medium">

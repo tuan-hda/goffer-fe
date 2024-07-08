@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { uploadFileService } from '@/services/file.service';
 import { isAxiosError } from 'axios';
 import { toast } from 'sonner';
-import { Answer, AnswerResponse } from '@/types/answer.type';
+import { AnswerResponse } from '@/types/answer.type';
 import { Question } from '@/types/question.type';
 import useApplyStore from '@/stores/applyStore';
 
@@ -117,6 +117,7 @@ const AudioRecorder = ({ audio, question, mock, outerSetLeftTime }: Props) => {
                 url: audioURL,
                 duration: rightTime,
                 question: question.id,
+                ref: audio?.ref!,
             });
         }
     }, [audioURL]);

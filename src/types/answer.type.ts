@@ -2,12 +2,11 @@ export type NewAnswer = {
     url: string;
     question: string;
     duration: number;
-    apply?: string;
     submitSeconds?: number;
     ref: string;
 };
 
-export type AnswerResponse = Omit<NewAnswer, 'apply'> & {
+export type AnswerResponse = NewAnswer & {
     id: string;
     owner: string;
 };
@@ -30,4 +29,5 @@ export type Answer = {
     createdAt: string; // ISO date string
     updatedAt: string; // ISO date string
     lang?: number;
+    ref: string;
 };
