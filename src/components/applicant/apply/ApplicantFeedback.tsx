@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { ApplyResponse } from '@/types/application.type';
 import { useState } from 'react';
+import ApplySuccess from './ApplySuccess';
 
 type ApplicantFeedbackProps = {
     data: ApplyResponse;
@@ -27,6 +28,7 @@ const ApplicantFeedback = ({ data }: ApplicantFeedbackProps) => {
                     </div>
                 </div>
             )}
+            {step === 2 && <ApplySuccess />}
         </div>
     );
 };
