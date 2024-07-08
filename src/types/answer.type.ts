@@ -4,6 +4,7 @@ export type NewAnswer = {
     duration: number;
     submitSeconds?: number;
     ref: string;
+    apply: string;
 };
 
 export type AnswerResponse = NewAnswer & {

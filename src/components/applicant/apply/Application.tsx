@@ -19,6 +19,7 @@ import { submitAudioAnswer } from '@/services/answer.service';
 import ApplySuccess from './ApplySuccess';
 import useApplyStore from '@/stores/applyStore';
 import moment, { Moment } from 'moment';
+import FinalStep from './FinalStep';
 
 const Application = () => {
     const navigate = useNavigate();
@@ -120,6 +121,7 @@ const Application = () => {
                             duration: answer.duration,
                             ref: id!,
                             submitSeconds: moment().diff(lastTime.current || moment(), 'seconds'),
+                            apply: data.id,
                         });
 
                     lastTime.current = moment();
@@ -188,7 +190,7 @@ const Application = () => {
                             </form>
                         </Form>
                     ) : stepNum === totalSteps ? (
-                        <ApplySuccess />
+                        <FinalStep data={data} />
                     ) : (
                         <ApplyQuestion total={totalSteps - 1} order={stepNum} question={job?.questions[stepNum - 1]} />
                     )}
