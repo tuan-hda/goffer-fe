@@ -15,7 +15,7 @@ import useApplyJob from '@/hooks/useApplyJob';
 import { submitApplicationService, updateApplyService } from '@/services/apply.service';
 import { TbLoaderQuarter } from 'react-icons/tb';
 import { uploadAudio } from '../common/AudioRecorder';
-import { submitApplyAudioAnswerService } from '@/services/answer.service';
+import { submitAudioAnswer } from '@/services/answer.service';
 import ApplySuccess from './ApplySuccess';
 import useApplyStore from '@/stores/applyStore';
 import moment, { Moment } from 'moment';
@@ -114,11 +114,10 @@ const Application = () => {
                     const audio = await uploadAudio(answer.url);
 
                     if (audio)
-                        await submitApplyAudioAnswerService({
+                        await submitAudioAnswer({
                             url: audio.file.url,
                             question: answer.question,
                             duration: answer.duration,
-                            apply: data?.id,
                             ref: id!,
                             submitSeconds: moment().diff(lastTime.current || moment(), 'seconds'),
                         });
