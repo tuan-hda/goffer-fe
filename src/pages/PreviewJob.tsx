@@ -31,7 +31,7 @@ const PreviewJob = () => {
             </div>
             <div className="h-[48px]" />
             <div>
-                <JobDetail />
+                <JobDetail mode="all" />
             </div>
         </div>
     );

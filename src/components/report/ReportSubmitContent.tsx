@@ -11,6 +11,7 @@ import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { toast } from 'sonner';
+import { Input } from '../ui/input';
 
 type ReportSubmitProps = {
     img: string;
@@ -41,15 +42,20 @@ const ReportSubmitContent = ({ img, setImg }: ReportSubmitProps) => {
                 <img src={img} className="mt-2 rounded-xl border" />
             </Label>
 
-            <Label className="my-2">
-                Description
-                <Textarea className="mt-2 min-h-[100px]" placeholder="Brief description your issue..." />
-            </Label>
+            <div>
+                <Label>Title</Label>
+                <Input className="mt-1" placeholder="Brief description your issue..." />
+            </div>
+
+            <div>
+                <Label className="mt-2">Description</Label>
+                <Textarea className="mt-1 min-h-[100px]" placeholder="Brief description your issue..." />
+            </div>
 
             <AlertDialogFooter>
                 <AlertDialogCancel ref={ref}>Cancel</AlertDialogCancel>
                 <Button onClick={handleSubmit} variant="black">
-                    Submit
+                    Submit report
                 </Button>
             </AlertDialogFooter>
         </AlertDialogContent>

@@ -8,9 +8,10 @@ import { NotFound } from '@/pages';
 
 type JobDetailProps = {
     jobId?: string;
+    mode?: 'published' | 'all';
 };
 
-const JobDetail = ({ jobId }: JobDetailProps) => {
+const JobDetail = ({ mode = 'published', jobId }: JobDetailProps) => {
     const { id } = useParams();
     const { data: job, isLoading } = useGetOrganizationJob(id || jobId);
 
@@ -25,7 +26,7 @@ const JobDetail = ({ jobId }: JobDetailProps) => {
         return null;
     }
 
-    if (job.status !== 'published') {
+    if (mode === 'published' && job.status !== 'published') {
         return (
             <div className="absolute bottom-0 left-0 right-0 top-0">
                 <NotFound />;

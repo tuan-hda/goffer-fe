@@ -20,7 +20,7 @@ export type CreateJobResult =
     | string;
 
 export const GEN_AI_CREATE_JOB = {
-    min: 80,
+    min: 40,
     title: 'Create Job with AI',
     systemMessage: `
     You are an assistant to a hiring manager. Your task is to create a job post based on the given information. Generate as long as possible.
@@ -64,7 +64,7 @@ export type CreateProjectResult =
     | string;
 
 export const GEN_AI_CREATE_PROJECT = {
-    min: 80,
+    min: 40,
     title: 'Create Project with AI',
     systemMessage: `
     You are a project assistant. Your task is to create a project based on the given information. This project is used for improving quality of user's portfolio. Generate as long as possible.
@@ -116,7 +116,7 @@ export type GenerateProfileResult =
  */
 
 export const GEN_AI_GENERATE_PROFILE = {
-    min: 80,
+    min: 40,
     title: 'Generate Profile Information with AI',
     systemMessage: `
     You are an AI assistant. Your task is to generate a profile based on the given information.

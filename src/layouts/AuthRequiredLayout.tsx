@@ -4,6 +4,7 @@ import useAuthStore from '@/stores/authStore';
 import AuthTwoSection from './AuthTwoSection';
 import ConfirmEmail from '@/components/auth/ConfirmEmail';
 import { Spinner } from '@nextui-org/react';
+import { NotFound } from '@/pages';
 
 type AuthRequiredLayoutProps = {
     children?: React.ReactNode;
@@ -15,6 +16,8 @@ const AuthRequiredLayout = ({ children }: AuthRequiredLayoutProps) => {
     const location = useLocation();
     const match = matchRoutes([{ path: '/auth' }], location);
     const getStarted = matchRoutes([{ path: '/get-started' }], location);
+
+    const isInAdmin = window.location.pathname.startsWith('/app/admin');
 
     if (isLoading || (access === undefined && !user))
         return (
@@ -53,6 +56,8 @@ const AuthRequiredLayout = ({ children }: AuthRequiredLayoutProps) => {
     if (user && (!user.name || !user.skills || user.skills.length === 0 || !user.avatar) && !getStarted) {
         return <Navigate to="/get-started" />;
     }
+
+    if (isInAdmin && user?.role !== 'admin') return <NotFound />;
 
     if (user) return children;
 };
