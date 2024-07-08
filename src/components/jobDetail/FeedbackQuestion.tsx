@@ -10,6 +10,8 @@ type FeedbackQuestionProps = {
     size?: string;
     answers?: string[];
     editable?: boolean;
+    selected?: string;
+    onSelected?: (_: string) => void;
 };
 
 const FeedbackQuestion = ({
@@ -17,8 +19,19 @@ const FeedbackQuestion = ({
     answers = ['1', '2', '3', '4', '5'],
     size = 'text-sm',
     editable = false,
+    selected,
+    onSelected,
 }: FeedbackQuestionProps) => {
     const [isEdit, setEdit] = useState(false);
+    const [select, setSelect] = useState(selected);
+
+    const handleSelected = (value: string) => {
+        if (onSelected) {
+            setSelect(value);
+            onSelected(value);
+            console.log('🚀 ~ file: FeedbackQuestion.tsx:33 ~ handleSelected ~ value:', value);
+        }
+    };
 
     return (
         <Card className={'group relative bg-white/100 pt-1 shadow-none'}>
@@ -27,11 +40,16 @@ const FeedbackQuestion = ({
                 <div
                     className={classNames(
                         'mt-4 grid grid-cols-5 gap-3',
-                        editable ? 'pointer-events-auto' : 'pointer-events-none',
+                        editable || onSelected ? 'pointer-events-auto' : 'pointer-events-none',
                     )}
                 >
                     {answers.map((ans) => (
-                        <Button variant="outline" key={ans} className={classNames(size)}>
+                        <Button
+                            onClick={() => handleSelected(ans)}
+                            variant={ans === select ? 'secondary' : 'outline'}
+                            key={ans}
+                            className={classNames(size)}
+                        >
                             {ans}
                         </Button>
                     ))}
