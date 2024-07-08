@@ -1,32 +1,28 @@
+import { Report as ReportType } from '@/types/report.type';
 import Report from './Report';
+import { Fragment } from 'react/jsx-runtime';
 
-const ReportList = () => {
+type ReportListProps = {
+    data: ReportType[];
+    selected?: string;
+    setSelected: (id?: string) => void;
+};
+
+const ReportList = ({ data, selected, setSelected }: ReportListProps) => {
     return (
         <div className="h-full overflow-y-scroll">
-            <Report
-                selected
-                title="Hello your report"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac odio tempus, ultricies nunc nec, tincidunt nunc."
-                status="opened"
-            />
-            <div className="border-t"></div>
-            <Report
-                title="Hello your report"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac odio tempus, ultricies nunc nec, tincidunt nunc."
-                status="working"
-            />
-            <div className="border-t"></div>
-            <Report
-                title="Hello your report"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac odio tempus, ultricies nunc nec, tincidunt nunc."
-                status="closed"
-            />
-            <div className="border-t"></div>
-            <Report
-                title="Hello your report"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac odio tempus, ultricies nunc nec, tincidunt nunc."
-                status="opened"
-            />
+            {data.map((item, index) => (
+                <Fragment key={item.id}>
+                    <Report
+                        onClick={() => setSelected(item.id)}
+                        selected={selected === item.id}
+                        title={item.title}
+                        description={item.description}
+                        status={item.status}
+                    />
+                    {index < data.length - 1 && <div className="border-t"></div>}
+                </Fragment>
+            ))}
         </div>
     );
 };

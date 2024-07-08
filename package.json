@@ -108,6 +108,7 @@
         "@visx/tooltip": "^3.3.0",
         "@visx/vendor": "^3.5.0",
         "axios": "^1.6.7",
+        "bowser": "^2.11.0",
         "change-case": "^5.4.4",
         "class-variance-authority": "^0.7.0",
         "classnames": "^2.5.1",

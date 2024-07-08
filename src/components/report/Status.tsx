@@ -1,19 +1,21 @@
 import classNames from 'classnames';
 
 type StatusProps = {
-    status: 'opened' | 'working' | 'closed';
+    status: 'pending' | 'in_progress' | 'resolved';
 };
 
 const Status = ({ status }: StatusProps) => {
     return (
         <span
             className={classNames({
-                'text-yellow-600 hover:text-yellow-600': status === 'opened',
-                'text-blue-600 hover:text-blue-600': status === 'working',
-                'text-gray-600 hover:text-gray-600': status === 'closed',
+                'text-yellow-600 hover:text-yellow-600': status === 'pending',
+                'text-blue-600 hover:text-blue-600': status === 'in_progress',
+                'text-gray-600 hover:text-gray-600': status === 'resolved',
             })}
         >
-            {status[0].toUpperCase() + status.slice(1)}
+            {status === 'pending' && 'Pending'}
+            {status === 'in_progress' && 'In Progress'}
+            {status === 'resolved' && 'Resolved'}
         </span>
     );
 };
