@@ -1,18 +1,38 @@
 import { formatUTCDate } from '@/utils/time';
 import { Avatar } from '@nextui-org/react';
 import { TbLoaderQuarter, TbPlanet } from 'react-icons/tb';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { useState } from 'react';
 import { JobResponse } from '@/types/job.type';
+import { useChatContext } from 'stream-chat-react';
 
 interface Props {
     job: JobResponse;
 }
 
 const HeaderInfo = ({ job }: Props) => {
+    const navigate = useNavigate();
+    const { client, setActiveChannel } = useChatContext();
+
     const [chatLoading, setChatLoading] = useState(false);
-    const getInTouch = async () => {};
+
+    const owner = job.owner;
+
+    const getInTouch = async () => {
+        if (client.userID && owner) {
+            setChatLoading(true);
+            await client.upsertUser({ id: owner.id, name: owner.name, image: owner.avatar });
+
+            const channel = client.channel('messaging', {
+                members: [client.userID, owner.id],
+            });
+            await channel.create();
+            setActiveChannel?.(channel);
+            navigate('/app/messages');
+            setChatLoading(false);
+        }
+    };
 
     return (
         <div className="flex flex-row gap-8">
