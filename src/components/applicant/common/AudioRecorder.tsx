@@ -324,7 +324,7 @@ const AudioRecorder = ({ audio, question, mock, outerSetLeftTime }: Props) => {
             <p
                 className={classNames(
                     'my-3 text-center text-sm',
-                    !isRecording && 0 < rightTime && rightTime < 20 && 'text-danger',
+                    !isRecording && 0 < rightTime && rightTime < (question.constraint ?? 20) && 'text-danger',
                 )}
             >
                 Recording must be at least {question.constraint} seconds long.
