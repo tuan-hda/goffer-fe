@@ -1,4 +1,3 @@
-"use client";
 
 import { BotIcon, ChevronDownIcon } from "lucide-react";
 
