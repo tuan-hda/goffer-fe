@@ -2,7 +2,7 @@ import { FeedbackQuestion } from '@/components/jobDetail';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { createFeedbackService } from '@/services/feedback.service';
-import { NPS, NewFeedback, Sentiment } from '@/types/feedback.type';
+import { NewFeedback } from '@/types/feedback.type';
 import catchAsync from '@/utils/catchAsync';
 import { getNPS, getSentiment, sentiment } from '@/utils/feedback';
 import { useState } from 'react';
