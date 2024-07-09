@@ -5,8 +5,12 @@ import { Progress } from '../ui/progress';
 import { Feedback } from './Feedback';
 import { Button } from '../ui/button';
 import { TbSparkles } from 'react-icons/tb';
+import useAnalyzeJobFeedbacks from '@/hooks/useAnalyzeJobFeedbacks';
+import { useParams } from 'react-router-dom';
 
 const Feedbacks = () => {
+    const { id } = useParams();
+    const { data } = useAnalyzeJobFeedbacks(id);
     const [feedbacks, setFeedbacks] = useState<any[]>([]);
     // ['😡', '😔', '😐', '😊', '🥰']
     return (

@@ -1,4 +1,4 @@
-import { TbBookmarks, TbLoaderQuarter, TbPlanet, TbStarFilled } from 'react-icons/tb';
+import { TbBookmarks, TbLoaderQuarter, TbPlanet } from 'react-icons/tb';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Avatar } from '@nextui-org/react';
 import { Button } from '@/components/ui/button';
