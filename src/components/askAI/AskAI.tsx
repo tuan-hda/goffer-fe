@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { TbArrowUp, TbClock, TbDots, TbSparkles, TbX } from 'react-icons/tb';
 import { Button } from '../ui/button';
@@ -7,6 +7,7 @@ import { Textarea } from '../ui/textarea';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { Thread } from '../ui/assistant-ui/thread';
+import VoiceRecorder from './VoiceRecorder';
 
 type AskAIProps = {
     isOpen: boolean;
@@ -14,6 +15,8 @@ type AskAIProps = {
 };
 
 const AskAI = ({ isOpen, onClose }: AskAIProps) => {
+    const [value, setValue] = useState('');
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -35,12 +38,14 @@ const AskAI = ({ isOpen, onClose }: AskAIProps) => {
             )}
         >
             <div className="relative m-auto w-[720px] rounded-3xl bg-white p-5" onClick={(e) => e.stopPropagation()}>
-                <div className="absolute left-0 right-0 top-0 z-[1] flex items-center gap-2 rounded-t-3xl bg-white/30 px-8 pb-5 pt-6 font-serif text-[26px] font-black backdrop-blur-md">
-                    Goffer Copilot
-                    <TbSparkles className="text-3xl" />
-                </div>
-                <div className="max-h-[600px] pt-6">
-                    <Thread />
+                <div className="max-h-[90vh]">
+                    <Thread
+                        value={value}
+                        onChange={setValue}
+                        extensions={{
+                            suggestions: true,
+                        }}
+                    />
                 </div>
             </div>
         </div>,

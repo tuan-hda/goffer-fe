@@ -31,3 +31,9 @@ export function remainTime(endingAt?: string) {
     // Format the duration as hh:mm:ss
     return duration.asMilliseconds();
 }
+
+export const formatMinSec = (secs: number) => {
+    const minutes = Math.floor(secs / 60);
+    const seconds = secs % 60;
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+};
