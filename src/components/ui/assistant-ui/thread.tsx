@@ -1,16 +1,40 @@
-'use client';
-
 import { ComposerPrimitive, MessagePrimitive, ThreadPrimitive } from '@assistant-ui/react';
-import type { FC } from 'react';
+import { forwardRef, Ref, useRef, useState, type FC } from 'react';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { SendHorizonalIcon } from 'lucide-react';
 import { HiMiniPaperAirplane } from 'react-icons/hi2';
+import { IoSparkles } from 'react-icons/io5';
+import { Button } from '../button';
+import { TbLoader, TbMicrophone, TbPaperclip } from 'react-icons/tb';
+import useChatbotStore from '@/stores/chatbotStore';
+import Suggestions from './suggestions';
+import VoiceRecorder from '@/components/askAI/VoiceRecorder';
+import catchAsync from '@/utils/catchAsync';
+import { uploadFileService } from '@/services/file.service';
+import { speechToText } from '@/services/speech.service';
 
-export const Thread: FC = () => {
+type ThreadProps = {
+    value?: string;
+    onChange?: (value: string) => void;
+    extensions?: {
+        suggestions?: boolean;
+    };
+};
+
+export const Thread = ({ value, onChange, extensions }: ThreadProps) => {
+    const ref = useRef<HTMLTextAreaElement>(null);
+    const hasMessage = useChatbotStore((state) => state.hasMessage);
+
+    const triggerChangeEvent = (value: string) => {
+        if (ref.current) {
+            ref.current.value = value;
+            ref.current.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+    };
+
     return (
-        <ThreadPrimitive.Root className="flex h-full max-h-full flex-col items-center pb-3">
-            <ThreadPrimitive.Viewport className="flex max-h-[500px] w-full flex-grow flex-col items-center overflow-y-auto scroll-smooth px-4 pt-12">
+        <ThreadPrimitive.Root className="flex h-full max-h-full flex-col items-center pb-5 pt-2">
+            <ThreadPrimitive.Viewport className="flex max-h-[calc(90vh-300px)] w-full flex-grow flex-col items-center overflow-y-auto scroll-smooth px-6">
                 <ThreadPrimitive.Empty>
                     <ThreadEmpty />
                 </ThreadPrimitive.Empty>
@@ -23,29 +47,74 @@ export const Thread: FC = () => {
                 />
             </ThreadPrimitive.Viewport>
 
-            <Composer />
+            <Composer ref={ref} value={value} onChange={onChange} />
+            {extensions?.suggestions && !hasMessage && (
+                <Suggestions
+                    suggestions={[
+                        'What are subscription plans in Goffer?',
+                        'How to create a new job?',
+                        'Guide me how to improve my resume.',
+                    ]}
+                    onChange={triggerChangeEvent}
+                />
+            )}
         </ThreadPrimitive.Root>
     );
 };
 
 const ThreadEmpty: FC = () => {
     return (
-        <div className="flex flex-grow flex-col items-center justify-center">
-            <Avatar>
-                <AvatarFallback>C</AvatarFallback>
-            </Avatar>
-            <p className="my-4 text-xl">I'm your AI assistant. Ask me anything about hiring and Goffer.</p>
+        <div className="mb-8 mt-4 flex flex-grow items-center justify-center gap-6">
+            <IoSparkles className="h-9 w-9" />
+            <p className="font-serif text-4xl">Hello, I'm your Assistant</p>
         </div>
     );
 };
 
-const Composer: FC = () => {
+type ComposerProps = {
+    value?: string;
+    onChange?: (value: string) => void;
+};
+
+const Composer = forwardRef(({ value, onChange }: ComposerProps, ref: Ref<HTMLTextAreaElement>) => {
+    const [node, setNode] = useState<HTMLTextAreaElement | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    const transcribe = (file: File) =>
+        catchAsync(
+            async () => {
+                if (!node) return;
+                setLoading(true);
+                const upload = await uploadFileService(file, 'audio');
+                const url = upload.data.file.url;
+                const transcript = await speechToText(url);
+                onChange?.(transcript);
+            },
+            () => {
+                setLoading(false);
+            },
+        );
+
     return (
-        <ComposerPrimitive.Root className="flex w-[calc(100%-32px)] max-w-[42rem] items-end rounded-2xl border p-0.5 transition-shadow focus-within:shadow-sm">
+        <ComposerPrimitive.Root className="relative flex w-[calc(100%-32px)] max-w-[42rem] items-end rounded-2xl border p-0.5 transition-shadow focus-within:shadow-medium">
             <ComposerPrimitive.Input
-                placeholder="Write a message..."
-                className="h-12 max-h-40 flex-grow resize-none bg-transparent p-3.5 text-base outline-none placeholder:text-foreground/50"
+                ref={(el) => {
+                    if (ref) {
+                        (ref as any).current = el;
+                    }
+                    setNode(el);
+                }}
+                value={value}
+                onChange={(e) => onChange?.(e.target.value)}
+                placeholder="How can I help you today?"
+                className="h-12 max-h-80 min-h-28 flex-grow resize-none bg-transparent p-3.5 text-base outline-none placeholder:text-foreground/50"
             />
+            <div className="absolute bottom-2 left-2 flex items-center gap-1">
+                <Button type="button" size="sm" variant="ghost" className="gap-1 px-2 text-sm text-black/60">
+                    <TbPaperclip className="text-base" /> Attach
+                </Button>
+                {loading ? <TbLoader className="animate-spin text-lg" /> : <VoiceRecorder onFinish={transcribe} />}
+            </div>
             <ThreadPrimitive.If running={false}>
                 <ComposerPrimitive.Send className="m-2 flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-2xl font-bold shadow transition-opacity disabled:opacity-10">
                     <HiMiniPaperAirplane className="text-base text-background" />
@@ -58,7 +127,7 @@ const Composer: FC = () => {
             </ThreadPrimitive.If>
         </ComposerPrimitive.Root>
     );
-};
+});
 
 const UserMessage: FC = () => {
     return (

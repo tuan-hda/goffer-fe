@@ -1,4 +1,5 @@
 import { conductQueryService } from '@/services/rag.service';
+import useChatbotStore from '@/stores/chatbotStore';
 import { AssistantRuntimeProvider, useLocalRuntime, type ChatModelAdapter } from '@assistant-ui/react';
 import removeMd from 'remove-markdown';
 const MyModelAdapter: ChatModelAdapter = {
@@ -8,6 +9,8 @@ const MyModelAdapter: ChatModelAdapter = {
             const result = await conductQueryService(messages, abortSignal);
 
             const data = await result.json();
+
+            useChatbotStore.getState().setMessage(true);
 
             return {
                 content: [
