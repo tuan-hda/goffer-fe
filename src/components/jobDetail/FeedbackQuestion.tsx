@@ -29,7 +29,6 @@ const FeedbackQuestion = ({
         if (onSelected) {
             setSelect(value);
             onSelected(value);
-            console.log('🚀 ~ file: FeedbackQuestion.tsx:33 ~ handleSelected ~ value:', value);
         }
     };
 

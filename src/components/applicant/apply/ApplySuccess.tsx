@@ -12,10 +12,12 @@ import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 import { TbArrowRight, TbPencilStar } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import GiveFeedback from './GiveFeedback';
+import { useState } from 'react';
 
 const ApplySuccess = () => {
     const navigate = useNavigate();
     const { data } = useSelfProfileQuery();
+    const [open, setOpen] = useState(true);
 
     return (
         <div className="space-y-8 text-2xl font-normal text-text">
@@ -26,7 +28,7 @@ const ApplySuccess = () => {
             </p>
             <p className="font-serif">You should be hearing back from us shortly!</p>
             <div className="flex gap-x-2">
-                <Dialog defaultOpen>
+                <Dialog defaultOpen open={open} onOpenChange={setOpen}>
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>
@@ -45,7 +47,7 @@ const ApplySuccess = () => {
                         <DialogHeader>
                             <DialogTitle>Give Feedback</DialogTitle>
                         </DialogHeader>
-                        <GiveFeedback />
+                        <GiveFeedback onSuccess={() => setOpen(false)} />
                     </DialogContent>
                 </Dialog>
                 <Button size="lg" className="gap-x-2" onClick={() => navigate('/app/jobs')} variant="black">
