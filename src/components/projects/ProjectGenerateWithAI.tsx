@@ -13,7 +13,7 @@ const ProjectGenerateWithAI = ({ setInitialValue }: ProjectGenerateWithAIProps) 
     const setInfo = useNewProjectStore((state) => state.setInfo);
 
     const handleResponse = (result: CreateProjectResult) => {
-        if (typeof result === 'string') {
+        if (!result) {
             return;
         }
 
