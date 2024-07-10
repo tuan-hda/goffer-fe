@@ -41,7 +41,7 @@ const SidebarItem = ({
             >
                 {item.element.content}
             </p>
-            {isEndContent && item.element.endContent}
+            {isEndContent && !collapsed && item.element.endContent}
         </button>
     ) : (
         <Link
