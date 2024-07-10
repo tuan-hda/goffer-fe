@@ -1,4 +1,3 @@
-import { TbCircleFilled, TbSparkles } from 'react-icons/tb';
 import AudioRecorder from '../applicant/common/AudioRecorder';
 import { Badge } from '../ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
@@ -13,6 +12,8 @@ import useCurrEvaluation from '@/hooks/useCurrEvaluation';
 import classNames from 'classnames';
 import useCurrApplication from '@/hooks/useCurrApplication';
 import useListEvaluations from '@/hooks/useListEvaluations';
+import Markdown from 'react-markdown';
+import { Accordion, AccordionItem } from '@nextui-org/react';
 
 type ApplicantResponseProps = {
     answer: Answer;
@@ -98,7 +99,7 @@ const ApplicantResponse = ({ answer, jobId, applicantId }: ApplicantResponseProp
                             <p className="font-medium text-black">Summary</p>
                             <p className="text-text">{answer.summary}</p>
 
-                            <p className="mt-4 font-medium text-black">Suggested evaluation</p>
+                            {/* <p className="mt-4 font-medium text-black">Suggested evaluation</p>
                             <div className="mt-1 pb-2 text-text">
                                 <div className="flex items-center gap-3">
                                     <TbCircleFilled className="h-2 w-2 text-green-500" />
@@ -112,8 +113,24 @@ const ApplicantResponse = ({ answer, jobId, applicantId }: ApplicantResponseProp
                                     <TbCircleFilled className="h-2 w-2 text-primary" />
                                     <p>Her voice is quite small</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
+                    )}
+                    {answer.assessment && (
+                        <>
+                            <div className="-mx-6 mb-2 mt-4 border-t border-dashed border-t-gray-500" />
+                            <Accordion className="!px-0">
+                                <AccordionItem
+                                    key="1"
+                                    aria-label="Accordion 1"
+                                    subtitle="Expand to see analysis"
+                                    title="AI-Powered Analysis"
+                                    classNames={{ title: 'font-medium text-black text-md' }}
+                                >
+                                    <Markdown className="mb-4">{answer.assessment}</Markdown>
+                                </AccordionItem>
+                            </Accordion>
+                        </>
                     )}
                 </CardContent>
             </Card>
