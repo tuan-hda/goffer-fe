@@ -49,14 +49,17 @@ export const Thread = ({ value, onChange, extensions }: ThreadProps) => {
 
             <Composer ref={ref} value={value} onChange={onChange} />
             {extensions?.suggestions && !hasMessage && (
-                <Suggestions
-                    suggestions={[
-                        'What are subscription plans in Goffer?',
-                        'How to create a new job?',
-                        'Guide me how to improve my resume.',
-                    ]}
-                    onChange={triggerChangeEvent}
-                />
+                <div className="mx-7 -mt-4 rounded-b-2xl border border-black/10 bg-beige/30 p-3 pt-6">
+                    <Suggestions
+                        suggestions={[
+                            'What are subscription plans in Goffer?',
+                            'How to create a new job?',
+                            'Guide me how to improve my resume.',
+                        ]}
+                        helperText="Get started with common questions below."
+                        onChange={triggerChangeEvent}
+                    />
+                </div>
             )}
         </ThreadPrimitive.Root>
     );
@@ -80,7 +83,7 @@ const Composer = forwardRef(({ value, onChange }: ComposerProps, ref: Ref<HTMLTe
     const [node, setNode] = useState<HTMLTextAreaElement | null>(null);
 
     return (
-        <ComposerPrimitive.Root className="relative flex w-[calc(100%-32px)] max-w-[42rem] items-end rounded-2xl border p-0.5 transition-shadow focus-within:shadow-medium">
+        <ComposerPrimitive.Root className="relative z-[11] flex w-[calc(100%-32px)] flex-col items-end !gap-0 rounded-2xl border bg-white p-0.5 transition-shadow focus-within:shadow-medium">
             <ComposerPrimitive.Input
                 ref={(el) => {
                     if (ref) {
@@ -91,21 +94,24 @@ const Composer = forwardRef(({ value, onChange }: ComposerProps, ref: Ref<HTMLTe
                 value={value}
                 onChange={(e) => onChange?.(e.target.value)}
                 placeholder="How can I help you today?"
-                className="h-12 max-h-80 min-h-28 flex-grow resize-none bg-transparent p-3.5 text-base outline-none placeholder:text-foreground/50"
+                className="max-h-80 min-h-20 w-full flex-grow resize-none bg-transparent px-3.5 pb-2 pt-3.5 text-base outline-none placeholder:text-foreground/50"
             />
-            <div className="absolute bottom-2 left-2 flex items-center gap-1">
-                <VoiceRecorder onTranscribe={onChange} />
+            <div className="flex w-full pb-2 pl-1 pr-2">
+                <div className="mr-auto flex items-center gap-1">
+                    <VoiceRecorder onTranscribe={onChange} />
+                </div>
+                <ThreadPrimitive.If running={false}>
+                    <ComposerPrimitive.Send className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-2xl font-bold shadow transition-opacity disabled:opacity-10">
+                        <HiMiniPaperAirplane className="text-base text-background" />
+                    </ComposerPrimitive.Send>
+                </ThreadPrimitive.If>
+
+                <ThreadPrimitive.If running>
+                    <ComposerPrimitive.Cancel className="flex size-5 items-center justify-center rounded-full border-2 border-foreground">
+                        <div className="size-2 rounded-[1px] bg-foreground" />
+                    </ComposerPrimitive.Cancel>
+                </ThreadPrimitive.If>
             </div>
-            <ThreadPrimitive.If running={false}>
-                <ComposerPrimitive.Send className="m-2 flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-2xl font-bold shadow transition-opacity disabled:opacity-10">
-                    <HiMiniPaperAirplane className="text-base text-background" />
-                </ComposerPrimitive.Send>
-            </ThreadPrimitive.If>
-            <ThreadPrimitive.If running>
-                <ComposerPrimitive.Cancel className="m-3.5 flex size-5 items-center justify-center rounded-full border-2 border-foreground">
-                    <div className="size-2 rounded-[1px] bg-foreground" />
-                </ComposerPrimitive.Cancel>
-            </ThreadPrimitive.If>
         </ComposerPrimitive.Root>
     );
 });
