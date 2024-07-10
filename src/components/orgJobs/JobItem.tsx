@@ -62,7 +62,7 @@ const JobItem = ({ data }: JobItemProps) => {
     const { domain } = useParams();
 
     const copyLink = async () => {
-        await navigator.clipboard.writeText(`http://localhost:3000/job/${data.id}`);
+        await navigator.clipboard.writeText(`https://goffer.world/job/${data.id}`);
         toast.success('Link copied to clipboard');
     };
 
