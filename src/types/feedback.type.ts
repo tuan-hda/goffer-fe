@@ -1,6 +1,6 @@
 import { User } from './user.type';
 
-export type Sentiment = 'negative' | 'neutral' | 'positive' | 'satisfied' | 'very satisfied';
+export type Sentiment = 'negative' | 'disappointed' | 'neutral' | 'satisfied' | 'very satisfied';
 export type NPS = 'promoters' | 'passives' | 'detractors';
 
 export type NewFeedback = {
@@ -23,18 +23,19 @@ export type Feedback = Omit<NewFeedback, 'resolved' | 'sentiment' | 'NPS'> & {
 
 export type UpdateFeedback = Partial<Omit<NewFeedback, 'job'>>;
 
-type FeedbackRate = {
+export type FeedbackRate = {
     quantity: number;
     rate: number;
 };
 
-export type FeedbackSummary = {
-    total: number;
-    average: string;
-} & Partial<Record<Sentiment | NPS, FeedbackRate>>;
-
 export type AnalyzeFeedback = {
-    sentiment: FeedbackSummary;
-    NPS: FeedbackSummary;
+    sentiment: {
+        total: number;
+        average: number;
+    } & Partial<Record<Sentiment, FeedbackRate>>;
+    NPS: {
+        total: number;
+        NPS: number;
+    } & Partial<Record<NPS, FeedbackRate>>;
     candidates: number;
 };
