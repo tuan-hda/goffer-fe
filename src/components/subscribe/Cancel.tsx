@@ -17,7 +17,7 @@ const Cancel = () => {
             </p>
             <Button
                 onClick={() => {
-                    navigate('/app/home');
+                    navigate('/app');
                 }}
                 className="mt-4 rounded-xl"
                 variant="outline"

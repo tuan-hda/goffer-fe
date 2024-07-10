@@ -109,7 +109,7 @@ const NewJob = () => {
     }, [editor]);
 
     const handleResponse = (result: CreateJobResult) => {
-        if (typeof result === 'string') {
+        if (!result) {
             return;
         }
         const { description, ...rest } = result;

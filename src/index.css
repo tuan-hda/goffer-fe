@@ -655,6 +655,7 @@ i.justify-align {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: var(--lines, 2);
+    word-wrap: break-word;
 }
 
 .animate-bounce-delay {
