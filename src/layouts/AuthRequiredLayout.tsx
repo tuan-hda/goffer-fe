@@ -53,7 +53,7 @@ const AuthRequiredLayout = ({ children }: AuthRequiredLayoutProps) => {
             </AuthTwoSection>
         );
 
-    if (user && (!user.name || !user.skills || user.skills.length === 0 || !user.avatar) && !getStarted) {
+    if (user && (!user.name || !user.avatar) && !getStarted) {
         return <Navigate to="/get-started" />;
     }
 

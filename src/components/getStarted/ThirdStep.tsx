@@ -27,7 +27,7 @@ const ThirdStep = ({ onContinue, onBack, info, setInfo }: ThirdStepProps) => {
 
     return (
         <div>
-            <p className="text-sm font-light text-black/40">Step 3/4</p>
+            <p className="text-sm font-light text-black/40">Step 2/2</p>
             <h1 className="mt-4 font-serif text-4xl">Set your avatar</h1>
             <form onSubmit={handleSubmit}>
                 <ImageEdit
@@ -43,7 +43,7 @@ const ThirdStep = ({ onContinue, onBack, info, setInfo }: ThirdStepProps) => {
                         <TbChevronLeft className="text-lg" />
                     </Button>
                     <Button type="submit" isDisabled={!avatar || loading} size="md" color="primary">
-                        Continue
+                        Finish
                     </Button>
                 </div>
             </form>

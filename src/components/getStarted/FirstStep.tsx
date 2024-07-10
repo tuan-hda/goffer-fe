@@ -22,7 +22,7 @@ const FirstStep = ({ onContinue, info, setInfo }: FirstStepProps) => {
 
     return (
         <div>
-            <p className="text-sm font-light text-black/40">Step 1/4</p>
+            <p className="text-sm font-light text-black/40">Step 1/2</p>
             <h1 className="mt-4 font-serif text-4xl">What&apos;s your name?</h1>
             <form onSubmit={handleSubmit}>
                 <Input

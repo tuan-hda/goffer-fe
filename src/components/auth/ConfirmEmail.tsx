@@ -109,7 +109,7 @@ const ConfirmEmail = ({ email, accessToken, onSuccess, initialType }: ConfirmEma
                 if (onSuccess) {
                     onSuccess();
                 } else {
-                    navigate(`/app/${initialType}`);
+                    navigate(`/app`);
                 }
                 localStorage.removeItem('lastSentEmail');
             }, 1500);
