@@ -116,8 +116,9 @@ export type GenerateProfileResult =
  */
 
 export const GEN_AI_GENERATE_PROFILE = {
+    maxWidth: 'max-w-[600px]',
     min: 40,
-    title: 'Generate Profile Information with AI',
+    title: 'Generate profile with AI',
     systemMessage: `
     You are an AI assistant. Your task is to generate a profile based on the given information.
     Only return the object with the following format: 

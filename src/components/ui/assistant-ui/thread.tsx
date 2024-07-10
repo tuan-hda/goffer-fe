@@ -78,22 +78,6 @@ type ComposerProps = {
 
 const Composer = forwardRef(({ value, onChange }: ComposerProps, ref: Ref<HTMLTextAreaElement>) => {
     const [node, setNode] = useState<HTMLTextAreaElement | null>(null);
-    const [loading, setLoading] = useState(false);
-
-    const transcribe = (file: File) =>
-        catchAsync(
-            async () => {
-                if (!node) return;
-                setLoading(true);
-                const upload = await uploadFileService(file, 'audio');
-                const url = upload.data.file.url;
-                const transcript = await speechToText(url);
-                onChange?.(transcript);
-            },
-            () => {
-                setLoading(false);
-            },
-        );
 
     return (
         <ComposerPrimitive.Root className="relative flex w-[calc(100%-32px)] max-w-[42rem] items-end rounded-2xl border p-0.5 transition-shadow focus-within:shadow-medium">
@@ -110,10 +94,7 @@ const Composer = forwardRef(({ value, onChange }: ComposerProps, ref: Ref<HTMLTe
                 className="h-12 max-h-80 min-h-28 flex-grow resize-none bg-transparent p-3.5 text-base outline-none placeholder:text-foreground/50"
             />
             <div className="absolute bottom-2 left-2 flex items-center gap-1">
-                <Button type="button" size="sm" variant="ghost" className="gap-1 px-2 text-sm text-black/60">
-                    <TbPaperclip className="text-base" /> Attach
-                </Button>
-                {loading ? <TbLoader className="animate-spin text-lg" /> : <VoiceRecorder onFinish={transcribe} />}
+                <VoiceRecorder onTranscribe={onChange} />
             </div>
             <ThreadPrimitive.If running={false}>
                 <ComposerPrimitive.Send className="m-2 flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-2xl font-bold shadow transition-opacity disabled:opacity-10">
