@@ -45,7 +45,7 @@ const VoiceRecorder = ({ onFinish, onTranscribe }: Props) => {
         try {
             setLoading(true);
             const upload = await uploadFileService(file, 'audio');
-            const url = upload.data.file.url;
+            const url = upload.data.file.secure_url;
             const transcript = await speechToText(url);
             onTranscribe(transcript);
         } catch (error) {

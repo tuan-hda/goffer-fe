@@ -94,7 +94,7 @@ const NewProject = () => {
                     const cover = info.cover;
                     const result = dataURLtoFile(cover, 'cover.jpg');
                     const image = await uploadFileService(result);
-                    projectData.cover = image.data.file.url;
+                    projectData.cover = image.data.file.secure_url;
                 } catch (error) {
                     // Do nothing
                 }

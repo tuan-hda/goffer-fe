@@ -47,7 +47,7 @@ const AvatarEdit = ({
             setLoading(true);
             const image = (await upload(file))?.file;
             if (image) {
-                setAvatar(image.url);
+                setAvatar(image.secure_url);
                 ref.current!.files = null;
             }
             setLoading(false);

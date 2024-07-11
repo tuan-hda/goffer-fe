@@ -52,7 +52,7 @@ const ReportSubmitContent = ({ img, setImg }: ReportSubmitProps) => {
                 const uploadedImg = (await uploadFileService(file)).data;
                 await createReportService({
                     ...data,
-                    image: uploadedImg.file.url,
+                    image: uploadedImg.file.secure_url,
                     relatedPath: window.location.href,
                     environment: {
                         os: browser.getOSName(),

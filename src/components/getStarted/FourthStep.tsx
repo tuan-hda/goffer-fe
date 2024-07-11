@@ -55,7 +55,7 @@ const FourthStep = ({ onContinue, onBack, info, setInfo }: FourthStepProps) => {
             setFileLoading(true);
             const cvFile = (await upload(file))?.file;
             if (cvFile) {
-                setRefDoc(cvFile.url);
+                setRefDoc(cvFile.secure_url);
                 setName(name || '');
                 setType('file');
                 ref.current!.files = null;

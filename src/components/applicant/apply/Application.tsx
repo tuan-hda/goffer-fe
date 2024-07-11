@@ -115,7 +115,7 @@ const Application = () => {
 
                     if (audio)
                         await submitAudioAnswer({
-                            url: audio.file.url,
+                            url: audio.file.secure_url,
                             question: answer.question,
                             duration: answer.duration,
                             ref: id!,

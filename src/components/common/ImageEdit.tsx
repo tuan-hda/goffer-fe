@@ -38,7 +38,7 @@ const ImageEdit = ({ image, setImage, loading, setLoading, className, uploadClas
             setLoading(true);
             const image = (await upload(file))?.file;
             if (image) {
-                setImage(image.url);
+                setImage(image.secure_url);
                 ref.current!.files = null;
             }
             setLoading(false);
