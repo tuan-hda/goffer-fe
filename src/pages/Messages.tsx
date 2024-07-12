@@ -41,11 +41,10 @@ const Messages = () => {
     return (
         <div className="h-screen text-sm">
             <div className="flex h-full">
-                <div className="h-full w-[360px]">
+                <div className="mx-6 my-6 w-[360px] overflow-hidden rounded-xl shadow-small">
                     <RoomList />
                 </div>
-                <div className="h-full border-r border-r-[#EEEEF0]" />
-                <div className="h-full flex-1">
+                <div className="my-6 mr-6 flex-1 overflow-hidden rounded-xl shadow-small">
                     <Channel EmojiPicker={EmojiPicker} emojiSearchIndex={SearchIndex}>
                         <Window>
                             <MessagePanel />
