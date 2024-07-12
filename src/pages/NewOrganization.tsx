@@ -42,7 +42,7 @@ const NewOrganization = () => {
             const session = await createOrganizationService(data);
 
             if (session.id) {
-                await stripe!.redirectToCheckout({ sessionId: session.id, customerEmail: self?.email });
+                await stripe!.redirectToCheckout({ sessionId: session.id });
             }
         } catch (error) {
             if (isAxiosError(error)) {
