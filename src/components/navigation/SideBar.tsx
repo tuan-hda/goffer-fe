@@ -252,7 +252,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                     </Link>
                                 )}
                                 {!domain && !collapsed && <SubscriptionIndividual />}
-                                <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
+                                {/* <button className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100">
                                     <TbHelp className="text-xl" />
                                     <p
                                         className={classNames(
@@ -264,7 +264,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                     >
                                         Help
                                     </p>
-                                </button>
+                                </button> */}
                                 <button
                                     onClick={logout}
                                     className="relative flex w-full items-center gap-[18px] rounded-lg p-2 transition hover:bg-gray-100"
