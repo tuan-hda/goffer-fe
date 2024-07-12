@@ -52,10 +52,10 @@ const Recommendations = ({ user }: RecommendationsProps) => {
                 <motion.div animate={ctrls}>
                     <p className="text-center text-[4vh] leading-[140%]">"{recommendations[curr]?.content}"</p>
                     <div className="mt-[4vh] flex items-center justify-center gap-[3vh]">
-                        <Avatar src={recommendations[curr].user?.avatar} className="h-[8vh] w-[8vh] flex-shrink-0" />
+                        <Avatar src={recommendations[curr].owner?.avatar} className="h-[8vh] w-[8vh] flex-shrink-0" />
                         <p className="min-w-0 flex-1 text-[3vh]">
-                            <span className="font-medium">{recommendations[curr].user?.name}</span>,{' '}
-                            <span className="text-gray-500">{recommendations[curr].user?.oneLiner}</span>
+                            <span className="font-medium">{recommendations[curr].owner?.name}</span>,{' '}
+                            <span className="text-gray-500">{recommendations[curr].owner?.oneLiner}</span>
                         </p>
                     </div>
                 </motion.div>
