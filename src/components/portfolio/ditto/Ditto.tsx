@@ -32,7 +32,7 @@ const Ditto = ({ portfolio, user }: Props) => {
             </Reveal>
             <div className="h-[28vh]"></div>
             <Reveal>
-                <Recommendations />
+                <Recommendations user={user} />
             </Reveal>
             <div className="h-[32vh]"></div>
             <Reveal>

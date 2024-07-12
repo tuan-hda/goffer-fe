@@ -55,7 +55,7 @@ const OnceInAMoon = ({ portfolio, user }: OnceInAMoonProps) => {
 
             <div className="h-[calc(55vh-200px)]"></div>
             <Reveal threshold={0.6}>
-                <Recommendations />
+                <Recommendations user={user} />
             </Reveal>
 
             <div className="h-[calc(55vh-200px)]"></div>
