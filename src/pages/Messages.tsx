@@ -54,9 +54,9 @@ const Messages = () => {
                     </Channel>
                 </div>
                 <div className="h-full border-r border-r-[#EEEEF0]" />
-                <div className="flex h-full w-[360px] flex-col">
+                {/* <div className="flex h-full w-[360px] flex-col">
                     <DetailsPanel user={user} />
-                </div>
+                </div> */}
             </div>
         </div>
     );
