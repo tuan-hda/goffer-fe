@@ -26,7 +26,7 @@ const GenAIProvider = (props: GenAIProviderProps) => {
             <DialogTrigger asChild>
                 <div>{props.children}</div>
             </DialogTrigger>
-            <DialogContent className={classNames('max-w-[700px] !rounded-3xl px-8 py-6')}>
+            <DialogContent className={classNames('max-h-[90vh] max-w-[700px] overflow-y-auto !rounded-3xl px-8 py-6')}>
                 <div className="flex flex-col">
                     <DialogHeader>
                         <div className="mb-8 mt-4 flex flex-grow items-center justify-center gap-6">

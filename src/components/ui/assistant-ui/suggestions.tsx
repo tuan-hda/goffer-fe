@@ -16,13 +16,17 @@ const Suggestions = ({ onChange, suggestions, helperText }: SuggestionsProps) =>
                         key={i}
                         onClick={() => onChange && onChange(s)}
                         className="cursor-pointer rounded-xl p-3 shadow-small outline-primary/20 hover:text-primary hover:outline"
-                        style={
-                            {
-                                '--lines': 3,
-                            } as CSSProperties
-                        }
                     >
-                        {s}
+                        <p
+                            className="lines-ellipsis"
+                            style={
+                                {
+                                    '--lines': 3,
+                                } as CSSProperties
+                            }
+                        >
+                            {s}
+                        </p>
                     </div>
                 ))}
             </div>

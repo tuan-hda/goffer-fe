@@ -1,5 +1,5 @@
 import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import { IoChatbubblesOutline } from 'react-icons/io5';
 import { Button } from '../button';
 import { TbChevronDown } from 'react-icons/tb';
@@ -48,7 +48,16 @@ const Recent = ({ name, onChange }: RecentProps) => {
                             key={index}
                             className="cursor-pointer rounded-xl border p-3 transition hover:border-black/60"
                         >
-                            {prompt}
+                            <p
+                                className="lines-ellipsis"
+                                style={
+                                    {
+                                        '--lines': 4,
+                                    } as CSSProperties
+                                }
+                            >
+                                {prompt}
+                            </p>
                         </div>
                     ))}
                 </div>

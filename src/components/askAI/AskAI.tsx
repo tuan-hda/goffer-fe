@@ -33,7 +33,7 @@ const AskAI = ({ isOpen, onClose }: AskAIProps) => {
         <div
             onClick={onClose}
             className={classNames(
-                'pointer-events-none fixed bottom-0 left-0 right-0 top-0 z-50 flex bg-black/70 opacity-0 backdrop-blur-sm transition',
+                'pointer-events-none fixed bottom-0 left-0 right-0 top-0 z-50 flex max-h-[90vh] overflow-y-auto bg-black/70 opacity-0 backdrop-blur-sm transition',
                 isOpen && 'pointer-events-auto opacity-100',
             )}
         >
