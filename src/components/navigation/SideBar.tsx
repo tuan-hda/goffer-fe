@@ -78,7 +78,7 @@ const SideBar = ({ org }: SideBarProps) => {
     const openBillingCustomerPortal = () => {
         const email = self?.email || '';
         window.open(
-            `https://billing.stripe.com/p/login/test_eVa6ss93Jd772Sk144?prefilled_email=${encodeURI(email)}`,
+            `https://billing.stripe.com/p/login/test_5kA3ggdjZc332Sk9AB?prefilled_email=${encodeURI(email)}`,
             '_blank',
         );
     };

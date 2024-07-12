@@ -31,7 +31,7 @@ const SubscriptionIndividual = () => {
                 const session = await subscribeProService();
 
                 if (session.id) {
-                    await stripe!.redirectToCheckout({ sessionId: session.id });
+                    await stripe!.redirectToCheckout({ sessionId: session.id, customerEmail: self?.email });
                 }
             },
             () => {

@@ -9,8 +9,10 @@ import { Progress } from '@/components/ui/progress';
 import config from '@/configs/config';
 import { createOrganizationService } from '@/services/organizations.service';
 import { NewOrganization as NewOrganizationType } from '@/types/organization.type';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
 
 const NewOrganization = () => {
+    const { data: self } = useSelfProfileQuery();
     const [loading, setLoading] = useState(false);
     const [step, setStep] = useState(1);
     const [data, setData] = useState<NewOrganizationType>({
@@ -40,7 +42,7 @@ const NewOrganization = () => {
             const session = await createOrganizationService(data);
 
             if (session.id) {
-                await stripe!.redirectToCheckout({ sessionId: session.id });
+                await stripe!.redirectToCheckout({ sessionId: session.id, customerEmail: self?.email });
             }
         } catch (error) {
             if (isAxiosError(error)) {
