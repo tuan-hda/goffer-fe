@@ -23,7 +23,7 @@ const AppLayout = () => {
             orgItems(domain, { onClickMap: {} }, false, currentMembership?.role)
                 .filter((item) => item.type === 'link')
                 .map((item) => ({
-                    path: item.element.path,
+                    path: 'path' in item.element ? item.element.path : '',
                 })),
             location.pathname,
         );
