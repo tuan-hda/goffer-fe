@@ -28,9 +28,10 @@ const PortfolioLayout = () => {
             <Header
                 logo={<img src={portfolio.logo} className="h-20 w-40 rounded-xl object-cover" />}
                 hideExperiences={false}
+                user={user}
             />
             <Outlet context={[portfolio]} />
-            <Footer links={user?.links || []} />
+            <Footer user={user} links={user?.links || []} />
         </div>
     );
 };

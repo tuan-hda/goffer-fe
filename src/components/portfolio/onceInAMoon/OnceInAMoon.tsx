@@ -40,7 +40,7 @@ const OnceInAMoon = ({ portfolio, user }: OnceInAMoonProps) => {
             {/* Showcase images part */}
             <ImagesShowcase portfolio={portfolio} />
 
-            <GetInTouch className="mx-auto mt-[24vh] w-fit" />
+            <GetInTouch user={user} className="mx-auto mt-[24vh] w-fit" />
 
             <div className="h-[calc(55vh-200px)]"></div>
             {/* Projects */}

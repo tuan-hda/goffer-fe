@@ -86,10 +86,11 @@ const Opening = ({ portfolio, user }: OpeningProps) => {
     };
 
     const baseWords = useMemo(() => {
-        const skills = user.skills || [];
+        let skills = user.skills || [];
         if (skills.length === 0) return ['developer', 'designer', 'freelancer'];
         if (skills.length === 1) return [skills[0], skills[0], skills[0]];
         if (skills.length === 2) return [skills[0], skills[1], skills[0]];
+        skills = skills.slice(0, 3);
         return skills.map((skill) => appendArticle(skill.toLowerCase()));
     }, [user.skills]);
 
@@ -158,7 +159,7 @@ const Opening = ({ portfolio, user }: OpeningProps) => {
             <p className="mt-[1vh] font-serif text-[10vh] font-medium leading-[100%] tracking-tight">
                 ➺ based in {user.location}
             </p>
-            <GetInTouch className="mt-[4vh]" />
+            <GetInTouch user={user} className="mt-[4vh]" />
         </div>
     );
 };

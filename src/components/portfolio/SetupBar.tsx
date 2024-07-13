@@ -58,9 +58,9 @@ const SetupBar = () => {
                         placeholder="Custom domain"
                         className="mr-2 flex-1"
                     />
-                    <Button variant="outline" className="pointer-events-none">
+                    {/* <Button variant="outline" className="pointer-events-none">
                         .goffer.online
-                    </Button>
+                    </Button> */}
                 </div>
                 <div className="h-6" />
                 <Label>

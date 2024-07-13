@@ -1,81 +1,54 @@
-import { AlertDialog } from '@radix-ui/react-alert-dialog';
-import {
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTrigger,
-} from '../ui/alert-dialog';
 import { Button } from '../ui/button';
 import classNames from 'classnames';
-import { Avatar } from '@nextui-org/react';
-import { Label } from '../ui/label';
-import { Textarea } from '../ui/textarea';
-import { Input } from '../ui/input';
+import { User } from '@/types/user.type';
+import useSelfProfileQuery from '@/hooks/useSelfProfileQuery';
+import { useNavigate } from 'react-router-dom';
+import { client } from '@/utils/streamchat';
+import { useState } from 'react';
+import { TbLoader } from 'react-icons/tb';
 
 type GetInTouchProps = {
     className?: string;
     type?: 'internal' | 'external';
+    user?: User;
 };
 
-const GetInTouch = ({ className, type = 'internal' }: GetInTouchProps) => {
+const GetInTouch = ({ className, type = 'internal', user: data }: GetInTouchProps) => {
+    const { data: self } = useSelfProfileQuery();
+    const navigate = useNavigate();
+    const [chatLoading, setChatLoading] = useState(false);
+    const getInTouch = async () => {
+        if (client.userID && data && data.id != self?.id) {
+            setChatLoading(true);
+            await client.upsertUser({ id: data.id, name: data.name, image: data.avatar });
+
+            const channel = client.channel('messaging', {
+                members: [client.userID, data.id],
+            });
+            await channel.create();
+            navigate('/app/messages');
+            setChatLoading(false);
+        }
+    };
+    const handleConnect = () => {
+        if (!self) {
+            navigate(`/auth/login?redirect=${window.location.pathname}`);
+        } else {
+            getInTouch();
+        }
+    };
+
     return (
-        <AlertDialog>
-            <AlertDialogTrigger asChild>
-                <Button
-                    className={classNames(
-                        className,
-                        'portfolio-button-bg h-[7.5vh] rounded-full px-[4vh] py-[3vh] !text-[2vh] text-base uppercase tracking-widest text-white',
-                    )}
-                >
-                    Get in touch
-                </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent className="max-w-[640px]">
-                <AlertDialogHeader>
-                    <div className="flex items-center gap-4">
-                        <Avatar
-                            size="lg"
-                            src="http://res.cloudinary.com/doxsstgkc/image/upload/v1716520511/goffer/tikvideo_app_7289049866494364974_11_jpeg_1716520507717.jpg"
-                        />
-                        <div>
-                            <p className="text-xl font-semibold">Connect to work with Tuan</p>
-                            <p className="text-sm font-light text-gray-600">
-                                {type === 'internal'
-                                    ? 'Tuan will receive your message on Goffer'
-                                    : 'Tuan will receive your message through email'}
-                            </p>
-                        </div>
-                    </div>
-                </AlertDialogHeader>
-
-                {type === 'external' && (
-                    <>
-                        <div className="mt-4 flex w-full items-center gap-7">
-                            <Label className="w-full">
-                                Your name
-                                <Input type="text" placeholder="Your name here..." className="mt-2 w-full" />
-                            </Label>
-                        </div>
-                        <div className="flex w-full items-center gap-7">
-                            <Label className="w-full">
-                                Email
-                                <Input type="text" placeholder="Your email address here..." className="mt-2 w-full" />
-                            </Label>
-                        </div>
-                    </>
-                )}
-
-                <Label className="mt-3">
-                    Your message
-                    <Textarea className="mt-2 h-fit min-h-[160px]" placeholder="Start your conversation..." />
-                </Label>
-                <AlertDialogFooter className="mt-2">
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <Button variant="black">Send</Button>
-                </AlertDialogFooter>
-            </AlertDialogContent>
-        </AlertDialog>
+        <Button
+            onClick={handleConnect}
+            className={classNames(
+                className,
+                'portfolio-button-bg h-[7.5vh] rounded-full px-[4vh] py-[3vh] !text-[2vh] text-base uppercase tracking-widest text-white',
+            )}
+        >
+            {chatLoading && <TbLoader className="mr-4 animate-spin text-xl" />}
+            Get in touch
+        </Button>
     );
 };
 

@@ -1,3 +1,4 @@
+import { User } from '@/types/user.type';
 import GetInTouch from './GetInTouch';
 
 type HeaderProps = {
@@ -5,9 +6,10 @@ type HeaderProps = {
     hideProjects?: boolean;
     hideExperiences?: boolean;
     hideRecommendations?: boolean;
+    user?: User;
 };
 
-const Header = ({ logo, hideProjects, hideExperiences, hideRecommendations }: HeaderProps) => {
+const Header = ({ logo, hideProjects, hideExperiences, hideRecommendations, user }: HeaderProps) => {
     return (
         <div className="sticky top-10 z-[11] mx-auto mt-10 flex w-[90vw] items-center gap-10 self-start">
             <p className="font-serif text-5xl font-semibold">{logo}</p>
@@ -27,7 +29,7 @@ const Header = ({ logo, hideProjects, hideExperiences, hideRecommendations }: He
                     Recommendations
                 </a>
             )}
-            <GetInTouch />
+            <GetInTouch user={user} />
         </div>
     );
 };
