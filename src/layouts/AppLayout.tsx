@@ -17,18 +17,18 @@ const AppLayout = () => {
     const { data: currentMembership } = useCurrentMembership();
     const [finished, setFinished] = useState(false);
 
-    const isValidOrg = useMemo(() => {
-        if (!domain) return true;
-        const result = matchRoutes(
-            orgItems(domain, { onClickMap: {} }, false, currentMembership?.role)
-                .filter((item) => item.type === 'link')
-                .map((item) => ({
-                    path: 'path' in item.element ? item.element.path : '',
-                })),
-            location.pathname,
-        );
-        return result && result.length > 0;
-    }, [location.pathname, currentMembership]);
+    // const isValidOrg = useMemo(() => {
+    //     if (!domain) return true;
+    //     const result = matchRoutes(
+    //         orgItems(domain, { onClickMap: {} }, false, currentMembership?.role)
+    //             .filter((item) => item.type === 'link')
+    //             .map((item) => ({
+    //                 path: 'path' in item.element ? item.element.path : '',
+    //             })),
+    //         location.pathname,
+    //     );
+    //     return result && result.length > 0;
+    // }, [location.pathname, currentMembership]);
 
     useEffect(() => {
         if (location.pathname === '/app') {
@@ -45,19 +45,19 @@ const AppLayout = () => {
         }
     }, [finished]);
 
-    if (!isValidOrg && !finished) {
-        return (
-            <AutoCenterLayout>
-                <div className="flex h-screen items-center justify-center">
-                    <Spinner className="scale-200 text-primary" />
-                </div>
-            </AutoCenterLayout>
-        );
-    }
+    // if (!isValidOrg && !finished) {
+    //     return (
+    //         <AutoCenterLayout>
+    //             <div className="flex h-screen items-center justify-center">
+    //                 <Spinner className="scale-200 text-primary" />
+    //             </div>
+    //         </AutoCenterLayout>
+    //     );
+    // }
 
-    if (!isValidOrg && finished) {
-        return <NotFound />;
-    }
+    // if (!isValidOrg && finished) {
+    //     return <NotFound />;
+    // }
 
     return (
         <AuthRequiredLayout>
