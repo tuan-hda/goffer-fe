@@ -230,7 +230,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                 ))}
                             </div>
                             <div className="mx-4 mt-auto">
-                                {domain && !collapsed && (
+                                {domain && !collapsed && currentMembership?.role === 'owner' && (
                                     <Link
                                         to={`/app/organization/${domain}/team`}
                                         className="absolute bottom-14 mb-4 block w-[248px] overflow-hidden rounded-xl border p-4 text-left"
