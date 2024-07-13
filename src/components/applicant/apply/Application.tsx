@@ -188,7 +188,7 @@ const Application = () => {
                             </form>
                         </Form>
                     ) : stepNum === totalSteps ? (
-                        <ApplySuccess />
+                        <ApplySuccess hasFeedback={job?.hasFeedback} />
                     ) : (
                         <ApplyQuestion total={totalSteps - 1} order={stepNum} question={job?.questions[stepNum - 1]} />
                     )}

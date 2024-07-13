@@ -5,7 +5,7 @@ import { toggleSavedOrg } from '@/services/interaction.service';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import Jobs from './Jobs';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { interactWithItemService } from '@/services/recommender.service';
 import { useParams } from 'react-router-dom';
 import useCurrOrganization from '@/hooks/useCurrOrganization';
@@ -13,6 +13,8 @@ import useCurrOrganization from '@/hooks/useCurrOrganization';
 const OrgDetail = () => {
     const { companyDomain } = useParams();
     const { data: org, refetch } = useCurrOrganization(companyDomain);
+
+    const [tab, setTab] = useState<string>();
 
     useEffect(() => {
         (async () => {
@@ -39,7 +41,7 @@ const OrgDetail = () => {
     return (
         <div className="flex w-full flex-row">
             <OrgPanel data={org} />
-            <Tabs defaultValue="overview" className="w-full">
+            <Tabs value={tab} onValueChange={setTab} defaultValue="overview" className="w-full">
                 <div className="flex h-14 items-center justify-between gap-6 border-b px-8">
                     <TabsList className="h-full gap-2 rounded-none bg-transparent p-0">
                         <TabsTrigger
@@ -69,7 +71,7 @@ const OrgDetail = () => {
                     </div>
                 </div>
                 <TabsContent value="overview">
-                    <Overview org={org} />
+                    <Overview onChange={() => setTab('jobs')} org={org} />
                 </TabsContent>
                 <TabsContent value="jobs">
                     <Jobs org={org} />

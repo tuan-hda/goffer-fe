@@ -12,6 +12,7 @@ import useListPeople from '@/hooks/useListPeople';
 import { toggleSavedUser } from '@/services/interaction.service';
 import { SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
+import useUsersRecommender from '@/hooks/useUsersRecommender';
 
 const colors = ['#F8F9FE'];
 
@@ -22,7 +23,7 @@ interface Props {
 const PersonCard = ({ data }: Props) => {
     const navigate = useNavigate();
     const latestExp = getLatestExperience(data.experiences ?? []);
-    const { refetch } = useListPeople();
+    const { refetch } = useUsersRecommender();
 
     const [chatLoading, setChatLoading] = useState(false);
 
