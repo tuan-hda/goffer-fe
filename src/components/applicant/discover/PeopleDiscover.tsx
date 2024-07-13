@@ -31,7 +31,7 @@ const PeopleDiscover = () => {
                     // </Sheet>
                 ))}
             </div>
-            {/* <div className="mt-14 flex w-full flex-col justify-center">
+            <div className="mt-14 flex w-full flex-col justify-center">
                 {isFetching && <p className="text-center">Loading...</p>}
                 {!isFetching && hasNextPage && (
                     <Button variant="outline" className="mx-auto" onClick={() => fetchNextPage()}>
@@ -39,7 +39,7 @@ const PeopleDiscover = () => {
                     </Button>
                 )}
                 {!isFetching && !hasNextPage && <p className="text-center">You've reached the end of the list</p>}
-            </div> */}
+            </div>
         </>
     );
 };

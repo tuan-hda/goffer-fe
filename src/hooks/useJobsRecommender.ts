@@ -9,8 +9,18 @@ const useJobsRecommender = () => {
     delete params.tab;
 
     return useInfiniteQuery({
-        queryKey: ['jobsRecommendation', params],
-        queryFn: ({ pageParam = 0 }) => getJobsRecommenderService(pageParam, params),
+        queryKey: [
+            'jobsRecommendation',
+            {
+                ...params,
+                limit: 9,
+            },
+        ],
+        queryFn: ({ pageParam = 0 }) =>
+            getJobsRecommenderService(pageParam, {
+                ...params,
+                limit: '9',
+            }),
         initialPageParam: 0,
         getNextPageParam: (lastPage) => {
             if (lastPage.endOfResults) return undefined;

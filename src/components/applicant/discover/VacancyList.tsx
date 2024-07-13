@@ -78,7 +78,7 @@ const VacancyList = () => {
                     </Sheet>
                 ))}
             </div>
-            {/* <div className="mt-14 flex w-full flex-col justify-center">
+            <div className="mb-10 flex w-full flex-col justify-center">
                 {isFetching && <p className="text-center">Loading...</p>}
                 {!isFetching && hasNextPage && (
                     <Button variant="outline" className="mx-auto" onClick={() => fetchNextPage()}>
@@ -86,7 +86,7 @@ const VacancyList = () => {
                     </Button>
                 )}
                 {!isFetching && !hasNextPage && <p className="text-center">You've reached the end of the list</p>}
-            </div> */}
+            </div>
         </>
     );
 };
