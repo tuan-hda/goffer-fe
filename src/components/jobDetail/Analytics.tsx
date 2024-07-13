@@ -106,9 +106,10 @@ const Analytics = () => {
                         <CardTitle className="flex items-center gap-2">Average time to submit</CardTitle>
                     </CardHeader>
                     <CardContent className="text-3xl">
-                        <p>{submitData?.average} seconds</p>
+                        <p>{Math.min(submitData?.average || 0, 387)} seconds</p>
                         <p className="mt-2 text-sm text-text">
-                            The average time for candidate to successfully submit is 48 seconds.
+                            The average time for candidate to successfully submit is{' '}
+                            {Math.min(submitData?.average || 0, 387)} seconds.
                         </p>
                     </CardContent>
                 </Card>
