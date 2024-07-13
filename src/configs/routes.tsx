@@ -72,6 +72,7 @@ const Invitation = lazy(() => import('@/components/invitation/Invitation'));
 const Pipeline = lazy(() => import('@/components/pipeline/Pipeline'));
 const AssessmentResultDetail = lazy(() => import('@/pages/AssessmentResultDetail'));
 const MyApplications = lazy(() => import('@/pages/MyApplications'));
+const OrganizationAbout = lazy(() => import('@/pages/OrganizationAbout'));
 const Test = lazy(() => import('@/pages/Test'));
 
 const routesConfig: RouteObject[] = [
@@ -328,6 +329,14 @@ const routesConfig: RouteObject[] = [
                         element: (
                             <Suspense fallback={<div></div>}>
                                 <Team />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: '/app/organization/:domain/about',
+                        element: (
+                            <Suspense fallback={<div></div>}>
+                                <OrganizationAbout />
                             </Suspense>
                         ),
                     },

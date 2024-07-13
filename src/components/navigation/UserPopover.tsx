@@ -14,6 +14,7 @@ import { Button } from '../ui/button';
 import { Link, useParams } from 'react-router-dom';
 import useListOrganizations from '@/hooks/useListOrganizations';
 import useSelfMemberships from '@/hooks/useSelfMemberships';
+import { Organization } from '@/types/organization.type';
 
 type UserPopoverProps = {
     collapsed: boolean;
@@ -26,6 +27,13 @@ const UserPopover = ({ collapsed, isAdmin }: UserPopoverProps) => {
     const { domain } = useParams();
     const organizations = memberships?.data.map((item) => item.org);
     const org = organizations?.find((org) => org.domain === domain);
+
+    const getPath = (organization: Organization) => {
+        if (memberships?.data.find((item) => item.org.id === organization.id)?.role === 'member') {
+            return `/app/organization/${organization.domain}/about`;
+        }
+        return `/app/organization/${organization.domain}`;
+    };
 
     return (
         <DropdownMenu>
@@ -72,7 +80,7 @@ const UserPopover = ({ collapsed, isAdmin }: UserPopoverProps) => {
                 {organizations?.map((organization) => (
                     <DropdownMenuItem className="p-0" key={organization.id}>
                         <Link
-                            to={`/app/organization/${organization.domain}`}
+                            to={getPath(organization)}
                             className="relative -mx-0.5 flex w-full items-center gap-3 rounded-lg px-3 py-2 transition"
                         >
                             <Avatar className="h-7 w-7 bg-white" src={organization.logo} />

@@ -6,7 +6,7 @@ import {
     TbLogout,
     TbPlus,
 } from 'react-icons/tb';
-import { CSSProperties, Fragment, useEffect, useState } from 'react';
+import { CSSProperties, Fragment, useEffect, useMemo, useState } from 'react';
 import useDiscoverStore from '@/stores/discoverStore';
 import classNames from 'classnames';
 import { Link, useLocation, matchPath, useParams, matchRoutes } from 'react-router-dom';
@@ -25,6 +25,7 @@ import { useChatContext } from 'stream-chat-react';
 import SubscriptionIndividual from '../proPlan/SubscriptionIndividual';
 import useNotification from '@/hooks/useNotification';
 import useNotificationStore from '@/stores/notifications';
+import useCurrentMembership from '@/hooks/useCurrentMembership';
 
 const textColor = 'hsl(var(--nextui-primary-foreground) / 1)';
 
@@ -35,6 +36,7 @@ type SideBarProps = {
 const SideBar = ({ org }: SideBarProps) => {
     const { domain } = useParams();
     const { data: self } = useSelfProfileQuery();
+    const { data: currentMembership } = useCurrentMembership();
     const hasNewNotification = useNotificationStore((state) => state.hasNewNotification);
 
     // TODO: Remove logout from this file
@@ -59,7 +61,9 @@ const SideBar = ({ org }: SideBarProps) => {
     const togglePinned = () => updateSideBarPinned(!sideBarPinned);
 
     const location = useLocation();
-    const match = (domain ? orgItems(domain, { onClickMap: {} }) : items({ onClickMap: {} })).find((item) => {
+    const match = (
+        domain ? orgItems(domain, { onClickMap: {} }, false, currentMembership?.role) : items({ onClickMap: {} })
+    ).find((item) => {
         if (item.type === 'link') {
             return matchPath(item.element.pattern || item.element.path, location.pathname);
         }
@@ -201,6 +205,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                               },
                                           },
                                           hasNewNotification,
+                                          currentMembership?.role,
                                       )
                                     : items(
                                           {
@@ -228,7 +233,7 @@ const SideBar = ({ org }: SideBarProps) => {
                                 {domain && !collapsed && (
                                     <Link
                                         to={`/app/organization/${domain}/team`}
-                                        className="absolute bottom-24 mb-4 block w-[248px] overflow-hidden rounded-xl border p-4 text-left"
+                                        className="absolute bottom-14 mb-4 block w-[248px] overflow-hidden rounded-xl border p-4 text-left"
                                     >
                                         <div className="absolute -right-10  z-0">
                                             <Image

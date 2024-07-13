@@ -1,6 +1,7 @@
 import { PiBank } from 'react-icons/pi';
 import {
     TbApple,
+    TbAt,
     TbAtom,
     TbBaguette,
     TbBell,
@@ -135,78 +136,100 @@ export const items: (
 export const orgItems: (
     _: string,
     { onClickMap }: { onClickMap: Record<number, () => void> },
-
     hasNotification?: boolean,
-) => Item[] = (domain: string, { onClickMap }, hasNewNotification = false) => [
-    {
-        type: 'button',
-        element: {
-            startContent: <TbSparkles className="text-xl" />,
-            content: 'Ask Goffer',
-            isPrimary: true,
+    role?: string,
+) => Item[] = (domain: string, { onClickMap }, hasNewNotification = false, role = 'member') => {
+    let res: Item[] = [
+        {
+            type: 'button',
+            element: {
+                startContent: <TbSparkles className="text-xl" />,
+                content: 'Ask Goffer',
+                isPrimary: true,
+            },
+            onClick: onClickMap[0],
         },
-        onClick: onClickMap[0],
-    },
-    {
+    ];
+    if (role === 'interviewer' || role === 'owner') {
+        res = res.concat([
+            {
+                type: 'link',
+                element: {
+                    path: `/app/organization/${domain}`,
+                    pattern: '/app/organization/:domain',
+                    startContent: <TbBaguette className="text-xl" />,
+                    content: 'Jobs',
+                },
+            },
+            {
+                type: 'link',
+                element: {
+                    content: 'Notifications',
+                    startContent: <TbBell className="flex-shrink-0 text-xl" />,
+                    path: `/app/organization/${domain}/notifications`,
+                    endContent: hasNewNotification && <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
+                },
+            },
+            // {
+            //     type: 'link',
+            //     element: {
+            //         content: 'Messages',
+            //         startContent: <TbChartBubble className="text-xl" />,
+            //         path: `/app/organization/${domain}/messages`,
+            //         endContent: <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
+            //     },
+            // },
+            {
+                type: 'link',
+                element: {
+                    content: 'Assessment',
+                    startContent: <TbAtom className="text-xl" />,
+                    path: `/app/organization/${domain}/assessment`,
+                },
+                divider: true,
+            },
+            {
+                type: 'link',
+                element: {
+                    content: 'Question bank',
+                    startContent: <PiBank className="text-xl" />,
+                    path: `/app/organization/${domain}/bank`,
+                },
+            },
+        ]);
+    }
+
+    if (role === 'owner') {
+        res = res.concat([
+            {
+                type: 'link',
+                element: {
+                    path: `/app/organization/${domain}/team`,
+                    pattern: '/app/organization/:domain/team',
+                    startContent: <TbUsers className="text-xl" />,
+                    content: 'Team',
+                },
+            },
+            {
+                type: 'link',
+                element: {
+                    path: `/app/organization/${domain}/settings`,
+                    pattern: '/app/organization/:domain/settings',
+                    startContent: <TbSettings className="text-xl" />,
+                    content: 'Settings',
+                },
+            },
+        ]);
+    }
+
+    res.push({
         type: 'link',
         element: {
-            path: `/app/organization/${domain}`,
-            pattern: '/app/organization/:domain',
-            startContent: <TbBaguette className="text-xl" />,
-            content: 'Jobs',
+            path: `/app/organization/${domain}/about`,
+            pattern: '/app/organization/:domain/about',
+            startContent: <TbAt className="text-xl" />,
+            content: 'About',
         },
-    },
-    {
-        type: 'link',
-        element: {
-            content: 'Notifications',
-            startContent: <TbBell className="flex-shrink-0 text-xl" />,
-            path: `/app/organization/${domain}/notifications`,
-            endContent: hasNewNotification && <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            content: 'Messages',
-            startContent: <TbChartBubble className="text-xl" />,
-            path: `/app/organization/${domain}/messages`,
-            endContent: <div className="ml-auto h-2 w-2 rounded-full bg-primary" />,
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            content: 'Assessment',
-            startContent: <TbAtom className="text-xl" />,
-            path: `/app/organization/${domain}/assessment`,
-        },
-        divider: true,
-    },
-    {
-        type: 'link',
-        element: {
-            content: 'Question bank',
-            startContent: <PiBank className="text-xl" />,
-            path: `/app/organization/${domain}/bank`,
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: `/app/organization/${domain}/team`,
-            pattern: '/app/organization/:domain/team',
-            startContent: <TbUsers className="text-xl" />,
-            content: 'Team',
-        },
-    },
-    {
-        type: 'link',
-        element: {
-            path: `/app/organization/${domain}/settings`,
-            pattern: '/app/organization/:domain/settings',
-            startContent: <TbSettings className="text-xl" />,
-            content: 'Settings',
-        },
-    },
-];
+    });
+    return res;
+};

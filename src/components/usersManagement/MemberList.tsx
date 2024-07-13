@@ -46,7 +46,7 @@ const MemberList = () => {
                     <TableHead className="w-[350px] bg-[#F9FAFC] font-medium text-black">Name</TableHead>
                     <TableHead className="w-[180px] bg-[#F9FAFC] font-medium text-black">Role</TableHead>
                     <TableHead className="w-[160px] bg-[#F9FAFC] font-medium text-black">Date added</TableHead>
-                    <TableHead className="w-[160px] bg-[#F9FAFC] font-medium text-black">Last active</TableHead>
+                    <TableHead className="w-[160px] bg-[#F9FAFC] font-medium text-black">Updated at</TableHead>
                     <TableHead className="rounded-tr-xl bg-[#F9FAFC] pr-5 text-right font-medium text-black"></TableHead>
                 </TableRow>
             </TableHeader>
@@ -78,7 +78,7 @@ const MemberList = () => {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value="owner">Owner</SelectItem>
-                                            <SelectItem value="interviewer">Interviewer</SelectItem>
+                                            <SelectItem value="interviewer">Collaborator</SelectItem>
                                             <SelectItem value="member">Member</SelectItem>
                                         </SelectContent>
                                     </Select>

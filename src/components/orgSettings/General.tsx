@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import { isAxiosError } from 'axios';
 import { updateOrganizationService } from '@/services/organizations.service';
 import useListOrganizations from '@/hooks/useListOrganizations';
+import { Spinner } from '@nextui-org/react';
 
 const General = () => {
     const [expanded, setExpanded] = useState(false);
@@ -176,7 +177,7 @@ const General = () => {
             </motion.div>
 
             <Button type="submit" disabled={loading || isInvalid} className="mt-6 w-full" variant="secondary">
-                {loading && <Loading />}
+                {loading && <Spinner />}
                 Save
             </Button>
         </form>

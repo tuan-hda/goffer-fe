@@ -18,6 +18,8 @@ export type Organization = NewOrganization & {
     saved?: boolean;
     follow: number;
     members: User[];
+    createdAt: string;
+    updatedAt: string;
 };
 
 export type EditOrganization = Partial<Organization>;
