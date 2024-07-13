@@ -205,7 +205,7 @@ const routesConfig: RouteObject[] = [
                                 ),
                             },
                             {
-                                path: '/app/company/:domain',
+                                path: '/app/company/:companyDomain',
                                 element: (
                                     <Suspense fallback={<div></div>}>
                                         <OrgDetail />

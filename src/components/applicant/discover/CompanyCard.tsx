@@ -20,9 +20,6 @@ const CompanyCard = ({ data }: Props) => {
             <CardContent className="-mx-[20px] pb-0 pt-1">
                 <Color format="hex" crossOrigin="anonymous" src={data.logo}>
                     {({ data: color, loading, error }) => {
-                        console.log('data', color);
-                        console.log('loading', loading);
-                        console.log('error', error);
                         return (
                             <div
                                 className="flex flex-col rounded-[22px] px-4 pb-6 pt-3"

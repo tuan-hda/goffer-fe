@@ -1,16 +1,18 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OrgPanel from './OrgPanel';
 import { Overview } from './overview';
-import useCurrOrganization from '@/hooks/useCurrOrganization';
 import { toggleSavedOrg } from '@/services/interaction.service';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import Jobs from './Jobs';
 import { useEffect } from 'react';
 import { interactWithItemService } from '@/services/recommender.service';
+import { useParams } from 'react-router-dom';
+import useCurrOrganization from '@/hooks/useCurrOrganization';
 
 const OrgDetail = () => {
-    const { data: org, refetch } = useCurrOrganization();
+    const { companyDomain } = useParams();
+    const { data: org, refetch } = useCurrOrganization(companyDomain);
 
     useEffect(() => {
         (async () => {
