@@ -70,7 +70,7 @@ const InsightCandidate = ({ candidate }: InsightCandidateProps) => {
                                 <Badge variant="outline">{Math.round(candidate.match) || 0}</Badge>
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>{candidate.reason}</p>
+                                <p className="max-w-[400px]">{candidate.reason}</p>
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
