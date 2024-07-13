@@ -3,7 +3,12 @@ import { baseAxios } from './base';
 import { List } from '@/types/list.type';
 
 export const createOrganizationService = async (data: NewOrganization) =>
-    (await baseAxios.post<Organization>('/organizations', data)).data;
+    (
+        await baseAxios.post<Organization>('/organizations', {
+            ...data,
+            visibility: 'public',
+        })
+    ).data;
 
 export const listOrganizationsService = async () => (await baseAxios.get<List<Organization>>('/organizations')).data;
 

@@ -21,14 +21,14 @@ const FourthStep = ({ setStep, data, setData }: FourthStepProps) => {
             setData((prev) => ({ ...prev, [key]: e.target.value }));
         };
 
-    const setVisibility = (visibility: string) => () => {
-        setData((prev) => ({ ...prev, visibility }) as NewOrganization);
-    };
+    // const setVisibility = (visibility: string) => () => {
+    //     setData((prev) => ({ ...prev, visibility }) as NewOrganization);
+    // };
 
     const disabled =
         !data.email ||
         !data.website ||
-        !data.visibility ||
+        // !data.visibility ||
         !data.description ||
         !validator.isEmail(data.email) ||
         !validator.isURL(data.website);
@@ -71,7 +71,7 @@ const FourthStep = ({ setStep, data, setData }: FourthStepProps) => {
                     className="mt-1 h-10 rounded-xl"
                 />
 
-                <p className="mt-4 block w-full text-left font-semibold">Visibility</p>
+                {/* <p className="mt-4 block w-full text-left font-semibold">Visibility</p>
                 <div className="mt-1 flex items-center gap-3">
                     <Button
                         type="button"
@@ -103,7 +103,7 @@ const FourthStep = ({ setStep, data, setData }: FourthStepProps) => {
                         <TbLockOff className="text-xl" />
                         <p className="text-text/60">Only those who you invited can</p>
                     </Button>
-                </div>
+                </div> */}
 
                 <label htmlFor="description" className="mt-4 block w-full text-left font-semibold">
                     Description
