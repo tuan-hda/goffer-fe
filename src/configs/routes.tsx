@@ -73,6 +73,7 @@ const Pipeline = lazy(() => import('@/components/pipeline/Pipeline'));
 const AssessmentResultDetail = lazy(() => import('@/pages/AssessmentResultDetail'));
 const MyApplications = lazy(() => import('@/pages/MyApplications'));
 const OrganizationAbout = lazy(() => import('@/pages/OrganizationAbout'));
+const ProfileDetail = lazy(() => import('@/pages/ProfileDetail'));
 const Test = lazy(() => import('@/pages/Test'));
 
 const routesConfig: RouteObject[] = [
@@ -257,6 +258,14 @@ const routesConfig: RouteObject[] = [
                         element: (
                             <Suspense fallback={<div></div>}>
                                 <Profile />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: '/app/profile/:userId',
+                        element: (
+                            <Suspense fallback={<div></div>}>
+                                <ProfileDetail />
                             </Suspense>
                         ),
                     },

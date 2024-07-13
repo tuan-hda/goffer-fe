@@ -26,7 +26,7 @@ const UserDetail = ({ id }: Props) => {
     return (
         <div className="flex h-full text-sm">
             <div className="mr-4 h-full min-w-1 flex-1">
-                <Tabs variant="underlined" className="">
+                <Tabs variant="underlined" className="-mx-3">
                     <Tab
                         key="profile"
                         title={
@@ -80,7 +80,7 @@ const UserDetail = ({ id }: Props) => {
                     </Tab>
                 </Tabs>
             </div>
-            <div className="right-0 top-0 flex h-[100vh-64px] w-[320px] flex-shrink-0 flex-col overflow-y-scroll px-4">
+            <div className="right-0 top-0 flex h-[100vh-64px] w-[320px] flex-shrink-0 flex-col px-4">
                 <UserPanel id={user.id} />
             </div>
         </div>

@@ -114,7 +114,7 @@ const Feedbacks = () => {
                     </div>
                 </div>
                 <div>
-                    <div className="flex items-center gap-2">
+                    {/* <div className="flex items-center gap-2">
                         <p className="text-xl">Goffer Copilot</p>
                         <TbSparkles className="text-2xl" />
                     </div>
@@ -126,7 +126,7 @@ const Feedbacks = () => {
                         <Button className="mt-4 w-full bg-white text-black hover:bg-gray-200 hover:text-black">
                             Summary feedbacks
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

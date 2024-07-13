@@ -1,13 +1,7 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { TbArrowUp, TbClock, TbDots, TbSparkles, TbX } from 'react-icons/tb';
-import { Button } from '../ui/button';
-import { Textarea } from '../ui/textarea';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { Thread } from '../ui/assistant-ui/thread';
-import VoiceRecorder from './VoiceRecorder';
 
 type AskAIProps = {
     isOpen: boolean;
@@ -15,8 +9,6 @@ type AskAIProps = {
 };
 
 const AskAI = ({ isOpen, onClose }: AskAIProps) => {
-    const [value, setValue] = useState('');
-
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -43,8 +35,6 @@ const AskAI = ({ isOpen, onClose }: AskAIProps) => {
             >
                 <div>
                     <Thread
-                        value={value}
-                        onChange={setValue}
                         extensions={{
                             suggestions: true,
                         }}

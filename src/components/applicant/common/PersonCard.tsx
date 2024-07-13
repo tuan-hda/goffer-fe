@@ -1,4 +1,4 @@
-import { TbBookmarks, TbLoaderQuarter, TbPlanet } from 'react-icons/tb';
+import { TbBookmarks, TbExternalLink, TbLoaderQuarter, TbPlanet } from 'react-icons/tb';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Avatar } from '@nextui-org/react';
 import { Button } from '@/components/ui/button';
@@ -7,7 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { User } from '@/types/user.type';
 import { getLatestExperience } from '@/utils/profile';
 import { client } from '@/utils/streamchat';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useListPeople from '@/hooks/useListPeople';
 import { toggleSavedUser } from '@/services/interaction.service';
 import { SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
@@ -113,11 +114,13 @@ const PersonCard = ({ data }: Props) => {
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
-                <SheetTrigger asChild>
-                    <Button size="sm" variant="outline" className="ml-auto text-sm">
-                        Details
-                    </Button>
-                </SheetTrigger>
+                {/* <SheetTrigger asChild> */}
+                <Button asChild size="sm" variant="outline" className="ml-auto text-sm">
+                    <Link to={`/app/profile/${data?.id}`} target="_blank" className="flex items-center gap-2">
+                        Details <TbExternalLink />
+                    </Link>
+                </Button>
+                {/* </SheetTrigger> */}
             </CardFooter>
         </Card>
     );

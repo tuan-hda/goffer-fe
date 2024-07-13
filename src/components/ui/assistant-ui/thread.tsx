@@ -1,5 +1,11 @@
-import { ComposerPrimitive, MessagePrimitive, ThreadPrimitive } from '@assistant-ui/react';
-import { forwardRef, Ref, useRef, useState, type FC } from 'react';
+import {
+    ComposerPrimitive,
+    MessagePrimitive,
+    ThreadPrimitive,
+    useComposerSend,
+    useThreadContext,
+} from '@assistant-ui/react';
+import { forwardRef, Ref, useEffect, useRef, useState, type FC } from 'react';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { HiMiniPaperAirplane } from 'react-icons/hi2';
@@ -21,16 +27,11 @@ type ThreadProps = {
     };
 };
 
-export const Thread = ({ value, onChange, extensions }: ThreadProps) => {
+export const Thread = ({ extensions }: ThreadProps) => {
     const ref = useRef<HTMLTextAreaElement>(null);
     const hasMessage = useChatbotStore((state) => state.hasMessage);
-
-    const triggerChangeEvent = (value: string) => {
-        if (ref.current) {
-            ref.current.value = value;
-            ref.current.dispatchEvent(new Event('input', { bubbles: true }));
-        }
-    };
+    const { useComposer } = useThreadContext();
+    const { setValue } = useComposer();
 
     return (
         <ThreadPrimitive.Root className="flex h-full max-h-full flex-col items-center pb-5 pt-2">
@@ -47,7 +48,7 @@ export const Thread = ({ value, onChange, extensions }: ThreadProps) => {
                 />
             </ThreadPrimitive.Viewport>
 
-            <Composer ref={ref} value={value} onChange={onChange} />
+            <Composer ref={ref} />
             {extensions?.suggestions && !hasMessage && (
                 <div className="mx-7 -mt-4 rounded-b-2xl border border-black/10 bg-beige/30 p-3 pt-6">
                     <Suggestions
@@ -57,7 +58,7 @@ export const Thread = ({ value, onChange, extensions }: ThreadProps) => {
                             'Guide me how to improve my resume.',
                         ]}
                         helperText="Get started with common questions below."
-                        onChange={triggerChangeEvent}
+                        onChange={setValue}
                     />
                 </div>
             )}
@@ -79,8 +80,10 @@ type ComposerProps = {
     onChange?: (value: string) => void;
 };
 
-const Composer = forwardRef(({ value, onChange }: ComposerProps, ref: Ref<HTMLTextAreaElement>) => {
+const Composer = forwardRef(({}: ComposerProps, ref: Ref<HTMLTextAreaElement>) => {
     const [node, setNode] = useState<HTMLTextAreaElement | null>(null);
+    const { useComposer } = useThreadContext();
+    const { setValue } = useComposer();
 
     return (
         <ComposerPrimitive.Root className="relative z-[11] flex w-[calc(100%-32px)] flex-col items-end !gap-0 rounded-2xl border bg-white p-0.5 transition-shadow focus-within:shadow-medium">
@@ -91,14 +94,12 @@ const Composer = forwardRef(({ value, onChange }: ComposerProps, ref: Ref<HTMLTe
                     }
                     setNode(el);
                 }}
-                value={value}
-                onChange={(e) => onChange?.(e.target.value)}
                 placeholder="How can I help you today?"
                 className="max-h-80 min-h-20 w-full flex-grow resize-none bg-transparent px-3.5 pb-2 pt-3.5 text-base outline-none placeholder:text-foreground/50"
             />
             <div className="flex w-full pb-2 pl-1 pr-2">
                 <div className="mr-auto flex items-center gap-1">
-                    <VoiceRecorder onTranscribe={onChange} />
+                    <VoiceRecorder onTranscribe={setValue} />
                 </div>
                 <ThreadPrimitive.If running={false}>
                     <ComposerPrimitive.Send className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-2xl font-bold shadow transition-opacity disabled:opacity-10">
@@ -107,7 +108,7 @@ const Composer = forwardRef(({ value, onChange }: ComposerProps, ref: Ref<HTMLTe
                 </ThreadPrimitive.If>
 
                 <ThreadPrimitive.If running>
-                    <ComposerPrimitive.Cancel className="flex size-5 items-center justify-center rounded-full border-2 border-foreground">
+                    <ComposerPrimitive.Cancel className="mr-1 mt-2 flex size-5 items-center justify-center rounded-full border-2 border-foreground">
                         <div className="size-2 rounded-[1px] bg-foreground" />
                     </ComposerPrimitive.Cancel>
                 </ThreadPrimitive.If>

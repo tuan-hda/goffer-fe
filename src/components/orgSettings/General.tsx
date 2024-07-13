@@ -7,7 +7,7 @@ import useCurrOrganization from '@/hooks/useCurrOrganization';
 import { Organization } from '@/types/organization.type';
 import { Textarea } from '../ui/textarea';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-import { TbChevronDown, TbInfoCircle } from 'react-icons/tb';
+import { TbChevronDown, TbInfoCircle, TbLoader } from 'react-icons/tb';
 import classNames from 'classnames';
 import { useAnimation, motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -24,7 +24,7 @@ const General = () => {
     const [uploading, setUploading] = useState(false);
 
     const { data, refetch } = useCurrOrganization();
-    const { refetch: refetchList } = useListOrganizations();
+    const { refetch: refetchList } = useListOrganizations({ limit: 1000 });
     const [curr, setCurr] = useState<Organization>();
 
     useEffect(() => {
@@ -177,7 +177,7 @@ const General = () => {
             </motion.div>
 
             <Button type="submit" disabled={loading || isInvalid} className="mt-6 w-full" variant="secondary">
-                {loading && <Spinner />}
+                {loading && <TbLoader className="mr-2 animate-spin text-lg" />}
                 Save
             </Button>
         </form>

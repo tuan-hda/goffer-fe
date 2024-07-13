@@ -25,16 +25,13 @@ const PeopleDiscover = () => {
         <>
             <div className="mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {users.map((person) => (
-                    <Sheet key={person.id} onOpenChange={async (open) => !open && (await refetch())}>
-                        <PersonCard data={person} />
+                    // <Sheet key={person.id} onOpenChange={async (open) => !open && (await refetch())}>
+                    <PersonCard data={person} key={person.id} />
 
-                        <SheetContent className="!max-w-screen-lg overflow-y-auto p-8 pr-0">
-                            <UserDetail id={person.id} />
-                        </SheetContent>
-                    </Sheet>
+                    // </Sheet>
                 ))}
             </div>
-            {/* <div className="mt-14 flex w-full flex-col justify-center">
+            <div className="mt-14 flex w-full flex-col justify-center">
                 {isFetching && <p className="text-center">Loading...</p>}
                 {!isFetching && hasNextPage && (
                     <Button variant="outline" className="mx-auto" onClick={() => fetchNextPage()}>
@@ -42,7 +39,7 @@ const PeopleDiscover = () => {
                     </Button>
                 )}
                 {!isFetching && !hasNextPage && <p className="text-center">You've reached the end of the list</p>}
-            </div> */}
+            </div>
         </>
     );
 };

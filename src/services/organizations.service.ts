@@ -3,9 +3,19 @@ import { baseAxios } from './base';
 import { List } from '@/types/list.type';
 
 export const createOrganizationService = async (data: NewOrganization) =>
-    (await baseAxios.post<Organization>('/organizations', data)).data;
+    (
+        await baseAxios.post<Organization>('/organizations', {
+            ...data,
+            visibility: 'public',
+        })
+    ).data;
 
-export const listOrganizationsService = async () => (await baseAxios.get<List<Organization>>('/organizations')).data;
+export const listOrganizationsService = async (params?: Record<string, unknown>) =>
+    (
+        await baseAxios.get<List<Organization>>('/organizations', {
+            params,
+        })
+    ).data;
 
 export const getOrganizationService = async (id: string) =>
     (await baseAxios.get<Organization>(`/organizations/${id}`)).data;

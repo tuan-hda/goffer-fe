@@ -68,7 +68,13 @@ const ImageEdit = ({ image, setImage, loading, setLoading, className, uploadClas
                     </div>
                 </button>
             )}
-            <input onChange={handleFileChange} type="file" accept=".png,.jpeg,.jpg" className="hidden" ref={ref} />
+            <input
+                onChange={handleFileChange}
+                type="file"
+                accept=".png,.jpeg,.jpg,.webp"
+                className="hidden"
+                ref={ref}
+            />
         </>
     );
 };
