@@ -57,13 +57,13 @@ const Filter = () => {
                 <p className="text-lg font-medium">Filters</p>
             </div>
 
-            <div className="relative mt-10 flex min-w-0 flex-1 items-center">
+            <div className="relative mt-10 flex w-full min-w-0 flex-1 items-center">
                 <TbSearch className="absolute left-4 text-base text-gray-400" />
                 <Input
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Search..."
-                    className="h-10 flex-1 rounded-xl bg-white pl-12 pr-36"
+                    className="h-10 w-full flex-1 rounded-xl bg-white pl-12"
                 />
             </div>
             <div>
