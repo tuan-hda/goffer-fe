@@ -20,7 +20,6 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     const { domain } = useParams();
     const { data: self } = useSelfProfileQuery();
     const org = data?.results.find((org) => org.domain === domain);
-    console.log('org', org);
 
     const { notifications, hasNewNotification, fetchNotifications, disconnectChannel, setClient } =
         useNotificationStore(
