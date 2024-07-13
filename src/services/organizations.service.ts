@@ -10,7 +10,12 @@ export const createOrganizationService = async (data: NewOrganization) =>
         })
     ).data;
 
-export const listOrganizationsService = async () => (await baseAxios.get<List<Organization>>('/organizations')).data;
+export const listOrganizationsService = async (params?: Record<string, unknown>) =>
+    (
+        await baseAxios.get<List<Organization>>('/organizations', {
+            params,
+        })
+    ).data;
 
 export const getOrganizationService = async (id: string) =>
     (await baseAxios.get<Organization>(`/organizations/${id}`)).data;

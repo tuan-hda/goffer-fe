@@ -24,7 +24,7 @@ const General = () => {
     const [uploading, setUploading] = useState(false);
 
     const { data, refetch } = useCurrOrganization();
-    const { refetch: refetchList } = useListOrganizations();
+    const { refetch: refetchList } = useListOrganizations({ limit: 1000 });
     const [curr, setCurr] = useState<Organization>();
 
     useEffect(() => {
