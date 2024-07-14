@@ -18,9 +18,11 @@ const MessagePanel = () => {
                     <p className="font-serif text-2xl font-bold">{otherUser?.user?.name}</p>
                 </div>
 
-                <MessageList messageLimit={30} />
+                <div className="min-h-0 flex-1">
+                    <MessageList messageLimit={30} />
+                </div>
 
-                <div className="relative mb-[1px] flex h-[72px] min-h-[72px] w-full items-center border-t bg-white">
+                <div className="relative mb-[1px] flex min-h-[72px] w-full items-center border-t bg-white">
                     <MessageInput />
                 </div>
             </div>
