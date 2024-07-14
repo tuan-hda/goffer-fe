@@ -26,10 +26,10 @@ export const getNPS = (value: string): NPS | undefined => {
 };
 
 export const getSentimentIconFromRate = (average?: number) => {
-    if (!average || isNaN(average) || average < 1 || average > 5) {
+    if (!average || isNaN(average) || average < 0 || average > 5) {
         return null;
     }
-    const sentimentIndex = Math.round(average) - 1;
+    const sentimentIndex = Math.floor(average) - 1;
     return sentiment[sentimentIndex];
 };
 
