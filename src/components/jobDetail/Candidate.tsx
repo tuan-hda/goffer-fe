@@ -1,13 +1,16 @@
 import { Avatar } from '@nextui-org/react';
 import { Card, CardContent } from '../ui/card';
-import { TbHeartHandshake, TbLocation, TbMail, TbRuler, TbSchool, TbSparkles, TbTools } from 'react-icons/tb';
+import { TbHeartHandshake, TbLoaderQuarter, TbLocation, TbMail, TbRuler, TbSchool, TbTools } from 'react-icons/tb';
 import { Badge } from '../ui/badge';
-import classNames from 'classnames';
 import { Button } from '../ui/button';
 import { Experience } from '@/types/user.type';
 import moment from 'moment';
+import { useChatContext } from 'stream-chat-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type CandidateProps = {
+    id: string;
     name?: string;
     avatar?: string;
     oneLiner?: string;
@@ -20,9 +23,42 @@ type CandidateProps = {
     email: string;
 };
 
-const Candidate = ({ name, avatar, oneLiner, location, experiences, tools, isPro, skills, email }: CandidateProps) => {
+const Candidate = ({
+    id,
+    name,
+    avatar,
+    oneLiner,
+    location,
+    experiences,
+    tools,
+    isPro,
+    skills,
+    email,
+}: CandidateProps) => {
+    const navigate = useNavigate();
+    const { client, setActiveChannel } = useChatContext();
+    const [chatLoading, setChatLoading] = useState(false);
+
+    const getInTouch = async () => {
+        if (client.userID) {
+            setChatLoading(true);
+            await client.upsertUser({ id, name, image: avatar });
+
+            const channel = client.channel('messaging', {
+                members: [client.userID, id],
+            });
+            await channel.create();
+            setActiveChannel?.(channel);
+            navigate('/app/messages');
+            setChatLoading(false);
+        }
+    };
+
     return (
-        <Card className="relative w-full cursor-pointer rounded-2xl border bg-white/100 pt-5 text-text shadow-none transition hover:shadow-small">
+        <Card
+            onClick={() => navigate(`/app/profile/${id}`)}
+            className="relative w-full cursor-pointer rounded-2xl border bg-white/100 pt-5 text-text shadow-none transition hover:shadow-small"
+        >
             <div className="absolute right-5 top-5 flex items-center gap-2">
                 {isPro && (
                     <Badge className="rounded-lg bg-gradient-to-r from-[#FAE4A7] to-[#E5D4FF] text-black shadow-none">
@@ -77,8 +113,13 @@ const Candidate = ({ name, avatar, oneLiner, location, experiences, tools, isPro
                         )}
 
                         <div className="mt-4 flex gap-4">
-                            <Button className="w-64 gap-2" variant="black">
-                                Get in touch <TbHeartHandshake className="text-lg" />
+                            <Button onClick={getInTouch} className="w-64 gap-2" variant="black">
+                                Get in touch{' '}
+                                {chatLoading ? (
+                                    <TbLoaderQuarter className="animate-spin text-base" size={20} />
+                                ) : (
+                                    <TbHeartHandshake className="text-lg" />
+                                )}
                             </Button>
                         </div>
                     </div>
