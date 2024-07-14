@@ -7,7 +7,7 @@ import { Experience } from '@/types/user.type';
 import moment from 'moment';
 import { useChatContext } from 'stream-chat-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type CandidateProps = {
     id: string;
@@ -55,10 +55,7 @@ const Candidate = ({
     };
 
     return (
-        <Card
-            onClick={() => navigate(`/app/profile/${id}`)}
-            className="relative w-full cursor-pointer rounded-2xl border bg-white/100 pt-5 text-text shadow-none transition hover:shadow-small"
-        >
+        <Card className="relative w-full cursor-pointer rounded-2xl border bg-white/100 pt-5 text-text shadow-none transition hover:shadow-small">
             <div className="absolute right-5 top-5 flex items-center gap-2">
                 {isPro && (
                     <Badge className="rounded-lg bg-gradient-to-r from-[#FAE4A7] to-[#E5D4FF] text-black shadow-none">
@@ -72,7 +69,9 @@ const Candidate = ({
                     <Avatar src={avatar} className="h-16 w-16 flex-shrink-0 rounded-2xl" />
                     <div className="flex flex-1 flex-col">
                         <p>{oneLiner}</p>
-                        <p className="text-xl text-black ">{name}</p>
+                        <Link target="_blank" to={`/app/profile/${id}`} className="text-xl text-black ">
+                            {name}
+                        </Link>
                         <div className="mt-1 flex items-center gap-6">
                             <div className="flex items-start gap-2 underline">
                                 <TbMail className="h-5 flex-shrink-0" />
