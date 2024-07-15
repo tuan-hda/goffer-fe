@@ -13,7 +13,8 @@ import classNames from 'classnames';
 import useCurrApplication from '@/hooks/useCurrApplication';
 import useListEvaluations from '@/hooks/useListEvaluations';
 import Markdown from 'react-markdown';
-import { Accordion, AccordionItem } from '@nextui-org/react';
+import ApplicantEvaluationAI from './ApplicantEvaluationAI';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 type ApplicantResponseProps = {
     answer: Answer;
@@ -119,15 +120,20 @@ const ApplicantResponse = ({ answer, jobId, applicantId }: ApplicantResponseProp
                     {answer.assessment && (
                         <>
                             <div className="-mx-6 mb-2 mt-4 border-t border-dashed border-t-gray-500" />
-                            <Accordion className="!px-0">
+                            <Accordion type="multiple" className="!px-0">
                                 <AccordionItem
+                                    value="item-1"
                                     key="1"
                                     aria-label="Accordion 1"
-                                    subtitle="Expand to see analysis"
                                     title="AI-Powered Analysis"
-                                    classNames={{ title: 'font-medium text-black text-md' }}
                                 >
-                                    <Markdown className="mb-4">{answer.assessment}</Markdown>
+                                    <AccordionTrigger>
+                                        <p>AI-powered analysis</p>
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                        <ApplicantEvaluationAI evaluation={answer.assessment} />
+                                    </AccordionContent>
+                                    {/* <Markdown className="markdown-html mb-4 space-y-2">{answer.assessment}</Markdown> */}
                                 </AccordionItem>
                             </Accordion>
                         </>

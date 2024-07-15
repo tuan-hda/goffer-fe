@@ -768,3 +768,19 @@ i.justify-align {
     background-color: #f2c299;
     clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%, 10% 50%);
 }
+
+.markdown-html h1 {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.markdown-html h2 {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.markdown-html h3 {
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: underline;
+}

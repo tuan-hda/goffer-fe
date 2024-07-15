@@ -6,6 +6,7 @@ import { baseAxios } from '@/services/base';
 import useAuthStore from '@/stores/authStore';
 import { AuthToken } from '@/types/token.type';
 import shallow from 'zustand/shallow';
+import { resolve } from 'path';
 
 type QueryProviderProps = {
     children: React.ReactNode;
@@ -34,6 +35,7 @@ const QueryProvider = ({ children }: QueryProviderProps) => {
                         if (isAxiosError(error) && error?.response?.status === 401) {
                             try {
                                 await refreshAuthToken();
+                                await new Promise((resolve) => setTimeout(resolve, 500));
                                 queryClient.invalidateQueries({ queryKey: query.queryKey });
                             } catch (error) {
                                 console.error('Error refreshing token', error);
