@@ -42,7 +42,7 @@ const Analytics = () => {
             <h2 className="mb-4 text-xl text-black">Conversion rate</h2>
 
             <AnalyticsConversionRate />
-            <div className="mt-6 grid grid-cols-3 gap-6">
+            {/* <div className="mt-6 grid grid-cols-3 gap-6">
                 <Card className="shadow-none">
                     <CardHeader className="pb-4">
                         <CardTitle className="flex items-center gap-2">
@@ -67,7 +67,7 @@ const Analytics = () => {
                     </CardHeader>
                     <CardContent className="text-3xl">{hired}</CardContent>
                 </Card>
-            </div>
+            </div> */}
 
             {/* <div className="mt-6 grid grid-cols-2 gap-6">
                 <Card ref={ref2} className="shadow-none">
