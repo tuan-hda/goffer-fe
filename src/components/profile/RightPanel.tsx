@@ -38,7 +38,7 @@ const RightPanel = () => {
                 <Button variant="outline" size="icon" className="ml-2">
                     <TbShare className="text-lg" />
                 </Button>
-                <DropdownMenu>
+                {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild className="ml-2">
                         <Button variant="outline" className="bg-[#F5F6F9]">
                             Unavailable <TbChevronDown className="ml-2" />
@@ -48,7 +48,7 @@ const RightPanel = () => {
                         <DropdownMenuItem>Unavailable</DropdownMenuItem>
                         <DropdownMenuItem>Open to job</DropdownMenuItem>
                     </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu> */}
             </div>
             <Editable
                 saving={loading}
